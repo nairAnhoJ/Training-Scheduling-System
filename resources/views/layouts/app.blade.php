@@ -20,7 +20,7 @@
     
 </head>
 <body>
-    @if (Auth::user())
+    @if(Auth::user())
         @include('layouts.navigation')
     @endif
     @yield('content')
