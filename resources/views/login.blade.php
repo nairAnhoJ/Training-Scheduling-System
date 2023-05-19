@@ -10,12 +10,15 @@
                 <div class="w-3/4 max-w-sm">
                     <form action="">
                         <div class="relative z-0 w-full mb-6 group">
-                            <input type="text" name="id_number" id="id_number" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-sky-600 peer" placeholder=" " required />
+                            <input type="text" name="id_number" id="id_number" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-sky-600 peer" placeholder=" " required autocomplete="off"/>
                             <label for="id_number" class="peer-focus:font-semibold font-semibold absolute text-base text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sky-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 tracking-wide">ID Number</label>
                         </div>
                         <div class="relative z-0 w-full mb-6 group">
                             <input type="password" name="password" id="password" class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-sky-600 peer" placeholder=" " required />
                             <label for="password" class="peer-focus:font-semibold font-semibold absolute text-base text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sky-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 tracking-wide">Password</label>
+                        </div>
+                        <div class="w-full">
+                            <button class="w-full py-3 rounded-full bg-sky-800 text-white font-bold shadow-lg hover:scale-105">Login</button>
                         </div>
                     </form>
                 </div>

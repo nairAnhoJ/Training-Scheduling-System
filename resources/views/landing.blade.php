@@ -75,7 +75,7 @@
                         center: '',
                         right: 'prev,next today'
                     },
-                    initialView: 'dayGridMonth',
+                    initialView: 'listMonth',
                     contentHeight: 'auto',
                     
                     events: [
