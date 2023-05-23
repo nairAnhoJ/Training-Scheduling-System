@@ -75,21 +75,25 @@
                         center: '',
                         right: 'prev,next today'
                     },
-                    initialView: 'listMonth',
+                    initialView: 'dayGridMonth',
                     contentHeight: 'auto',
                     
                     events: [
                         {
-                            title: 'Event 1',
-                            start: '2023-05-16'
+                            title: 'BCH237',
+                            start: '2023-05-12 15:30:00',
+                            extendedProps: {
+                                department: 'BioChemistry'
+                            },
+                            description: 'Lecture'
                         },
                         {
                             title: 'Event 2',
-                            start: '2023-05-16'
+                            start: '2023-05-23 05:30:00',
                         },
                         {
                             title: 'Event 3',
-                            start: '2023-05-16'
+                            start: '2023-05-04'
                         },
                     ]
                 });

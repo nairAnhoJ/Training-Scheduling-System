@@ -18,7 +18,8 @@
                             <label for="password" class="peer-focus:font-semibold font-semibold absolute text-base text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sky-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 tracking-wide">Password</label>
                         </div>
                         <div class="w-full">
-                            <button class="w-full py-3 rounded-full bg-sky-800 text-white font-bold shadow-lg hover:scale-105">Login</button>
+                            <button type="submit" class="w-full py-3 mb-3 rounded-full bg-sky-800 text-white font-bold shadow-lg hover:scale-105">Login</button>
+                            <a href="{{ url('/') }}" type="button" class="w-full py-3 rounded-full bg-neutral-800 text-white font-bold shadow-lg hover:scale-105 text-center">Back</a>
                         </div>
                     </form>
                 </div>
