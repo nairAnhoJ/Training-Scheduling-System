@@ -16,11 +16,14 @@ return new class extends Migration
             $table->string('id_number');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('department');
+            $table->unsignedInteger('dept_id');
+            $table->foreign('dept_id')->references('id')->on('departments');
             $table->string('email');
             $table->string('role');
             $table->string('password');
-            $table->string('first_time_login');
+            $table->string('first_time_login')->default('1');
+            $table->string('is_deleted')->default('0');
+            $table->string('is_active')->default('1');
             $table->timestamps();
         });
     }

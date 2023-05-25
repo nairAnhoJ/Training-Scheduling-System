@@ -145,7 +145,7 @@
                 </div>
             </nav>
             <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-                <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full overflow-y-scroll">
+                <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full overflow-y-scroll sca">
                     <div id="calendar"></div>
                 </div>
             </div>
@@ -165,6 +165,7 @@
 
                     eventMouseEnter: function (info) {
                         info.el.classList.add('cursor-pointer');
+                        info.el.classList.add('hover:scale-105');
                     },
                     eventClick: function(calEvent, jsEvent, view) {
                         var name = calEvent.event.title;
