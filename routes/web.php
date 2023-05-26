@@ -32,5 +32,11 @@ Route::post('/auth', [AuthController::class, 'auth'])->name('login.auth');
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/request', [DashboardController::class, 'index'])->name('dashboard.index');
+});
+
+Route::fallback(function () {
+    return view('404');
 });
 

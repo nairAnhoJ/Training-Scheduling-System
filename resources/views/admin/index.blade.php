@@ -25,7 +25,7 @@
                         <div class="">
                             <div class="grid grid-cols-5">
                                 <div>Date: </div>
-                                <div id="viewDate" class="col-span-4 font-semibold text-lg">MAY 25, 2023</div>
+                                <div id="viewDate" class="col-span-4 font-semibold text-lg">DATE NGAYON (M d, YYYY)</div>
 
                                 <div>Venue: </div>
                                 <div id="viewDate" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
@@ -37,7 +37,7 @@
                                 </div>
                                 <div class="grid grid-cols-5">
                                     <div>Address: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">SA MAY KANTO, LIKOD NG JOLLIBEE</div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
 
                                     <h3 class="font-semibold col-span-5">Contact Person/s:</h3>
                                     <div class="ml-10">Name: </div>
@@ -67,7 +67,9 @@
                                     <div>Status: </div>
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">Scheduled</div>
                                     <div>Notes: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold"><textarea name="" id="" class="w-full h-auto border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly>BAWAL UMIHI, PUTOL TITI</textarea></div>
+                                    <div class="col-span-4 font-semibold">
+                                        <textarea id="viewNotes" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly>DITO YUNG MGA REMARKS  NG EVENT OR KAHIT ANO NA GUSTONG ILAGAY NI COORDINATOR, PWEDE RIN ITONG BLANGKO</textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -118,6 +120,7 @@
                     var name = calEvent.event.title;
                     $('#viewCompanyName').html(name);
                     $('#viewEventButton').click();
+                    autoResize();
                 },
                 events: [
                     {
@@ -142,6 +145,12 @@
 
             $('.fc-addButton-button').removeClass('fc-button-primary fc fc-button');
             $('.fc-addButton-button').addClass('bg-blue-500 font-bold h-10 px-10 rounded-lg text-white tracking-wider hover:scale-105');
+
+            function autoResize() {
+                var textarea = $('#viewNotes');
+                textarea.css('height', 'auto');
+                textarea.css('height', textarea[0].scrollHeight + 'px');
+            }
         });
     </script>
 @endsection

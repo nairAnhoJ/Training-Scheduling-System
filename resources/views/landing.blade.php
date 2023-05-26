@@ -18,6 +18,7 @@
 
         <!-- Script -->
         <script src="{{asset('assets/js/jquery.js')}}"></script>
+        <script src="{{asset('assets/js/tailwindcss.js')}}"></script>
         <script src="{{asset('assets/js/flowbite.js')}}"></script>
         <script src="{{asset('assets/js/fullcalendar.js')}}"></script>
 
@@ -72,57 +73,59 @@
                             </button>
                         </div>
                         <!-- Modal body -->
-                        <div class="p-6 overflow-y-auto overflow-x-hidden h-[calc(100vh-220px)]">
-                            <div class="">
+                    <div class="p-6 overflow-y-auto overflow-x-hidden h-[calc(100vh-220px)]">
+                        <div class="">
+                            <div class="grid grid-cols-5">
+                                <div>Date: </div>
+                                <div id="viewDate" class="col-span-4 font-semibold text-lg">DATE NGAYON (M d, YYYY)</div>
+
+                                <div>Venue: </div>
+                                <div id="viewDate" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
+                            </div>
+
+                            <div class="mt-5">
+                                <div class="flex items-center">
+                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                </div>
                                 <div class="grid grid-cols-5">
-                                    <div>Date: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">MAY 25, 2023</div>
-
-                                    <div>Venue: </div>
+                                    <div>Address: </div>
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
+
+                                    <h3 class="font-semibold col-span-5">Contact Person/s:</h3>
+                                    <div class="ml-10">Name: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">Juan Dela Cruz</div>
+                                    <div class="ml-10">Date: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">09123456789</div>
+                                    <div class="ml-10">Date: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com</div>
                                 </div>
+                            </div>
 
-                                <div class="mt-5">
-                                    <div class="flex items-center">
-                                        <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
-                                    </div>
-                                    <div class="grid grid-cols-5">
-                                        <div>Address: </div>
-                                        <div id="viewDate" class="col-span-4 font-semibold text-lg">SA MAY KANTO, LIKOD NG JOLLIBEE</div>
-
-                                        <h3 class="font-semibold col-span-5">Contact Person/s:</h3>
-                                        <div class="ml-10">Name: </div>
-                                        <div id="viewDate" class="col-span-4 font-semibold text-lg">Juan Dela Cruz</div>
-                                        <div class="ml-10">Date: </div>
-                                        <div id="viewDate" class="col-span-4 font-semibold text-lg">09123456789</div>
-                                        <div class="ml-10">Date: </div>
-                                        <div id="viewDate" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com</div>
-                                    </div>
+                            <div class="mt-5">
+                                <div class="flex items-center">
+                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
                                 </div>
-
-                                <div class="mt-5">
-                                    <div class="flex items-center">
-                                        <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
-                                    </div>
-                                    <div class="grid grid-cols-5">
-                                        <div>Area: </div>
-                                        <div id="viewDate" class="col-span-4 font-semibold text-lg">NORTH</div>
-                                        <div>Billing Type: </div>
-                                        <div id="viewDate" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
-                                        <div>Type: </div>
-                                        <div id="viewDate" class="col-span-4 font-semibold text-lg">RENTAL UNIT</div>
-                                        <div>Pax: </div>
-                                        <div id="viewDate" class="col-span-4 font-semibold text-lg">13</div>
-                                        <div>Trainer: </div>
-                                        <div id="viewDate" class="col-span-4 font-semibold text-lg">CARDO DALISAY</div>
-                                        <div>Status: </div>
-                                        <div id="viewDate" class="col-span-4 font-semibold text-lg">Scheduled</div>
-                                        <div>Notes: </div>
-                                        <div id="viewDate" class="col-span-4 font-semibold"><textarea name="" id="" class="w-full h-auto border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly>BAWAL UMIHI, PUTOL TITI</textarea></div>
+                                <div class="grid grid-cols-5">
+                                    <div>Area: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">NORTH</div>
+                                    <div>Billing Type: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
+                                    <div>Type: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">RENTAL UNIT</div>
+                                    <div>Pax: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">13</div>
+                                    <div>Trainer: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">CARDO DALISAY</div>
+                                    <div>Status: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">Scheduled</div>
+                                    <div>Notes: </div>
+                                    <div class="col-span-4 font-semibold">
+                                        <textarea id="viewNotes" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly>DITO YUNG MGA REMARKS  NG EVENT OR KAHIT ANO NA GUSTONG ILAGAY NI COORDINATOR, PWEDE RIN ITONG BLANGKO</textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                         <!-- Modal footer -->
                         <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
                             {{-- <button data-modal-hide="viewEventModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">I accept</button> --}}
@@ -171,6 +174,7 @@
                         var name = calEvent.event.title;
                         $('#viewCompanyName').html(name);
                         $('#viewEventButton').click();
+                        autoResize();
                     },
                     events: [
                         {
@@ -192,6 +196,12 @@
                     ]
                 });
                 calendar.render();
+
+                function autoResize() {
+                    var textarea = $('#viewNotes');
+                    textarea.css('height', 'auto');
+                    textarea.css('height', textarea[0].scrollHeight + 'px');
+                }
             });
         </script>
     </body>
