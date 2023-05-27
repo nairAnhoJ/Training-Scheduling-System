@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RequestController;
+use App\Models\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -22,7 +24,7 @@ Route::get('/', function () {
     if(!Auth::user()){
         return view('landing');
     }else{
-        return view('dashboard');
+        return redirect()->route('dashboard.index');
     }
 });
 
@@ -33,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/request', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/request', [RequestController::class, 'index'])->name('request.index');
 });
 
 Route::fallback(function () {

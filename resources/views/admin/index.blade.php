@@ -28,7 +28,7 @@
                                 <div id="viewDate" class="col-span-4 font-semibold text-lg">DATE NGAYON (M d, YYYY)</div>
 
                                 <div>Venue: </div>
-                                <div id="viewDate" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
+                                <div id="viewDate" class="col-span-4 font-semibold text-lg">VENUE NG TRAINING</div>
                             </div>
 
                             <div class="mt-5">
@@ -37,15 +37,15 @@
                                 </div>
                                 <div class="grid grid-cols-5">
                                     <div>Address: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">ADDRESS NG CUSTOMER</div>
 
                                     <h3 class="font-semibold col-span-5">Contact Person/s:</h3>
                                     <div class="ml-10">Name: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">Juan Dela Cruz</div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">JUAN DELA CRUZ</div>
                                     <div class="ml-10">Date: </div>
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">09123456789</div>
-                                    <div class="ml-10">Date: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com</div>
+                                    <div class="ml-10">E-mail: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com <br>*note: Kung tatlo po ang contact person tatlo rin po ang lalabas dito.</div>
                                 </div>
                             </div>
 
@@ -85,7 +85,7 @@
     {{-- VIEW EVENT MODAL END --}}
 
     <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-        <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full overflow-y-scroll sca">
+        <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full overflow-y-scroll">
             <div id="calendar"></div>
         </div>
     </div>
@@ -95,7 +95,7 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 headerToolbar: {
-                    left: 'addButton',
+                    left: '', // addButton
                     center: 'title',
                     right: 'prev,next today'
                 },
@@ -133,8 +133,16 @@
                     },
                     {
                         id: '2',
-                        title: 'LAZADA E-SERVICES PHILS INC. ',
+                        title: 'LAZADA E-SERVICES PHILS INC.',
                         start: '2023-05-27',
+                        extendedProps: {
+                            department: 'BioChemistry'
+                        },
+                    },
+                    {
+                        id: '3',
+                        title: 'A&B SUMMIT DISTRIBUTION INC.',
+                        start: '2023-05-30',
                         extendedProps: {
                             department: 'BioChemistry'
                         },

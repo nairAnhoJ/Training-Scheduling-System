@@ -80,7 +80,7 @@
                                 <div id="viewDate" class="col-span-4 font-semibold text-lg">DATE NGAYON (M d, YYYY)</div>
 
                                 <div>Venue: </div>
-                                <div id="viewDate" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
+                                <div id="viewDate" class="col-span-4 font-semibold text-lg">VENUE NG TRAINING</div>
                             </div>
 
                             <div class="mt-5">
@@ -89,15 +89,15 @@
                                 </div>
                                 <div class="grid grid-cols-5">
                                     <div>Address: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">ADDRESS NG CUSTOMER</div>
 
                                     <h3 class="font-semibold col-span-5">Contact Person/s:</h3>
                                     <div class="ml-10">Name: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">Juan Dela Cruz</div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">JUAN DELA CRUZ</div>
                                     <div class="ml-10">Date: </div>
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">09123456789</div>
-                                    <div class="ml-10">Date: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com</div>
+                                    <div class="ml-10">E-mail: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com *note: Kung tatlo po ang contact person tatlo rin po ang lalabas dito</div>
                                 </div>
                             </div>
 
@@ -110,7 +110,7 @@
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">NORTH</div>
                                     <div>Billing Type: </div>
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
-                                    <div>Type: </div>
+                                    <div>Type of Unit: </div>
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">RENTAL UNIT</div>
                                     <div>Pax: </div>
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">13</div>
@@ -193,6 +193,14 @@
                                 department: 'BioChemistry'
                             },
                         },
+                    {
+                        id: '3',
+                        title: 'A&B SUMMIT DISTRIBUTION INC.',
+                        start: '2023-05-30',
+                        extendedProps: {
+                            department: 'BioChemistry'
+                        },
+                    },
                     ]
                 });
                 calendar.render();
