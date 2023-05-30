@@ -17,4 +17,8 @@ class RequestController extends Controller
         $page = 1;
         return view('admin.request.index', compact('search', 'requests', 'page'));
     }
+
+    public function add(){
+        return view('admin.request.add');
+    }
 }

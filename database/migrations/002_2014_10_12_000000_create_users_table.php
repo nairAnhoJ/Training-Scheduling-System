@@ -19,8 +19,9 @@ return new class extends Migration
             $table->unsignedInteger('dept_id');
             $table->foreign('dept_id')->references('id')->on('departments');
             $table->string('email');
-            $table->string('role');
+            $table->string('role'); // 0 - ADMIN, 1 - TRAINING COORDINATOR, 2 - VIEWING ONLY
             $table->string('password');
+            $table->string('color')->default('0');
             $table->string('first_time_login')->default('1');
             $table->string('is_deleted')->default('0');
             $table->string('is_active')->default('1');

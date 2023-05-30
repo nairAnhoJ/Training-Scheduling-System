@@ -17,21 +17,14 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->string('category'); // PU / RU / PM
             $table->string('unit_type');
+            $table->string('brand');
+            $table->string('model');
+            $table->string('unit_type');
             $table->string('no_of_unit')->nullable();
             $table->string('billing_type')->nullable(); // Chargeable / Non-Chargeable
 
             // if category is PM 
             $table->string('contract_details');
-
-            // if billing_type is Chargeable 
-            $table->string('sap_entry_form')->nullable();
-            $table->string('bir_2303')->nullable();
-            $table->string('peza_erd_form')->nullable();
-            $table->string('sec_certificate')->nullable();
-            $table->string('certificate_of_incorporation')->nullable();
-            $table->string('sworn_affidavit')->nullable();
-            $table->string('tax_exemption_certificate')->nullable();
-            $table->string('vat_agreement')->nullable();
 
             // Additional Information
             $table->string('no_of_attendees')->nullable();

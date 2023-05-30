@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title','SCHEDULE BOARD')
 @section('content')
 
     {{-- VIEW EVENT MODAL --}}

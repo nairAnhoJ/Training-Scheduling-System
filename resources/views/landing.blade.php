@@ -96,22 +96,31 @@
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">JUAN DELA CRUZ</div>
                                     <div class="ml-10">Date: </div>
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">09123456789</div>
-                                    <div class="ml-10">E-mail: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com *note: Kung tatlo po ang contact person tatlo rin po ang lalabas dito</div>
+                                    <div class="ml-10 mb-5">E-mail: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com</div>
+
+                                    <div class="ml-10">Name: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">JUAN DELA CRUZ</div>
+                                    <div class="ml-10">Date: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">09123456789</div>
+                                    <div class="ml-10 mb-5">E-mail: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com</div>
                                 </div>
                             </div>
 
-                            <div class="mt-5">
+                            <div class="">
                                 <div class="flex items-center">
                                     <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
                                 </div>
                                 <div class="grid grid-cols-5">
-                                    <div>Area: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">NORTH</div>
+                                    <div>Category: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">RENTAL UNIT</div>
                                     <div>Billing Type: </div>
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
+                                    <div>Area: </div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">NORTH</div>
                                     <div>Type of Unit: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">RENTAL UNIT</div>
+                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">REACH TRUCK</div>
                                     <div>Pax: </div>
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">13</div>
                                     <div>Trainer: </div>

@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'last_name' => 'Administrator',
             'dept_id' => '1',
             'email' => 'admin@email.com',
-            'role' => '1',
+            'role' => '0',
             'password' => '$2y$10$A93SkRc5P3Suqt0l6sX91uh1Z4Ec2sMyDAhuuZeB3irIZPEghqtmG',
             'first_time_login' => '0',
         ]);

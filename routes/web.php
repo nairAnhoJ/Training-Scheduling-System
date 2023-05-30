@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/request', [RequestController::class, 'index'])->name('request.index');
+    Route::get('/request/add', [RequestController::class, 'add'])->name('request.add');
 });
 
 Route::fallback(function () {
