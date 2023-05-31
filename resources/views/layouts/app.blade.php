@@ -22,6 +22,7 @@
     <script src="{{asset('assets/js/jquery.js')}}"></script>
     {{-- <script src="{{asset('assets/js/tailwindcss.js')}}"></script> --}}
     <script src="{{asset('assets/js/flowbite.js')}}"></script>
+    <script src="{{asset('assets/js/datepicker.js')}}"></script>
     <script src="{{asset('assets/js/fullcalendar.js')}}"></script>
 
     <!-- Styles -->

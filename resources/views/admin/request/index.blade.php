@@ -91,7 +91,7 @@
                 {{-- CONTROLS --}}
                     <div class="mb-3">
                         <div class="md:grid md:grid-cols-2">
-                            <div class="w-24">
+                            <div class="w-24 mb-3 md:mb-0">
                                 <a href="{{ route('request.add') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 mr-1" fill="currentColor" viewBox="0 -960 960 960"><path d="M440.391-190.391v-250h-250v-79.218h250v-250h79.218v250h250v79.218h-250v250h-79.218Z"/></svg>
                                     <span>ADD</span></a>

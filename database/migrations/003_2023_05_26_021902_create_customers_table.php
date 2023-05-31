@@ -30,14 +30,14 @@ return new class extends Migration
             $table->string('cp3_email')->nullable();
 
             // if billing_type is Chargeable 
-            $table->string('sap_entry_form')->nullable();
-            $table->string('bir_2303')->nullable();
-            $table->string('peza_erd_form')->nullable();
-            $table->string('sec_certificate')->nullable();
-            $table->string('certificate_of_incorporation')->nullable();
-            $table->string('sworn_affidavit')->nullable();
-            $table->string('tax_exemption_certificate')->nullable();
-            $table->string('vat_agreement')->nullable();
+            // $table->string('sap_entry_form')->nullable();
+            // $table->string('bir_2303')->nullable();
+            // $table->string('peza_erd_form')->nullable();
+            // $table->string('sec_certificate')->nullable();
+            // $table->string('certificate_of_incorporation')->nullable();
+            // $table->string('sworn_affidavit')->nullable();
+            // $table->string('tax_exemption_certificate')->nullable();
+            // $table->string('vat_agreement')->nullable();
 
             $table->string('is_deleted')->default('0');
             $table->string('is_active')->default('1');

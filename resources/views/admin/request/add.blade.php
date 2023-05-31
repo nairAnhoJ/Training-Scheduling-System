@@ -132,7 +132,7 @@
                             <div class="pl-5">
                                 <div class="mb-3">
                                     <h1 class="text-gray-600">#1</h1>
-                                    <div class="pl-5 flex gap-x-8 w-full">
+                                    <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
                                         <div class="mb-3 w-full">
                                             <label for="cp1_name" class="block text-sm font-medium text-gray-600">Name</label>
                                             <input type="text" id="cp1_name" name="cp1_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
@@ -149,7 +149,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <h1 class="text-gray-600">#2</h1>
-                                    <div class="pl-5 flex gap-x-8 w-full">
+                                    <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
                                         <div class="mb-3 w-full">
                                             <label for="cp2_name" class="block text-sm font-medium text-gray-600">Name</label>
                                             <input type="text" id="cp2_name" name="cp2_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
@@ -166,7 +166,7 @@
                                 </div>
                                 <div>
                                     <h1 class="text-gray-600">#3</h1>
-                                    <div class="pl-5 flex gap-x-8 w-full">
+                                    <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
                                         <div class="mb-3 w-full">
                                             <label for="cp3_name" class="block text-sm font-medium text-gray-600">Name</label>
                                             <input type="text" id="cp3_name" name="cp3_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
@@ -190,17 +190,29 @@
                     <h1 class="text-gray-600 font-bold text-xl mb-2">OTHER DETAILS</h1>
                     <div class="pl-3">
                         <div class="mb-3">
-                            <label for="area" class="block text-sm font-medium text-gray-600">Category</label>
-                            <select id="area" name="area" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <label for="category" class="block text-sm font-medium text-gray-600">Category</label>
+                            <select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value="RENTAL">Rental</option>
                                 <option value="PURCHASED">Purchased</option>
                                 <option value="PM">PM Contact</option>
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label for="brand" class="block text-sm font-medium text-gray-600">Brand</label>
+                            <select id="brand" name="brand" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="BT">BT</option>
+                                <option value="RAYMOND">Raymond</option>
+                                <option value="TOYOTA">Toyota</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 w-full">
+                            <label for="model" class="block text-sm font-medium text-gray-600">Model</label>
+                            <input type="text" id="model" name="model" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                        </div>
 
                         <div class="mb-3">
-                            <label for="area" class="block text-sm font-medium text-gray-600">Unit Type</label>
-                            <select id="area" name="area" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <label for="unit_type" class="block text-sm font-medium text-gray-600">Unit Type</label>
+                            <select id="unit_type" name="unit_type" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value="RENTAL">Reach Truck</option>
                                 <option value="PURCHASED">Purchased</option>
                                 <option value="PM">PM Contact</option>
@@ -208,26 +220,41 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="adress" class="block text-sm font-medium text-gray-600">Number of Unit/s</label>
-                            <input type="text" id="adress" name="adress" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" value="1">
+                            <label for="no_of_unit" class="block text-sm font-medium text-gray-600">Number of Unit/s</label>
+                            <input type="text" id="no_of_unit" name="no_of_unit" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" value="1">
                         </div>
         
                         <div class="mb-3">
-                            <label for="area" class="block text-sm font-medium text-gray-600">Billing Type</label>
-                            <select id="area" name="area" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <label for="billing_type" class="block text-sm font-medium text-gray-600">Billing Type</label>
+                            <select id="billing_type" name="billing_type" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value="CHARGEABLE">Chargeable</option>
                                 <option value="NON-CHARGEABLE">Non-Chargeable</option>
                             </select>
                         </div>
+                        <div class="mb-3 w-full">
+                            <label for="no_of_attendees" class="block text-sm font-medium text-gray-600">Number of Attendees</label>
+                            <input type="text" id="no_of_attendees" name="no_of_attendees" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" value="1">
+                        </div>
+                        <div class="mb-3 w-full">
+                            <label for="venue" class="block text-sm font-medium text-gray-600">Venue</label>
+                            <input type="text" id="venue" name="venue" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                        </div>
+                        <div class="mb-3 w-full">
+                            <label for="venue" class="block text-sm font-medium text-gray-600">Date</label>
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                  <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                </div>
+                                <input datepicker type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Select date">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex gap-x-8">
+                <div class="mt-5 flex gap-x-8">
                     <button class="bg-blue-500 w-1/2 py-2 rounded-lg text-white font-bold tracking-wider hover:scale-105">SAVE</button>
                     <button class="bg-gray-500 w-1/2 py-2 rounded-lg text-white font-bold tracking-wider hover:scale-105">BACK</button>
                 </div>
-
-
             </form>
         </div>
     </div>
@@ -249,9 +276,13 @@
                 });
             }
             
-            jQuery(document).on( "input", ".inputOption", function(){
+            jQuery(document).on( "keydown", ".inputOption", function(e){
                 var value = $(this).val().toLowerCase();
                 searchFilter(value);
+
+                if (event.keyCode === 9) {
+                    $('.listOption').addClass('hidden');
+                }
             });
 
             jQuery(document).on( "click", ".listOption li", function(){

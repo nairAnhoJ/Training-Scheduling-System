@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('unit_type');
             $table->string('brand');
             $table->string('model');
-            $table->string('unit_type');
             $table->string('no_of_unit')->nullable();
             $table->string('billing_type')->nullable(); // Chargeable / Non-Chargeable
 
@@ -28,11 +27,12 @@ return new class extends Migration
 
             // Additional Information
             $table->string('no_of_attendees')->nullable();
-            $table->string('venue')->nullable();
+            $table->string('venue')->nullable(); 
             $table->string('training_date')->nullable();
             $table->string('knowledge_of_participants')->nullable();
-            $table->string('type_of_payment')->nullable();
-            $table->string('vat_zero_rated')->nullable();
+            
+            // $table->string('type_of_payment')->nullable();
+            // $table->string('vat_zero_rated')->nullable();
 
             $table->timestamps();
         });
