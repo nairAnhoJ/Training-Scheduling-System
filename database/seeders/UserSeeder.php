@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         User::create([
             'id_number' => 'HII-admin',
             'first_name' => 'HII',
-            'last_name' => 'Administrator',
+            'last_name' => 'ADMINISTRATOR',
             'dept_id' => '1',
             'email' => 'admin@email.com',
             'role' => '0',

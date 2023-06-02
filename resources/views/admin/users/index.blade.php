@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','REQUESTS')
+@section('title','USERS')
 @section('content')
 
     @if(session('success'))
@@ -107,7 +107,7 @@
                     <div class="mb-3">
                         <div class="md:grid md:grid-cols-2">
                             <div class="w-24 mb-3 md:mb-0">
-                                <a href="{{ route('request.add') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
+                                <a href="{{ route('users.add') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 mr-1" fill="currentColor" viewBox="0 -960 960 960"><path d="M440.391-190.391v-250h-250v-79.218h250v-250h79.218v250h250v79.218h-250v250h-79.218Z"/></svg>
                                     <span>ADD</span></a>
                             </div>
@@ -138,19 +138,19 @@
                                     <thead class="text-xs text-gray-600 uppercase bg-gray-100">
                                         <tr>
                                             <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                                                Company Name
+                                                Full Name
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Category
+                                                ID Number
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Number of Unit/s
+                                                Department
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Billing Type
+                                                E-mail
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Area
+                                                Role
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Action
@@ -158,22 +158,33 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($requests as $request)
+                                        @foreach ($users as $user)
+                                            @php
+                                                if($user->role == 0){
+                                                    $role = 'ADMINISTRATOR';
+                                                }else if($user->role == 1){
+                                                    $role = 'TRAINING COORDINATOR';
+                                                }else if($user->role == 2){
+                                                    $role = 'TRAINER';
+                                                }else if($user->role == 3){
+                                                    $role = 'VIEWING ONLY';
+                                                }
+                                            @endphp
                                             <tr class="bg-white border-b cursor-pointer hover:bg-gray-200 even:bg-gray-100">
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                    {{ $request->name }}
+                                                    {{ $user->first_name.' '.$user->last_name }}
                                                 </th>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->category }}
+                                                    {{ $user->id_number }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->no_of_unit }}
+                                                    {{ $user->dept }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->billing_type }}
+                                                    {{ $user->email }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->area }}
+                                                    {{ $role }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     <a href="#" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <a type="button" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
@@ -192,37 +203,48 @@
                                 @php
                                     $x = 1;
                                 @endphp
-                                @foreach ($requests as $request)
+                                @foreach ($users as $user)
+                                    @php
+                                        if($user->role == 0){
+                                            $role = 'ADMINISTRATOR';
+                                        }else if($user->role == 1){
+                                            $role = 'TRAINING COORDINATOR';
+                                        }else if($user->role == 2){
+                                            $role = 'TRAINER';
+                                        }else if($user->role == 3){
+                                            $role = 'VIEWING ONLY';
+                                        }
+                                    @endphp
                                     <h2 id="accordion-collapse-heading-{{$x}}">
                                         <button type="button" class="flex items-center justify-between w-full px-3 py-1.5 text-sm font-semibold text-left text-gray-500 border  border-gray-200 {{ $x == 1 ? 'rounded-t-xl border-b-0' : 'border-b' }} hover:bg-gray-100 focus:bg-gray-900" data-accordion-target="#accordion-collapse-body-{{$x}}" aria-expanded="false" aria-controls="accordion-collapse-body-{{$x}}">
-                                            <span>{{ $request->name }}</span>
+                                            <span>{{ $user->first_name.' '.$user->last_name }}</span>
                                             <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                         </button>
                                     </h2>
                                     <div id="accordion-collapse-body-{{$x}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$x}}">
                                         <div class="px-3 py-1.5 font-light border border-b border-gray-200">
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Category</div>
+                                                <div class="text-xs leading-5">ID Number</div>
                                                 <div class=" font-semibold text-sm">
-                                                    {{ $request->category }}
+                                                    {{ $user->id_number }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Number of Unit/s</div>
+                                                <div class="text-xs leading-5">Department</div>
                                                 <div class=" font-semibold text-sm">
-                                                    {{ $request->no_of_unit }}
+                                                    {{ $user->dept }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Billing Type</div>
+                                                <div class="text-xs leading-5">E-mail</div>
                                                 <div class="font-semibold text-sm">
-                                                    {{ $request->billing_type }}
+                                                    {{ $user->email }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Area</div>
+                                                <div class="text-xs leading-5">Role</div>
                                                 <div class="cfont-semibold text-sm">
-                                                    {{ $request->area }}
+                                                    {{ $role }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
@@ -238,10 +260,162 @@
                                         $x++;
                                     @endphp
                                 @endforeach
+
+
+
+
+                                {{-- @php
+                                    $x = 1;
+                                    foreach ($users as $user) {
+                                        if($x == 1){
+                                            echo '
+                                                <h2 id="accordion-collapse-heading-'.$x.'">
+                                                    <button type="button" class="flex items-center justify-between w-full px-3 py-1.5 text-sm font-semibold text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl hover:bg-gray-100" data-accordion-target="#accordion-collapse-body-'.$x.'" aria-expanded="false" aria-controls="accordion-collapse-body-'.$x.'">
+                                                        <span>'.$user->name.'</span>
+                                                        <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                    </button>
+                                                </h2>
+                                                <div id="accordion-collapse-body-'.$x.'" class="hidden" aria-labelledby="accordion-collapse-heading-'.$x.'">
+                                                    <div class="px-3 py-1.5 font-light border border-b-0 border-gray-200">
+                                                        <div class="grid grid-cols-3">
+                                                            <div class="text-xs leading-5">Username</div>
+                                                            <div class="col-span-2 font-semibold text-sm">
+                                                                '.$user->username.'
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-3">
+                                                            <div class="text-xs leading-5">Username</div>
+                                                            <div class="col-span-2 font-semibold text-sm">
+                                                                '.$role.'
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-3">
+                                                            <div class="text-xs leading-5">Action</div>
+                                                            <div class="col-span-2">
+                                                                <a href="'.url('/system-management/user/edit/'.$user->slug).'" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | 
+                                                                <a type="button" data-modal-target="itemDeleteModal" data-modal-toggle="itemDeleteModal" data-slug="'.$user->slug.'" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ';
+                                        }else if($x == $users->count()){
+                                            echo '
+                                                <h2 id="accordion-collapse-heading-'.$x.'">
+                                                    <button type="button" class="flex items-center justify-between w-full px-3 py-1.5 text-sm font-medium text-left text-gray-500 border border-gray-200 hover:bg-gray-100" data-accordion-target="#accordion-collapse-body-'.$x.'" aria-expanded="false" aria-controls="accordion-collapse-body-'.$x.'">
+                                                        <span>'.$user->name.'</span>
+                                                        <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                    </button>
+                                                </h2>
+                                                <div id="accordion-collapse-body-'.$x.'" class="hidden" aria-labelledby="accordion-collapse-heading-'.$x.'">
+                                                    <div class="px-3 py-1.5 font-light border border-t-0 border-gray-200 rounded-b-xl">
+                                                        <div class="grid grid-cols-3 content-center">
+                                                            <div class="text-xs leading-5">Category</div>
+                                                            <div class="col-span-2 font-semibold text-sm">
+                                                                '.$user->username.'
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-3">
+                                                            <div class="text-xs leading-5">Username</div>
+                                                            <div class="col-span-2 font-semibold text-sm">
+                                                                '.$role.'
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-3">
+                                                            <div>Action</div>
+                                                            <div class="col-span-2">
+                                                                <a href="'.url('/system-management/user/edit/'.$user->slug).'" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | 
+                                                                <a type="button" data-modal-target="itemDeleteModal" data-modal-toggle="itemDeleteModal" data-slug="'.$user->slug.'" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ';
+                                        }else{
+                                            echo '
+                                                <h2 id="accordion-collapse-heading-'.$x.'">
+                                                    <button type="button" class="flex items-center justify-between w-full px-3 py-1.5 text-sm font-medium text-left text-gray-500 border border-b-0 border-gray-200 hover:bg-gray-100" data-accordion-target="#accordion-collapse-body-'.$x.'" aria-expanded="false" aria-controls="accordion-collapse-body-'.$x.'">
+                                                        <span>'.$user->name.'</span>
+                                                        <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                    </button>
+                                                </h2>
+                                                <div id="accordion-collapse-body-'.$x.'" class="hidden" aria-labelledby="accordion-collapse-heading-'.$x.'">
+                                                    <div class="px-3 py-1.5 font-light border border-b-0 border-gray-200">
+                                                        <div class="grid grid-cols-3 content-center">
+                                                            <div class="text-xs leading-5">Category</div>
+                                                            <div class="col-span-2 font-semibold text-sm">
+                                                                '.$user->username.'
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-3">
+                                                            <div class="text-xs leading-5">Username</div>
+                                                            <div class="col-span-2 font-semibold text-sm">
+                                                                '.$role.'
+                                                            </div>
+                                                        </div>
+                                                        <div class="grid grid-cols-3">
+                                                            <div class="text-xs leading-5">Action</div>
+                                                            <div class="col-span-2">
+                                                                <a href="'.url('/system-management/user/edit/'.$user->slug).'" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | 
+                                                                <a type="button" data-modal-target="itemDeleteModal" data-modal-toggle="itemDeleteModal" data-slug="'.$user->slug.'" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ';
+                                        }
+                                        $x++;
+                                    }
+                                @endphp --}}
                             </div>
                         </div>
                     {{-- INVENTORY LIST SMALL DEVICE END --}}
                 </div>
+
+                {{-- PAGINATION --}}
+                    {{-- <div class="grid md:grid-cols-2 mt-3 px-3">
+                        @php
+                            $prev = $page - 1;
+                            $next = $page + 1;
+                            $from = ($prev * 100) + 1;
+                            $to = $page * 100;
+                            if($to > $users->count()){
+                                $to = $users->count();
+                            }if($users->count() == 0){
+                                $from = 0;
+                            }
+                        @endphp
+                        <div class="justify-self-center md:justify-self-start self-center">
+                            <span class="text-sm text-gray-700">
+                                Showing <span class="font-semibold text-gray-900">{{ $from }}</span> to <span class="font-semibold text-gray-900">{{ $to }}</span> of <span class="font-semibold text-gray-900">{{ $users->count() }}</span> Items
+                            </span>
+                        </div>
+
+                        <div class="justify-self-center md:justify-self-end">
+                            <nav aria-label="Page navigation example" class="h-8 mb-0.5">
+                                <ul class="inline-flex items-center -space-x-px">
+                                    <li>
+                                        <a href="{{ ($search == '') ? url('/system-management/user/'.$prev) : url('/system-management/user/'.$prev.'/'.$search);  }}"  class="{{ ($page == 1) ? 'pointer-events-none' : ''; }} w-10 h-10 leading-9 text-center text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 group-hover:text-gray-900 mr-1 text-gray-500" fill="currentColor" viewBox="0 -960 960 960"><path xmlns="http://www.w3.org/2000/svg" d="M561-226.434 306.434-481 561-735.566 617.566-679l-198 198 198 198L561-226.434Z"/></svg>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <p class="block w-24 h-10 leading-9 text-center z-10 text-gray-500 border border-gray-300 bg-white font-semibold">Page {{ $page }}</p>
+                                    </li>
+                                    <li>
+                                        <a href="{{ ($search == '') ? url('/system-management/user/'.$next) : url('/system-management/user/'.$next.'/'.$search); }}" class="{{ ($to == $users->count()) ? 'pointer-events-none' : ''; }} w-10 h-10 leading-9 text-center text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 flex items-center justify-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 group-hover:text-gray-900 mr-1 text-gray-500" fill="currentColor" viewBox="0 -960 960 960"><path xmlns="http://www.w3.org/2000/svg" d="M375-226.434 318.434-283l198-198-198-198L375-735.566 629.566-481 375-226.434Z"/></svg>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div> --}}
+                {{-- PAGINATION END --}}
+
+
             </div>
         </div>
     </div>
