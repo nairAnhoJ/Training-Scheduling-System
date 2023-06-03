@@ -20,7 +20,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+ 
 Route::get('/', function () {
     if(!Auth::user()){
         return view('landing');
@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/system-management/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/system-management/users/add', [UserController::class, 'add'])->name('users.add');
     Route::post('/system-management/users/store', [UserController::class, 'store'])->name('users.store');
+    Route::get('/system-management/users/edit/{key}', [UserController::class, 'edit'])->name('users.edit');
 });
 
 Route::fallback(function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -24,14 +25,27 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
-        $color = '0';
-        $first_name = $request->first_name;
-        $last_name = $request->last_name;
+        $first_name = strtoupper($request->first_name);
+        $last_name = strtoupper($request->last_name);
         $id_number = $request->id_number;
         $department = $request->department;
         $email = $request->email;
         $role = $request->role;
         $color = $request->color;
+        if($color == ''){
+            $color = '0';
+        }
+
+        $unique = false;
+        $key = null;
+
+        while (!$unique) {
+            $key = Str::uuid()->toString();
+            $existingModel = DB::table('users')->where('id', $key)->first();
+            if (!$existingModel) {
+                $unique = true;
+            }
+        }
 
         DB::table('users')
             ->insert([
@@ -42,8 +56,18 @@ class UserController extends Controller
                 'email' => $email,
                 'role' => $role,
                 'color' => $color,
+                'key' => $key,
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ]);
 
         return redirect()->route('users.index')->with('success', 'User Successfully Added');
+    }
+
+    public function edit($key){
+        $user = DB::table('users')->where('key', $key)->first();
+        $departments = DB::table('departments')->orderBy('name', 'asc')->get();
+
+        return view('admin.users.edit', compact('departments', 'user'));
     }
 }

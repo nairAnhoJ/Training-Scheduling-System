@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title','LOGIN')
 @section('content')
     <div class="h-screen w-screen overflow-hidden">
         <div class="justify-center items-center lg:hidden flex bg-gradient-to-t from-sky-800 to-sky-300 pt-5 pb-16">

@@ -187,7 +187,7 @@
                                                     {{ $role }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="#" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <a type="button" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
+                                                    <a href="{{ url('/system-management/users/edit/'.$user->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <a type="button" data-key="{{ $user->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach
