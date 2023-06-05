@@ -17,13 +17,13 @@ class RequestController extends Controller
 
         $search = '';
         // $page = 1;
-        return view('admin.request.index', compact('requests', 'search'));
+        return view('coordinator.request.index', compact('requests', 'search'));
     }
 
     public function add(){
         $customers = DB::table('customers')->get();
 
-        return view('admin.request.add', compact('customers'));
+        return view('coordinator.request.add', compact('customers'));
     }
 
     public function getcom(Request $request){
@@ -99,6 +99,7 @@ class RequestController extends Controller
                     'cp3_name' => $cp3_name,
                     'cp3_number' => $cp3_number,
                     'cp3_email' => $cp3_email,
+                    'updated_at' => date('Y-m-d H:i:s'),
                 ]);
             $cusID = $com->id;
         }else{
@@ -116,6 +117,8 @@ class RequestController extends Controller
                     'cp3_name' => $cp3_name,
                     'cp3_number' => $cp3_number,
                     'cp3_email' => $cp3_email,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                 ]);
             $cusID = $customer;
         }
@@ -148,6 +151,8 @@ class RequestController extends Controller
                     'venue' => $venue,
                     'training_date' => $event_date,
                     'knowledge_of_participants' => $cusID,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                 ]);
         }else{
             DB::table('requests')
@@ -163,6 +168,8 @@ class RequestController extends Controller
                     'venue' => $venue,
                     'training_date' => $event_date,
                     'knowledge_of_participants' => $cusID,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                 ]);
         }
 

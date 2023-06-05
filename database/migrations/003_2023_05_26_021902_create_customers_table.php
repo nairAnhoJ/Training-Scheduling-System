@@ -41,6 +41,7 @@ return new class extends Migration
 
             $table->string('is_deleted')->default('0');
             $table->string('is_active')->default('1');
+            $table->string('key');
             $table->timestamps();
         });
     }

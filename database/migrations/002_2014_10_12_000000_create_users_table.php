@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedInteger('dept_id');
             $table->foreign('dept_id')->references('id')->on('departments');
             $table->string('email');
-            $table->string('role'); // 0 - ADMIN, 1 - TRAINING COORDINATOR, 2 - VIEWING ONLY
+            $table->string('role'); // 0 - ADMIN, 1 - TRAINING COORDINATOR, 2 - TRAINER, 2 - VIEWING ONLY
             $table->string('password')->default(Hash::make('password2023'));
             $table->string('color')->default('0');
             $table->string('first_time_login')->default('1');

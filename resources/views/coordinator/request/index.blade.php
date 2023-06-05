@@ -153,6 +153,9 @@
                                                 Area
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Last Updated
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Action
                                             </th>
                                         </tr>
@@ -174,6 +177,9 @@
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ $request->area }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    {{ date('F j, Y', strtotime($request->updated_at)) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     <a href="#" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <a type="button" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>

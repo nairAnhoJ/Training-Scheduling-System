@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','USERS')
+@section('title','DEPARTMENTS')
 @section('content')
 
     @if(session('success'))
@@ -18,11 +18,6 @@
 
 
     {{-- VIEW EVENT MODAL --}}
-        <!-- Modal toggle -->
-        <button data-modal-target="deleteModal" data-modal-toggle="deleteModal" id="viewEventButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
-            Toggle modal
-        </button>
-        
         <!-- Main modal -->
         <div id="deleteModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
             <div class="relative w-full max-w-3xl bg-white rounded-lg overflow-x-hidden overflow-y-auto">
@@ -32,7 +27,7 @@
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
                         <div class="flex items-center">
                             <svg aria-hidden="true" class="w-6 h-6 text-red-500 mr-2" fill="currentColor" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path xmlns="http://www.w3.org/2000/svg" d="m40-120 440-760 440 760H40Zm104-60h672L480-760 144-180Zm340.175-57q12.825 0 21.325-8.675 8.5-8.676 8.5-21.5 0-12.825-8.675-21.325-8.676-8.5-21.5-8.5-12.825 0-21.325 8.675-8.5 8.676-8.5 21.5 0 12.825 8.675 21.325 8.676 8.5 21.5 8.5ZM454-348h60v-224h-60v224Zm26-122Z"/></svg>
-                            <h3 class="text-xl tracking-wide font-semibold text-red-500 flex items-center">Delete User</h3>
+                            <h3 class="text-xl tracking-wide font-semibold text-red-500 flex items-center">Delete department</h3>
                         </div>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="deleteModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -41,7 +36,7 @@
                     </div>
                     <!-- Modal body -->
                     <div class="p-6 overflow-y-auto overflow-x-hidden">
-                        Are you sure you want to delete this user?
+                        Are you sure you want to delete this department?
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
@@ -60,7 +55,7 @@
                     <div class="mb-3">
                         <div class="md:grid md:grid-cols-2">
                             <div class="w-24 mb-3 md:mb-0">
-                                <a href="{{ route('users.add') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
+                                <a href="{{ route('departments.add') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 mr-1" fill="currentColor" viewBox="0 -960 960 960"><path d="M440.391-190.391v-250h-250v-79.218h250v-250h79.218v250h250v79.218h-250v250h-79.218Z"/></svg>
                                     <span>ADD</span></a>
                             </div>
@@ -91,19 +86,7 @@
                                     <thead class="text-xs text-gray-600 uppercase bg-gray-100">
                                         <tr>
                                             <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                                                Full Name
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                ID Number
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Department
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                E-mail
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Role
+                                                Name
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Action
@@ -111,38 +94,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $user)
-                                            @php
-                                                if($user->role == 0){
-                                                    $role = 'ADMINISTRATOR';
-                                                }else if($user->role == 1){
-                                                    $role = 'TRAINING COORDINATOR';
-                                                }else if($user->role == 2){
-                                                    $role = 'TRAINER';
-                                                }else if($user->role == 3){
-                                                    $role = 'VIEWING ONLY';
-                                                }
-                                            @endphp
+                                        @foreach ($departments as $department)
                                             <tr class="bg-white border-b hover:bg-gray-200 even:bg-gray-100">
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                    {{ $user->first_name.' '.$user->last_name }}
+                                                    {{ $department->name }}
                                                 </th>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $user->id_number }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $user->dept }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $user->email }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $role }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/system-management/users/edit/'.$user->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a>
-                                                    @if ($user->id != 1)
-                                                     | <a type="button" data-key="{{ $user->key }}" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
+                                                    <a href="{{ url('/system-management/departments/edit/'.$department->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a>
+                                                    @if ($department->id != 1)
+                                                     | <a type="button" data-key="{{ $department->key }}" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -159,56 +119,21 @@
                                 @php
                                     $x = 1;
                                 @endphp
-                                @foreach ($users as $user)
-                                    @php
-                                        if($user->role == 0){
-                                            $role = 'ADMINISTRATOR';
-                                        }else if($user->role == 1){
-                                            $role = 'TRAINING COORDINATOR';
-                                        }else if($user->role == 2){
-                                            $role = 'TRAINER';
-                                        }else if($user->role == 3){
-                                            $role = 'VIEWING ONLY';
-                                        }
-                                    @endphp
+                                @foreach ($departments as $department)
                                     <h2 id="accordion-collapse-heading-{{$x}}">
                                         <button type="button" class="flex items-center justify-between w-full px-3 py-1.5 text-sm font-semibold text-left text-gray-500 border  border-gray-200 {{ $x == 1 ? 'rounded-t-xl border-b-0' : 'border-b' }} hover:bg-gray-100 focus:bg-gray-900" data-accordion-target="#accordion-collapse-body-{{$x}}" aria-expanded="false" aria-controls="accordion-collapse-body-{{$x}}">
-                                            <span>{{ $user->first_name.' '.$user->last_name }}</span>
+                                            <span>{{ $department->name }}</span>
                                             <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                         </button>
                                     </h2>
                                     <div id="accordion-collapse-body-{{$x}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$x}}">
                                         <div class="px-3 py-1.5 font-light border border-b border-gray-200">
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">ID Number</div>
-                                                <div class=" font-semibold text-sm">
-                                                    {{ $user->id_number }}
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Department</div>
-                                                <div class=" font-semibold text-sm">
-                                                    {{ $user->dept }}
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">E-mail</div>
-                                                <div class="font-semibold text-sm">
-                                                    {{ $user->email }}
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Role</div>
-                                                <div class="cfont-semibold text-sm">
-                                                    {{ $role }}
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Action</div>
                                                 <div class="">
-                                                    <a href="{{ url('/system-management/users/edit/'.$user->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a>
-                                                    @if ($user->id != 1)
-                                                     | <a type="button" data-key="{{ $user->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
+                                                    <a href="{{ url('/system-management/departments/edit/'.$department->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a>
+                                                    @if ($department->id != 1)
+                                                     | <a type="button" data-key="{{ $department->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -230,7 +155,7 @@
         $(document).ready(function(){
             $('.deleteButton').click(function(){
                 var key = $(this).data('key');
-                $('#confirmDelete').attr('href', `{{ url('/system-management/users/delete/${key}') }}`)
+                $('#confirmDelete').attr('href', `{{ url('/system-management/departments/delete/${key}') }}`)
             });
         });
     </script>

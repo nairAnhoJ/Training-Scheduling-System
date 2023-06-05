@@ -12,6 +12,7 @@ class UserController extends Controller
         $users = DB::table('users')
             ->select('users.*', 'departments.name as dept')
             ->join('departments', 'users.dept_id', '=', 'departments.id')
+            ->where('users.is_deleted', 0)
             ->orderBy('users.first_name', 'asc')
             ->get();
         $search = '';
@@ -19,7 +20,7 @@ class UserController extends Controller
     }
 
     public function add(){
-        $departments = DB::table('departments')->orderBy('name', 'asc')->get();
+        $departments = DB::table('departments')->where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
         return view('admin.users.add', compact('departments'));
     }
@@ -68,6 +69,46 @@ class UserController extends Controller
         $user = DB::table('users')->where('key', $key)->first();
         $departments = DB::table('departments')->orderBy('name', 'asc')->get();
 
-        return view('admin.users.edit', compact('departments', 'user'));
+        return view('admin.users.edit', compact('departments', 'user', 'key'));
+    }
+
+    public function update(Request $request, $key){
+        $first_name = strtoupper($request->first_name);
+        $last_name = strtoupper($request->last_name);
+        $id_number = $request->id_number;
+        $department = $request->department;
+        $email = $request->email;
+        $role = $request->role;
+        $color = $request->color;
+        if($color == ''){
+            $color = '0';
+        }
+
+        DB::table('users')
+            ->where('key', $key)
+            ->update([
+                'id_number' => $id_number,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'dept_id' => $department,
+                'email' => $email,
+                'role' => $role,
+                'color' => $color,
+                'key' => $key,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+
+        return redirect()->route('users.index')->with('success', 'User Successfully Updated');
+    }
+
+    public function delete($key){
+        DB::table('users')
+            ->where('key', $key)
+            ->update([
+                'is_deleted' => 1,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+
+        return redirect()->route('users.index')->with('success', 'User Successfully Deleted');
     }
 }

@@ -34,6 +34,7 @@ return new class extends Migration
             // $table->string('type_of_payment')->nullable();
             // $table->string('vat_zero_rated')->nullable();
 
+            $table->string('key');
             $table->timestamps();
         });
     }
