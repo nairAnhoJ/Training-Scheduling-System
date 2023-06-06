@@ -42,7 +42,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/request/add', [RequestController::class, 'add'])->name('request.add');
     Route::post('/request/getcom', [RequestController::class, 'getcom'])->name('request.getcom');
     Route::post('/request/store', [RequestController::class, 'store'])->name('request.store');
+    Route::post('/request/view', [RequestController::class, 'view'])->name('request.view');
     Route::get('/request/edit/{key}', [RequestController::class, 'edit'])->name('request.edit');
+    Route::post('/request/update/{key}', [RequestController::class, 'update'])->name('request.update');
 
     // USERS
     Route::get('/system-management/users', [UserController::class, 'index'])->name('users.index');

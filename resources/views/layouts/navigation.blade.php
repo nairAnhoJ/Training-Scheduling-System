@@ -1,6 +1,7 @@
 
 <nav class="w-screen bg-blue-500 h-14 shadow-lg">
-    <div class="flex justify-between h-full">
+    <div class="grid grid-cols-3 h-full">
+
         <div class="h-full">
             <div class="flex items-center h-full">
                <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mx-3 text-sm text-blue-600 rounded-lg bg-white hover:scale-105 shadow-xl"> 
@@ -12,12 +13,20 @@
                 <h1 id="pageTitle" class="whitespace-nowrap mt-1 uppercase font-bold text-xl tracking-wider text-white">@yield('title')</h1>
             </div>
         </div>
-        <form method="POST" action="{{ route('logout') }}" class="w-36 h-full p-2.5">
+
+        <div class="h-full justify-self-center">
+            <div class="flex items-center h-full text-white text-xl font-bold">
+               {{ date('F j, Y') }}
+            </div>
+        </div>
+
+        <form method="POST" action="{{ route('logout') }}" class="w-36 h-full p-2.5 justify-self-end">
             @csrf
             <button type="submit" class="bg-white text-blue-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
                 <span>LOGOUT</span>
             </button>
         </form>
+
     </div>
 </nav>
 

@@ -42,7 +42,7 @@ class UserController extends Controller
 
         while (!$unique) {
             $key = Str::uuid()->toString();
-            $existingModel = DB::table('users')->where('id', $key)->first();
+            $existingModel = DB::table('users')->where('key', $key)->first();
             if (!$existingModel) {
                 $unique = true;
             }
@@ -94,7 +94,6 @@ class UserController extends Controller
                 'email' => $email,
                 'role' => $role,
                 'color' => $color,
-                'key' => $key,
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
 

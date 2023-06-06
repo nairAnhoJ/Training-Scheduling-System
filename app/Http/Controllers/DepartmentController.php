@@ -31,7 +31,7 @@ class DepartmentController extends Controller
 
         while (!$unique) {
             $key = Str::uuid()->toString();
-            $existingModel = DB::table('departments')->where('id', $key)->first();
+            $existingModel = DB::table('departments')->where('key', $key)->first();
             if (!$existingModel) {
                 $unique = true;
             }
