@@ -23,7 +23,7 @@
         
                         <div class="mb-3">
                             <label for="address" class="block text-sm font-semibold text-gray-600">Address <span class="text-red-500">*</span></label>
-                            <input type="text" id="address" name="address" value="{{ $request->address }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required>
+                            <input type="text" id="address" name="address" value="{{ $request->address }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                         </div>
         
                         <div class="mb-3">
@@ -43,15 +43,15 @@
                                         <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
                                             <div class="mb-3 w-full">
                                                 <label for="cp1_name" class="block text-sm font-semibold text-gray-600">Name</label>
-                                                <input type="text" id="cp1_name" name="cp1_name" value="{{ $request->cp1_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                                <input type="text" id="cp1_name" name="cp1_name" value="{{ $request->cp1_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
                                             <div class="mb-3 w-full">
                                                 <label for="cp1_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
-                                                <input type="text" id="cp1_number" name="cp1_number" value="{{ $request->cp1_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                                <input type="text" id="cp1_number" name="cp1_number" value="{{ $request->cp1_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
                                             <div class="mb-3 w-full">
                                                 <label for="cp1_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
-                                                <input type="text" id="cp1_email" name="cp1_email" value="{{ $request->cp1_email }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                                <input type="text" id="cp1_email" name="cp1_email" value="{{ $request->cp1_email }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
@@ -60,15 +60,15 @@
                                         <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
                                             <div class="mb-3 w-full">
                                                 <label for="cp2_name" class="block text-sm font-semibold text-gray-600">Name</label>
-                                                <input type="text" id="cp2_name" name="cp2_name" value="{{ $request->cp2_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                                <input type="text" id="cp2_name" name="cp2_name" value="{{ $request->cp2_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
                                             <div class="mb-3 w-full">
                                                 <label for="cp2_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
-                                                <input type="text" id="cp2_number" name="cp2_number" value="{{ $request->cp2_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                                <input type="text" id="cp2_number" name="cp2_number" value="{{ $request->cp2_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
                                             <div class="mb-3 w-full">
                                                 <label for="cp2_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
-                                                <input type="text" id="cp2_email" name="cp2_email" value="{{ $request->cp2_email }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                                <input type="text" id="cp2_email" name="cp2_email" value="{{ $request->cp2_email }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
@@ -77,15 +77,15 @@
                                         <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
                                             <div class="mb-3 w-full">
                                                 <label for="cp3_name" class="block text-sm font-semibold text-gray-600">Name</label>
-                                                <input type="text" id="cp3_name" name="cp3_name" value="{{ $request->cp3_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                                <input type="text" id="cp3_name" name="cp3_name" value="{{ $request->cp3_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
                                             <div class="mb-3 w-full">
                                                 <label for="cp3_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
-                                                <input type="text" id="cp3_number" name="cp3_number" value="{{ $request->cp3_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                                <input type="text" id="cp3_number" name="cp3_number" value="{{ $request->cp3_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
                                             <div class="mb-3 w-full">
                                                 <label for="cp3_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
-                                                <input type="text" id="cp3_email" name="cp3_email" value="{{ $request->cp3_email }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                                                <input type="text" id="cp3_email" name="cp3_email" value="{{ $request->cp3_email }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
@@ -111,49 +111,20 @@
                             <div class="mb-3 mt-4 flex items-center">
                                 <span class="mx-3 text-sm font-semibold text-gray-600">PM</span>
                                 <label class="relative inline-flex items-center cursor-pointer">
-                                    <input {{ $request->contract_details != '' ? 'checked' : '' }} type="checkbox" id="pm" class="sr-only peer">
+                                    <input {{ $request->is_PM != '0' ? 'checked' : '' }} type="checkbox" id="pm" class="sr-only peer">
                                     <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                                 </label>
                             </div>
 
                             {{-- CONTRACT DETAILS --}}
-                                    <div id="contractDetailsContainer1" class="mb-0 h-0 overflow-hidden transition-all duration-500 py-0">
-                                        <div id="contractDetailsContainer" class="border border-gray-400 rounded-lg p-5 relative opacity-50">
+                                    <div id="contractDetailsContainer1" class="mb-0 h-0 transition-all duration-500 py-0  {{ $request->is_PM != '0' ? 'h-[136px] mb-6 pt-2' : 'overflow-hidden' }}">
+                                        <div id="contractDetailsContainer" class="border border-gray-400 rounded-lg p-5 relative">
                                             <h1 class="font-bold text-gray-500 tracking-wide absolute top-0 -translate-y-1/2 left-5 bg-white px-2">Contract Details</h1>
-                                            
                                             <div>
                                                 <label class="block text-sm font-semibold text-gray-900" for="contract_details">Upload file</label>
-                                                <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" aria-describedby="file_input_help" id="contract_details" name="contract_details" type="file">
+                                                <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" aria-describedby="file_input_help" id="contract_details" name="contract_details" type="file" accept="application/pdf">
                                                 <p class="mt-1 text-sm text-gray-500" id="file_input_help">PDF (MAX. 20mb).</p>
                                             </div>
-
-
-                                            {{-- <div>
-                                                <div class="mb-3 w-full">
-                                                    <label for="f1" class="block text-sm font-semibold text-gray-600">F1</label>
-                                                    <input disabled type="text" id="f1" name="f1" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
-                                                </div>
-                                                
-                                                <div class="mb-3 w-full">
-                                                    <label for="f2" class="block text-sm font-semibold text-gray-600">F2</label>
-                                                    <input disabled type="text" id="f2" name="f2" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
-                                                </div>
-                                                
-                                                <div class="mb-3 w-full">
-                                                    <label for="f3" class="block text-sm font-semibold text-gray-600">F3</label>
-                                                    <input disabled type="text" id="f3" name="f3" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
-                                                </div>
-                                                
-                                                <div class="mb-3 w-full">
-                                                    <label for="f4" class="block text-sm font-semibold text-gray-600">F4</label>
-                                                    <input disabled type="text" id="f4" name="f4" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
-                                                </div>
-                                                
-                                                <div class="mb-3 w-full">
-                                                    <label for="f5" class="block text-sm font-semibold text-gray-600">F5</label>
-                                                    <input disabled type="text" id="f5" name="f5" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
-                                                </div>
-                                            </div> --}}
                                         </div>
                                     </div>
                             {{-- CONTRACT DETAILS END --}}
@@ -170,7 +141,7 @@
 
                         <div class="mb-3 w-full">
                             <label for="model" class="block text-sm font-semibold text-gray-600">Model <span class="text-red-500">*</span></label>
-                            <input type="text" id="model" name="model" value="{{ $request->model }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required>
+                            <input type="text" id="model" name="model" value="{{ $request->model }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                         </div>
 
                         <div class="mb-3">
@@ -191,7 +162,7 @@
 
                         <div class="mb-3">
                             <label for="no_of_unit" class="block text-sm font-semibold text-gray-600">Number of Unit/s <span class="text-red-500">*</span></label>
-                            <input type="text" id="no_of_unit" name="no_of_unit" value="{{ $request->no_of_unit }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" value="1" required>
+                            <input type="text" id="no_of_unit" name="no_of_unit" value="{{ $request->no_of_unit }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" value="1" required autocomplete="off">
                         </div>
         
                         <div class="mb-3">
@@ -203,7 +174,7 @@
                         </div>
                         <div class="mb-3 w-full">
                             <label for="no_of_attendees" class="block text-sm font-semibold text-gray-600">Number of Attendees</label>
-                            <input type="text" id="no_of_attendees" name="no_of_attendees" value="{{ $request->no_of_attendees }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" value="1">
+                            <input type="text" id="no_of_attendees" name="no_of_attendees" value="{{ $request->no_of_attendees }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" value="1" autocomplete="off">
                         </div>
                         <div class="mb-3">
                             <label for="knowledge_of_participants" class="block text-sm font-semibold text-gray-600">Knowledge of Attendees</label>
@@ -214,7 +185,7 @@
                         </div>
                         <div class="mb-3 w-full">
                             <label for="venue" class="block text-sm font-semibold text-gray-600">Venue</label>
-                            <input type="text" id="venue" name="venue" value="{{ $request->venue }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                            <input type="text" id="venue" name="venue" value="{{ $request->venue }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         </div>
                         <div class="mb-3 w-full">
                             <label for="event_date" class="block text-sm font-semibold text-gray-600">Date</label>
@@ -227,7 +198,7 @@
                         </div>
                         <div class="mb-3 w-full">
                             <label for="remarks" class="block text-sm font-semibold text-gray-600">Remarks</label>
-                            <input type="text" id="remarks" name="remarks" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">
+                            <input type="text" id="remarks" name="remarks" value="{{ $request->remarks }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         </div>
                     </div>
                 </div>
@@ -309,12 +280,6 @@
 
             $('#pm').change(function() {
                 if ($(this).is(':checked')) {
-                    $('#contractDetailsContainer').toggleClass('opacity-50');
-                    $('#f1').prop('disabled', false);
-                    $('#f2').prop('disabled', false);
-                    $('#f3').prop('disabled', false);
-                    $('#f4').prop('disabled', false);
-                    $('#f5').prop('disabled', false);
                     $('#contractDetailsContainer1').toggleClass('h-[136px]');
                     $('#contractDetailsContainer1').toggleClass('mb-6');
                     $('#contractDetailsContainer1').toggleClass('pt-2');
@@ -322,12 +287,6 @@
                         $('#contractDetailsContainer1').toggleClass('overflow-hidden');
                     }, 450);
                 } else {
-                    $('#contractDetailsContainer').toggleClass('opacity-50');
-                    $('#f1').prop('disabled', true);
-                    $('#f2').prop('disabled', true);
-                    $('#f3').prop('disabled', true);
-                    $('#f4').prop('disabled', true);
-                    $('#f5').prop('disabled', true);
                     $('#contractDetailsContainer1').toggleClass('h-[136px]');
                     $('#contractDetailsContainer1').toggleClass('mb-6');
                     $('#contractDetailsContainer1').toggleClass('pt-2');

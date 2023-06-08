@@ -10,15 +10,15 @@
                 <div>
                     <div class="mb-3 w-full">
                         <label for="first_name" class="block text-sm font-semibold text-gray-600">First Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="first_name" name="first_name" value="{{ $user->first_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required>
+                        <input type="text" id="first_name" name="first_name" value="{{ $user->first_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                     </div>
                     <div class="mb-3 w-full">
                         <label for="last_name" class="block text-sm font-semibold text-gray-600">Last Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="last_name" name="last_name" value="{{ $user->last_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required>
+                        <input type="text" id="last_name" name="last_name" value="{{ $user->last_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                     </div>
                     <div class="mb-3 w-full">
                         <label for="id_number" class="block text-sm font-semibold text-gray-600">ID Number <span class="text-red-500">*</span></label>
-                        <input type="text" id="id_number" name="id_number" value="{{ $user->id_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required>
+                        <input type="text" id="id_number" name="id_number" value="{{ $user->id_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                     </div>
 
                     <div class="mb-3 {{ $user->id == 1 ? 'opacity-50' : '' }}">
@@ -32,7 +32,7 @@
 
                     <div class="mb-3 w-full">
                         <label for="email" class="block text-sm font-semibold text-gray-600">E-mail <span class="text-red-500">*</span></label>
-                        <input type="text" id="email" name="email" value="{{ $user->email }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required>
+                        <input type="text" id="email" name="email" value="{{ $user->email }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                     </div>
 
                     <div class="mb-3 {{ $user->id == 1 ? 'opacity-50' : '' }}">

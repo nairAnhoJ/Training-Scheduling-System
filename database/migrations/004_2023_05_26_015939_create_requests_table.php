@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('billing_type')->nullable(); // Chargeable / Non-Chargeable
 
             // if category is PM 
+            $table->string('is_PM');
             $table->string('contract_details')->nullable();
 
             // Additional Information
@@ -30,6 +31,7 @@ return new class extends Migration
             $table->string('venue')->nullable(); 
             $table->string('training_date')->nullable();
             $table->string('knowledge_of_participants')->nullable();
+            $table->string('remarks')->nullable();
             
             // $table->string('type_of_payment')->nullable();
             // $table->string('vat_zero_rated')->nullable();

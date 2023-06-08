@@ -129,7 +129,7 @@
                                     <div id="viewDate" class="col-span-4 font-semibold text-lg">Scheduled</div>
                                     <div>Notes: </div>
                                     <div class="col-span-4 font-semibold">
-                                        <textarea id="viewNotes" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly>DITO YUNG MGA REMARKS  NG EVENT OR KAHIT ANO NA GUSTONG ILAGAY NI COORDINATOR, PWEDE RIN ITONG BLANGKO</textarea>
+                                        <textarea id="viewNotes" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly>DITO YUNG MGA </textarea>
                                     </div>
                                 </div>
                             </div>

@@ -8,7 +8,7 @@
                 @csrf
                 <div class="mb-3 w-full">
                     <label for="name" class="block text-sm font-semibold text-gray-600">Name <span class="text-red-500">*</span></label>
-                    <input type="text" id="name" name="name" value="{{ $department->name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required>
+                    <input type="text" id="name" name="name" value="{{ $department->name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                 </div>
 
                 <div class="mt-5 flex gap-x-8">

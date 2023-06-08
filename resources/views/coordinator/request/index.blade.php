@@ -23,7 +23,7 @@
         
         <!-- Main modal -->
         <div id="viewRequestModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-3xl h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full max-w-5xl h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
                 <div class="relative shadow text-gray-700">
                     <!-- Modal header -->
@@ -37,11 +37,11 @@
                     <!-- Modal body -->
                     <div class="p-6 overflow-y-auto overflow-x-hidden h-[calc(100vh-220px)]">
                         <div class="">
-                            <div class="grid grid-cols-5">
-                                <div>Date: </div>
+                            <div class="grid grid-cols-6">
+                                <div class="col-span-2">Date: </div>
                                 <div id="event_date" class="col-span-4 font-semibold text-lg">DATE NGAYON (M d, YYYY)</div>
 
-                                <div>Venue: </div>
+                                <div class="col-span-2">Venue: </div>
                                 <div id="venue" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
                             </div>
 
@@ -49,31 +49,37 @@
                                 <div class="flex items-center">
                                     <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
                                 </div>
-                                <div class="grid grid-cols-5">
-                                    <div>Address: </div>
+                                <div class="grid grid-cols-6">
+                                    <div class="col-span-2">Address: </div>
                                     <div id="address" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
 
-                                    <h3 class="font-semibold col-span-5">Contact Person/s:</h3>
-                                    <div class="ml-10">Name: </div>
-                                    <div id="cp1_name" class="col-span-4 font-semibold text-lg">JUAN DELA CRUZ</div>
-                                    <div class="ml-10">Date: </div>
-                                    <div id="cp1_number" class="col-span-4 font-semibold text-lg">09123456789</div>
-                                    <div class="ml-10">E-mail: </div>
-                                    <div id="cp1_email" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com</div>
+                                    <h3 class="font-semibold col-span-6">Contact Person/s:</h3>
+                                    <div id="cp1_div" class="col-span-6 grid grid-cols-6">
+                                        <div class="ml-10 col-span-2">Name: </div>
+                                        <div id="cp1_name" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="ml-10 col-span-2">Date: </div>
+                                        <div id="cp1_number" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="ml-10 col-span-2">E-mail: </div>
+                                        <div id="cp1_email" class="col-span-4 font-semibold text-lg"></div>
+                                    </div>
 
-                                    <div class="ml-10 mt-5">Name: </div>
-                                    <div id="cp2_name" class="col-span-4 font-semibold text-lg mt-5">JUAN DELA CRUZ</div>
-                                    <div class="ml-10">Date: </div>
-                                    <div id="cp2_number" class="col-span-4 font-semibold text-lg">09123456789</div>
-                                    <div class="ml-10">E-mail: </div>
-                                    <div id="cp2_email" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com</div>
+                                    <div id="cp2_div" class="col-span-5 grid grid-cols-5">
+                                        <div class="ml-10 mt-5">Name: </div>
+                                        <div id="cp2_name" class="col-span-4 font-semibold text-lg mt-5"></div>
+                                        <div class="ml-10">Date: </div>
+                                        <div id="cp2_number" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="ml-10">E-mail: </div>
+                                        <div id="cp2_email" class="col-span-4 font-semibold text-lg"></div>
+                                    </div>
 
-                                    <div class="ml-10 mt-5">Name: </div>
-                                    <div id="cp3_name" class="col-span-4 font-semibold text-lg mt-5">JUAN DELA CRUZ</div>
-                                    <div class="ml-10">Date: </div>
-                                    <div id="cp3_number" class="col-span-4 font-semibold text-lg">09123456789</div>
-                                    <div class="ml-10">E-mail: </div>
-                                    <div id="cp3_email" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com</div>
+                                    <div id="cp3_div" class="col-span-5 grid grid-cols-5">
+                                        <div class="ml-10 mt-5">Name: </div>
+                                        <div id="cp3_name" class="col-span-4 font-semibold text-lg mt-5"></div>
+                                        <div class="ml-10">Date: </div>
+                                        <div id="cp3_number" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="ml-10">E-mail: </div>
+                                        <div id="cp3_email" class="col-span-4 font-semibold text-lg"></div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -81,26 +87,28 @@
                                 <div class="flex items-center">
                                     <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
                                 </div>
-                                <div class="grid grid-cols-5">
-                                    <div>Area: </div>
+                                <div class="grid grid-cols-6">
+                                    <div class="col-span-2">Area: </div>
                                     <div id="area" class="col-span-4 font-semibold text-lg">NORTH</div>
-                                    <div>Category: </div>
+                                    <div class="col-span-2">Category: </div>
                                     <div id="category" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
-                                    <div>Contract Details: </div>
-                                    <button id="contract_details" class="col-span-4 font-semibold text-lg text-white bg-blue-500 rounded-lg w-40 tracking-wide">VIEW</button>
-                                    <div>Brand: </div>
+                                    <div id="con_details_div" class="col-span-6 grid grid-cols-6">
+                                        <div class="col-span-2">Contract Details: </div>
+                                        <a href="#" id="contract_details" target="_blank" class="col-span-4 font-semibold text-lg text-white bg-blue-500 rounded-lg w-40 tracking-wide text-center hover:scale-105">VIEW</a>
+                                    </div>
+                                    <div class="col-span-2">Brand: </div>
                                     <div id="brand" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
-                                    <div>Model: </div>
+                                    <div class="col-span-2">Model: </div>
                                     <div id="model" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
-                                    <div>Type of Unit: </div>
+                                    <div class="col-span-2">Type of Unit: </div>
                                     <div id="unit_type" class="col-span-4 font-semibold text-lg">RENTAL UNIT</div>
-                                    <div>Billing Type: </div>
+                                    <div class="col-span-2">Billing Type: </div>
                                     <div id="billing_type" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
-                                    <div>Number of Attendees: </div>
+                                    <div class="col-span-2">Number of Attendees: </div>
                                     <div id="no_of_attendees" class="col-span-4 font-semibold text-lg">13</div>
-                                    <div>Knowledge of Participants: </div>
+                                    <div class="col-span-2">Knowledge of Participants: </div>
                                     <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg">CARDO DALISAY</div>
-                                    <div>Notes: </div>
+                                    <div class="col-span-2">Notes: </div>
                                     <div class="col-span-4 font-semibold">
                                         <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
                                     </div>
@@ -110,7 +118,7 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        {{-- <button data-modal-hide="viewRequestModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">I accept</button> --}}
+                        <button id="approveButton" data-modal-hide="viewRequestModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</button>
                         <button data-modal-hide="viewRequestModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
@@ -289,9 +297,64 @@
                         _token: _token
                     },
                     success:function(result){
-                        // $('#adress').val(result.address);
-                        
+                        $('#event_date').html(result.event_date);
+                        $('#venue').html(result.venue);
+                        if(result.event_date != '' && result.venue != ''){
+                            $('#approveButton').prop('disabled', false);
+                        }else{
+                            $('#approveButton').prop('disabled', true);
+                        }
 
+                        $('#name').html(result.name);
+                        $('#address').html(result.address);
+
+                        if(result.cp1_name != ''){
+                            $('#cp1_name').html(result.cp1_name);
+                            $('#cp1_number').html(result.cp1_number);
+                            $('#cp1_email').html(result.cp1_email);
+                        }else{
+                            $('#cp1_div').addClass('hidden');
+                        }
+
+                        if(result.cp2_name != ''){
+                            $('#cp2_name').html(result.cp2_name);
+                            $('#cp2_number').html(result.cp2_number);
+                            $('#cp2_email').html(result.cp2_email);
+                        }else{
+                            $('#cp2_div').addClass('hidden');
+                        }
+
+                        if(result.cp3_name != ''){
+                            $('#cp3_name').html(result.cp3_name);
+                            $('#cp3_number').html(result.cp3_number);
+                            $('#cp3_email').html(result.cp3_email);
+                        }else{
+                            $('#cp3_div').addClass('hidden');
+                        }
+
+                        $('#area').html(result.area);
+                        $('#category').html(result.category);
+
+                        if(result.is_PM == 1){
+                            $('#con_details_div').removeClass('hidden');
+                            if(result.contract_details == null){
+                                $('#contract_details').addClass('pointer-events-none opacity-50');
+                            }else{
+                                $('#contract_details').removeClass('pointer-events-none opacity-50');
+                                $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
+                            }
+                        }else{
+                            $('#con_details_div').addClass('hidden');
+                        }
+
+                        $('#brand').html(result.brand);
+                        $('#model').html(result.model);
+                        $('#unit_type').html(result.unit_type);
+                        $('#billing_type').html(result.billing_type);
+                        $('#no_of_attendees').html(result.no_of_attendees);
+                        $('#knowledge_of_participants').html(result.knowledge_of_participants);
+                        $('#remarks').html(result.remarks);
+                        
                         $('#viewRequestButton').click();
                         autoResize();
                     }
@@ -300,7 +363,7 @@
             });
 
             function autoResize() {
-                var textarea = $('#viewNotes');
+                var textarea = $('#remarks');
                 textarea.css('height', 'auto');
                 textarea.css('height', textarea[0].scrollHeight + 'px');
             }

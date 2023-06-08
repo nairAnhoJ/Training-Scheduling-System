@@ -69,6 +69,7 @@ class RequestController extends Controller
         $cp3_email = $request->cp3_email;
 
         $category = $request->category;
+        $pm = $request->pm;
         $contract_details = $request->contract_details;
         $brand = $request->brand;
         $model = strtoupper($request->model);
@@ -79,6 +80,7 @@ class RequestController extends Controller
         $knowledge_of_participants = $request->knowledge_of_participants;
         $venue = strtoupper($request->venue);
         $event_date = $request->event_date;
+        $remarks = $request->remarks;
 
         $com = DB::table('customers')
             ->where('name', $name)
@@ -148,25 +150,68 @@ class RequestController extends Controller
             }
         }
 
-        $contract_details_path = null;
-        if($contract_details != null){
-            $nid = DB::table('requests')->latest('id')->value('id');
-            if($nid != null){
-                $nid += $nid;
+        if ($pm == '1') {
+            $contract_details_path = null;
+            if($contract_details != null){
+                $nid = DB::table('requests')->latest('id')->value('id');
+                if($nid != null){
+                    $nid += $nid;
+                }else{
+                    $nid = 1;
+                }
+    
+                $filename = 'R_'.$nid.'_'.date('md_Y').'.'.$request->file('contract_details')->getClientOriginalExtension();
+                $path = "files/contract_details/";
+                $contract_details_path = $path.$filename;
+                $request->file('contract_details')->move(public_path('storage/'.$path), $filename);
+    
+                DB::table('requests')
+                    ->insert([
+                        'customer_id' => $cusID,
+                        'category' => $category,
+                        'is_PM' => 1,
+                        'contract_details' => $contract_details_path,
+                        'unit_type' => $unit_type,
+                        'brand' => $brand,
+                        'model' => $model,
+                        'no_of_unit' => $no_of_unit,
+                        'billing_type' => $billing_type,
+                        'no_of_attendees' => $no_of_attendees,
+                        'venue' => $venue,
+                        'training_date' => $event_date,
+                        'knowledge_of_participants' => $knowledge_of_participants,
+                        'remarks' => $remarks,
+                        'key' => $key,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
             }else{
-                $nid = 1;
+                DB::table('requests')
+                    ->insert([
+                        'customer_id' => $cusID,
+                        'category' => $category,
+                        'is_PM' => 1,
+                        'unit_type' => $unit_type,
+                        'brand' => $brand,
+                        'model' => $model,
+                        'no_of_unit' => $no_of_unit,
+                        'billing_type' => $billing_type,
+                        'no_of_attendees' => $no_of_attendees,
+                        'venue' => $venue,
+                        'training_date' => $event_date,
+                        'knowledge_of_participants' => $knowledge_of_participants,
+                        'remarks' => $remarks,
+                        'key' => $key,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ]);
             }
-
-            $filename = 'R_'.$nid.'_'.date('md_Y').'.'.$request->file('contract_details')->getClientOriginalExtension();
-            $path = "files/contract_details/";
-            $contract_details_path = $path.$filename;
-            $request->file('contract_details')->move(public_path('storage/'.$path), $filename);
-
+        } else {
             DB::table('requests')
                 ->insert([
                     'customer_id' => $cusID,
                     'category' => $category,
-                    'contract_details' => $contract_details_path,
+                    'is_PM' => 0,
                     'unit_type' => $unit_type,
                     'brand' => $brand,
                     'model' => $model,
@@ -176,24 +221,7 @@ class RequestController extends Controller
                     'venue' => $venue,
                     'training_date' => $event_date,
                     'knowledge_of_participants' => $knowledge_of_participants,
-                    'key' => $key,
-                    'created_at' => date('Y-m-d H:i:s'),
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ]);
-        }else{
-            DB::table('requests')
-                ->insert([
-                    'customer_id' => $cusID,
-                    'category' => $category,
-                    'unit_type' => $unit_type,
-                    'brand' => $brand,
-                    'model' => $model,
-                    'no_of_unit' => $no_of_unit,
-                    'billing_type' => $billing_type,
-                    'no_of_attendees' => $no_of_attendees,
-                    'venue' => $venue,
-                    'training_date' => $event_date,
-                    'knowledge_of_participants' => $knowledge_of_participants,
+                    'remarks' => $remarks,
                     'key' => $key,
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
@@ -241,6 +269,7 @@ class RequestController extends Controller
         $knowledge_of_participants = $request->knowledge_of_participants;
         $venue = strtoupper($request->venue);
         $event_date = $request->event_date;
+        $remarks = $request->remarks;
 
         DB::table('customers')
             ->where('name', $name)
@@ -287,6 +316,7 @@ class RequestController extends Controller
                     'venue' => $venue,
                     'training_date' => $event_date,
                     'knowledge_of_participants' => $knowledge_of_participants,
+                    'remarks' => $remarks,
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
         }else{
@@ -303,6 +333,7 @@ class RequestController extends Controller
                     'venue' => $venue,
                     'training_date' => $event_date,
                     'knowledge_of_participants' => $knowledge_of_participants,
+                    'remarks' => $remarks,
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
         }
@@ -312,16 +343,54 @@ class RequestController extends Controller
 
     public function view(Request $request){
         $key = $request->key;
-        $request = DB::table('requests')
-            ->select('customers.*', 'requests.*')
+        $thisRequest = DB::table('requests')
+            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.remarks', 'requests.key')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->where('requests.key', $key)
             ->first();
 
         $result = array(
-            'name' => $request->name,
+            'event_date' => $thisRequest->training_date,
+            'venue' => $thisRequest->venue,
+
+            'name' => $thisRequest->name,
+            'address' => $thisRequest->address,
+            'area' => $thisRequest->area,
+
+            'cp1_name' => $thisRequest->cp1_name,
+            'cp1_number' => $thisRequest->cp1_number,
+            'cp1_email' => $thisRequest->cp1_email,
+
+            'cp2_name' => $thisRequest->cp2_name,
+            'cp2_number' => $thisRequest->cp2_number,
+            'cp2_email' => $thisRequest->cp2_email,
+
+            'cp3_name' => $thisRequest->cp3_name,
+            'cp3_number' => $thisRequest->cp3_number,
+            'cp3_email' => $thisRequest->cp3_email,
+
+            'category' => $thisRequest->category,
+            'is_PM' => $thisRequest->is_PM,
+            'unit_type' => $thisRequest->unit_type,
+            'brand' => $thisRequest->brand,
+            'model' => $thisRequest->model,
+            'no_of_unit' => $thisRequest->no_of_unit,
+            'billing_type' => $thisRequest->billing_type,
+            'contract_details' => $thisRequest->contract_details,
+            'no_of_attendees' => $thisRequest->no_of_attendees,
+            'venue' => $thisRequest->venue,
+            'training_date' => $thisRequest->training_date,
+            'knowledge_of_participants' => $thisRequest->knowledge_of_participants,
+            'remarks' => $thisRequest->remarks,
+            'key' => $thisRequest->key,
         );
 
         echo json_encode($result);
+    }
+
+    public function contractDetails($key){
+        $path = (DB::table('requests')->where('key', $key)->first())->contract_details;
+
+        return view('coordinator.request.view-contract-details', compact('path'));
     }
 }
