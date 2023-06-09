@@ -31,7 +31,9 @@ return new class extends Migration
             $table->string('venue')->nullable(); 
             $table->string('training_date')->nullable();
             $table->string('knowledge_of_participants')->nullable();
+            $table->string('trainer')->nullable();
             $table->string('remarks')->nullable();
+            $table->string('status');
             
             // $table->string('type_of_payment')->nullable();
             // $table->string('vat_zero_rated')->nullable();

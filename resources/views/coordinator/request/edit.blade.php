@@ -179,6 +179,7 @@
                         <div class="mb-3">
                             <label for="knowledge_of_participants" class="block text-sm font-semibold text-gray-600">Knowledge of Attendees</label>
                             <select id="knowledge_of_participants" name="knowledge_of_participants" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value=""></option>
                                 <option {{ $request->knowledge_of_participants == 'WITH EXPERIENCE' ? 'selected' : '' }} value="WITH EXPERIENCE">With Experience</option>
                                 <option {{ $request->knowledge_of_participants == 'WITHOUT EXPERIENCE' ? 'selected' : '' }} value="WITHOUT EXPERIENCE">Without Experience</option>
                             </select>
@@ -193,8 +194,17 @@
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                   <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                                 </div>
-                                <input datepicker type="text" name="event_date" value="{{ $request->training_date != '' ? date('m/d/Y', strtotime($request->training_date)) : '' }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Select date">
+                                <input datepicker type="text" id="event_date" name="event_date" value="{{ $request->training_date != '' ? date('m/d/Y', strtotime($request->training_date)) : '' }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Select date">
                             </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="trainer" class="block text-sm font-semibold text-gray-600">Trainer</label>
+                            <select id="trainer" name="trainer" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value=""></option>
+                                @foreach ($trainers as $trainer)
+                                    <option {{ $request->trainer == $trainer->first_name.' '.$trainer->last_name ? 'selected' : '' }} value="{{$trainer->first_name.' '.$trainer->last_name}}">{{$trainer->first_name.' '.$trainer->last_name}}</span></option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3 w-full">
                             <label for="remarks" class="block text-sm font-semibold text-gray-600">Remarks</label>
@@ -213,6 +223,14 @@
 
     <script>
         $(document).ready(function(){
+            $(document).on('click', '.datepicker-cell', function() {
+                var enteredDate = new Date($('#event_date').val());
+                var currentDate = new Date();
+                if (enteredDate < currentDate) {
+                    var formattedDate = moment(currentDate).format('MM/DD/YYYY');
+                    $('#event_date').val(formattedDate);
+                }
+            });
             
             jQuery(document).on( "click", ".inputOption", function(e){
                 $('.content').not($(this).closest('.optionDiv').find('.listOption')).addClass('hidden');

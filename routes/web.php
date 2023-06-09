@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/request/getcom', [RequestController::class, 'getcom'])->name('request.getcom');
     Route::post('/request/store', [RequestController::class, 'store'])->name('request.store');
     Route::post('/request/view', [RequestController::class, 'view'])->name('request.view');
+    Route::get('/request/approve/{key}', [RequestController::class, 'approve']);
     Route::get('/request/view/contract-details/{key}', [RequestController::class, 'contractDetails']);
     Route::get('/request/edit/{key}', [RequestController::class, 'edit'])->name('request.edit');
     Route::post('/request/update/{key}', [RequestController::class, 'update'])->name('request.update');

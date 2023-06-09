@@ -11,7 +11,7 @@ class RequestController extends Controller
 {
     public function index(){
         $requests = DB::table('requests')
-            ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.updated_at', 'requests.key')
+            ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->orderBy('requests.id', 'desc')
             ->get();
@@ -23,8 +23,9 @@ class RequestController extends Controller
 
     public function add(){
         $customers = DB::table('customers')->get();
+        $trainers = DB::table('users')->where('role', 2)->get();
 
-        return view('coordinator.request.add', compact('customers'));
+        return view('coordinator.request.add', compact('customers', 'trainers'));
     }
 
     public function getcom(Request $request){
@@ -80,6 +81,7 @@ class RequestController extends Controller
         $knowledge_of_participants = $request->knowledge_of_participants;
         $venue = strtoupper($request->venue);
         $event_date = $request->event_date;
+        $trainer = $request->trainer;
         $remarks = $request->remarks;
 
         $com = DB::table('customers')
@@ -177,9 +179,10 @@ class RequestController extends Controller
                         'no_of_unit' => $no_of_unit,
                         'billing_type' => $billing_type,
                         'no_of_attendees' => $no_of_attendees,
+                        'knowledge_of_participants' => $knowledge_of_participants,
                         'venue' => $venue,
                         'training_date' => $event_date,
-                        'knowledge_of_participants' => $knowledge_of_participants,
+                        'trainer' => $trainer,
                         'remarks' => $remarks,
                         'key' => $key,
                         'created_at' => date('Y-m-d H:i:s'),
@@ -197,9 +200,10 @@ class RequestController extends Controller
                         'no_of_unit' => $no_of_unit,
                         'billing_type' => $billing_type,
                         'no_of_attendees' => $no_of_attendees,
+                        'knowledge_of_participants' => $knowledge_of_participants,
                         'venue' => $venue,
                         'training_date' => $event_date,
-                        'knowledge_of_participants' => $knowledge_of_participants,
+                        'trainer' => $trainer,
                         'remarks' => $remarks,
                         'key' => $key,
                         'created_at' => date('Y-m-d H:i:s'),
@@ -218,9 +222,10 @@ class RequestController extends Controller
                     'no_of_unit' => $no_of_unit,
                     'billing_type' => $billing_type,
                     'no_of_attendees' => $no_of_attendees,
+                    'knowledge_of_participants' => $knowledge_of_participants,
                     'venue' => $venue,
                     'training_date' => $event_date,
-                    'knowledge_of_participants' => $knowledge_of_participants,
+                    'trainer' => $trainer,
                     'remarks' => $remarks,
                     'key' => $key,
                     'created_at' => date('Y-m-d H:i:s'),
@@ -237,8 +242,9 @@ class RequestController extends Controller
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->where('requests.key', $key)
             ->first();
+        $trainers = DB::table('users')->where('role', 2)->get();
 
-        return view('coordinator.request.edit', compact('request', 'key'));
+        return view('coordinator.request.edit', compact('request', 'trainers', 'key'));
     }
 
     public function update(Request $request, $key){
@@ -269,6 +275,7 @@ class RequestController extends Controller
         $knowledge_of_participants = $request->knowledge_of_participants;
         $venue = strtoupper($request->venue);
         $event_date = $request->event_date;
+        $trainer = $request->trainer;
         $remarks = $request->remarks;
 
         DB::table('customers')
@@ -316,6 +323,7 @@ class RequestController extends Controller
                     'venue' => $venue,
                     'training_date' => $event_date,
                     'knowledge_of_participants' => $knowledge_of_participants,
+                    'trainer' => $trainer,
                     'remarks' => $remarks,
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
@@ -333,6 +341,7 @@ class RequestController extends Controller
                     'venue' => $venue,
                     'training_date' => $event_date,
                     'knowledge_of_participants' => $knowledge_of_participants,
+                    'trainer' => $trainer,
                     'remarks' => $remarks,
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
@@ -344,7 +353,7 @@ class RequestController extends Controller
     public function view(Request $request){
         $key = $request->key;
         $thisRequest = DB::table('requests')
-            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.remarks', 'requests.key')
+            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.key')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->where('requests.key', $key)
             ->first();
@@ -352,6 +361,7 @@ class RequestController extends Controller
         $result = array(
             'event_date' => $thisRequest->training_date,
             'venue' => $thisRequest->venue,
+            'trainer' => $thisRequest->trainer,
 
             'name' => $thisRequest->name,
             'address' => $thisRequest->address,
@@ -392,5 +402,9 @@ class RequestController extends Controller
         $path = (DB::table('requests')->where('key', $key)->first())->contract_details;
 
         return view('coordinator.request.view-contract-details', compact('path'));
+    }
+
+    public function approve($key){
+        dd($key);
     }
 }

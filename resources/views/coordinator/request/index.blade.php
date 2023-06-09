@@ -3,18 +3,50 @@
 @section('content')
 
     @if(session('success'))
-        <div id="alert-3" class="absolute left-1/2 -translate-x-1/2 top-16 z-[99] shadow-lg border border-emerald-500 w-[calc(100%-10px)] sm:w-[500px] flex p-4 mb-4 text-green-50 rounded-lg bg-emerald-500" role="alert">
+        <div id="alert-3" class="absolute left-1/2 -translate-x-1/2 top-16 z-[99] shadow-lg border border-emerald-500 w-[calc(100%-10px)] sm:w-[500px] flex p-4 mb-4 text-green-50 rounded-lg bg-emerald-500 transition-all duration-500" role="alert">
             <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
             <span class="sr-only">Info</span>
             <div class="ml-3 text-sm font-medium">
                 {{ session('success') }}
             </div>
-            <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 hover:scale-105 inline-flex h-8 w-8" data-dismiss-target="#alert-3" aria-label="Close">
+            <button type="button" id="notifCloseButton" class="ml-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 hover:scale-105 inline-flex h-8 w-8" data-dismiss-target="#alert-3" aria-label="Close">
                 <span class="sr-only">Close</span>
                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
         </div>
     @endif
+
+
+    {{-- APPROVE MODAL --}}
+        <!-- Modal toggle -->
+        <button data-modal-target="confirmApproveModal" data-modal-toggle="confirmApproveModal" id="confirmApproveButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button"></button>
+        
+        <!-- Main modal -->
+        <div id="confirmApproveModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
+            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+                <!-- Modal content -->
+                <div class="relative shadow text-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 border-b rounded-t">
+                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">APPROVE</h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmApproveModal">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-6">
+                        Are you sure you want to approve this request?
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+                        <a id="confirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</a>
+                        <button id="closeConfirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{-- APPROVE MODAL END --}}
 
 
     {{-- VIEW EVENT MODAL --}}
@@ -27,7 +59,7 @@
                 <!-- Modal content -->
                 <div class="relative shadow text-gray-700">
                     <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 border-b rounded-t bg-blue-500">
+                    <div class="flex items-center justify-between p-4 border-b rounded-t">
                         <h3 id="name" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewRequestModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -39,10 +71,13 @@
                         <div class="">
                             <div class="grid grid-cols-6">
                                 <div class="col-span-2">Date: </div>
-                                <div id="event_date" class="col-span-4 font-semibold text-lg">DATE NGAYON (M d, YYYY)</div>
+                                <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
 
                                 <div class="col-span-2">Venue: </div>
-                                <div id="venue" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
+                                <div id="venue" class="col-span-4 font-semibold text-lg"></div>
+
+                                <div class="col-span-2">Trainer: </div>
+                                <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
                             </div>
 
                             <div class="mt-5">
@@ -51,7 +86,7 @@
                                 </div>
                                 <div class="grid grid-cols-6">
                                     <div class="col-span-2">Address: </div>
-                                    <div id="address" class="col-span-4 font-semibold text-lg">BRGY. SAKSAKAN, MAKAILAG, SWERTE</div>
+                                    <div id="address" class="col-span-4 font-semibold text-lg"></div>
 
                                     <h3 class="font-semibold col-span-6">Contact Person/s:</h3>
                                     <div id="cp1_div" class="col-span-6 grid grid-cols-6">
@@ -118,7 +153,7 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        <button id="approveButton" data-modal-hide="viewRequestModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</button>
+                        <button id="approveButton" data-modal-target="confirmApproveModal" data-modal-toggle="confirmApproveModal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</button>
                         <button data-modal-hide="viewRequestModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
@@ -180,6 +215,9 @@
                                                 Area
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Trainer
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Last Updated
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
@@ -208,10 +246,13 @@
                                                     {{ $request->area }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    {{ $request->trainer }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ date('F j, Y', strtotime($request->updated_at)) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/request/edit/'.$request->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <a type="button" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
+                                                    <a href="{{ url('/request/edit/'.$request->key) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <a type="button" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -282,11 +323,20 @@
     </div>
 
     <script>
-        $(document).ready(function(){
+            $(document).ready(function(){$('.requestRow').on('click', '.editButton', function(e) {
+                e.stopPropagation();
+            });
+
+            $(document).click(function(){
+                $('#alert-3').addClass('opacity-0');
+                setTimeout(function() {
+                    $('#notifCloseButton').click();
+                }, 550);
+            });
+
             $('.requestRow').click(function(){
                 var key = $(this).find('span').data('key');
                 var _token = $('input[name="_token"]').val();
-
 
                 $.ajax({
                     url:"{{ route('request.view') }}",
@@ -299,10 +349,12 @@
                     success:function(result){
                         $('#event_date').html(result.event_date);
                         $('#venue').html(result.venue);
+                        $('#trainer').html(result.trainer);
                         if(result.event_date != '' && result.venue != ''){
                             $('#approveButton').prop('disabled', false);
+                            $('#approveButton').attr('href', `/request/approve/${result.key}`);
                         }else{
-                            $('#approveButton').prop('disabled', true);
+                            $('#approveButton').prop('disabled', 'true');
                         }
 
                         $('#name').html(result.name);
@@ -367,6 +419,16 @@
                 textarea.css('height', 'auto');
                 textarea.css('height', textarea[0].scrollHeight + 'px');
             }
+
+            $('#approveButton').click(function(){
+                $('#viewRequestModal').removeClass('z-50');
+                $('#viewRequestModal').addClass('z-30');
+            });
+
+            $('#closeConfirmApproveButton').click(function(){
+                $('#viewRequestModal').addClass('z-50');
+                $('#viewRequestModal').removeClass('z-30');
+            });
         });
     </script>
 @endsection
