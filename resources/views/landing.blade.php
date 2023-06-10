@@ -194,22 +194,6 @@
                                 department: 'BioChemistry'
                             },
                         },
-                        {
-                            id: '2',
-                            title: 'LAZADA E-SERVICES PHILS INC. ',
-                            start: '2023-05-27',
-                            extendedProps: {
-                                department: 'BioChemistry'
-                            },
-                        },
-                    {
-                        id: '3',
-                        title: 'A&B SUMMIT DISTRIBUTION INC.',
-                        start: '2023-05-30',
-                        extendedProps: {
-                            department: 'BioChemistry'
-                        },
-                    },
                     ]
                 });
                 calendar.render();

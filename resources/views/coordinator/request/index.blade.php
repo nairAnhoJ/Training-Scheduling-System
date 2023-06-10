@@ -40,7 +40,7 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        <a id="confirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</a>
+                        <a id="confirmApproveButtona" data-modal-hide="confirmApproveModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</a>
                         <button id="closeConfirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                                     <div class="col-span-2">Number of Attendees: </div>
                                     <div id="no_of_attendees" class="col-span-4 font-semibold text-lg">13</div>
                                     <div class="col-span-2">Knowledge of Participants: </div>
-                                    <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg">CARDO DALISAY</div>
+                                    <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Notes: </div>
                                     <div class="col-span-4 font-semibold">
                                         <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
@@ -246,7 +246,7 @@
                                                     {{ $request->area }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->trainer }}
+                                                    {{ $request->first_name.' '.$request->last_name }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ date('F j, Y', strtotime($request->updated_at)) }}
@@ -323,7 +323,10 @@
     </div>
 
     <script>
-            $(document).ready(function(){$('.requestRow').on('click', '.editButton', function(e) {
+        $(document).ready(function(){
+            var key = '';
+
+            $('.requestRow').on('click', '.editButton', function(e) {
                 e.stopPropagation();
             });
 
@@ -350,9 +353,9 @@
                         $('#event_date').html(result.event_date);
                         $('#venue').html(result.venue);
                         $('#trainer').html(result.trainer);
-                        if(result.event_date != '' && result.venue != ''){
+                        if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
                             $('#approveButton').prop('disabled', false);
-                            $('#approveButton').attr('href', `/request/approve/${result.key}`);
+                            // $('#approveButton').attr('href', `/request/approve/${result.key}`);
                         }else{
                             $('#approveButton').prop('disabled', 'true');
                         }
@@ -406,6 +409,8 @@
                         $('#no_of_attendees').html(result.no_of_attendees);
                         $('#knowledge_of_participants').html(result.knowledge_of_participants);
                         $('#remarks').html(result.remarks);
+
+                        $('#confirmApproveButtona').attr('href', `/request/approve/${result.key}`);
                         
                         $('#viewRequestButton').click();
                         autoResize();
@@ -423,6 +428,7 @@
             $('#approveButton').click(function(){
                 $('#viewRequestModal').removeClass('z-50');
                 $('#viewRequestModal').addClass('z-30');
+
             });
 
             $('#closeConfirmApproveButton').click(function(){

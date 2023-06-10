@@ -11,8 +11,10 @@ class RequestController extends Controller
 {
     public function index(){
         $requests = DB::table('requests')
-            ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key')
+            ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'users.first_name', 'users.last_name')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
+            ->join('users', 'requests.trainer', '=', 'users.id')
+            ->where('is_approved', 0)
             ->orderBy('requests.id', 'desc')
             ->get();
 
@@ -353,15 +355,16 @@ class RequestController extends Controller
     public function view(Request $request){
         $key = $request->key;
         $thisRequest = DB::table('requests')
-            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.key')
+            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.key', 'users.first_name', 'users.last_name')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
+            ->join('users', 'requests.trainer', '=', 'users.id')
             ->where('requests.key', $key)
             ->first();
 
         $result = array(
             'event_date' => $thisRequest->training_date,
             'venue' => $thisRequest->venue,
-            'trainer' => $thisRequest->trainer,
+            'trainer' => $thisRequest->first_name.' '.$thisRequest->last_name,
 
             'name' => $thisRequest->name,
             'address' => $thisRequest->address,
@@ -405,6 +408,11 @@ class RequestController extends Controller
     }
 
     public function approve($key){
-        dd($key);
+        DB::table('requests')->where('key', $key)->update([
+            'status' => 'SCHEDULED',
+            'is_approved' => 1,
+        ]);
+
+        return redirect()->route('request.index')->with('success', 'Request Has Been Approved');
     }
 }

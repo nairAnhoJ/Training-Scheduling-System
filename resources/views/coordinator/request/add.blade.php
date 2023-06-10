@@ -205,7 +205,7 @@
                             <select id="trainer" name="trainer" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value=""></option>
                                 @foreach ($trainers as $trainer)
-                                    <option value="{{$trainer->first_name.' '.$trainer->last_name}}">{{$trainer->first_name.' '.$trainer->last_name}}</span></option>
+                                    <option value="{{$trainer->id}}">{{$trainer->first_name.' '.$trainer->last_name}}</span></option>
                                 @endforeach
                             </select>
                         </div>

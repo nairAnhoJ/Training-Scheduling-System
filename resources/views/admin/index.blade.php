@@ -93,6 +93,8 @@
 
     <script>
         $(document).ready(function(){
+            var eventArray = @json($eventArray);
+
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 headerToolbar: {
@@ -123,32 +125,7 @@
                     $('#viewEventButton').click();
                     autoResize();
                 },
-                events: [
-                    {
-                        id: '1',
-                        title: 'ABENSON CORP. QUANTA PAPER MEXICO',
-                        start: '2023-05-12',
-                        extendedProps: {
-                            department: 'BioChemistry'
-                        },
-                    },
-                    {
-                        id: '2',
-                        title: 'LAZADA E-SERVICES PHILS INC.',
-                        start: '2023-05-27',
-                        extendedProps: {
-                            department: 'BioChemistry'
-                        },
-                    },
-                    {
-                        id: '3',
-                        title: 'A&B SUMMIT DISTRIBUTION INC.',
-                        start: '2023-05-30',
-                        extendedProps: {
-                            department: 'BioChemistry'
-                        },
-                    },
-                ]
+                events: eventArray
             });
             calendar.render();
 

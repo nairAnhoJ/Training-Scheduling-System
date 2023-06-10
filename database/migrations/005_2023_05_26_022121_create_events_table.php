@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customers');
+            // $table->unsignedInteger('customer_id');
+            // $table->foreign('customer_id')->references('id')->on('customers');
             $table->unsignedInteger('request_id');
             $table->foreign('request_id')->references('id')->on('requests');
-            $table->string('contract_details');
+            $table->string('event_status');
             $table->timestamps();
         });
     }

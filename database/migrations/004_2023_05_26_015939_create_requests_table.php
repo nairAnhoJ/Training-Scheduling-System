@@ -33,7 +33,9 @@ return new class extends Migration
             $table->string('knowledge_of_participants')->nullable();
             $table->string('trainer')->nullable();
             $table->string('remarks')->nullable();
-            $table->string('status');
+
+            $table->string('is_approved')->default(0);
+            $table->string('status')->default('PENDING');
             
             // $table->string('type_of_payment')->nullable();
             // $table->string('vat_zero_rated')->nullable();
