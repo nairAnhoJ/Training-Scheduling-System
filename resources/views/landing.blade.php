@@ -165,12 +165,24 @@
 
         <script>
             $(document).ready(function(){
+                var eventArray = @json($eventArray);
+
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     headerToolbar: {
-                        left: 'title',
-                        center: '',
+                        left: '', // addButton
+                        center: 'title',
                         right: 'prev,next today'
+                    },
+                    customButtons: {
+                        addButton: {
+                            text: 'ADD',
+                            classNames: 'myButtonClass',
+                            click: function() {
+                                // Perform your custom action here
+                                alert('Custom button clicked!');
+                            }
+                        }
                     },
                     initialView: 'dayGridMonth',
                     contentHeight: 'auto',
@@ -185,18 +197,12 @@
                         $('#viewEventButton').click();
                         autoResize();
                     },
-                    events: [
-                        {
-                            id: '1',
-                            title: 'ABENSON CORP. QUANTA PAPER MEXICO',
-                            start: '2023-05-12',
-                            extendedProps: {
-                                department: 'BioChemistry'
-                            },
-                        },
-                    ]
+                    events: eventArray
                 });
                 calendar.render();
+
+                $('.fc-addButton-button').removeClass('fc-button-primary fc fc-button');
+                $('.fc-addButton-button').addClass('bg-blue-500 font-bold h-10 px-10 rounded-lg text-white tracking-wider hover:scale-105');
 
                 function autoResize() {
                     var textarea = $('#viewNotes');

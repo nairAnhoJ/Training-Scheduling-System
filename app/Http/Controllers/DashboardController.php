@@ -32,6 +32,6 @@ class DashboardController extends Controller
             $eventArray[] = $newArray;
         }
 
-        return view('admin.index', compact('events', 'eventArray'));
+        return view('user.index', compact('events', 'eventArray'));
     }
 }

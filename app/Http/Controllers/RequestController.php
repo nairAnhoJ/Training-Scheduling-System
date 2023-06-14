@@ -20,14 +20,14 @@ class RequestController extends Controller
 
         $search = '';
         // $page = 1;
-        return view('coordinator.request.index', compact('requests', 'search'));
+        return view('user.coordinator.request.index', compact('requests', 'search'));
     }
 
     public function add(){
         $customers = DB::table('customers')->get();
         $trainers = DB::table('users')->where('role', 2)->get();
 
-        return view('coordinator.request.add', compact('customers', 'trainers'));
+        return view('user.coordinator.request.add', compact('customers', 'trainers'));
     }
 
     public function getcom(Request $request){
@@ -246,7 +246,7 @@ class RequestController extends Controller
             ->first();
         $trainers = DB::table('users')->where('role', 2)->get();
 
-        return view('coordinator.request.edit', compact('request', 'trainers', 'key'));
+        return view('user.coordinator.request.edit', compact('request', 'trainers', 'key'));
     }
 
     public function update(Request $request, $key){
@@ -404,7 +404,7 @@ class RequestController extends Controller
     public function contractDetails($key){
         $path = (DB::table('requests')->where('key', $key)->first())->contract_details;
 
-        return view('coordinator.request.view-contract-details', compact('path'));
+        return view('user.coordinator.request.view-contract-details', compact('path'));
     }
 
     public function approve($key){
