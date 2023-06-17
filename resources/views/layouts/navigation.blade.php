@@ -41,9 +41,21 @@
              </a>
           </li>
           <li>
+             <a href="{{ route('request.index') }}" class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-300 hover:text-gray-700 border-gray-300 {{ (Str::contains(url()->current(), url('/company-list'))) ? 'scale-105 bg-gray-300 border border-gray-300 shadow' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" viewBox="0 0 24 24" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M14,8h1a1,1,0,0,0,0-2H14a1,1,0,0,0,0,2Zm0,4h1a1,1,0,0,0,0-2H14a1,1,0,0,0,0,2ZM9,8h1a1,1,0,0,0,0-2H9A1,1,0,0,0,9,8Zm0,4h1a1,1,0,0,0,0-2H9a1,1,0,0,0,0,2Zm12,8H20V3a1,1,0,0,0-1-1H5A1,1,0,0,0,4,3V20H3a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Zm-8,0H11V16h2Zm5,0H15V15a1,1,0,0,0-1-1H10a1,1,0,0,0-1,1v5H6V4H18Z"/></svg>
+                <span class="ml-3">Company List</span>
+             </a>
+          </li>
+          <li>
              <a href="{{ route('request.index') }}" class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-300 hover:text-gray-700 border-gray-300 {{ (Str::contains(url()->current(), url('/request'))) ? 'scale-105 bg-gray-300 border border-gray-300 shadow' : '' }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path d="M349-250h262q12.75 0 21.375-8.675 8.625-8.676 8.625-21.5 0-12.825-8.625-21.325T611-310H349q-12.75 0-21.375 8.675-8.625 8.676-8.625 21.5 0 12.825 8.625 21.325T349-250Zm0-170h262q12.75 0 21.375-8.675 8.625-8.676 8.625-21.5 0-12.825-8.625-21.325T611-480H349q-12.75 0-21.375 8.675-8.625 8.676-8.625 21.5 0 12.825 8.625 21.325T349-420ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h336q12.444 0 23.722 5T599-862l183 183q8 8 13 19.278 5 11.278 5 23.722v496q0 24-18 42t-42 18H220Zm331-584v-156H220v680h520v-494H581q-12.75 0-21.375-8.625T551-664ZM220-820v186-186 680-680Z"/></svg>
                 <span class="ml-3">Request</span>
+             </a>
+          </li>
+          <li>
+             <a href="{{ route('request.index') }}" class="flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-300 hover:text-gray-700 border-gray-300 {{ (Str::contains(url()->current(), url('/scheduled-trainings'))) ? 'scale-105 bg-gray-300 border border-gray-300 shadow' : '' }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M433-228 295-365l42-42 96 94 184-184 42 43-226 226ZM180-80q-24 0-42-18t-18-42v-620q0-24 18-42t42-18h65v-60h65v60h340v-60h65v60h65q24 0 42 18t18 42v620q0 24-18 42t-42 18H180Zm0-60h600v-430H180v430Zm0-490h600v-130H180v130Zm0 0v-130 130Z"/></svg>
+                <span class="ml-3">Scheduled Trainings</span>
              </a>
           </li>
           @if (Auth::user()->role == 0)
@@ -55,10 +67,10 @@
                </button>
                <ul id="dropdown-example" class="hidden py-2 space-y-2">
                      <li>
-                        <a href="{{ route('users.index') }}" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/system-management/users'))) ? 'scale-105 bg-gray-300 border border-gray-300 shadow' : '' }}">Users</a>
+                        <a href="{{ route('users.index') }}" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/system-management/users'))) ? 'bg-gray-300 border border-gray-300 shadow' : '' }}">Users</a>
                      </li>
                      <li>
-                        <a href="{{ route('departments.index') }}" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/system-management/departments'))) ? 'scale-105 bg-gray-300 border border-gray-300 shadow' : '' }}">Departments</a>
+                        <a href="{{ route('departments.index') }}" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/system-management/departments'))) ? 'bg-gray-300 border border-gray-300 shadow' : '' }}">Departments</a>
                      </li>
                </ul>
             </li>

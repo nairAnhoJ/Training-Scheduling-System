@@ -98,21 +98,21 @@
                                         <div id="cp1_email" class="col-span-4 font-semibold text-lg"></div>
                                     </div>
 
-                                    <div id="cp2_div" class="col-span-5 grid grid-cols-5">
-                                        <div class="ml-10 mt-5">Name: </div>
+                                    <div id="cp2_div" class="col-span-6 grid grid-cols-6">
+                                        <div class="ml-10 mt-5 col-span-2">Name: </div>
                                         <div id="cp2_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10">Date: </div>
+                                        <div class="ml-10 col-span-2">Date: </div>
                                         <div id="cp2_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10">E-mail: </div>
+                                        <div class="ml-10 col-span-2">E-mail: </div>
                                         <div id="cp2_email" class="col-span-4 font-semibold text-lg"></div>
                                     </div>
 
-                                    <div id="cp3_div" class="col-span-5 grid grid-cols-5">
-                                        <div class="ml-10 mt-5">Name: </div>
+                                    <div id="cp3_div" class="col-span-6 grid grid-cols-6">
+                                        <div class="ml-10 mt-5 col-span-2">Name: </div>
                                         <div id="cp3_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10">Date: </div>
+                                        <div class="ml-10 col-span-2">Date: </div>
                                         <div id="cp3_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10">E-mail: </div>
+                                        <div class="ml-10 col-span-2">E-mail: </div>
                                         <div id="cp3_email" class="col-span-4 font-semibold text-lg"></div>
                                     </div>
                                 </div>
@@ -416,7 +416,6 @@
                         autoResize();
                     }
                 })
-                
             });
 
             function autoResize() {

@@ -52,7 +52,7 @@
         </style>
     </head>
     <body>
-
+        @csrf
         {{-- VIEW EVENT MODAL --}}
             <!-- Modal toggle -->
             <button data-modal-target="viewEventModal" data-modal-toggle="viewEventModal" id="viewEventButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
@@ -66,7 +66,7 @@
                     <div class="relative shadow text-gray-700">
                         <!-- Modal header -->
                         <div class="flex items-center justify-between p-4 border-b rounded-t bg-blue-500">
-                            <h3 id="viewCompanyName" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
+                            <h3 id="name" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
                             <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewEventModal">
                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                 <span class="sr-only">Close modal</span>
@@ -75,61 +75,83 @@
                         <!-- Modal body -->
                     <div class="p-6 overflow-y-auto overflow-x-hidden h-[calc(100vh-220px)]">
                         <div class="">
-                            <div class="grid grid-cols-5">
-                                <div>Date: </div>
-                                <div id="viewDate" class="col-span-4 font-semibold text-lg">DATE NGAYON (M d, YYYY)</div>
+                            <div class="grid grid-cols-6">
+                                <div class="col-span-2">Date: </div>
+                                <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
 
-                                <div>Venue: </div>
-                                <div id="viewDate" class="col-span-4 font-semibold text-lg">VENUE NG TRAINING</div>
+                                <div class="col-span-2">Venue: </div>
+                                <div id="venue" class="col-span-4 font-semibold text-lg"></div>
+
+                                <div class="col-span-2">Trainer: </div>
+                                <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
                             </div>
 
                             <div class="mt-5">
                                 <div class="flex items-center">
                                     <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
                                 </div>
-                                <div class="grid grid-cols-5">
-                                    <div>Address: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">ADDRESS NG CUSTOMER</div>
+                                <div class="grid grid-cols-6">
+                                    <div class="col-span-2">Address: </div>
+                                    <div id="address" class="col-span-4 font-semibold text-lg"></div>
 
-                                    <h3 class="font-semibold col-span-5">Contact Person/s:</h3>
-                                    <div class="ml-10">Name: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">JUAN DELA CRUZ</div>
-                                    <div class="ml-10">Date: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">09123456789</div>
-                                    <div class="ml-10 mb-5">E-mail: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com</div>
+                                    <h3 class="font-semibold col-span-6">Contact Person/s:</h3>
+                                    <div id="cp1_div" class="col-span-6 grid grid-cols-6">
+                                        <div class="ml-10 col-span-2">Name: </div>
+                                        <div id="cp1_name" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="ml-10 col-span-2">Date: </div>
+                                        <div id="cp1_number" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="ml-10 col-span-2">E-mail: </div>
+                                        <div id="cp1_email" class="col-span-4 font-semibold text-lg"></div>
+                                    </div>
 
-                                    <div class="ml-10">Name: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">JUAN DELA CRUZ</div>
-                                    <div class="ml-10">Date: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">09123456789</div>
-                                    <div class="ml-10 mb-5">E-mail: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">juan.delacruz@email.com</div>
+                                    <div id="cp2_div" class="col-span-5 grid grid-cols-5">
+                                        <div class="ml-10 mt-5">Name: </div>
+                                        <div id="cp2_name" class="col-span-4 font-semibold text-lg mt-5"></div>
+                                        <div class="ml-10">Date: </div>
+                                        <div id="cp2_number" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="ml-10">E-mail: </div>
+                                        <div id="cp2_email" class="col-span-4 font-semibold text-lg"></div>
+                                    </div>
+
+                                    <div id="cp3_div" class="col-span-5 grid grid-cols-5">
+                                        <div class="ml-10 mt-5">Name: </div>
+                                        <div id="cp3_name" class="col-span-4 font-semibold text-lg mt-5"></div>
+                                        <div class="ml-10">Date: </div>
+                                        <div id="cp3_number" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="ml-10">E-mail: </div>
+                                        <div id="cp3_email" class="col-span-4 font-semibold text-lg"></div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="">
+                            <div class="mt-5">
                                 <div class="flex items-center">
                                     <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
                                 </div>
-                                <div class="grid grid-cols-5">
-                                    <div>Category: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">RENTAL UNIT</div>
-                                    <div>Billing Type: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
-                                    <div>Area: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">NORTH</div>
-                                    <div>Type of Unit: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">REACH TRUCK</div>
-                                    <div>Pax: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">13</div>
-                                    <div>Trainer: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">CARDO DALISAY</div>
-                                    <div>Status: </div>
-                                    <div id="viewDate" class="col-span-4 font-semibold text-lg">Scheduled</div>
-                                    <div>Notes: </div>
+                                <div class="grid grid-cols-6">
+                                    <div class="col-span-2">Area: </div>
+                                    <div id="area" class="col-span-4 font-semibold text-lg"></div>
+                                    <div class="col-span-2">Category: </div>
+                                    <div id="category" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="con_details_div" class="col-span-6 grid grid-cols-6">
+                                        <div class="col-span-2">Contract Details: </div>
+                                        <a href="#" id="contract_details" target="_blank" class="col-span-4 font-semibold text-lg text-white bg-blue-500 rounded-lg w-40 tracking-wide text-center hover:scale-105">VIEW</a>
+                                    </div>
+                                    <div class="col-span-2">Brand: </div>
+                                    <div id="brand" class="col-span-4 font-semibold text-lg"></div>
+                                    <div class="col-span-2">Model: </div>
+                                    <div id="model" class="col-span-4 font-semibold text-lg"></div>
+                                    <div class="col-span-2">Type of Unit: </div>
+                                    <div id="unit_type" class="col-span-4 font-semibold text-lg"></div>
+                                    <div class="col-span-2">Billing Type: </div>
+                                    <div id="billing_type" class="col-span-4 font-semibold text-lg"></div>
+                                    <div class="col-span-2">Number of Attendees: </div>
+                                    <div id="no_of_attendees" class="col-span-4 font-semibold text-lg">13</div>
+                                    <div class="col-span-2">Knowledge of Participants: </div>
+                                    <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg"></div>
+                                    <div class="col-span-2">Notes: </div>
                                     <div class="col-span-4 font-semibold">
-                                        <textarea id="viewNotes" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly>DITO YUNG MGA </textarea>
+                                        <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +188,7 @@
         <script>
             $(document).ready(function(){
                 var eventArray = @json($eventArray);
-
+  
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     headerToolbar: {
@@ -180,7 +202,7 @@
                             classNames: 'myButtonClass',
                             click: function() {
                                 // Perform your custom action here
-                                alert('Custom button clicked!');
+                                alert('Custom button clicked!'); 
                             }
                         }
                     },
@@ -189,13 +211,87 @@
 
                     eventMouseEnter: function (info) {
                         info.el.classList.add('cursor-pointer');
-                        info.el.classList.add('hover:scale-105');
+                        info.el.classList.add('hover:scale-105'); 
                     },
                     eventClick: function(calEvent, jsEvent, view) {
-                        var name = calEvent.event.title;
-                        $('#viewCompanyName').html(name);
-                        $('#viewEventButton').click();
-                        autoResize();
+                        var id = calEvent.event.id;
+                        var _token = $('input[name="_token"]').val();
+
+                        $.ajax({
+                            url:"{{ route('guest.view') }}",
+                            method:"POST",
+                            dataType: 'json',
+                            data:{
+                                id: id,
+                                _token: _token
+                            },
+                            success:function(result){
+                                $('#event_date').html(result.event_date);
+                                $('#venue').html(result.venue);
+                                $('#trainer').html(result.trainer);
+                                if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
+                                    $('#approveButton').prop('disabled', false);
+                                    // $('#approveButton').attr('href', `/request/approve/${result.key}`);
+                                }else{
+                                    $('#approveButton').prop('disabled', 'true');
+                                }
+
+                                $('#name').html(result.name);
+                                $('#address').html(result.address);
+
+                                if(result.cp1_name != ''){
+                                    $('#cp1_name').html(result.cp1_name);
+                                    $('#cp1_number').html(result.cp1_number);
+                                    $('#cp1_email').html(result.cp1_email);
+                                }else{
+                                    $('#cp1_div').addClass('hidden');
+                                }
+
+                                if(result.cp2_name != ''){
+                                    $('#cp2_name').html(result.cp2_name);
+                                    $('#cp2_number').html(result.cp2_number);
+                                    $('#cp2_email').html(result.cp2_email);
+                                }else{
+                                    $('#cp2_div').addClass('hidden');
+                                }
+
+                                if(result.cp3_name != ''){
+                                    $('#cp3_name').html(result.cp3_name);
+                                    $('#cp3_number').html(result.cp3_number);
+                                    $('#cp3_email').html(result.cp3_email);
+                                }else{
+                                    $('#cp3_div').addClass('hidden');
+                                }
+
+                                $('#area').html(result.area);
+                                $('#category').html(result.category);
+
+                                if(result.is_PM == 1){
+                                    $('#con_details_div').removeClass('hidden');
+                                    if(result.contract_details == null){
+                                        $('#contract_details').addClass('pointer-events-none opacity-50');
+                                    }else{
+                                        $('#contract_details').removeClass('pointer-events-none opacity-50');
+                                        $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
+                                    }
+                                }else{
+                                    $('#con_details_div').addClass('hidden');
+                                }
+
+                                $('#brand').html(result.brand);
+                                $('#model').html(result.model);
+                                $('#unit_type').html(result.unit_type);
+                                $('#billing_type').html(result.billing_type);
+                                $('#no_of_attendees').html(result.no_of_attendees);
+                                $('#knowledge_of_participants').html(result.knowledge_of_participants);
+                                $('#remarks').html(result.remarks);
+
+                                $('#confirmApproveButtona').attr('href', `/request/approve/${result.key}`);
+                                
+                                $('#viewEventButton').click();
+                                autoResize();
+                            }
+                        })
                     },
                     events: eventArray
                 });
@@ -205,7 +301,7 @@
                 $('.fc-addButton-button').addClass('bg-blue-500 font-bold h-10 px-10 rounded-lg text-white tracking-wider hover:scale-105');
 
                 function autoResize() {
-                    var textarea = $('#viewNotes');
+                    var textarea = $('#remarks');
                     textarea.css('height', 'auto');
                     textarea.css('height', textarea[0].scrollHeight + 'px');
                 }

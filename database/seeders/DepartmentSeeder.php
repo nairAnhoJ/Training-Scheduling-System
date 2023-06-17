@@ -18,5 +18,9 @@ class DepartmentSeeder extends Seeder
             'name' => 'ADMINISTRATOR',
             'key' => Str::uuid()->toString(),
         ]);
+        Department::create([
+            'name' => 'TRAINING',
+            'key' => Str::uuid()->toString(),
+        ]);
     }
 }
