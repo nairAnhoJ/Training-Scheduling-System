@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('number'); // Request Number ,,, Training Number  ======== YYMM-(user_id)000000(id)
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->string('category'); // PU / RU / PM

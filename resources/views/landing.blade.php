@@ -179,7 +179,17 @@
                 </div>
             </nav>
             <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-                <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full overflow-y-scroll sca">
+                <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full overflow-y-scroll">
+                    {{-- Legends --}}
+                    <div class="w-full flex gap-x-5">
+                        @foreach ($trainers as $trainer)
+                            <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
+                                <span class="flex w-3 h-3 bg-[{{ $trainer->color }}] rounded-full mr-1.5 flex-shrink-0"></span>
+                                {{ $trainer->first_name.' '.$trainer->last_name }}
+                            </span>
+                        @endforeach
+                    </div>
+
                     <div id="calendar"></div>
                 </div>
             </div>

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function index(){
+        $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
         $events = DB::table('requests')
             ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'requests.training_date', 'requests.id', 'users.id as uid', 'users.first_name', 'users.last_name', 'users.color')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
@@ -32,8 +33,9 @@ class DashboardController extends Controller
             $eventArray[] = $newArray;
         }
 
-        return view('user.index', compact('events', 'eventArray'));
+        return view('user.index', compact('events', 'eventArray', 'trainers'));
     }
+
     public function view(Request $request){
         $id = $request->id;
         $thisRequest = DB::table('requests')

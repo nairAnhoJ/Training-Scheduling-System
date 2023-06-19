@@ -26,6 +26,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
  
 Route::get('/', function () {
     if(!Auth::user()){
+        $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
 
         $events = DB::table('requests')
             ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'requests.training_date', 'requests.id', 'users.id as uid', 'users.first_name', 'users.last_name', 'users.color')
@@ -51,7 +52,7 @@ Route::get('/', function () {
             $eventArray[] = $newArray;
         }
 
-        return view('landing', compact('events', 'eventArray'));
+        return view('landing', compact('events', 'eventArray', 'trainers'));
     }else{
         return redirect()->route('dashboard.index');
     }
