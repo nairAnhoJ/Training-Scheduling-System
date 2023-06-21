@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RequestController;
@@ -66,6 +67,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/schedule-board', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::post('/schedule-board/view', [DashboardController::class, 'view'])->name('dashboard.view');
     Route::post('/schedule-board/cancel/{key}', [DashboardController::class, 'cancel'])->name('dashboard.cancel');
+
+    Route::post('/schedule-board/event/add', [EventController::class, 'add'])->name('event.add');
+    Route::post('/schedule-board/event/view', [EventController::class, 'view'])->name('event.view');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // REQUEST

@@ -84,6 +84,9 @@
 
                                 <div class="col-span-2">Trainer: </div>
                                 <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
+
+                                <div class="col-span-2">Training Number: </div>
+                                <div id="trainingNumber" class="col-span-4 font-semibold text-lg"></div>
                             </div>
 
                             <div class="mt-5">
@@ -239,6 +242,7 @@
                                 $('#event_date').html(result.event_date);
                                 $('#venue').html(result.venue);
                                 $('#trainer').html(result.trainer);
+                                $('#trainingNumber').html(result.training_number);
                                 if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
                                     $('#approveButton').prop('disabled', false);
                                     // $('#approveButton').attr('href', `/request/approve/${result.key}`);

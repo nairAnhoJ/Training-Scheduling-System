@@ -10,7 +10,8 @@ class DashboardController extends Controller
     public function index(){
         $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
         $events = DB::table('requests')
-            ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'requests.training_date', 'requests.id', 'users.id as uid', 'users.first_name', 'users.last_name', 'users.color')
+            // ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'requests.training_date', 'requests.id', 'users.id as uid', 'users.first_name', 'users.last_name', 'users.color')
+            ->select('requests.id', 'customers.name', 'requests.training_date', 'users.color')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->join('users', 'requests.trainer', '=', 'users.id')
             ->where('is_approved', 1)
@@ -18,18 +19,39 @@ class DashboardController extends Controller
 
         $eventArray = [];
         foreach ($events as $event) {
-            // Create a new array for each iteration
             $newArray = [];
         
-            // Populate the new array with desired values
             $newArray = [
                 'id' => $event->id,
                 'title' => $event->name,
                 'start' => date('Y-m-d', strtotime($event->training_date)),
                 'color' => $event->color,
+                'extendedProps' => [
+                    'isTraining' => true
+                ]
             ];
         
-            // Push the new array into the result array
+            $eventArray[] = $newArray;
+        }
+
+        $events2 = DB::table('events')
+            ->leftJoin('users', 'events.trainer', '=', 'users.id')
+            ->select('events.*', DB::raw('IF(events.trainer = 0, "#FE2C55", users.color) as color'))
+            ->get();
+
+        foreach ($events2 as $event) {
+            $newArray = [];
+        
+            $newArray = [
+                'id' => $event->id,
+                'title' => $event->description,
+                'start' => date('Y-m-d', strtotime($event->date)),
+                'color' => $event->color,
+                'extendedProps' => [
+                    'isTraining' => false
+                ]
+            ];
+        
             $eventArray[] = $newArray;
         }
 
@@ -39,7 +61,7 @@ class DashboardController extends Controller
     public function view(Request $request){
         $id = $request->id;
         $thisRequest = DB::table('requests')
-            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.key', 'users.first_name', 'users.last_name')
+            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.number', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.key', 'users.first_name', 'users.last_name')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->join('users', 'requests.trainer', '=', 'users.id')
             ->where('requests.id', $id)
@@ -49,6 +71,7 @@ class DashboardController extends Controller
             'event_date' => $thisRequest->training_date,
             'venue' => $thisRequest->venue,
             'trainer' => $thisRequest->first_name.' '.$thisRequest->last_name,
+            'training_number' => $thisRequest->number,
 
             'name' => $thisRequest->name,
             'address' => $thisRequest->address,

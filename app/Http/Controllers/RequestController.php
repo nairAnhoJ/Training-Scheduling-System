@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
@@ -55,6 +56,18 @@ class RequestController extends Controller
     }
 
     public function store(Request $request){
+
+        $id = DB::table('requests')->orderBy('id', 'desc')->value('id') + 1;
+        $user_id = Auth::user()->id;
+
+        if($id == null || $id == ''){
+            $id = 1;
+        }
+
+        $nid = str_pad($id, 7, '0', STR_PAD_LEFT);
+
+        $number = date('ym').'-'.$user_id.'-'.$nid;
+
         $name = strtoupper($request->name);
         $adress = strtoupper($request->adress);
         $area = $request->area;
@@ -171,6 +184,7 @@ class RequestController extends Controller
     
                 DB::table('requests')
                     ->insert([
+                        'number' => $number,
                         'customer_id' => $cusID,
                         'category' => $category,
                         'is_PM' => 1,
@@ -193,6 +207,7 @@ class RequestController extends Controller
             }else{
                 DB::table('requests')
                     ->insert([
+                        'number' => $number,
                         'customer_id' => $cusID,
                         'category' => $category,
                         'is_PM' => 1,
@@ -215,6 +230,7 @@ class RequestController extends Controller
         } else {
             DB::table('requests')
                 ->insert([
+                    'number' => $number,
                     'customer_id' => $cusID,
                     'category' => $category,
                     'is_PM' => 0,

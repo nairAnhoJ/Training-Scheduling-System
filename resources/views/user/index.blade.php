@@ -17,6 +17,59 @@
     @endif
 
 
+    {{-- ADD EVENT MODAL --}}
+        <!-- Modal toggle -->
+        <button data-modal-target="addEventModal" data-modal-toggle="addEventModal" id="addEventButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button"></button>
+        
+        <!-- Main modal -->
+        <div id="addEventModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
+            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+                <!-- Modal content -->
+                <form action="{{ route('event.add') }}" method="POST" class="relative shadow text-gray-700">
+                    @csrf
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 border-b rounded-t">
+                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">ADD EVENT</h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="addEventModal">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Description</label>
+                            <input type="text" id="description" name="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" autocomplete="off" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="date" class="block mb-2 text-sm font-medium text-gray-900">Date</label>
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                  <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                </div>
+                                <input datepicker type="text" id="date" name="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Select date" autocomplete="off" required>
+                            </div>    
+                        </div>
+                        <div class="mb-6">
+                            <label for="tr" class="block text-sm font-semibold text-gray-600">Trainer</label>
+                            <select id="tr" name="trainer" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                <option value="0">All</option>
+                                @foreach ($trainers as $trainer)
+                                    <option value="{{$trainer->id}}">{{$trainer->first_name.' '.$trainer->last_name}}</span></option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">SAVE</button>
+                        <button id="closeConfirmApproveButton" data-modal-hide="addEventModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {{-- ADD EVENT MODAL END --}}
+
     {{-- CANCEL MODAL --}}
         <!-- Modal toggle -->
         {{-- <button data-modal-target="confirmApproveModal" data-modal-toggle="confirmApproveModal" id="confirmCancelButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button"></button> --}}
@@ -47,6 +100,43 @@
             </div>
         </div>
     {{-- CANCEL MODAL END --}}
+
+    {{-- VIEW CUSTOM EVENT MODAL --}}
+        <!-- Modal toggle -->
+        <button data-modal-target="viewCustomModal" data-modal-toggle="viewCustomModal" id="viewCustomEventButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button"></button>
+        
+        <!-- Main modal -->
+        <div id="viewCustomModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
+            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+                <!-- Modal content -->
+                <div class="relative shadow text-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 border-b rounded-t">
+                        <h3 id="cusName" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewCustomModal">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-6">
+                        <div class="grid grid-cols-6 gap-y-3">
+                            <div class="col-span-2">Date: </div>
+                            <div id="cusDate" class="col-span-4 font-semibold text-lg"></div>
+
+                            <div class="col-span-2">Trainer: </div>
+                            <div id="cusTrainer" class="col-span-4 font-semibold text-lg"></div>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+                        <a href='#' type="button" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">DELETE</a>
+                        <button id="closeConfirmApproveButton" data-modal-hide="viewCustomModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{-- VIEW CUSTOM EVENT MODAL END --}}
 
     {{-- VIEW EVENT MODAL --}}
         <!-- Modal toggle -->
@@ -79,6 +169,9 @@
 
                                 <div class="col-span-2">Trainer: </div>
                                 <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
+
+                                <div class="col-span-2">Training Number: </div>
+                                <div id="trainingNumber" class="col-span-4 font-semibold text-lg"></div>
                             </div>
 
                             <div class="mt-5">
@@ -166,6 +259,10 @@
         <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full overflow-y-scroll">
             {{-- Legends --}}
             <div class="w-full flex gap-x-5">
+                <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
+                    <span class="flex w-3 h-3 bg-[#FE2C55] rounded-full mr-1.5 flex-shrink-0"></span>
+                    ALL
+                </span>
                 @foreach ($trainers as $trainer)
                     <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
                         <span class="flex w-3 h-3 bg-[{{ $trainer->color }}] rounded-full mr-1.5 flex-shrink-0"></span>
@@ -194,8 +291,7 @@
                         text: 'Add Event',
                         classNames: 'myButtonClass',
                         click: function() {
-                            // Perform your custom action here
-                            alert('Custom button clicked!');
+                            $('#addEventButton').click();
                         }
                     }
                 },
@@ -208,86 +304,107 @@
                 },
                 eventClick: function(calEvent, jsEvent, view) {
                     var id = calEvent.event.id;
-                    var _token = $('input[name="_token"]').val();
+                    var isTraining = calEvent.event.extendedProps.isTraining;
+                        var _token = $('input[name="_token"]').val();
 
-                    $.ajax({
-                        url:"{{ route('guest.view') }}",
-                        method:"POST",
-                        dataType: 'json',
-                        data:{
-                            id: id,
-                            _token: _token
-                        },
-                        success:function(result){
-                            $('#event_date').html(result.event_date);
-                            $('#venue').html(result.venue);
-                            $('#trainer').html(result.trainer);
-                            if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
-                                $('#approveButton').prop('disabled', false);
-                                // $('#approveButton').attr('href', `/request/approve/${result.key}`);
-                            }else{
-                                $('#approveButton').prop('disabled', 'true');
-                            }
-
-                            $('#name').html(result.name);
-                            $('#address').html(result.address);
-
-                            if(result.cp1_name != ''){
-                                $('#cp1_div').removeClass('hidden');
-                                $('#cp1_name').html(result.cp1_name);
-                                $('#cp1_number').html(result.cp1_number);
-                                $('#cp1_email').html(result.cp1_email);
-                            }else{
-                                $('#cp1_div').addClass('hidden');
-                            }
-
-                            if(result.cp2_name != ''){
-                                $('#cp2_div').removeClass('hidden');
-                                $('#cp2_name').html(result.cp2_name);
-                                $('#cp2_number').html(result.cp2_number);
-                                $('#cp2_email').html(result.cp2_email);
-                            }else{
-                                $('#cp2_div').addClass('hidden');
-                            }
-
-                            if(result.cp3_name != ''){
-                                $('#cp3_div').removeClass('hidden');
-                                $('#cp3_name').html(result.cp3_name);
-                                $('#cp3_number').html(result.cp3_number);
-                                $('#cp3_email').html(result.cp3_email);
-                            }else{
-                                $('#cp3_div').addClass('hidden');
-                            }
-
-                            $('#area').html(result.area);
-                            $('#category').html(result.category);
-
-                            if(result.is_PM == 1){
-                                $('#con_details_div').removeClass('hidden');
-                                if(result.contract_details == null){
-                                    $('#contract_details').addClass('pointer-events-none opacity-50');
+                    if(isTraining){
+                        $.ajax({
+                            url:"{{ route('dashboard.view') }}",
+                            method:"POST",
+                            dataType: 'json',
+                            data:{
+                                id: id,
+                                _token: _token
+                            },
+                            success:function(result){
+                                $('#event_date').html(result.event_date);
+                                $('#venue').html(result.venue);
+                                $('#trainer').html(result.trainer);
+                                $('#trainingNumber').html(result.training_number);
+                                if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
+                                    $('#approveButton').prop('disabled', false);
+                                    // $('#approveButton').attr('href', `/request/approve/${result.key}`);
                                 }else{
-                                    $('#contract_details').removeClass('pointer-events-none opacity-50');
-                                    $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
+                                    $('#approveButton').prop('disabled', 'true');
                                 }
-                            }else{
-                                $('#con_details_div').addClass('hidden');
+
+                                $('#name').html(result.name);
+                                $('#address').html(result.address);
+
+                                if(result.cp1_name != ''){
+                                    $('#cp1_div').removeClass('hidden');
+                                    $('#cp1_name').html(result.cp1_name);
+                                    $('#cp1_number').html(result.cp1_number);
+                                    $('#cp1_email').html(result.cp1_email);
+                                }else{
+                                    $('#cp1_div').addClass('hidden');
+                                }
+
+                                if(result.cp2_name != ''){
+                                    $('#cp2_div').removeClass('hidden');
+                                    $('#cp2_name').html(result.cp2_name);
+                                    $('#cp2_number').html(result.cp2_number);
+                                    $('#cp2_email').html(result.cp2_email);
+                                }else{
+                                    $('#cp2_div').addClass('hidden');
+                                }
+
+                                if(result.cp3_name != ''){
+                                    $('#cp3_div').removeClass('hidden');
+                                    $('#cp3_name').html(result.cp3_name);
+                                    $('#cp3_number').html(result.cp3_number);
+                                    $('#cp3_email').html(result.cp3_email);
+                                }else{
+                                    $('#cp3_div').addClass('hidden');
+                                }
+
+                                $('#area').html(result.area);
+                                $('#category').html(result.category);
+
+                                if(result.is_PM == 1){
+                                    $('#con_details_div').removeClass('hidden');
+                                    if(result.contract_details == null){
+                                        $('#contract_details').addClass('pointer-events-none opacity-50');
+                                    }else{
+                                        $('#contract_details').removeClass('pointer-events-none opacity-50');
+                                        $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
+                                    }
+                                }else{
+                                    $('#con_details_div').addClass('hidden');
+                                }
+
+                                $('#brand').html(result.brand);
+                                $('#model').html(result.model);
+                                $('#unit_type').html(result.unit_type);
+                                $('#billing_type').html(result.billing_type);
+                                $('#no_of_attendees').html(result.no_of_attendees);
+                                $('#knowledge_of_participants').html(result.knowledge_of_participants);
+                                $('#remarks').html(result.remarks);
+
+                                $('#confirmCancelButtona').attr('href', `/schedule-board/cancel/${result.key}`);
+                                
+                                $('#viewEventButton').click();
+                                autoResize();
                             }
-
-                            $('#brand').html(result.brand);
-                            $('#model').html(result.model);
-                            $('#unit_type').html(result.unit_type);
-                            $('#billing_type').html(result.billing_type);
-                            $('#no_of_attendees').html(result.no_of_attendees);
-                            $('#knowledge_of_participants').html(result.knowledge_of_participants);
-                            $('#remarks').html(result.remarks);
-
-                            $('#confirmCancelButtona').attr('href', `/schedule-board/cancel/${result.key}`);
-                            
-                            $('#viewEventButton').click();
-                            autoResize();
-                        }
-                    })
+                        })
+                    }else{
+                        $.ajax({
+                            url:"{{ route('event.view') }}",
+                            method:"POST",
+                            dataType: 'json',
+                            data:{
+                                id: id,
+                                _token: _token
+                            },
+                            success:function(result){
+                                $('#cusName').html(result.description);
+                                $('#cusDate').html(result.date);
+                                $('#cusTrainer').html(result.trainer);
+                                
+                                $('#viewCustomEventButton').click();
+                            }
+                        })
+                    }
                 },
                 events: eventArray
             });
@@ -297,7 +414,7 @@
             $('.fc-addButton-button').addClass('bg-blue-500 font-bold h-10 px-10 rounded-lg text-white tracking-wider hover:scale-105');
 
             function autoResize() {
-                var textarea = $('#viewNotes');
+                var textarea = $('#remarks');
                 textarea.css('height', 'auto');
                 textarea.css('height', textarea[0].scrollHeight + 'px');
             }
