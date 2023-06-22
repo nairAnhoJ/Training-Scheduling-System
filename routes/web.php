@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EventController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\UserController;
+use App\Models\Customer;
 use App\Models\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -66,10 +68,11 @@ Route::post('/auth', [AuthController::class, 'auth'])->name('login.auth');
 Route::middleware('auth')->group(function () {
     Route::get('/schedule-board', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::post('/schedule-board/view', [DashboardController::class, 'view'])->name('dashboard.view');
-    Route::post('/schedule-board/cancel/{key}', [DashboardController::class, 'cancel'])->name('dashboard.cancel');
+    Route::get('/schedule-board/cancel/{key}', [DashboardController::class, 'cancel'])->name('dashboard.cancel');
 
     Route::post('/schedule-board/event/add', [EventController::class, 'add'])->name('event.add');
     Route::post('/schedule-board/event/view', [EventController::class, 'view'])->name('event.view');
+    Route::get('/schedule-board/event/delete/{key}', [EventController::class, 'delete'])->name('event.delete');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -82,7 +85,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/request/approve/{key}', [RequestController::class, 'approve']);
     Route::get('/request/view/contract-details/{key}', [RequestController::class, 'contractDetails']);
     Route::get('/request/edit/{key}', [RequestController::class, 'edit'])->name('request.edit');
+    Route::get('/request/delete/{key}', [RequestController::class, 'delete'])->name('request.delete');
     Route::post('/request/update/{key}', [RequestController::class, 'update'])->name('request.update');
+
+    // CUSTOMER
+    Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');
+    Route::post('/customer', [CustomerController::class, 'search'])->name('customer.search');
+    Route::get('/customer/add', [CustomerController::class, 'add'])->name('customer.add');
+    Route::post('/customer/store', [CustomerController::class, 'store'])->name('customer.store');
+    Route::post('/customer/view', [CustomerController::class, 'view'])->name('customer.view');
+    Route::get('/customer/edit/{key}', [CustomerController::class, 'edit'])->name('customer.edit');
+    Route::post('/customer/update/{key}', [CustomerController::class, 'update'])->name('customer.update');
+    Route::get('/customer/delete/{key}', [CustomerController::class, 'delete'])->name('customer.delete');
 
     // COMPANY
     Route::get('/company-list', [RequestController::class, 'index'])->name('company.index');

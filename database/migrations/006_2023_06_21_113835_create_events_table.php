@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('date');
             $table->string('trainer');
+            $table->string('key');
             $table->timestamps();
         });
     }

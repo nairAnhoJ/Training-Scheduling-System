@@ -11,10 +11,11 @@ class DashboardController extends Controller
         $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
         $events = DB::table('requests')
             // ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'requests.training_date', 'requests.id', 'users.id as uid', 'users.first_name', 'users.last_name', 'users.color')
-            ->select('requests.id', 'customers.name', 'requests.training_date', 'users.color')
+            ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->join('users', 'requests.trainer', '=', 'users.id')
             ->where('is_approved', 1)
+            ->where('status', 'SCHEDULED')
             ->get();
 
         $eventArray = [];
@@ -22,7 +23,7 @@ class DashboardController extends Controller
             $newArray = [];
         
             $newArray = [
-                'id' => $event->id,
+                'id' => $event->key,
                 'title' => $event->name,
                 'start' => date('Y-m-d', strtotime($event->training_date)),
                 'color' => $event->color,
@@ -43,7 +44,7 @@ class DashboardController extends Controller
             $newArray = [];
         
             $newArray = [
-                'id' => $event->id,
+                'id' => $event->key,
                 'title' => $event->description,
                 'start' => date('Y-m-d', strtotime($event->date)),
                 'color' => $event->color,
@@ -64,7 +65,7 @@ class DashboardController extends Controller
             ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.number', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.key', 'users.first_name', 'users.last_name')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->join('users', 'requests.trainer', '=', 'users.id')
-            ->where('requests.id', $id)
+            ->where('requests.key', $id)
             ->first();
 
         $result = array(
@@ -108,5 +109,11 @@ class DashboardController extends Controller
         echo json_encode($result);
     }
 
+    public function cancel($key){
+        DB::table('requests')->where('key', $key)->update([
+            'status' => 'CANCELLED',
+        ]);
 
+        return redirect()->route('dashboard.index')->with('success', 'Training Has Been Cancelled');
+    }
 }

@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('remarks')->nullable();
 
             $table->string('is_approved')->default(0);
+            $table->string('is_deleted')->default(0);
             $table->string('status')->default('PENDING');
             
             // $table->string('type_of_payment')->nullable();

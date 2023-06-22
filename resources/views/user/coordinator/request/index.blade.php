@@ -18,9 +18,6 @@
 
 
     {{-- APPROVE MODAL --}}
-        <!-- Modal toggle -->
-        <button data-modal-target="confirmApproveModal" data-modal-toggle="confirmApproveModal" id="confirmApproveButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button"></button>
-        
         <!-- Main modal -->
         <div id="confirmApproveModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
             <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
@@ -40,7 +37,7 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        <a id="confirmApproveButtona" data-modal-hide="confirmApproveModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</a>
+                        <button id="confirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</button>
                         <button id="closeConfirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
@@ -48,6 +45,33 @@
         </div>
     {{-- APPROVE MODAL END --}}
 
+    {{-- DELETE MODAL --}}
+        <!-- Main modal -->
+        <div id="confirmDeleteModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
+            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+                <!-- Modal content -->
+                <div class="relative shadow text-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 border-b rounded-t">
+                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">DELETE</h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmDeleteModal">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-6">
+                        Are you sure you want to delete this request?
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+                        <a id="confirmDeleteButton" type="button" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">DELETE</a>
+                        <button id="closeConfirmApproveButton" data-modal-hide="confirmDeleteModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{-- DELETE MODAL END --}}
 
     {{-- VIEW EVENT MODAL --}}
         <!-- Modal toggle -->
@@ -199,6 +223,9 @@
                                 <table class="w-full text-sm text-left text-gray-500">
                                     <thead class="text-xs text-gray-600 uppercase bg-gray-100">
                                         <tr>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Action
+                                            </th>
                                             <th scope="col" class="px-6 py-3 whitespace-nowrap">
                                                 Company Name
                                             </th>
@@ -220,14 +247,14 @@
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Last Updated
                                             </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Action
-                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($requests as $request)
                                             <tr class="requestRow bg-white border-b cursor-pointer hover:bg-gray-200 even:bg-gray-100">
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    <a href="{{ url('/request/edit/'.$request->key) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</button>
+                                                </td>
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                                     <span data-key="{{ $request->key }}">
                                                         {{ $request->name }}
@@ -250,9 +277,6 @@
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ date('F j, Y', strtotime($request->updated_at)) }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/request/edit/'.$request->key) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <a type="button" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -304,8 +328,8 @@
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Action</div>
                                                 <div class="">
-                                                    <a href="#" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | 
-                                                    <a type="button" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Delete</a>
+                                                    <a href="{{ url('/request/edit/'.$request->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | 
+                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -330,6 +354,10 @@
                 e.stopPropagation();
             });
 
+            $('.requestRow').on('click', '.deleteButton', function(e) {
+                e.stopPropagation();
+            });
+
             $(document).click(function(){
                 $('#alert-3').addClass('opacity-0');
                 setTimeout(function() {
@@ -338,7 +366,7 @@
             });
 
             $('.requestRow').click(function(){
-                var key = $(this).find('span').data('key');
+                key = $(this).find('span').data('key');
                 var _token = $('input[name="_token"]').val();
 
                 $.ajax({
@@ -433,6 +461,18 @@
             $('#closeConfirmApproveButton').click(function(){
                 $('#viewRequestModal').addClass('z-50');
                 $('#viewRequestModal').removeClass('z-30');
+            });
+
+            $('.deleteButton').click(function(){
+                key = $(this).data('key');
+            });
+
+            $('#confirmDeleteButton').click(function(){
+                window.location.href = `/request/delete/${key}`;
+            });
+
+            $('#confirmApproveButton').click(function(){
+                window.location.href = `/request/approve/${key}`;
             });
         });
     </script>

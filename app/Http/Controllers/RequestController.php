@@ -15,13 +15,18 @@ class RequestController extends Controller
             ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'users.first_name', 'users.last_name')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->leftJoin('users', 'requests.trainer', '=', 'users.id')
-            ->where('is_approved', 0)
+            ->where('requests.is_approved', 0)
+            ->where('requests.is_deleted', 0)
             ->orderBy('requests.id', 'desc')
             ->get();
 
         $search = '';
         // $page = 1;
         return view('user.coordinator.request.index', compact('requests', 'search'));
+    }
+
+    public function search(){
+        
     }
 
     public function add(){
@@ -366,6 +371,14 @@ class RequestController extends Controller
         }
 
         return redirect()->route('request.index')->with('success', 'Request Successfully Updated');
+    }
+
+    public function delete($key){
+        DB::table('requests')->where('key', $key)->update([
+            'is_deleted' => 1
+        ]);
+        
+        return redirect()->route('request.index')->with('success', 'Request Successfully Deleted');
     }
 
     public function view(Request $request){
