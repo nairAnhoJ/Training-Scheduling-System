@@ -8,6 +8,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
 use App\Models\Customer;
 use App\Models\Request;
@@ -78,6 +79,7 @@ Route::middleware('auth')->group(function () {
 
     // REQUEST
     Route::get('/request', [RequestController::class, 'index'])->name('request.index');
+    Route::post('/request', [RequestController::class, 'search'])->name('request.search');
     Route::get('/request/add', [RequestController::class, 'add'])->name('request.add');
     Route::post('/request/getcom', [RequestController::class, 'getcom'])->name('request.getcom');
     Route::post('/request/store', [RequestController::class, 'store'])->name('request.store');
@@ -87,6 +89,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/request/edit/{key}', [RequestController::class, 'edit'])->name('request.edit');
     Route::get('/request/delete/{key}', [RequestController::class, 'delete'])->name('request.delete');
     Route::post('/request/update/{key}', [RequestController::class, 'update'])->name('request.update');
+
+    // TRAINING
+    Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
+    Route::post('/trainings/view', [TrainingController::class, 'view'])->name('trainings.view');
+    Route::post('/trainings/reschedule', [TrainingController::class, 'reschedule'])->name('trainings.reschedule');
+    Route::get('/trainings/view/contract-details/{key}', [TrainingController::class, 'contractDetails']);
+    Route::get('/trainings/edit/{key}', [TrainingController::class, 'edit'])->name('trainings.edit');
+    Route::get('/trainings/delete/{key}', [TrainingController::class, 'delete'])->name('trainings.delete');
+    Route::post('/trainings/update/{key}', [TrainingController::class, 'update'])->name('trainings.update');
+    Route::get('/training/cancel/{key}', [TrainingController::class, 'cancel'])->name('dashboard.cancel');
 
     // CUSTOMER
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');

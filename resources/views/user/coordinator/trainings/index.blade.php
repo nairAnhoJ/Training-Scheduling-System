@@ -1,6 +1,12 @@
 @extends('layouts.app')
-@section('title','REQUESTS')
+@section('title','SCHEDULED TRAININGS')
 @section('content')
+
+    <style>
+        .datepicker{
+            z-index: 61;
+        }
+    </style>
 
     @if(session('success'))
         <div id="alert-3" class="absolute left-1/2 -translate-x-1/2 top-16 z-[99] shadow-lg border border-emerald-500 w-[calc(100%-10px)] sm:w-[500px] flex p-4 mb-4 text-green-50 rounded-lg bg-emerald-500 transition-all duration-500" role="alert">
@@ -16,62 +22,71 @@
         </div>
     @endif
 
-
-    {{-- APPROVE MODAL --}}
+    {{-- CANCEL MODAL --}}
         <!-- Main modal -->
-        <div id="confirmApproveModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+        <div id="confirmCancelModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
+            <div class="relative w-full max-w-xl bg-white border-2 border-gray-300 shadow-2xl rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
                 <div class="relative shadow text-gray-700">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">APPROVE</h3>
-                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmApproveModal">
+                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">CANCEL TRAINING</h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmCancelModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
                         </button>
                     </div>
                     <!-- Modal body -->
                     <div class="p-6">
-                        Are you sure you want to approve this request?
+                        Are you sure you want to cancel this training?
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        <button id="confirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</button>
-                        <button id="closeConfirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                        <button id="confirmCancelButtona" type="button" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">CANCEL</button>
+                        <button id="closeConfirmApproveButton" data-modal-hide="confirmCancelModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
             </div>
         </div>
-    {{-- APPROVE MODAL END --}}
+    {{-- CANCEL MODAL END --}}
 
-    {{-- DELETE MODAL --}}
+    {{-- RESCHEDULE MODAL --}}
         <!-- Main modal -->
-        <div id="confirmDeleteModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+        <div id="rescheduleModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
+            <div class="relative w-full max-w-xl bg-white border-2 border-gray-300 shadow-2xl rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <form method="POST" action="{{ route('trainings.reschedule') }}" class="relative shadow text-gray-700">
+                    @csrf
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">DELETE</h3>
-                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmDeleteModal">
+                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">RESCHEDULE TRAINING</h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="rescheduleModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
                         </button>
                     </div>
                     <!-- Modal body -->
                     <div class="p-6">
-                        Are you sure you want to delete this request?
+                        <input type="hidden" id="reschedKey" name="key">
+                        <div class="mb-3 w-full">
+                            <label for="rescheduleDate" class="block text-sm font-semibold text-gray-600">Date</label>
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                  <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                </div>
+                                <input datepicker type="text" id="rescheduleDate" name="rescheduleDate" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Select date">
+                            </div>
+                        </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        <a id="confirmDeleteButton" type="button" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">DELETE</a>
-                        <button id="closeConfirmApproveButton" data-modal-hide="confirmDeleteModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                        <button type="submit" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">RESCHEDULE</button>
+                        <button id="closeConfirmApproveButton" data-modal-hide="rescheduleModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
-    {{-- DELETE MODAL END --}}
+    {{-- RESCHEDULE MODAL END --}}
 
     {{-- VIEW EVENT MODAL --}}
         <!-- Modal toggle -->
@@ -102,6 +117,9 @@
 
                                 <div class="col-span-2">Trainer: </div>
                                 <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
+
+                                <div class="col-span-2">Status: </div>
+                                <div id="status" class="col-span-4 font-semibold text-lg"></div>
                             </div>
 
                             <div class="mt-5">
@@ -177,7 +195,8 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        <button id="approveButton" data-modal-target="confirmApproveModal" data-modal-toggle="confirmApproveModal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</button>
+                        <button id="cancelButton" data-modal-target="confirmCancelModal" data-modal-toggle="confirmCancelModal" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">CANCEL SCHEDULE</button>
+                        <button id="rescheduleButton" data-modal-target="rescheduleModal" data-modal-toggle="rescheduleModal" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">RESCHEDULE</button>
                         <button data-modal-hide="viewRequestModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
@@ -191,13 +210,13 @@
                 {{-- CONTROLS --}}
                     @csrf
                     <div class="mb-3">
-                        <div class="md:grid md:grid-cols-2">
-                            <div class="w-24 mb-3 md:mb-0">
+                        <div class="flex flex-row-reverse">
+                            {{-- <div class="w-24 mb-3 md:mb-0">
                                 <a href="{{ route('request.add') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 mr-1" fill="currentColor" viewBox="0 -960 960 960"><path d="M440.391-190.391v-250h-250v-79.218h250v-250h79.218v250h250v79.218h-250v250h-79.218Z"/></svg>
                                     <span>ADD</span></a>
-                            </div>
-                            <div class="justify-self-end w-full xl:w-4/5">
+                            </div> --}}
+                            <div class="justify-self-end w-full xl:w-2/5">
                                 <form method="POST" action="{{ route('request.search') }}" id="searchForm" class="w-full">
                                     @csrf
                                     <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
@@ -227,17 +246,11 @@
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Action
                                             </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Date
+                                            </th>
                                             <th scope="col" class="px-6 py-3 whitespace-nowrap">
                                                 Company Name
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Category
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Type of Unit
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Billing Type
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Area
@@ -246,15 +259,33 @@
                                                 Trainer
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Status
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Last Updated
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($requests as $request)
+                                            @php
+                                                if($request->status == 'SCHEDULED'){
+                                                    $sColor = 'text-orange-500';
+                                                }else if($request->status == 'COMPLETED'){
+                                                    $sColor = 'text-emerald-600';
+                                                }else if($request->status == 'CANCELLED'){
+                                                    $sColor = 'text-red-600';
+                                                }
+                                            @endphp
                                             <tr class="requestRow bg-white border-b cursor-pointer hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/request/edit/'.$request->key) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</button>
+                                                    @if ($request->status == 'SCHEDULED')
+                                                        <a href="{{ url('/trainings/edit/'.$request->key) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a>
+                                                    @endif
+                                                     {{-- | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</button> --}}
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    {{ date('F j, Y', strtotime($request->training_date)) }}
                                                 </td>
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                                     <span data-key="{{ $request->key }}">
@@ -262,19 +293,13 @@
                                                     </span>
                                                 </th>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->category }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->unit_type }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->billing_type }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ $request->area }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ $request->first_name.' '.$request->last_name }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap {{ $sColor }} font-semibold">
+                                                    {{ $request->status }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ date('F j, Y', strtotime($request->updated_at)) }}
@@ -294,6 +319,15 @@
                                     $x = 1;
                                 @endphp
                                 @foreach ($requests as $request)
+                                    @php
+                                        if($request->status == 'SCHEDULED'){
+                                            $sColor = 'text-orange-500';
+                                        }else if($request->status == 'COMPLETED'){
+                                            $sColor = 'text-emerald-600';
+                                        }else if($request->status == 'CANCELLED'){
+                                            $sColor = 'text-red-600';
+                                        }
+                                    @endphp
                                     <h2 id="accordion-collapse-heading-{{$x}}">
                                         <button type="button" class="flex items-center justify-between w-full px-3 py-1.5 text-sm font-semibold text-left text-gray-500 border  border-gray-200 {{ $x == 1 ? 'rounded-t-xl border-b-0' : 'border-b' }} hover:bg-gray-100 focus:bg-gray-900" data-accordion-target="#accordion-collapse-body-{{$x}}" aria-expanded="false" aria-controls="accordion-collapse-body-{{$x}}">
                                             <span>{{ $request->name }}</span>
@@ -303,34 +337,37 @@
                                     <div id="accordion-collapse-body-{{$x}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$x}}">
                                         <div class="px-3 py-1.5 font-light border border-b border-gray-200">
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Category</div>
+                                                <div class="text-xs leading-5">Date</div>
                                                 <div class=" font-semibold text-sm">
-                                                    {{ $request->category }}
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Type of Unit</div>
-                                                <div class=" font-semibold text-sm">
-                                                    {{ $request->unit_type }}
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Billing Type</div>
-                                                <div class="font-semibold text-sm">
-                                                    {{ $request->billing_type }}
+                                                    {{ date('F j, Y', strtotime($request->training_date)) }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Area</div>
-                                                <div class="cfont-semibold text-sm">
+                                                <div class=" font-semibold text-sm">
                                                     {{ $request->area }}
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2">
+                                                <div class="text-xs leading-5">Trainer</div>
+                                                <div class="font-semibold text-sm">
+                                                    {{ $request->first_name.' '.$request->last_name }}
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2">
+                                                <div class="text-xs leading-5">Status</div>
+                                                <div class="text-sm {{ $sColor }} font-semibold">
+                                                    {{ $request->status }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Action</div>
                                                 <div class="">
-                                                    <a href="{{ url('/request/edit/'.$request->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | 
-                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Delete</button>
+                                                    @if ($request->status == 'SCHEDULED')
+                                                        <a href="{{ url('/trainings/edit/'.$request->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a>
+                                                    @endif
+                                                     {{-- | 
+                                                     <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Delete</button> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -371,7 +408,7 @@
                 var _token = $('input[name="_token"]').val();
 
                 $.ajax({
-                    url:"{{ route('request.view') }}",
+                    url:"{{ route('trainings.view') }}",
                     method:"POST",
                     dataType: 'json',
                     data:{
@@ -379,14 +416,42 @@
                         _token: _token
                     },
                     success:function(result){
+                        var currentDate = new Date();
+                        var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+                        var day = currentDate.getDate().toString().padStart(2, '0');
+                        var year = currentDate.getFullYear().toString();
+                        var nCurDate = month + '/' + day + '/' + year;
+                        var nCCDate = year + "-" + month + "-" + day;
+
+                        var dateParts = result.event_date.split('/');
+                        var eventDate = dateParts[2] + '-' + dateParts[0] + '-' + dateParts[1];
+
                         $('#event_date').html(result.event_date);
+                        $('#reschedKey').val(result.key)
+
+                        if(eventDate < nCCDate){
+                            $('#rescheduleDate').val(nCurDate);
+                        }else{
+                            $('#rescheduleDate').val(result.event_date);
+                        }
+
                         $('#venue').html(result.venue);
                         $('#trainer').html(result.trainer);
-                        if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
-                            $('#approveButton').prop('disabled', false);
-                            // $('#approveButton').attr('href', `/request/approve/${result.key}`);
-                        }else{
-                            $('#approveButton').prop('disabled', 'true');
+                        $('#status').html(result.status);
+
+                        $('#status').removeClass('text-orange-500');
+                        $('#status').removeClass('text-emerald-600');
+                        $('#status').removeClass('text-red-600');
+                        $('#cancelButton').addClass('hidden');
+                        $('#rescheduleButton').addClass('hidden');
+                        if(result.status == 'SCHEDULED'){
+                            $('#cancelButton').removeClass('hidden');
+                            $('#status').addClass('text-orange-500');
+                        }else if(result.status == 'COMPLETED'){
+                            $('#status').addClass('text-emerald-600');
+                        }else if(result.status == 'CANCELLED'){
+                            $('#status').addClass('text-red-600');
+                            $('#rescheduleButton').removeClass('hidden');
                         }
 
                         $('#name').html(result.name);
@@ -396,6 +461,7 @@
                             $('#cp1_name').html(result.cp1_name);
                             $('#cp1_number').html(result.cp1_number);
                             $('#cp1_email').html(result.cp1_email);
+                            $('#cp1_div').removeClass('hidden');
                         }else{
                             $('#cp1_div').addClass('hidden');
                         }
@@ -404,6 +470,7 @@
                             $('#cp2_name').html(result.cp2_name);
                             $('#cp2_number').html(result.cp2_number);
                             $('#cp2_email').html(result.cp2_email);
+                            $('#cp2_div').removeClass('hidden');
                         }else{
                             $('#cp2_div').addClass('hidden');
                         }
@@ -412,6 +479,7 @@
                             $('#cp3_name').html(result.cp3_name);
                             $('#cp3_number').html(result.cp3_number);
                             $('#cp3_email').html(result.cp3_email);
+                            $('#cp3_div').removeClass('hidden');
                         }else{
                             $('#cp3_div').addClass('hidden');
                         }
@@ -438,8 +506,6 @@
                         $('#no_of_attendees').html(result.no_of_attendees);
                         $('#knowledge_of_participants').html(result.knowledge_of_participants);
                         $('#remarks').html(result.remarks);
-
-                        $('#confirmApproveButtona').attr('href', `/request/approve/${result.key}`);
                         
                         $('#viewRequestButton').click();
                         autoResize();
@@ -453,17 +519,6 @@
                 textarea.css('height', textarea[0].scrollHeight + 'px');
             }
 
-            $('#approveButton').click(function(){
-                $('#viewRequestModal').removeClass('z-50');
-                $('#viewRequestModal').addClass('z-30');
-
-            });
-
-            $('#closeConfirmApproveButton').click(function(){
-                $('#viewRequestModal').addClass('z-50');
-                $('#viewRequestModal').removeClass('z-30');
-            });
-
             $('.deleteButton').click(function(){
                 key = $(this).data('key');
             });
@@ -472,13 +527,22 @@
                 window.location.href = `/request/delete/${key}`;
             });
 
-            $('#confirmApproveButton').click(function(){
-                window.location.href = `/request/approve/${key}`;
-            });
-
             $('#clearButton').click(function(){
                 $('#search').val('');
                 $('#searchSubmit').click();
+            });
+
+            $('#confirmCancelButtona').click(function(){
+                window.location.href = `/training/cancel/${key}`;
+            });
+
+            $(document).on('click', '.datepicker-cell', function() {
+                var enteredDate = new Date($('#rescheduleDate').val());
+                var currentDate = new Date();
+                if (enteredDate < currentDate) {
+                    var formattedDate = moment(currentDate).format('MM/DD/YYYY');
+                    $('#rescheduleDate').val(formattedDate);
+                }
             });
         });
     </script>

@@ -15,7 +15,7 @@ class DashboardController extends Controller
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->join('users', 'requests.trainer', '=', 'users.id')
             ->where('is_approved', 1)
-            ->where('status', 'SCHEDULED')
+            ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
             ->get();
 
         $eventArray = [];

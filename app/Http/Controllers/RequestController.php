@@ -25,8 +25,20 @@ class RequestController extends Controller
         return view('user.coordinator.request.index', compact('requests', 'search'));
     }
 
-    public function search(){
-        
+    public function search(Request $request){
+        $search = $request->search;
+        $requests = DB::table('requests')
+            ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'users.first_name', 'users.last_name')
+            ->join('customers', 'requests.customer_id', '=', 'customers.id')
+            ->leftJoin('users', 'requests.trainer', '=', 'users.id')
+            ->whereRaw("CONCAT_WS(' ', customers.name, requests.category, requests.unit_type, requests.billing_type, customers.area, requests.updated_at, users.first_name, users.last_name) LIKE '%{$search}%'")
+            ->where('requests.is_approved', 0)
+            ->where('requests.is_deleted', 0)
+            ->orderBy('requests.id', 'desc')
+            ->get();
+
+        // $page = 1;
+        return view('user.coordinator.request.index', compact('requests', 'search'));
     }
 
     public function add(){
