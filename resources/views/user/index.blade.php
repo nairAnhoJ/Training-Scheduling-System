@@ -161,6 +161,9 @@
                     <div class="p-6 overflow-y-auto overflow-x-hidden h-[calc(100vh-220px)]">
                         <div class="">
                             <div class="grid grid-cols-6">
+                                <div class="col-span-2">Status: </div>
+                                <div id="status" class="col-span-4 font-semibold text-lg"></div>
+
                                 <div class="col-span-2">Date: </div>
                                 <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
 
@@ -306,7 +309,7 @@
                 eventClick: function(calEvent, jsEvent, view) {
                     id = calEvent.event.id;
                     var isTraining = calEvent.event.extendedProps.isTraining;
-                        var _token = $('input[name="_token"]').val();
+                    var _token = $('input[name="_token"]').val();
 
                     if(isTraining){
                         $.ajax({
@@ -318,6 +321,19 @@
                                 _token: _token
                             },
                             success:function(result){
+                                $('#status').html(result.status);
+
+                                $('#status').removeClass('text-orange-500');
+                                $('#status').removeClass('text-emerald-600');
+                                $('#status').removeClass('text-red-600');
+                                if(result.status == 'SCHEDULED'){
+                                    $('#status').addClass('text-orange-500');
+                                }else if(result.status == 'COMPLETED'){
+                                    $('#status').addClass('text-emerald-600');
+                                }else if(result.status == 'CANCELLED'){
+                                    $('#status').addClass('text-red-600');
+                                }
+
                                 $('#event_date').html(result.event_date);
                                 $('#venue').html(result.venue);
                                 $('#trainer').html(result.trainer);

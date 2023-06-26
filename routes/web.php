@@ -7,6 +7,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogsController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
@@ -29,33 +30,60 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 */
  
 Route::get('/', function () {
+    $currentDate = date('Y-m-d');
+    
+    DB::table('requests')
+        ->whereRaw('STR_TO_DATE(training_date, "%m/%d/%Y") < ?', [$currentDate])
+        ->update(['status' => 'COMPLETED']);
+
     if(!Auth::user()){
         $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
-
         $events = DB::table('requests')
-            ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'requests.training_date', 'requests.id', 'users.id as uid', 'users.first_name', 'users.last_name', 'users.color')
+            // ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'requests.training_date', 'requests.id', 'users.id as uid', 'users.first_name', 'users.last_name', 'users.color')
+            ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->join('users', 'requests.trainer', '=', 'users.id')
             ->where('is_approved', 1)
+            ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
             ->get();
 
         $eventArray = [];
-        foreach ($events as $event) { 
-            // Create a new array for each iteration
+        foreach ($events as $event) {
             $newArray = [];
         
-            // Populate the new array with desired values
             $newArray = [
-                'id' => $event->id,
+                'id' => $event->key,
                 'title' => $event->name,
                 'start' => date('Y-m-d', strtotime($event->training_date)),
                 'color' => $event->color,
+                'extendedProps' => [
+                    'isTraining' => true
+                ]
             ];
         
-            // Push the new array into the result array
             $eventArray[] = $newArray;
         }
 
+        $events2 = DB::table('events')
+            ->leftJoin('users', 'events.trainer', '=', 'users.id')
+            ->select('events.*', DB::raw('IF(events.trainer = 0, "#FE2C55", users.color) as color'))
+            ->get();
+
+        foreach ($events2 as $event) {
+            $newArray = [];
+        
+            $newArray = [
+                'id' => $event->key,
+                'title' => $event->description,
+                'start' => date('Y-m-d', strtotime($event->date)),
+                'color' => $event->color,
+                'extendedProps' => [
+                    'isTraining' => false
+                ]
+            ];
+        
+            $eventArray[] = $newArray;
+        }
         return view('landing', compact('events', 'eventArray', 'trainers'));
     }else{
         return redirect()->route('dashboard.index');
@@ -64,6 +92,7 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/view', [GuestController::class, 'view'])->name('guest.view');
+Route::post('/event', [GuestController::class, 'event'])->name('guest.event');
 Route::post('/auth', [AuthController::class, 'auth'])->name('login.auth');
 
 Route::middleware('auth')->group(function () {
@@ -132,6 +161,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/system-management/departments/edit/{key}', [DepartmentController::class, 'edit'])->name('departments.edit');
     Route::post('/system-management/departments/update/{key}', [DepartmentController::class, 'update'])->name('departments.update');
     Route::get('/system-management/departments/delete/{key}', [DepartmentController::class, 'delete'])->name('departments.delete');
+
+
+
+
+
+
+    // LOGS
+        // CUSTOMERS
+            Route::get('/logs/customers', [LogsController::class, 'customerIndex'])->name('logs.customer.index');
+    //  LOGS END
+
 });
 
 Route::fallback(function () {

@@ -396,13 +396,14 @@ class RequestController extends Controller
     public function view(Request $request){
         $key = $request->key;
         $thisRequest = DB::table('requests')
-            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.key', 'users.first_name', 'users.last_name')
+            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.status', 'requests.key', 'users.first_name', 'users.last_name')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->leftJoin('users', 'requests.trainer', '=', 'users.id')
             ->where('requests.key', $key)
             ->first();
 
         $result = array(
+            'status' => $thisRequest->status,
             'event_date' => $thisRequest->training_date,
             'venue' => $thisRequest->venue,
             'trainer' => $thisRequest->first_name.' '.$thisRequest->last_name,

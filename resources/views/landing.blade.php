@@ -53,6 +53,44 @@
     </head>
     <body>
         @csrf
+
+        {{-- VIEW CUSTOM EVENT MODAL --}}
+            <!-- Modal toggle -->
+            <button data-modal-target="viewCustomModal" data-modal-toggle="viewCustomModal" id="viewCustomEventButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button"></button>
+            
+            <!-- Main modal -->
+            <div id="viewCustomModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
+                <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+                    <!-- Modal content -->
+                    <div class="relative shadow text-gray-700">
+                        <!-- Modal header -->
+                        <div class="flex items-center justify-between p-4 border-b rounded-t">
+                            <h3 id="cusName" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
+                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewCustomModal">
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-6">
+                            <div class="grid grid-cols-6 gap-y-3">
+                                <div class="col-span-2">Date: </div>
+                                <div id="cusDate" class="col-span-4 font-semibold text-lg"></div>
+    
+                                <div class="col-span-2">Trainer: </div>
+                                <div id="cusTrainer" class="col-span-4 font-semibold text-lg"></div>
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+                            <button id="deleteCustomButton" type="button" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">DELETE</button>
+                            <button id="closeConfirmApproveButton" data-modal-hide="viewCustomModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{-- VIEW CUSTOM EVENT MODAL END --}}
+
         {{-- VIEW EVENT MODAL --}}
             <!-- Modal toggle -->
             <button data-modal-target="viewEventModal" data-modal-toggle="viewEventModal" id="viewEventButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
@@ -76,6 +114,9 @@
                     <div class="p-6 overflow-y-auto overflow-x-hidden h-[calc(100vh-220px)]">
                         <div class="">
                             <div class="grid grid-cols-6">
+                                <div class="col-span-2">Status: </div>
+                                <div id="status" class="col-span-4 font-semibold text-lg"></div>
+                                
                                 <div class="col-span-2">Date: </div>
                                 <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
 
@@ -200,6 +241,7 @@
 
         <script>
             $(document).ready(function(){
+                var id;
                 var eventArray = @json($eventArray);
   
                 var calendarEl = document.getElementById('calendar');
@@ -227,85 +269,119 @@
                         info.el.classList.add('hover:scale-105'); 
                     },
                     eventClick: function(calEvent, jsEvent, view) {
-                        var id = calEvent.event.id;
+                        id = calEvent.event.id;
+                        var isTraining = calEvent.event.extendedProps.isTraining;
                         var _token = $('input[name="_token"]').val();
 
-                        $.ajax({
-                            url:"{{ route('guest.view') }}",
-                            method:"POST",
-                            dataType: 'json',
-                            data:{
-                                id: id,
-                                _token: _token
-                            },
-                            success:function(result){
-                                $('#event_date').html(result.event_date);
-                                $('#venue').html(result.venue);
-                                $('#trainer').html(result.trainer);
-                                $('#trainingNumber').html(result.training_number);
-                                if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
-                                    $('#approveButton').prop('disabled', false);
-                                    // $('#approveButton').attr('href', `/request/approve/${result.key}`);
-                                }else{
-                                    $('#approveButton').prop('disabled', 'true');
-                                }
+                        if(isTraining){
+                            $.ajax({
+                                url:"{{ route('guest.view') }}",
+                                method:"POST",
+                                dataType: 'json',
+                                data:{
+                                    id: id,
+                                    _token: _token
+                                },
+                                success:function(result){
+                                    $('#status').html(result.status);
 
-                                $('#name').html(result.name);
-                                $('#address').html(result.address);
-
-                                if(result.cp1_name != ''){
-                                    $('#cp1_name').html(result.cp1_name);
-                                    $('#cp1_number').html(result.cp1_number);
-                                    $('#cp1_email').html(result.cp1_email);
-                                }else{
-                                    $('#cp1_div').addClass('hidden');
-                                }
-
-                                if(result.cp2_name != ''){
-                                    $('#cp2_name').html(result.cp2_name);
-                                    $('#cp2_number').html(result.cp2_number);
-                                    $('#cp2_email').html(result.cp2_email);
-                                }else{
-                                    $('#cp2_div').addClass('hidden');
-                                }
-
-                                if(result.cp3_name != ''){
-                                    $('#cp3_name').html(result.cp3_name);
-                                    $('#cp3_number').html(result.cp3_number);
-                                    $('#cp3_email').html(result.cp3_email);
-                                }else{
-                                    $('#cp3_div').addClass('hidden');
-                                }
-
-                                $('#area').html(result.area);
-                                $('#category').html(result.category);
-
-                                if(result.is_PM == 1){
-                                    $('#con_details_div').removeClass('hidden');
-                                    if(result.contract_details == null){
-                                        $('#contract_details').addClass('pointer-events-none opacity-50');
-                                    }else{
-                                        $('#contract_details').removeClass('pointer-events-none opacity-50');
-                                        $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
+                                    $('#status').removeClass('text-orange-500');
+                                    $('#status').removeClass('text-emerald-600');
+                                    $('#status').removeClass('text-red-600');
+                                    if(result.status == 'SCHEDULED'){
+                                        $('#status').addClass('text-orange-500');
+                                    }else if(result.status == 'COMPLETED'){
+                                        $('#status').addClass('text-emerald-600');
+                                    }else if(result.status == 'CANCELLED'){
+                                        $('#status').addClass('text-red-600');
                                     }
-                                }else{
-                                    $('#con_details_div').addClass('hidden');
+
+                                    $('#event_date').html(result.event_date);
+                                    $('#venue').html(result.venue);
+                                    $('#trainer').html(result.trainer);
+                                    $('#trainingNumber').html(result.training_number);
+                                    if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
+                                        $('#approveButton').prop('disabled', false);
+                                        // $('#approveButton').attr('href', `/request/approve/${result.key}`);
+                                    }else{
+                                        $('#approveButton').prop('disabled', 'true');
+                                    }
+
+                                    $('#name').html(result.name);
+                                    $('#address').html(result.address);
+
+                                    if(result.cp1_name != ''){
+                                        $('#cp1_div').removeClass('hidden');
+                                        $('#cp1_name').html(result.cp1_name);
+                                        $('#cp1_number').html(result.cp1_number);
+                                        $('#cp1_email').html(result.cp1_email);
+                                    }else{
+                                        $('#cp1_div').addClass('hidden');
+                                    }
+
+                                    if(result.cp2_name != ''){
+                                        $('#cp2_div').removeClass('hidden');
+                                        $('#cp2_name').html(result.cp2_name);
+                                        $('#cp2_number').html(result.cp2_number);
+                                        $('#cp2_email').html(result.cp2_email);
+                                    }else{
+                                        $('#cp2_div').addClass('hidden');
+                                    }
+
+                                    if(result.cp3_name != ''){
+                                        $('#cp3_div').removeClass('hidden');
+                                        $('#cp3_name').html(result.cp3_name);
+                                        $('#cp3_number').html(result.cp3_number);
+                                        $('#cp3_email').html(result.cp3_email);
+                                    }else{
+                                        $('#cp3_div').addClass('hidden');
+                                    }
+
+                                    $('#area').html(result.area);
+                                    $('#category').html(result.category);
+
+                                    if(result.is_PM == 1){
+                                        $('#con_details_div').removeClass('hidden');
+                                        if(result.contract_details == null){
+                                            $('#contract_details').addClass('pointer-events-none opacity-50');
+                                        }else{
+                                            $('#contract_details').removeClass('pointer-events-none opacity-50');
+                                            $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
+                                        }
+                                    }else{
+                                        $('#con_details_div').addClass('hidden');
+                                    }
+
+                                    $('#brand').html(result.brand);
+                                    $('#model').html(result.model);
+                                    $('#unit_type').html(result.unit_type);
+                                    $('#billing_type').html(result.billing_type);
+                                    $('#no_of_attendees').html(result.no_of_attendees);
+                                    $('#knowledge_of_participants').html(result.knowledge_of_participants);
+                                    $('#remarks').html(result.remarks);
+                                    
+                                    $('#viewEventButton').click();
+                                    autoResize();
                                 }
-
-                                $('#brand').html(result.brand);
-                                $('#model').html(result.model);
-                                $('#unit_type').html(result.unit_type);
-                                $('#billing_type').html(result.billing_type);
-                                $('#no_of_attendees').html(result.no_of_attendees);
-                                $('#knowledge_of_participants').html(result.knowledge_of_participants);
-                                $('#remarks').html(result.remarks);
-
-                                $('#confirmApproveButtona').attr('href', `/request/approve/${result.key}`);
-                                
-                                $('#viewEventButton').click();
-                                autoResize();
-                            }
-                        })
+                            })
+                        }else{
+                            $.ajax({
+                                url:"{{ route('guest.event') }}",
+                                method:"POST",
+                                dataType: 'json',
+                                data:{
+                                    id: id,
+                                    _token: _token
+                                },
+                                success:function(result){
+                                    $('#cusName').html(result.description);
+                                    $('#cusDate').html(result.date);
+                                    $('#cusTrainer').html(result.trainer);
+                                    
+                                    $('#viewCustomEventButton').click();
+                                }
+                            })
+                        }
                     },
                     events: eventArray
                 });
