@@ -124,17 +124,17 @@ class CustomerController extends Controller
             }else if($column == 'cp1_email'){
                 $changed = 'Contact Person 1 Email';
             }else if($column == 'cp2_name'){
-                $changed = 'Contact Person 1 Name';
+                $changed = 'Contact Person 2 Name';
             }else if($column == 'cp2_number'){
-                $changed = 'Contact Person 1 Number';
+                $changed = 'Contact Person 2 Number';
             }else if($column == 'cp2_email'){
-                $changed = 'Contact Person 1 Email';
+                $changed = 'Contact Person 2 Email';
             }else if($column == 'cp3_name'){
-                $changed = 'Contact Person 1 Name';
+                $changed = 'Contact Person 3 Name';
             }else if($column == 'cp3_number'){
-                $changed = 'Contact Person 1 Number';
+                $changed = 'Contact Person 3 Number';
             }else if($column == 'cp3_email'){
-                $changed = 'Contact Person 1 Email';
+                $changed = 'Contact Person 3 Email';
             }else{
                 $changed = ucfirst($column);
             }
@@ -143,7 +143,8 @@ class CustomerController extends Controller
             $log->table = 'CUSTOMERS';
             $log->table_key = $key;
             $log->action = 'UPDATE';
-            $log->description = '>> '.$model->name.' { '.$changed.' }';
+            $log->description = $model->name;
+            $log->field = $changed;
             $log->before = $originalData[$column];
             $log->after = $data[$column];
             $log->user_id = Auth::id();
@@ -200,7 +201,7 @@ class CustomerController extends Controller
         $log->table = 'CUSTOMERS';
         $log->table_key = $key;
         $log->action = 'DELETE';
-        $log->description = '>> Name { '.$cus->name.' }';
+        $log->description = 'Name >> '.$cus->name;
         $log->before = '';
         $log->after = '';
         $log->user_id = Auth::id();
@@ -214,6 +215,30 @@ class CustomerController extends Controller
         $thisRequest = DB::table('customers')
             ->where('key', $key)
             ->first();
+
+        $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
+            ->select('logs.*', 'users.first_name', 'users.last_name')
+            ->where('table', 'CUSTOMERS')
+            ->where('logs.table_key', $key)
+            ->orderByDesc('id')
+            ->get();
+        $logRes = '';
+
+        foreach($logs as $log){
+            $logRes .= '
+                <div class="text-sm mt-2">
+                    <div class="flex justify-between bg-gray-200 px-1.5 py-0.5">
+                        <p class="font-semibold">'.$log->created_at.'</p>
+                        <p>'.$log->first_name.' '.$log->last_name.'</p>
+                    </div>
+                    <div id="logsDiv" class="pl-7">
+                        <div>
+                            • <span>'.ucfirst(strtolower($log->action)).'</span> <span>'.ucwords(strtolower($log->field)).'</span>: <span></span><span>'.$log->before.'</span> ⇒ <span>'.$log->after.'</span>
+                        </div>
+                    </div>
+                </div>
+            ';
+        }
 
         $result = array(
             'name' => $thisRequest->name,
@@ -231,6 +256,8 @@ class CustomerController extends Controller
             'cp3_name' => $thisRequest->cp3_name,
             'cp3_number' => $thisRequest->cp3_number,
             'cp3_email' => $thisRequest->cp3_email,
+
+            'logRes' => $logRes,
         );
 
         echo json_encode($result);

@@ -49,8 +49,8 @@
         <button data-modal-target="viewCustomerModal" data-modal-toggle="viewCustomerModal" id="viewCustomerButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button"></button>
         
         <!-- Main modal -->
-        <div id="viewCustomerModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-3xl bg-white rounded-lg overflow-x-hidden overflow-y-auto">
+        <div id="viewCustomerModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 p-4 z-50 hidden w-full overflow-x-hidden overflow-y-auto md:inset-0 h-full">
+            <div class="relative w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
                 <div class="relative shadow text-gray-700">
                     <!-- Modal header -->
@@ -62,8 +62,8 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="p-6 overflow-y-auto overflow-x-hidden">
-                        <div class="">
+                    <div class="p-4 overflow-y-auto overflow-x-hidden grid grid-cols-5 h-[calc(100vh-188px)]">
+                        <div class="col-span-3 border-r p-4">
                             <div class="">
                                 <div class="flex items-center mb-3">
                                     <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
@@ -76,8 +76,8 @@
                                     <div id="cp1_div" class="col-span-6 grid grid-cols-6">
                                         <div class="ml-10">Name: </div>
                                         <div id="cp1_name" class="col-span-5 font-semibold text-lg"></div>
-                                        <div class="ml-10">Date: </div>
-                                        <div id="cp1_number" class="col-span-5 font-semibold text-lg"></div>
+                                        <div class="ml-10">Number: </div>
+                                        <div id="cp1_number" class="col-span-5 font-semibold text-lg slashed-zero"></div>
                                         <div class="ml-10">E-mail: </div>
                                         <div id="cp1_email" class="col-span-5 font-semibold text-lg"></div>
                                     </div>
@@ -85,8 +85,8 @@
                                     <div id="cp2_div" class="col-span-6 grid grid-cols-6">
                                         <div class="ml-10 mt-5">Name: </div>
                                         <div id="cp2_name" class="col-span-5 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10">Date: </div>
-                                        <div id="cp2_number" class="col-span-5 font-semibold text-lg"></div>
+                                        <div class="ml-10">Number: </div>
+                                        <div id="cp2_number" class="col-span-5 font-semibold text-lg slashed-zero"></div>
                                         <div class="ml-10">E-mail: </div>
                                         <div id="cp2_email" class="col-span-5 font-semibold text-lg"></div>
                                     </div>
@@ -94,11 +94,24 @@
                                     <div id="cp3_div" class="col-span-6 grid grid-cols-6">
                                         <div class="ml-10 mt-5">Name: </div>
                                         <div id="cp3_name" class="col-span-5 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10">Date: </div>
-                                        <div id="cp3_number" class="col-span-5 font-semibold text-lg"></div>
+                                        <div class="ml-10">Number: </div>
+                                        <div id="cp3_number" class="col-span-5 font-semibold text-lg slashed-zero"></div>
                                         <div class="ml-10">E-mail: </div>
                                         <div id="cp3_email" class="col-span-5 font-semibold text-lg"></div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-4 col-span-2 h-full overflow-x-hidden overflow-y-auto">
+                            <div class="relative">
+                                <div class="sticky top-0 bg-white py-2">
+                                    <div class="flex items-center mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="h-6 w-6"><path d="M477-120q-149 0-253-105.5T120-481h60q0 125 86 213t211 88q127 0 215-89t88-216q0-124-89-209.5T477-780q-68 0-127.5 31T246-667h105v60H142v-208h60v106q52-61 123.5-96T477-840q75 0 141 28t115.5 76.5Q783-687 811.5-622T840-482q0 75-28.5 141t-78 115Q684-177 618-148.5T477-120Zm128-197L451-469v-214h60v189l137 134-43 43Z"/></svg>
+                                        <h3 class="ml-1">History Logs</h3>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div id="logsDiv">
                                 </div>
                             </div>
                         </div>
@@ -285,6 +298,9 @@
                         $('#cp3_name').html(result.cp3_name);
                         $('#cp3_number').html(result.cp3_number);
                         $('#cp3_email').html(result.cp3_email);
+
+                        $('#logsDiv').html(result.logRes);
+
 
                         $('#viewCustomerButton').click();
                     }

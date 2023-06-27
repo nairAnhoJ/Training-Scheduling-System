@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('table_key');
             $table->string('action'); // SET, EDIT, DELETE
             $table->string('description');
+            $table->string('field');
             $table->string('before')->nullable();
             $table->string('after')->nullable();
             $table->unsignedInteger('user_id');
