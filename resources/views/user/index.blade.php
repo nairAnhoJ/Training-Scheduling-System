@@ -328,10 +328,13 @@
                                 $('#status').removeClass('text-red-600');
                                 if(result.status == 'SCHEDULED'){
                                     $('#status').addClass('text-orange-500');
+                                    $('#cancelButton').removeClass('hidden');
                                 }else if(result.status == 'COMPLETED'){
                                     $('#status').addClass('text-emerald-600');
+                                    $('#cancelButton').addClass('hidden');
                                 }else if(result.status == 'CANCELLED'){
                                     $('#status').addClass('text-red-600');
+                                    $('#cancelButton').addClass('hidden');
                                 }
 
                                 $('#event_date').html(result.event_date);

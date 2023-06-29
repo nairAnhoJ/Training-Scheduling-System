@@ -170,6 +170,7 @@ Route::middleware('auth')->group(function () {
     // LOGS
         // CUSTOMERS
             Route::get('/logs/customers', [LogsController::class, 'customerIndex'])->name('logs.customer.index');
+            Route::get('/logs/customers/{page}/{search?}', [LogsController::class, 'customerPaginate'])->name('logs.customer.paginate');
     //  LOGS END
 
 });

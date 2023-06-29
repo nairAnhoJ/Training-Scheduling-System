@@ -30,7 +30,7 @@
                                     <span>ADD</span></a>
                             </div> --}}
                             <div class="justify-self-end w-full xl:w-4/5">
-                                <form method="POST" action="{{ route('request.search') }}" id="searchForm" class="w-full">
+                                <form method="GET" action="" id="searchForm" class="w-full">
                                     @csrf
                                     <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                                     <div class="relative">
@@ -41,7 +41,7 @@
                                         <button id="clearButton" type="button" class="absolute right-20 bottom-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 group-hover:text-gray-900 mr-1 text-gray-500" fill="currentColor" viewBox="0 -960 960 960"><path d="M249-193.434 193.434-249l231-231-231-231L249-766.566l231 231 231-231L766.566-711l-231 231 231 231L711-193.434l-231-231-231 231Z"/></svg>
                                         </button>
-                                        <button id="searchSubmit" type="submit" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
+                                        <button id="searchSubmit" type="button" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
                                     </div>
                                 </form>
                             </div>
@@ -161,21 +161,32 @@
                     {{-- TABLE SMALL DEVICE END --}}
 
                     {{-- PAGINATION --}}
+                        @php
+                            $prev = $page - 1;
+                            $next = $page + 1;
+                            $from = ($prev * 100) + 1;
+                            $to = $page * 100;
+                            if($to > $logsCount){
+                                $to = $logsCount;
+                            }if($logsCount == 0){
+                                $from = 0;
+                            }
+                        @endphp
                         <div class="flex flex-row items-center w-full justify-between mt-2">
                             <!-- Help text -->
                             <span class="text-sm text-gray-700">
-                                Showing <span class="font-semibold text-gray-700">1</span> to <span class="font-semibold text-gray-700">10</span> of <span class="font-semibold text-gray-700">100</span> results
+                                Showing <span class="font-semibold text-gray-700">{{$from}}</span> to <span class="font-semibold text-gray-700">{{$to}}</span> of <span class="font-semibold text-gray-700">{{ $logsCount }}</span> results
                             </span>
                             <!-- Buttons -->
                             <div class="inline-flex xs:mt-0">
-                                <a href="#" class="inline-flex items-center px-4 py-2 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-400 rounded-lg hover:bg-gray-100 hover:text-gray-700 w-32">
+                                <a href="{{ url('/logs/customers/'.$prev.'/'.$search) }}" class="{{ ($page == 1) ? 'pointer-events-none' : ''; }} inline-flex items-center px-4 py-2 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-400 rounded-lg hover:bg-gray-100 hover:text-gray-700 w-32">
                                     <svg aria-hidden="true" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
                                     Previous
-                                  </a>
-                                  <a href="#" class="flex items-center text-center px-8 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-400 rounded-lg hover:bg-gray-100 hover:text-gray-700 w-32">
+                                </a>
+                                <a href="{{ url('/logs/customers/'.$next.'/'.$search) }}" class="{{ ($to == $logsCount) ? 'pointer-events-none' : ''; }} flex items-center text-center px-8 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-400 rounded-lg hover:bg-gray-100 hover:text-gray-700 w-32">
                                     Next
                                     <svg aria-hidden="true" class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                  </a>
+                                </a>
                             </div>
                         </div>
                     {{-- PAGINATION END --}}
@@ -186,7 +197,30 @@
 
     <script>
         $(document).ready(function(){
+            $('#searchSubmit').click(function() {
+                var searchValue = $('#search').val();
+                var pageValue = '<?php echo $page; ?>';
+                var actionUrl = "{{ url('/logs/customers/') }}" + "/" + pageValue + "/" + searchValue;
 
+                $('#searchForm').attr('action', actionUrl);
+                $('#searchForm').submit();
+            });
+
+            $('#clearButton').click(function() {
+                var searchValue = '';
+                var pageValue = '<?php echo $page; ?>';
+                var actionUrl = "{{ url('/logs/customers/') }}" + "/" + pageValue + "/" + searchValue;
+
+                $('#searchForm').attr('action', actionUrl);
+                $('#searchForm').submit();
+            });
+            
+            $('#search').keypress(function(event) {
+                if (event.which === 13) {
+                    event.preventDefault();
+                    $('#searchSubmit').click();
+                }
+            });
         });
     </script>
 @endsection
