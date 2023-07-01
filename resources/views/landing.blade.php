@@ -226,6 +226,10 @@
                 <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full overflow-y-scroll">
                     {{-- Legends --}}
                     <div class="w-full flex gap-x-5">
+                        <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
+                            <span class="flex w-3 h-3 bg-[#FE2C55] rounded-full mr-1.5 flex-shrink-0"></span>
+                            ALL
+                        </span>
                         @foreach ($trainers as $trainer)
                             <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
                                 <span class="flex w-3 h-3 bg-[{{ $trainer->color }}] rounded-full mr-1.5 flex-shrink-0"></span>
