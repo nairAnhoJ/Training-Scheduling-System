@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
@@ -98,6 +99,7 @@ Route::post('/auth', [AuthController::class, 'auth'])->name('login.auth');
 Route::middleware('auth')->group(function () {
     Route::get('/schedule-board', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::post('/schedule-board/view', [DashboardController::class, 'view'])->name('dashboard.view');
+    Route::post('/schedule-board/comment', [CommentController::class, 'store'])->name('comment.store');
     Route::get('/schedule-board/cancel/{key}', [DashboardController::class, 'cancel'])->name('dashboard.cancel');
 
     Route::post('/schedule-board/event/add', [EventController::class, 'add'])->name('event.add');

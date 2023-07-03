@@ -146,7 +146,7 @@
         
         <!-- Main modal -->
         <div id="viewEventModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-3xl h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
                 <div class="relative shadow text-gray-700">
                     <!-- Modal header -->
@@ -159,90 +159,117 @@
                     </div>
                     <!-- Modal body -->
                     <div class="p-6 overflow-y-auto overflow-x-hidden h-[calc(100vh-220px)]">
-                        <div class="">
-                            <div class="grid grid-cols-6">
-                                <div class="col-span-2">Status: </div>
-                                <div id="status" class="col-span-4 font-semibold text-lg"></div>
-
-                                <div class="col-span-2">Date: </div>
-                                <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
-
-                                <div class="col-span-2">Venue: </div>
-                                <div id="venue" class="col-span-4 font-semibold text-lg"></div>
-
-                                <div class="col-span-2">Trainer: </div>
-                                <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
-
-                                <div class="col-span-2">Training Number: </div>
-                                <div id="trainingNumber" class="col-span-4 font-semibold text-lg"></div>
-                            </div>
-
-                            <div class="mt-5">
-                                <div class="flex items-center">
-                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
-                                </div>
+                        <div class="grid grid-cols-3">
+                            <div class="col-span-2 border-r pr-6">
                                 <div class="grid grid-cols-6">
-                                    <div class="col-span-2">Address: </div>
-                                    <div id="address" class="col-span-4 font-semibold text-lg"></div>
-
-                                    <h3 class="font-semibold col-span-6">Contact Person/s:</h3>
-                                    <div id="cp1_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 col-span-2">Name: </div>
-                                        <div id="cp1_name" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp1_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp1_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <div class="col-span-2">Status: </div>
+                                    <div id="status" class="col-span-4 font-semibold text-lg"></div>
+    
+                                    <div class="col-span-2">Date: </div>
+                                    <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
+    
+                                    <div class="col-span-2">Venue: </div>
+                                    <div id="venue" class="col-span-4 font-semibold text-lg"></div>
+    
+                                    <div class="col-span-2">Trainer: </div>
+                                    <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
+    
+                                    <div class="col-span-2">Training Number: </div>
+                                    <div id="trainingNumber" class="col-span-4 font-semibold text-lg"></div>
+                                </div>
+    
+                                <div class="mt-5">
+                                    <div class="flex items-center">
+                                        <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
                                     </div>
-
-                                    <div id="cp2_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 mt-5 col-span-2">Name: </div>
-                                        <div id="cp2_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp2_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp2_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <div class="grid grid-cols-6">
+                                        <div class="col-span-2">Address: </div>
+                                        <div id="address" class="col-span-4 font-semibold text-lg"></div>
+    
+                                        <h3 class="font-semibold col-span-6">Contact Person/s:</h3>
+                                        <div id="cp1_div" class="col-span-6 grid grid-cols-6">
+                                            <div class="ml-10 col-span-2">Name: </div>
+                                            <div id="cp1_name" class="col-span-4 font-semibold text-lg"></div>
+                                            <div class="ml-10 col-span-2">Date: </div>
+                                            <div id="cp1_number" class="col-span-4 font-semibold text-lg"></div>
+                                            <div class="ml-10 col-span-2">E-mail: </div>
+                                            <div id="cp1_email" class="col-span-4 font-semibold text-lg"></div>
+                                        </div>
+    
+                                        <div id="cp2_div" class="col-span-6 grid grid-cols-6">
+                                            <div class="ml-10 mt-5 col-span-2">Name: </div>
+                                            <div id="cp2_name" class="col-span-4 font-semibold text-lg mt-5"></div>
+                                            <div class="ml-10 col-span-2">Date: </div>
+                                            <div id="cp2_number" class="col-span-4 font-semibold text-lg"></div>
+                                            <div class="ml-10 col-span-2">E-mail: </div>
+                                            <div id="cp2_email" class="col-span-4 font-semibold text-lg"></div>
+                                        </div>
+    
+                                        <div id="cp3_div" class="col-span-6 grid grid-cols-6">
+                                            <div class="ml-10 mt-5 col-span-2">Name: </div>
+                                            <div id="cp3_name" class="col-span-4 font-semibold text-lg mt-5"></div>
+                                            <div class="ml-10 col-span-2">Date: </div>
+                                            <div id="cp3_number" class="col-span-4 font-semibold text-lg"></div>
+                                            <div class="ml-10 col-span-2">E-mail: </div>
+                                            <div id="cp3_email" class="col-span-4 font-semibold text-lg"></div>
+                                        </div>
                                     </div>
-
-                                    <div id="cp3_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 mt-5 col-span-2">Name: </div>
-                                        <div id="cp3_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp3_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp3_email" class="col-span-4 font-semibold text-lg"></div>
+                                </div>
+    
+                                <div class="mt-5">
+                                    <div class="flex items-center">
+                                        <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                    </div>
+                                    <div class="grid grid-cols-6">
+                                        <div class="col-span-2">Area: </div>
+                                        <div id="area" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="col-span-2">Category: </div>
+                                        <div id="category" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="con_details_div" class="col-span-6 grid grid-cols-6">
+                                            <div class="col-span-2">Contract Details: </div>
+                                            <a href="#" id="contract_details" target="_blank" class="col-span-4 font-semibold text-lg text-white bg-blue-500 rounded-lg w-40 tracking-wide text-center hover:scale-105">VIEW</a>
+                                        </div>
+                                        <div class="col-span-2">Brand: </div>
+                                        <div id="brand" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="col-span-2">Model: </div>
+                                        <div id="model" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="col-span-2">Type of Unit: </div>
+                                        <div id="unit_type" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="col-span-2">Billing Type: </div>
+                                        <div id="billing_type" class="col-span-4 font-semibold text-lg"></div>
+                                        <div class="col-span-2">Number of Attendees: </div>
+                                        <div id="no_of_attendees" class="col-span-4 font-semibold text-lg">13</div>
+                                        <div class="col-span-2">Knowledge of Participants: </div>
+                                        <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg"></div>
+                                        {{-- <div class="col-span-2">Notes: </div>
+                                        <div class="col-span-4 font-semibold">
+                                            <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="mt-5">
-                                <div class="flex items-center">
-                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                            <div class="pl-6">
+                                <h1 class="text-2xl font-bold">Comments</h1>
+                                <div id="commentContainer" class="h-[calc(100vh-358px)] overflow-x-hidden overflow-y-auto pr-2">
+                                    {{--  --}}
+                                        <div class="my-2 border border-gray-400 shadow p-2 rounded-lg">
+                                            <div class="flex flex-col leading-4">
+                                                <h1 class="font-semibold">John Arian Malondras</h1>
+                                                <p class="text-sm mb-2">July 1, 2023 at 6:31 AM</p>
+                                                <p>If you want to detect when the Enter key is pressed in an input tag using jQuery, you can achieve this by attaching an event listener to the input element and checking for the keycode of the Enter key (which is 13). Here's an example:</p>
+                                            </div>
+                                        </div>
+                                    {{--  --}}
                                 </div>
-                                <div class="grid grid-cols-6">
-                                    <div class="col-span-2">Area: </div>
-                                    <div id="area" class="col-span-4 font-semibold text-lg"></div>
-                                    <div class="col-span-2">Category: </div>
-                                    <div id="category" class="col-span-4 font-semibold text-lg"></div>
-                                    <div id="con_details_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="col-span-2">Contract Details: </div>
-                                        <a href="#" id="contract_details" target="_blank" class="col-span-4 font-semibold text-lg text-white bg-blue-500 rounded-lg w-40 tracking-wide text-center hover:scale-105">VIEW</a>
-                                    </div>
-                                    <div class="col-span-2">Brand: </div>
-                                    <div id="brand" class="col-span-4 font-semibold text-lg"></div>
-                                    <div class="col-span-2">Model: </div>
-                                    <div id="model" class="col-span-4 font-semibold text-lg"></div>
-                                    <div class="col-span-2">Type of Unit: </div>
-                                    <div id="unit_type" class="col-span-4 font-semibold text-lg"></div>
-                                    <div class="col-span-2">Billing Type: </div>
-                                    <div id="billing_type" class="col-span-4 font-semibold text-lg"></div>
-                                    <div class="col-span-2">Number of Attendees: </div>
-                                    <div id="no_of_attendees" class="col-span-4 font-semibold text-lg">13</div>
-                                    <div class="col-span-2">Knowledge of Participants: </div>
-                                    <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg"></div>
-                                    <div class="col-span-2">Notes: </div>
-                                    <div class="col-span-4 font-semibold">
-                                        <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
+                                <div class="h-[40px] pr-2 mt-2">
+                                    <div>
+                                        <div>   
+                                            <label for="commentInput" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
+                                            <div class="relative">
+                                                <input type="text" id="commentInput" name="commentInput" class="block h-14 w-full pl-4 pr-14 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Write a comment..." required>
+                                                <button type="button" id="commentSubmit" class="text-white absolute right-2.5 bottom-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-2 py-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor"><path d="M120-160v-640l760 320-760 320Zm60-93 544-227-544-230v168l242 62-242 60v167Zm0 0v-457 457Z"/></svg></button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -310,6 +337,7 @@
                     id = calEvent.event.id;
                     var isTraining = calEvent.event.extendedProps.isTraining;
                     var _token = $('input[name="_token"]').val();
+                    console.log(calEvent.event.extendedProps.notificationCount);
 
                     if(isTraining){
                         $.ajax({
@@ -400,9 +428,9 @@
                                 $('#no_of_attendees').html(result.no_of_attendees);
                                 $('#knowledge_of_participants').html(result.knowledge_of_participants);
                                 $('#remarks').html(result.remarks);
-                                
+
                                 $('#viewEventButton').click();
-                                autoResize();
+                                autoScroll();
                             }
                         })
                     }else{
@@ -424,17 +452,30 @@
                         })
                     }
                 },
-                events: eventArray
+                events: eventArray,
+                eventDidMount: function(calEvent) {
+                    console.log(calEvent.event);
+                    $('.fc-event-title-container').css('padding-right', '13px');
+                    // var eventTitleElement = calEvent.el.querySelector('.fc-title');
+                    // eventTitleElement.addClass()
+                    var event = calEvent.event;
+                    if (event.extendedProps.notificationCount > 0) {
+                        var badge = document.createElement('div');
+                        badge.className = 'absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 bg-red-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-xs font-semibold';
+                        badge.textContent = event.extendedProps.notificationCount;
+                        calEvent.el.appendChild(badge);
+                    }
+                }
             });
             calendar.render();
 
             $('.fc-addButton-button').removeClass('fc-button-primary fc fc-button');
             $('.fc-addButton-button').addClass('bg-blue-500 font-bold h-10 px-10 rounded-lg text-white tracking-wider hover:scale-105');
 
-            function autoResize() {
-                var textarea = $('#remarks');
-                textarea.css('height', 'auto');
-                textarea.css('height', textarea[0].scrollHeight + 'px');
+            function autoScroll() {
+                var commentList = $('#commentContainer');
+                var scrollHeight = commentList[0].scrollHeight;
+                commentList.scrollTop(scrollHeight);
             }
 
             $('#deleteCustomButton').click(function(){
@@ -444,6 +485,40 @@
             $('#confirmCancelButtona').click(function(){
                 window.location.href = `/schedule-board/cancel/${id}`;
             });
+
+            $('input').keypress(function(event) {
+                if (event.which === 13) {
+                    submitComment();
+                }
+            });
+
+            $('#commentSubmit').click(function(){
+                submitComment();
+            });
+
+            function submitComment(){
+                var content = $('#commentInput').val();
+                var _token = $('input[name="_token"]').val();
+                
+                if(content != '' && content != null){
+                    $.ajax({
+                        url:"{{ route('comment.store') }}",
+                        method:"POST",
+                        data:{
+                            id: id,
+                            content: content,
+                            _token: _token
+                        },
+                        success:function(result){
+                            console.log(result)
+                            $('#commentContainer').html(result);
+                            $('#commentInput').val('');
+                            $('#commentInput').focus();
+                            autoScroll();
+                        }
+                    })
+                }
+            }
         });
     </script>
 @endsection

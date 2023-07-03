@@ -33,6 +33,7 @@ class DashboardController extends Controller
                 'title' => $event->name,
                 'start' => date('Y-m-d', strtotime($event->training_date)),
                 'color' => $event->color,
+                'notificationCount' => 3,
                 'extendedProps' => [
                     'isTraining' => true
                 ]
@@ -54,6 +55,7 @@ class DashboardController extends Controller
                 'title' => $event->description,
                 'start' => date('Y-m-d', strtotime($event->date)),
                 'color' => $event->color,
+                'notificationCount' => 0,
                 'extendedProps' => [
                     'isTraining' => false
                 ]
