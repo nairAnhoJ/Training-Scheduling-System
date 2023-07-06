@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Logs;
+use App\Models\Request as ModelsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class RequestController extends Controller
 {
@@ -302,7 +306,7 @@ class RequestController extends Controller
         $category = $request->category;
         $contract_details = $request->contract_details;
         $brand = $request->brand;
-        $model = strtoupper($request->model);
+        $reqmodel = strtoupper($request->model);
         $unit_type = $request->unit_type;
         $no_of_unit = $request->no_of_unit;
         $billing_type = $request->billing_type;
@@ -313,22 +317,104 @@ class RequestController extends Controller
         $trainer = $request->trainer;
         $remarks = $request->remarks;
 
-        DB::table('customers')
-            ->where('name', $name)
-            ->update([
-                'address' => $address,
-                'area' => $area,
-                'cp1_name' => $cp1_name,
-                'cp1_number' => $cp1_number,
-                'cp1_email' => $cp1_email,
-                'cp2_name' => $cp2_name,
-                'cp2_number' => $cp2_number,
-                'cp2_email' => $cp2_email,
-                'cp3_name' => $cp3_name,
-                'cp3_number' => $cp3_number,
-                'cp3_email' => $cp3_email,
-                'updated_at' => date('Y-m-d H:i:s'),
-            ]);
+
+        $model = Customer::where('name', $name)->firstOrFail();
+        $originalData = $model->toArray();
+
+        $data = $request->except('_token', 'category', 'brand', 'model', 'unit_type', 'no_of_unit', 'billing_type', 'no_of_attendees', 'knowledge_of_participants', 'venue', 'event_date', 'trainer', 'remarks');
+        $data['address'] = $address;
+        $data['area'] = $area;
+        $data['cp1_name'] = $cp1_name;
+        $data['cp1_number'] = $cp1_number;
+        $data['cp1_email'] = $cp1_email;
+        $data['cp2_name'] = $cp2_name;
+        $data['cp2_number'] = $cp2_number;
+        $data['cp2_email'] = $cp2_email;
+        $data['cp3_name'] = $cp3_name;
+        $data['cp3_number'] = $cp3_number;
+        $data['cp3_email'] = $cp3_email;
+        $data['updated_at'] = Carbon::now();
+        $model->update($data);
+
+        $changedColumns = array_keys(array_diff_assoc($data, $originalData));
+        $changedColumns = array_diff($changedColumns, ['updated_at']);
+
+
+        foreach ($changedColumns as $column) {
+            $changed = '';
+
+            if($column == 'cp1_name'){
+                $changed = 'Contact Person 1 Name';
+            }else if($column == 'cp1_number'){
+                $changed = 'Contact Person 1 Number';
+            }else if($column == 'cp1_email'){
+                $changed = 'Contact Person 1 Email';
+            }else if($column == 'cp2_name'){
+                $changed = 'Contact Person 2 Name';
+            }else if($column == 'cp2_number'){
+                $changed = 'Contact Person 2 Number';
+            }else if($column == 'cp2_email'){
+                $changed = 'Contact Person 2 Email';
+            }else if($column == 'cp3_name'){
+                $changed = 'Contact Person 3 Name';
+            }else if($column == 'cp3_number'){
+                $changed = 'Contact Person 3 Number';
+            }else if($column == 'cp3_email'){
+                $changed = 'Contact Person 3 Email';
+            }else{
+                $changed = ucfirst($column);
+            }
+
+            $log = new Logs();
+            $log->table = 'CUSTOMERS';
+            $log->table_key = $key;
+            $log->action = 'UPDATE';
+            $log->description = $model->name;
+            $log->field = $changed;
+            $log->before = $originalData[$column];
+            $log->after = $data[$column];
+            $log->user_id = Auth::id();
+            $log->save();
+        }
+
+
+
+        // DB::table('customers')
+        //     ->where('name', $name)
+        //     ->update([
+        //         'address' => $address,
+        //         'area' => $area,
+        //         'cp1_name' => $cp1_name,
+        //         'cp1_number' => $cp1_number,
+        //         'cp1_email' => $cp1_email,
+        //         'cp2_name' => $cp2_name,
+        //         'cp2_number' => $cp2_number,
+        //         'cp2_email' => $cp2_email,
+        //         'cp3_name' => $cp3_name,
+        //         'cp3_number' => $cp3_number,
+        //         'cp3_email' => $cp3_email,
+        //         'updated_at' => date('Y-m-d H:i:s'),
+        //     ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         $contract_details_path = null;
         if($contract_details != null){
@@ -344,42 +430,153 @@ class RequestController extends Controller
             $contract_details_path = $path.$filename;
             $request->file('contract_details')->move(public_path('storage/'.$path), $filename);
 
-            DB::table('requests')
-                ->where('key', $key)
-                ->update([
-                    'category' => $category,
-                    'contract_details' => $contract_details_path,
-                    'unit_type' => $unit_type,
-                    'brand' => $brand,
-                    'model' => $model,
-                    'no_of_unit' => $no_of_unit,
-                    'billing_type' => $billing_type,
-                    'no_of_attendees' => $no_of_attendees,
-                    'venue' => $venue,
-                    'training_date' => $event_date,
-                    'knowledge_of_participants' => $knowledge_of_participants,
-                    'trainer' => $trainer,
-                    'remarks' => $remarks,
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ]);
+
+            $model = Request::where('key', $key)->firstOrFail();
+            $originalData = $model->toArray();
+    
+            $data = $request->except('_token');
+            $data['category'] = $category;
+            $data['contract_details_path'] = $contract_details_path;
+            $data['unit_type'] = $unit_type;
+            $data['brand'] = $brand;
+            $data['model'] = $reqmodel;
+            $data['no_of_unit'] = $no_of_unit;
+            $data['billing_type'] = $billing_type;
+            $data['no_of_attendees'] = $no_of_attendees;
+            $data['venue'] = $venue;
+            $data['training_date'] = $event_date;
+            $data['knowledge_of_participants'] = $knowledge_of_participants;
+            $data['trainer'] = $trainer;
+            $data['remarks'] = $remarks;
+            $data['updated_at'] = Carbon::now();
+            $model->update($data);
+    
+            $changedColumns = array_keys(array_diff_assoc($data, $originalData));
+            $changedColumns = array_diff($changedColumns, ['updated_at']);
+    
+            foreach ($changedColumns as $column) {
+                $changed = '';
+    
+                if($column == 'knowledge_of_participants'){
+                    $changed = 'Knowledge of Participants';
+                }else if($column == 'contract_details_path'){
+                    $changed = 'Contract Details';
+                }else if($column == 'unit_type'){
+                    $changed = 'Unit Type';
+                }else if($column == 'billing_type'){
+                    $changed = 'Billing Type';
+                }else if($column == 'no_of_attendees'){
+                    $changed = 'Number of Attendees';
+                }else if($column == 'no_of_unit'){
+                    $changed = 'Number of Unit';
+                }else if($column == 'training_date'){
+                    $changed = 'Training Date';
+                }else{
+                    $changed = ucfirst($column);
+                }
+    
+                $log = new Logs();
+                $log->table = 'REQUEST';
+                $log->table_key = $key;
+                $log->action = 'UPDATE';
+                $log->description = $model->name;
+                $log->field = $changed;
+                $log->before = $originalData[$column];
+                $log->after = $data[$column];
+                $log->user_id = Auth::id();
+                $log->save();
+            }
+
+            // DB::table('requests')
+            //     ->where('key', $key)
+            //     ->update([
+            //         'category' => $category,
+            //         'contract_details' => $contract_details_path,
+            //         'unit_type' => $unit_type,
+            //         'brand' => $brand,
+            //         'model' => $model,
+            //         'no_of_unit' => $no_of_unit,
+            //         'billing_type' => $billing_type,
+            //         'no_of_attendees' => $no_of_attendees,
+            //         'venue' => $venue,
+            //         'training_date' => $event_date,
+            //         'knowledge_of_participants' => $knowledge_of_participants,
+            //         'trainer' => $trainer,
+            //         'remarks' => $remarks,
+            //         'updated_at' => date('Y-m-d H:i:s'),
+            //     ]);
         }else{
-            DB::table('requests')
-                ->where('key', $key)
-                ->update([
-                    'category' => $category,
-                    'unit_type' => $unit_type,
-                    'brand' => $brand,
-                    'model' => $model,
-                    'no_of_unit' => $no_of_unit,
-                    'billing_type' => $billing_type,
-                    'no_of_attendees' => $no_of_attendees,
-                    'venue' => $venue,
-                    'training_date' => $event_date,
-                    'knowledge_of_participants' => $knowledge_of_participants,
-                    'trainer' => $trainer,
-                    'remarks' => $remarks,
-                    'updated_at' => date('Y-m-d H:i:s'),
-                ]);
+
+            $model = ModelsRequest::where('key', $key)->firstOrFail();
+            $originalData = $model->toArray();
+    
+            $data = $request->except('_token', 'name', 'address', 'area', 'cp1_name', 'cp1_number', 'cp1_email', 'cp2_name', 'cp2_number', 'cp2_email', 'cp3_name', 'cp3_number', 'cp3_email');
+            $data['category'] = $category;
+            $data['unit_type'] = $unit_type;
+            $data['brand'] = $brand;
+            $data['model'] = $reqmodel;
+            $data['no_of_unit'] = $no_of_unit;
+            $data['billing_type'] = $billing_type;
+            $data['no_of_attendees'] = $no_of_attendees;
+            $data['venue'] = $venue;
+            $data['training_date'] = $event_date;
+            $data['knowledge_of_participants'] = $knowledge_of_participants;
+            $data['trainer'] = $trainer;
+            $data['remarks'] = $remarks;
+            $data['updated_at'] = Carbon::now();
+            $model->update($data);
+    
+            $changedColumns = array_keys(array_diff_assoc($data, $originalData));
+            $changedColumns = array_diff($changedColumns, ['updated_at','event_date']);
+    
+            foreach ($changedColumns as $column) {
+                $changed = '';
+    
+                if($column == 'knowledge_of_participants'){
+                    $changed = 'Knowledge of Participants';
+                }else if($column == 'unit_type'){
+                    $changed = 'Unit Type';
+                }else if($column == 'billing_type'){
+                    $changed = 'Billing Type';
+                }else if($column == 'no_of_attendees'){
+                    $changed = 'Number of Attendees';
+                }else if($column == 'no_of_unit'){
+                    $changed = 'Number of Unit';
+                }else if($column == 'training_date'){
+                    $changed = 'Training Date';
+                }else{
+                    $changed = ucfirst($column);
+                }
+    
+                $log = new Logs();
+                $log->table = 'REQUEST';
+                $log->table_key = $key;
+                $log->action = 'UPDATE';
+                $log->description = $model->number;
+                $log->field = $changed;
+                $log->before = $originalData[$column];
+                $log->after = $data[$column];
+                $log->user_id = Auth::id();
+                $log->save();
+            }
+
+            // DB::table('requests')
+            //     ->where('key', $key)
+            //     ->update([
+            //         'category' => $category,
+            //         'unit_type' => $unit_type,
+            //         'brand' => $brand,
+            //         'model' => $model,
+            //         'no_of_unit' => $no_of_unit,
+            //         'billing_type' => $billing_type,
+            //         'no_of_attendees' => $no_of_attendees,
+            //         'venue' => $venue,
+            //         'training_date' => $event_date,
+            //         'knowledge_of_participants' => $knowledge_of_participants,
+            //         'trainer' => $trainer,
+            //         'remarks' => $remarks,
+            //         'updated_at' => date('Y-m-d H:i:s'),
+            //     ]);
         }
 
         return redirect()->route('request.index')->with('success', 'Request Successfully Updated');

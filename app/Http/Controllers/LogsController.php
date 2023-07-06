@@ -35,4 +35,43 @@ class LogsController extends Controller
 
         return view('user.coordinator.logs.customers.index', compact('page', 'search', 'logs', 'logsCount'));
     }
+
+
+
+
+
+
+
+
+
+
+
+    public function requestIndex(){
+        $page = 1;
+        $search = '';
+        $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
+            ->select('logs.*', 'users.first_name', 'users.last_name')
+            ->where('table', 'REQUEST')
+            ->orderByDesc('id')
+            ->paginate(50, ['*'], 'page', $page);
+        $logsCount = Logs::where('table', 'REQUEST')->count();
+
+        return view('user.coordinator.logs.requests.index', compact('page', 'search', 'logs', 'logsCount'));
+    }
+
+    public function requestPaginate($page, $search = null){
+        $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
+            ->select('logs.*', 'users.first_name', 'users.last_name')
+            ->where('table', 'REQUEST')
+            ->whereRaw("CONCAT_WS(' ', logs.action, logs.description, logs.field, logs.before, logs.after, users.first_name, users.last_name) LIKE '%{$search}%'")
+            ->orderByDesc('id')
+            ->paginate(50, ['*'], 'page', $page);
+        $logsCount = Logs::join('users', 'logs.user_id', '=', 'users.id')
+            ->select('logs.*', 'users.first_name', 'users.last_name')
+            ->where('table', 'REQUEST')
+            ->whereRaw("CONCAT_WS(' ', logs.action, logs.description, logs.field, logs.before, logs.after, users.first_name, users.last_name) LIKE '%{$search}%'")
+            ->count();
+
+        return view('user.coordinator.logs.requests.index', compact('page', 'search', 'logs', 'logsCount'));
+    }
 }

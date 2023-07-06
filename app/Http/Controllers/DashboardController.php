@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -15,13 +18,39 @@ class DashboardController extends Controller
             ->update(['status' => 'COMPLETED']);
 
         $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
+        // $events = DB::table('requests')
+        //     ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color', DB::raw('COUNT(comments.id) as commentCount'))
+        //     ->join('customers', 'requests.customer_id', '=', 'customers.id')
+        //     ->join('users', 'requests.trainer', '=', 'users.id')
+        //     ->join('comments', 'requests.key', '=', 'comments.key')
+        //     ->where('is_approved', 1)
+        //     ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
+        //     ->get();
+
+        // $events = DB::table('requests')
+        //     ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color', DB::raw('IFNULL(COUNT(comments.id), 0) as commentCount'))
+        //     ->join('customers', 'requests.customer_id', '=', 'customers.id')
+        //     ->join('users', 'requests.trainer', '=', 'users.id')
+        //     ->leftJoin('comments', 'requests.key', '=', 'comments.req_id')
+        //     ->where('is_approved', 1)
+        //     ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
+        //     ->where('comments.is_read', 0)
+        //     ->where('comments.user_id', Auth::user()->key)
+        //     ->groupBy('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color')
+        //     ->get();
+
         $events = DB::table('requests')
-            // ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'requests.training_date', 'requests.id', 'users.id as uid', 'users.first_name', 'users.last_name', 'users.color')
-            ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color')
+            ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color', DB::raw('IFNULL(COUNT(comments.id), 0) as commentCount'))
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->join('users', 'requests.trainer', '=', 'users.id')
+            ->leftJoin('comments', function ($join) {
+                $join->on('requests.key', '=', 'comments.req_id')
+                    ->where('comments.is_read', 0)
+                    ->where('comments.user_id', Auth::user()->key);
+            })
             ->where('is_approved', 1)
             ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
+            ->groupBy('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color')
             ->get();
 
         $eventArray = [];
@@ -33,7 +62,7 @@ class DashboardController extends Controller
                 'title' => $event->name,
                 'start' => date('Y-m-d', strtotime($event->training_date)),
                 'color' => $event->color,
-                'notificationCount' => 3,
+                'notificationCount' => $event->commentCount,
                 'extendedProps' => [
                     'isTraining' => true
                 ]
@@ -75,6 +104,34 @@ class DashboardController extends Controller
             ->join('users', 'requests.trainer', '=', 'users.id')
             ->where('requests.key', $id)
             ->first();
+        
+        $com = '';
+
+        $comments = DB::table('comments')
+            ->select('comments.key', DB::raw('MAX(comments.content) as content'), DB::raw('MAX(comments.created_at) as created_at'), DB::raw('MAX(users.first_name) as ufname'), DB::raw('MAX(users.last_name) as ulname'))
+            ->join('users', 'comments.commenter_id', '=', 'users.key')
+            ->where('comments.req_id', $request->id)
+            ->groupBy('key')
+            ->get();
+
+        foreach ($comments as $comment) {
+            $dateTimeObj = new DateTime($comment->created_at);
+            $date = $dateTimeObj->format('F j, Y');
+            $time = $dateTimeObj->format('h:i A');
+            $com .= '
+                <div class="my-2 border border-gray-400 shadow p-2 rounded-lg">
+                    <div class="flex flex-col leading-4">
+                        <h1 class="font-semibold">'.$comment->ufname.' '.$comment->ulname.'</h1>
+                        <p class="text-sm mb-2">'.$date.' at '.$time.'</p>
+                        <p>'.$comment->content.'</p>
+                    </div>
+                </div>
+            ';
+        }
+
+        DB::table('comments')->where('req_id', $request->id)->where('user_id', Auth::user()->key)->update([
+            'is_read' => 1
+        ]);
 
         $result = array(
             'status' => $thisRequest->status,
@@ -113,6 +170,8 @@ class DashboardController extends Controller
             'knowledge_of_participants' => $thisRequest->knowledge_of_participants,
             'remarks' => $thisRequest->remarks,
             'key' => $thisRequest->key,
+
+            'com' => $com,
         );
 
         echo json_encode($result);

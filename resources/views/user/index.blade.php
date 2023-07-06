@@ -145,14 +145,14 @@
         </button>
         
         <!-- Main modal -->
-        <div id="viewEventModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div id="viewEventModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
                 <div class="relative shadow text-gray-700">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t bg-blue-500">
                         <h3 id="name" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
-                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewEventModal">
+                        <button type="button" class="closeViewEventModalButton text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewEventModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
                         </button>
@@ -251,15 +251,6 @@
                             <div class="pl-6">
                                 <h1 class="text-2xl font-bold">Comments</h1>
                                 <div id="commentContainer" class="h-[calc(100vh-358px)] overflow-x-hidden overflow-y-auto pr-2">
-                                    {{--  --}}
-                                        <div class="my-2 border border-gray-400 shadow p-2 rounded-lg">
-                                            <div class="flex flex-col leading-4">
-                                                <h1 class="font-semibold">John Arian Malondras</h1>
-                                                <p class="text-sm mb-2">July 1, 2023 at 6:31 AM</p>
-                                                <p>If you want to detect when the Enter key is pressed in an input tag using jQuery, you can achieve this by attaching an event listener to the input element and checking for the keycode of the Enter key (which is 13). Here's an example:</p>
-                                            </div>
-                                        </div>
-                                    {{--  --}}
                                 </div>
                                 <div class="h-[40px] pr-2 mt-2">
                                     <div>
@@ -278,7 +269,7 @@
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
                         <button id="cancelButton" data-modal-target="confirmCancelModal" data-modal-toggle="confirmCancelModal" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">CANCEL SCHEDULE</button>
-                        <button data-modal-hide="viewEventModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                        <button data-modal-hide="viewEventModal" type="button" class="closeViewEventModalButton text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
             </div>
@@ -429,6 +420,10 @@
                                 $('#knowledge_of_participants').html(result.knowledge_of_participants);
                                 $('#remarks').html(result.remarks);
 
+                                $('#commentContainer').html(result.com);
+                                $('#commentInput').val('');
+                                $('#commentInput').focus();
+
                                 $('#viewEventButton').click();
                                 autoScroll();
                             }
@@ -496,6 +491,10 @@
                 submitComment();
             });
 
+            $('.closeViewEventModalButton').click(function(){
+                location.reload();
+            });
+
             function submitComment(){
                 var content = $('#commentInput').val();
                 var _token = $('input[name="_token"]').val();
@@ -510,7 +509,6 @@
                             _token: _token
                         },
                         success:function(result){
-                            console.log(result)
                             $('#commentContainer').html(result);
                             $('#commentInput').val('');
                             $('#commentInput').focus();

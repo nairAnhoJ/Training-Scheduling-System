@@ -46,13 +46,6 @@ class CommentController extends Controller
             ->groupBy('key')
             ->get();
 
-        // $comments = DB::table('comments')
-        //     ->select('comments.key', DB::raw('MAX(comments.content) as content'), DB::raw('MAX(comments.created_at) as created_at'), DB::raw('MAX(users.first_name) as ufname'), DB::raw('MAX(users.last_name) as ulname'))
-        //     ->join('users', 'comments.commenter_id', '=', 'users.key')
-        //     ->where('comments.req_id', $request->id)
-        //     ->groupBy('comments.key')
-        //     ->get();
-
         foreach ($comments as $comment) {
             $dateTimeObj = new DateTime($comment->created_at);
             $date = $dateTimeObj->format('F j, Y');
