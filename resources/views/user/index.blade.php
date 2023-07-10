@@ -158,9 +158,9 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="p-6 overflow-y-auto overflow-x-hidden h-[calc(100vh-220px)]">
+                    <div class="p-6 overflow-y-hidden overflow-x-hidden h-[calc(100vh-220px)]">
                         <div class="grid grid-cols-3">
-                            <div class="col-span-2 border-r pr-6">
+                            <div class="col-span-2 border-r pr-6 overflow-y-auto overflow-x-hidden h-[calc(100vh-268px)]">
                                 <div class="grid grid-cols-6">
                                     <div class="col-span-2">Status: </div>
                                     <div id="status" class="col-span-4 font-semibold text-lg"></div>

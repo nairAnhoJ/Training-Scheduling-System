@@ -46,7 +46,7 @@ class LogsController extends Controller
 
 
 
-    public function requestIndex(){
+    public function trainingsIndex(){
         $page = 1;
         $search = '';
         $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
@@ -59,7 +59,7 @@ class LogsController extends Controller
         return view('user.coordinator.logs.requests.index', compact('page', 'search', 'logs', 'logsCount'));
     }
 
-    public function requestPaginate($page, $search = null){
+    public function trainingsPaginate($page, $search = null){
         $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
             ->select('logs.*', 'users.first_name', 'users.last_name')
             ->where('table', 'REQUEST')

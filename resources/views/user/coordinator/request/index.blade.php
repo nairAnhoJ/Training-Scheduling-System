@@ -79,7 +79,7 @@
         
         <!-- Main modal -->
         <div id="viewRequestModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-5xl h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full max-w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
                 <div class="relative shadow text-gray-700">
                     <!-- Modal header -->
@@ -91,9 +91,12 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="p-6 overflow-y-auto overflow-x-hidden h-[calc(100vh-220px)]">
-                        <div class="">
+                    <div class="p-6 overflow-y-hidden overflow-x-hidden grid grid-cols-5 h-[calc(100vh-220px)]">
+                        <div class="col-span-3 border-r p-4 overflow-y-auto overflow-x-hidden h-[calc(100vh-268px)]">
                             <div class="grid grid-cols-6">
+                                <div class="col-span-2">Request Number: </div>
+                                <div id="req_number" class="col-span-4 font-semibold text-lg"></div>
+
                                 <div class="col-span-2">Date: </div>
                                 <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
 
@@ -171,6 +174,19 @@
                                     <div class="col-span-4 font-semibold">
                                         <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-4 col-span-2 h-full overflow-x-hidden overflow-y-auto">
+                            <div class="relative">
+                                <div class="sticky top-0 bg-white py-2">
+                                    <div class="flex items-center mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="h-6 w-6"><path d="M477-120q-149 0-253-105.5T120-481h60q0 125 86 213t211 88q127 0 215-89t88-216q0-124-89-209.5T477-780q-68 0-127.5 31T246-667h105v60H142v-208h60v106q52-61 123.5-96T477-840q75 0 141 28t115.5 76.5Q783-687 811.5-622T840-482q0 75-28.5 141t-78 115Q684-177 618-148.5T477-120Zm128-197L451-469v-214h60v189l137 134-43 43Z"/></svg>
+                                        <h3 class="ml-1">History Logs</h3>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div id="logsDiv">
                                 </div>
                             </div>
                         </div>
@@ -379,6 +395,7 @@
                         _token: _token
                     },
                     success:function(result){
+                        $('#req_number').html(result.req_number);
                         $('#event_date').html(result.event_date);
                         $('#venue').html(result.venue);
                         $('#trainer').html(result.trainer);
@@ -440,6 +457,8 @@
                         $('#remarks').html(result.remarks);
 
                         $('#confirmApproveButtona').attr('href', `/request/approve/${result.key}`);
+
+                        $('#logsDiv').html(result.logRes);
                         
                         $('#viewRequestButton').click();
                         autoResize();

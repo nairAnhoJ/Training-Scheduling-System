@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','LOGS - CUSTOMERS')
+@section('title','LOGS - TRAININGS')
 @section('content')
 
     @if(session('success'))

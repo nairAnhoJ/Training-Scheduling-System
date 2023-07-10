@@ -62,7 +62,7 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="p-4 overflow-y-auto overflow-x-hidden grid grid-cols-5 h-[calc(100vh-188px)]">
+                    <div class="p-4 overflow-y-hidden overflow-x-hidden grid grid-cols-5 h-[calc(100vh-188px)]">
                         <div class="col-span-3 border-r p-4">
                             <div class="">
                                 <div class="flex items-center mb-3">

@@ -321,7 +321,7 @@ class RequestController extends Controller
         $model = Customer::where('name', $name)->firstOrFail();
         $originalData = $model->toArray();
 
-        $data = $request->except('_token', 'category', 'brand', 'model', 'unit_type', 'no_of_unit', 'billing_type', 'no_of_attendees', 'knowledge_of_participants', 'venue', 'event_date', 'trainer', 'remarks');
+        $data = $request->except('_token', 'category', 'contract_details', 'brand', 'model', 'unit_type', 'no_of_unit', 'billing_type', 'no_of_attendees', 'knowledge_of_participants', 'venue', 'event_date', 'trainer', 'remarks');
         $data['address'] = $address;
         $data['area'] = $area;
         $data['cp1_name'] = $cp1_name;
@@ -338,7 +338,6 @@ class RequestController extends Controller
 
         $changedColumns = array_keys(array_diff_assoc($data, $originalData));
         $changedColumns = array_diff($changedColumns, ['updated_at']);
-
 
         foreach ($changedColumns as $column) {
             $changed = '';
@@ -379,42 +378,6 @@ class RequestController extends Controller
 
 
 
-        // DB::table('customers')
-        //     ->where('name', $name)
-        //     ->update([
-        //         'address' => $address,
-        //         'area' => $area,
-        //         'cp1_name' => $cp1_name,
-        //         'cp1_number' => $cp1_number,
-        //         'cp1_email' => $cp1_email,
-        //         'cp2_name' => $cp2_name,
-        //         'cp2_number' => $cp2_number,
-        //         'cp2_email' => $cp2_email,
-        //         'cp3_name' => $cp3_name,
-        //         'cp3_number' => $cp3_number,
-        //         'cp3_email' => $cp3_email,
-        //         'updated_at' => date('Y-m-d H:i:s'),
-        //     ]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         $contract_details_path = null;
         if($contract_details != null){
@@ -431,12 +394,13 @@ class RequestController extends Controller
             $request->file('contract_details')->move(public_path('storage/'.$path), $filename);
 
 
-            $model = Request::where('key', $key)->firstOrFail();
+            $model = ModelsRequest::where('key', $key)->firstOrFail();
             $originalData = $model->toArray();
     
-            $data = $request->except('_token');
+            $data = $request->except('_token', 'name', 'address', 'area', 'cp1_name', 'cp1_number', 'cp1_email', 'cp2_name', 'cp2_number', 'cp2_email', 'cp3_name', 'cp3_number', 'cp3_email');
             $data['category'] = $category;
-            $data['contract_details_path'] = $contract_details_path;
+            $data['is_PM'] = 1;
+            $data['contract_details'] = $contract_details_path;
             $data['unit_type'] = $unit_type;
             $data['brand'] = $brand;
             $data['model'] = $reqmodel;
@@ -450,9 +414,9 @@ class RequestController extends Controller
             $data['remarks'] = $remarks;
             $data['updated_at'] = Carbon::now();
             $model->update($data);
-    
+
             $changedColumns = array_keys(array_diff_assoc($data, $originalData));
-            $changedColumns = array_diff($changedColumns, ['updated_at']);
+            $changedColumns = array_diff($changedColumns, ['updated_at','event_date','is_PM']);
     
             foreach ($changedColumns as $column) {
                 $changed = '';
@@ -479,32 +443,16 @@ class RequestController extends Controller
                 $log->table = 'REQUEST';
                 $log->table_key = $key;
                 $log->action = 'UPDATE';
-                $log->description = $model->name;
+                $log->description = $model->number;
                 $log->field = $changed;
                 $log->before = $originalData[$column];
+                // if($column == 'contract_details'){
+                //     $column = 'contract_details_path';
+                // }
                 $log->after = $data[$column];
                 $log->user_id = Auth::id();
                 $log->save();
             }
-
-            // DB::table('requests')
-            //     ->where('key', $key)
-            //     ->update([
-            //         'category' => $category,
-            //         'contract_details' => $contract_details_path,
-            //         'unit_type' => $unit_type,
-            //         'brand' => $brand,
-            //         'model' => $model,
-            //         'no_of_unit' => $no_of_unit,
-            //         'billing_type' => $billing_type,
-            //         'no_of_attendees' => $no_of_attendees,
-            //         'venue' => $venue,
-            //         'training_date' => $event_date,
-            //         'knowledge_of_participants' => $knowledge_of_participants,
-            //         'trainer' => $trainer,
-            //         'remarks' => $remarks,
-            //         'updated_at' => date('Y-m-d H:i:s'),
-            //     ]);
         }else{
 
             $model = ModelsRequest::where('key', $key)->firstOrFail();
@@ -559,33 +507,26 @@ class RequestController extends Controller
                 $log->user_id = Auth::id();
                 $log->save();
             }
-
-            // DB::table('requests')
-            //     ->where('key', $key)
-            //     ->update([
-            //         'category' => $category,
-            //         'unit_type' => $unit_type,
-            //         'brand' => $brand,
-            //         'model' => $model,
-            //         'no_of_unit' => $no_of_unit,
-            //         'billing_type' => $billing_type,
-            //         'no_of_attendees' => $no_of_attendees,
-            //         'venue' => $venue,
-            //         'training_date' => $event_date,
-            //         'knowledge_of_participants' => $knowledge_of_participants,
-            //         'trainer' => $trainer,
-            //         'remarks' => $remarks,
-            //         'updated_at' => date('Y-m-d H:i:s'),
-            //     ]);
         }
 
         return redirect()->route('request.index')->with('success', 'Request Successfully Updated');
     }
 
     public function delete($key){
+        $req = ModelsRequest::where('key', $key)->firstOrFail();
         DB::table('requests')->where('key', $key)->update([
             'is_deleted' => 1
         ]);
+
+        $log = new Logs();
+        $log->table = 'REQUEST';
+        $log->table_key = $key;
+        $log->action = "DELETE";
+        $log->description = 'Request Number >> '.$req->number;
+        $log->before = '';
+        $log->after = '';
+        $log->user_id = Auth::id();
+        $log->save();
         
         return redirect()->route('request.index')->with('success', 'Request Successfully Deleted');
     }
@@ -593,13 +534,39 @@ class RequestController extends Controller
     public function view(Request $request){
         $key = $request->key;
         $thisRequest = DB::table('requests')
-            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.status', 'requests.key', 'users.first_name', 'users.last_name')
+            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.number', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.status', 'requests.key', 'users.first_name', 'users.last_name')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->leftJoin('users', 'requests.trainer', '=', 'users.id')
             ->where('requests.key', $key)
             ->first();
 
+
+        $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
+        ->select('logs.*', 'users.first_name', 'users.last_name')
+        ->where('table', 'REQUEST')
+        ->where('logs.table_key', $key)
+        ->orderByDesc('id')
+        ->get();
+        $logRes = '';
+
+        foreach($logs as $log){
+            $logRes .= '
+                <div class="text-sm mt-2">
+                    <div class="flex justify-between bg-gray-200 px-1.5 py-0.5">
+                        <p class="font-semibold">'.$log->created_at.'</p>
+                        <p>'.$log->first_name.' '.$log->last_name.'</p>
+                    </div>
+                    <div id="logsDiv" class="pl-7">
+                        <div>
+                            • <span>'.ucfirst(strtolower($log->action)).'</span> <span>'.ucwords(strtolower($log->field)).'</span>: <span></span><span>'.$log->before.'</span> ⇒ <span>'.$log->after.'</span>
+                        </div>
+                    </div>
+                </div>
+            ';
+        }
+
         $result = array(
+            'req_number' => $thisRequest->number,
             'status' => $thisRequest->status,
             'event_date' => $thisRequest->training_date,
             'venue' => $thisRequest->venue,
@@ -635,6 +602,8 @@ class RequestController extends Controller
             'knowledge_of_participants' => $thisRequest->knowledge_of_participants,
             'remarks' => $thisRequest->remarks,
             'key' => $thisRequest->key,
+
+            'logRes' => $logRes,
         );
 
         echo json_encode($result);
@@ -651,6 +620,18 @@ class RequestController extends Controller
             'status' => 'SCHEDULED',
             'is_approved' => 1,
         ]);
+
+        $req = ModelsRequest::where('key', $key)->firstOrFail();
+
+        $log = new Logs();
+        $log->table = 'REQUEST';
+        $log->table_key = $key;
+        $log->action = "APPROVE";
+        $log->description = 'Request Number >> '.$req->number;
+        $log->before = '';
+        $log->after = '';
+        $log->user_id = Auth::id();
+        $log->save();
 
         return redirect()->route('request.index')->with('success', 'Request Has Been Approved');
     }

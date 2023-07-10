@@ -173,11 +173,13 @@ Route::middleware('auth')->group(function () {
         // CUSTOMERS
             Route::get('/logs/customers', [LogsController::class, 'customerIndex'])->name('logs.customer.index');
             Route::get('/logs/customers/{page}/{search?}', [LogsController::class, 'customerPaginate'])->name('logs.customer.paginate');
+        // CUSTOMERS END
 
 
-        // CUSTOMERS
-            Route::get('/logs/request', [LogsController::class, 'requestIndex'])->name('logs.request.index');
-            Route::get('/logs/request/{page}/{search?}', [LogsController::class, 'requestPaginate'])->name('logs.request.paginate');
+        // REQUEST
+            Route::get('/logs/trainings', [LogsController::class, 'trainingsIndex'])->name('logs.trainings.index');
+            Route::get('/logs/trainings/{page}/{search?}', [LogsController::class, 'trainingsPaginate'])->name('logs.trainings.paginate');
+        // REQUEST END
 
     //  LOGS END
 

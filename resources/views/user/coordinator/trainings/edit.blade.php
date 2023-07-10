@@ -170,7 +170,7 @@
                             <select id="billing_type" name="billing_type" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value=""></option>
                                 <option {{ $request->billing_type == 'CHARGEABLE' ? 'selected' : '' }} value="CHARGEABLE">Chargeable</option>
-                                <option {{ $request->billing_type == 'CHARGEABLE' ? 'selected' : '' }} value="NON-CHARGEABLE">Non-Chargeable</option>
+                                <option {{ $request->billing_type == 'NON-CHARGEABLE' ? 'selected' : '' }} value="NON-CHARGEABLE">Non-Chargeable</option>
                             </select>
                         </div>
                         <div class="mb-3 w-full">
