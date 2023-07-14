@@ -97,6 +97,8 @@ Route::post('/event', [GuestController::class, 'event'])->name('guest.event');
 Route::post('/auth', [AuthController::class, 'auth'])->name('login.auth');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
     Route::get('/schedule-board', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::post('/schedule-board/view', [DashboardController::class, 'view'])->name('dashboard.view');
     Route::post('/schedule-board/comment', [CommentController::class, 'store'])->name('comment.store');

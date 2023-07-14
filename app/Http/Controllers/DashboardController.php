@@ -10,12 +10,29 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    public function dashboard(){
+        return view('user.dashboard');
+    }
+
     public function index(){
         $currentDate = date('Y-m-d');
         
         DB::table('requests')
             ->whereRaw('STR_TO_DATE(training_date, "%m/%d/%Y") < ?', [$currentDate])
             ->update(['status' => 'COMPLETED']);
+
+
+        $requestCount = DB::table('requests')->where('is_approved', 0)->where('is_deleted', 0)->where('status', 'PENDING')->count();
+        $trainingCount = DB::table('requests')->where('is_approved', 1)->where('is_deleted', 0)->where('status', 'SCHEDULED')->count();
+
+
+
+
+
+
+
+
+
 
         $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
         // $events = DB::table('requests')
@@ -93,7 +110,7 @@ class DashboardController extends Controller
             $eventArray[] = $newArray;
         }
 
-        return view('user.index', compact('events', 'eventArray', 'trainers'));
+        return view('user.index', compact('events', 'eventArray', 'trainers', 'requestCount', 'trainingCount'));
     }
 
     public function view(Request $request){
