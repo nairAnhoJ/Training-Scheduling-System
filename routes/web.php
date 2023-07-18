@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerRequestController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EventController;
@@ -122,6 +123,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/request/edit/{key}', [RequestController::class, 'edit'])->name('request.edit');
     Route::get('/request/delete/{key}', [RequestController::class, 'delete'])->name('request.delete');
     Route::post('/request/update/{key}', [RequestController::class, 'update'])->name('request.update');
+
+    // REQUEST FROM CUSTOMERS
+    Route::get('/request-from-customers', [CustomerRequestController::class, 'index'])->name('customer.request.index');
 
     // TRAINING
     Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
