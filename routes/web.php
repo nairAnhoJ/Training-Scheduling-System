@@ -112,17 +112,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // REQUEST
-    Route::get('/request', [RequestController::class, 'index'])->name('request.index');
-    Route::post('/request', [RequestController::class, 'search'])->name('request.search');
-    Route::get('/request/add', [RequestController::class, 'add'])->name('request.add');
-    Route::post('/request/getcom', [RequestController::class, 'getcom'])->name('request.getcom');
-    Route::post('/request/store', [RequestController::class, 'store'])->name('request.store');
-    Route::post('/request/view', [RequestController::class, 'view'])->name('request.view');
-    Route::get('/request/approve/{key}', [RequestController::class, 'approve']);
-    Route::get('/request/view/contract-details/{key}', [RequestController::class, 'contractDetails']);
-    Route::get('/request/edit/{key}', [RequestController::class, 'edit'])->name('request.edit');
-    Route::get('/request/delete/{key}', [RequestController::class, 'delete'])->name('request.delete');
-    Route::post('/request/update/{key}', [RequestController::class, 'update'])->name('request.update');
+    Route::get('/requests', [RequestController::class, 'index'])->name('request.index');
+    Route::post('/requests', [RequestController::class, 'search'])->name('request.search');
+    Route::get('/requests/add', [RequestController::class, 'add'])->name('request.add');
+    Route::post('/requests/getcom', [RequestController::class, 'getcom'])->name('request.getcom');
+    Route::post('/requests/store', [RequestController::class, 'store'])->name('request.store');
+    Route::post('/requests/view', [RequestController::class, 'view'])->name('request.view');
+    Route::get('/requests/approve/{key}', [RequestController::class, 'approve']);
+    Route::get('/requests/view/contract-details/{key}', [RequestController::class, 'contractDetails']);
+    Route::get('/requests/edit/{key}', [RequestController::class, 'edit'])->name('request.edit');
+    Route::get('/requests/delete/{key}', [RequestController::class, 'delete'])->name('request.delete');
+    Route::post('/requests/update/{key}', [RequestController::class, 'update'])->name('request.update');
 
     // REQUEST FROM CUSTOMERS
     Route::get('/request-from-customers', [CustomerRequestController::class, 'index'])->name('customer.request.index');

@@ -79,7 +79,7 @@
         
         <!-- Main modal -->
         <div id="viewRequestModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative max-w-[1024px] w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
                 <div class="relative shadow text-gray-700">
                     <!-- Modal header -->
@@ -91,9 +91,9 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="p-6 overflow-y-hidden overflow-x-hidden grid grid-cols-5 h-[calc(100vh-220px)]">
-                        <div class="col-span-3 border-r p-4 overflow-y-auto overflow-x-hidden h-[calc(100vh-268px)]">
-                            <div class="grid grid-cols-6">
+                    <div class="p-6 overflow-y-hidden overflow-x-hidden h-[calc(100vh-220px)]">
+                        <div class="border-r p-4 overflow-y-auto overflow-x-hidden h-[calc(100vh-268px)]">
+                            {{-- <div class="grid grid-cols-6">
                                 <div class="col-span-2">Request Number: </div>
                                 <div id="req_number" class="col-span-4 font-semibold text-lg"></div>
 
@@ -105,9 +105,9 @@
 
                                 <div class="col-span-2">Trainer: </div>
                                 <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
-                            </div>
+                            </div> --}}
 
-                            <div class="mt-5">
+                            <div class="">
                                 <div class="flex items-center">
                                     <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
                                 </div>
@@ -150,34 +150,34 @@
                                     <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
                                 </div>
                                 <div class="grid grid-cols-6">
-                                    <div class="col-span-2">Area: </div>
-                                    <div id="area" class="col-span-4 font-semibold text-lg">NORTH</div>
+                                    {{-- <div class="col-span-2">Area: </div>
+                                    <div id="area" class="col-span-4 font-semibold text-lg"></div> --}}
                                     <div class="col-span-2">Category: </div>
-                                    <div id="category" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
-                                    <div id="con_details_div" class="col-span-6 grid grid-cols-6">
+                                    <div id="category" class="col-span-4 font-semibold text-lg"></div>
+                                    {{-- <div id="con_details_div" class="col-span-6 grid grid-cols-6">
                                         <div class="col-span-2">Contract Details: </div>
                                         <a href="#" id="contract_details" target="_blank" class="col-span-4 font-semibold text-lg text-white bg-blue-500 rounded-lg w-40 tracking-wide text-center hover:scale-105">VIEW</a>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-span-2">Brand: </div>
-                                    <div id="brand" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
+                                    <div id="brand" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Model: </div>
-                                    <div id="model" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
+                                    <div id="model" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Type of Unit: </div>
-                                    <div id="unit_type" class="col-span-4 font-semibold text-lg">RENTAL UNIT</div>
-                                    <div class="col-span-2">Billing Type: </div>
-                                    <div id="billing_type" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
+                                    <div id="unit_type" class="col-span-4 font-semibold text-lg"></div>
+                                    {{-- <div class="col-span-2">Billing Type: </div>
+                                    <div id="billing_type" class="col-span-4 font-semibold text-lg"></div> --}}
                                     <div class="col-span-2">Number of Attendees: </div>
-                                    <div id="no_of_attendees" class="col-span-4 font-semibold text-lg">13</div>
+                                    <div id="no_of_attendees" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Knowledge of Participants: </div>
                                     <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg"></div>
-                                    <div class="col-span-2">Notes: </div>
+                                    {{-- <div class="col-span-2">Notes: </div>
                                     <div class="col-span-4 font-semibold">
                                         <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
-                        <div class="px-4 col-span-2 h-full overflow-x-hidden overflow-y-auto">
+                        {{-- <div class="px-4 col-span-2 h-full overflow-x-hidden overflow-y-auto">
                             <div class="relative">
                                 <div class="sticky top-0 bg-white py-2">
                                     <div class="flex items-center mb-2">
@@ -189,11 +189,12 @@
                                 <div id="logsDiv">
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
                         <button id="approveButton" data-modal-target="confirmApproveModal" data-modal-toggle="confirmApproveModal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</button>
+                        <button id="approveButton" data-modal-target="confirmApproveModal" data-modal-toggle="confirmApproveModal" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">DECLINE</button>
                         <button data-modal-hide="viewRequestModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
@@ -206,7 +207,7 @@
             <div class="overflow-hidden rounded-lg p-4">
                 {{-- CONTROLS --}}
                     @csrf
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <div class="md:grid md:grid-cols-2">
                             <div class="w-24 mb-3 md:mb-0">
                                 <a href="{{ route('request.add') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
@@ -230,7 +231,7 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 {{-- CONTROLS END --}}
 
                 <div>
@@ -240,9 +241,9 @@
                                 <table class="w-full text-sm text-left text-gray-500">
                                     <thead class="text-xs text-gray-600 uppercase bg-gray-100">
                                         <tr>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                            {{-- <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Action
-                                            </th>
+                                            </th> --}}
                                             <th scope="col" class="px-6 py-3 whitespace-nowrap">
                                                 Company Name
                                             </th>
@@ -250,50 +251,63 @@
                                                 Category
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Brand
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Model
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Type of Unit
                                             </th>
-                                            {{-- <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Billing Type
-                                            </th> --}}
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Area
+                                                Date Submitted
                                             </th>
-                                            {{-- <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Trainer
-                                            </th> --}}
-                                            {{-- <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Last Updated
-                                            </th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($requests as $request)
                                             <tr class="requestRow bg-white border-b cursor-pointer hover:bg-gray-200 even:bg-gray-100">
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/request/edit/'.$request->id) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->id }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</button>
-                                                </td>
+                                                {{-- <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-id="{{ $request->id }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Decline</button>
+                                                </td> --}}
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                    <span data-key="{{ $request->id }}">
-                                                        {{ $request->name }}
+                                                    <span 
+                                                        data-id="{{ $request->id }}"
+                                                        data-name="{{ $request->name }}"
+                                                        data-address="{{ $request->address }}"
+                                                        data-cp1_name="{{ $request->cp1_name }}"
+                                                        data-cp1_number="{{ $request->cp1_number }}"
+                                                        data-cp1_email="{{ $request->cp1_email }}"
+                                                        data-cp2_name="{{ $request->cp2_name }}"
+                                                        data-cp2_number="{{ $request->cp2_number }}"
+                                                        data-cp2_email="{{ $request->cp2_email }}"
+                                                        data-cp3_name="{{ $request->cp3_name }}"
+                                                        data-cp3_number="{{ $request->cp3_number }}"
+                                                        data-cp3_email="{{ $request->cp3_email }}"
+                                                        data-category="{{ $request->category }}"
+                                                        data-brand="{{ $request->brand }}"
+                                                        data-model="{{ $request->model }}"
+                                                        data-unit_type="{{ $request->unit_type }}"
+                                                        data-no_of_unit="{{ $request->no_of_unit }}"
+                                                        data-no_of_attendees="{{ $request->no_of_attendees }}"
+                                                        data-knowledge_of_participants="{{ $request->knowledge_of_participants }}">
+                                                            {{ strtoupper($request->name) }}
                                                     </span>
                                                 </th>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->category }}
+                                                    {{ strtoupper($request->category) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->unit_type }}
+                                                    {{ strtoupper($request->brand) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{-- {{ $request->billing_type }} --}}
+                                                    {{ strtoupper($request->model) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->area }}
+                                                    {{ strtoupper($request->unit_type) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{-- {{ $request->first_name.' '.$request->last_name }} --}}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{-- {{ date('F j, Y', strtotime($request->updated_at)) }} --}}
+                                                    {{ $request->timestamp }}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -325,28 +339,33 @@
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
+                                                <div class="text-xs leading-5">Brand</div>
+                                                <div class=" font-semibold text-sm">
+                                                    {{ $request->brand }}
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2">
+                                                <div class="text-xs leading-5">Model</div>
+                                                <div class=" font-semibold text-sm">
+                                                    {{ $request->model }}
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Type of Unit</div>
                                                 <div class=" font-semibold text-sm">
                                                     {{ $request->unit_type }}
                                                 </div>
                                             </div>
-                                            {{-- <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Billing Type</div>
-                                                <div class="font-semibold text-sm">
-                                                    {{ $request->billing_type }}
-                                                </div>
-                                            </div> --}}
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Area</div>
+                                                <div class="text-xs leading-5">Date Submitted</div>
                                                 <div class="cfont-semibold text-sm">
-                                                    {{ $request->area }}
+                                                    {{ $request->timestamp }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Action</div>
                                                 <div class="">
-                                                    <a href="{{ url('/request/edit/'.$request->id) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | 
-                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->id }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Delete</button>
+                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->id }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Decline</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -365,15 +384,7 @@
 
     <script>
         $(document).ready(function(){
-            var key = '';
-
-            $('.requestRow').on('click', '.editButton', function(e) {
-                e.stopPropagation();
-            });
-
-            $('.requestRow').on('click', '.deleteButton', function(e) {
-                e.stopPropagation();
-            });
+            var id = '';
 
             $(document).click(function(){
                 $('#alert-3').addClass('opacity-0');
@@ -383,87 +394,146 @@
             });
 
             $('.requestRow').click(function(){
-                key = $(this).find('span').data('key');
-                var _token = $('input[name="_token"]').val();
+                id = $(this).find('span').data('id');
+                var name = $(this).find('span').data('name');
+                var address = $(this).find('span').data('address');
+                var cp1_name = $(this).find('span').data('cp1_name');
+                var cp1_number = $(this).find('span').data('cp1_number');
+                var cp1_email = $(this).find('span').data('cp1_email');
+                var cp2_name = $(this).find('span').data('cp2_name');
+                var cp2_number = $(this).find('span').data('cp2_number');
+                var cp2_email = $(this).find('span').data('cp2_email');
+                var cp3_name = $(this).find('span').data('cp3_name');
+                var cp3_number = $(this).find('span').data('cp3_number');
+                var cp3_email = $(this).find('span').data('cp3_email');
+                var category = $(this).find('span').data('category');
+                var brand = $(this).find('span').data('brand');
+                var model = $(this).find('span').data('model');
+                var unit_type = $(this).find('span').data('unit_type');
+                var no_of_unit = $(this).find('span').data('no_of_unit');
+                var no_of_attendees = $(this).find('span').data('no_of_attendees');
+                var knowledge_of_participants = $(this).find('span').data('knowledge_of_participants');
 
-                $.ajax({
-                    url:"{{ route('request.view') }}",
-                    method:"POST",
-                    dataType: 'json',
-                    data:{
-                        key: key,
-                        _token: _token
-                    },
-                    success:function(result){
-                        $('#req_number').html(result.req_number);
-                        $('#event_date').html(result.event_date);
-                        $('#venue').html(result.venue);
-                        $('#trainer').html(result.trainer);
-                        if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
-                            $('#approveButton').prop('disabled', false);
-                            // $('#approveButton').attr('href', `/request/approve/${result.key}`);
-                        }else{
-                            $('#approveButton').prop('disabled', 'true');
-                        }
 
-                        $('#name').html(result.name);
-                        $('#address').html(result.address);
+                $('#name').html(name.toUpperCase());
+                $('#address').html(address.toUpperCase());
 
-                        if(result.cp1_name != ''){
-                            $('#cp1_name').html(result.cp1_name);
-                            $('#cp1_number').html(result.cp1_number);
-                            $('#cp1_email').html(result.cp1_email);
-                        }else{
-                            $('#cp1_div').addClass('hidden');
-                        }
+                if(cp1_name != '' || cp1_number != '' || cp1_email != ''){
+                    $('#cp1_name').html(cp1_name.toUpperCase());
+                    $('#cp1_number').html(cp1_number);
+                    $('#cp1_email').html(cp1_email);
+                    $('#cp3_div').removeClass('hidden');
+                }else{
+                    $('#cp1_div').addClass('hidden');
+                }
 
-                        if(result.cp2_name != ''){
-                            $('#cp2_name').html(result.cp2_name);
-                            $('#cp2_number').html(result.cp2_number);
-                            $('#cp2_email').html(result.cp2_email);
-                        }else{
-                            $('#cp2_div').addClass('hidden');
-                        }
+                if(cp2_name != '' || cp2_number != '' || cp2_email != ''){
+                    $('#cp2_name').html(cp2_name.toUpperCase());
+                    $('#cp2_number').html(cp2_number);
+                    $('#cp2_email').html(cp2_email);
+                    $('#cp3_div').removeClass('hidden');
+                }else{
+                    $('#cp2_div').addClass('hidden');
+                }
 
-                        if(result.cp3_name != ''){
-                            $('#cp3_name').html(result.cp3_name);
-                            $('#cp3_number').html(result.cp3_number);
-                            $('#cp3_email').html(result.cp3_email);
-                        }else{
-                            $('#cp3_div').addClass('hidden');
-                        }
+                if(cp3_name != '' || cp3_number != '' || cp3_email != ''){
+                    $('#cp3_name').html(cp3_name.toUpperCase());
+                    $('#cp3_number').html(cp3_number);
+                    $('#cp3_email').html(cp3_email);
+                    $('#cp3_div').removeClass('hidden');
+                }else{
+                    $('#cp3_div').addClass('hidden');
+                }
 
-                        $('#area').html(result.area);
-                        $('#category').html(result.category);
+                $('#brand').html(brand.toUpperCase());
+                $('#model').html(model.toUpperCase());
+                $('#unit_type').html(unit_type.toUpperCase());
+                $('#no_of_attendees').html(no_of_attendees);
+                $('#knowledge_of_participants').html(knowledge_of_participants.toUpperCase());
 
-                        if(result.is_PM == 1){
-                            $('#con_details_div').removeClass('hidden');
-                            if(result.contract_details == null){
-                                $('#contract_details').addClass('pointer-events-none opacity-50');
-                            }else{
-                                $('#contract_details').removeClass('pointer-events-none opacity-50');
-                                $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
-                            }
-                        }else{
-                            $('#con_details_div').addClass('hidden');
-                        }
+                $('#viewRequestButton').click();
 
-                        $('#brand').html(result.brand);
-                        $('#model').html(result.model);
-                        $('#unit_type').html(result.unit_type);
-                        $('#billing_type').html(result.billing_type);
-                        $('#no_of_attendees').html(result.no_of_attendees);
-                        $('#knowledge_of_participants').html(result.knowledge_of_participants);
-                        $('#remarks').html(result.remarks);
 
-                        $('#confirmApproveButtona').attr('href', `/request/approve/${result.key}`);
+                // var _token = $('input[name="_token"]').val();
 
-                        $('#logsDiv').html(result.logRes);
+                // $.ajax({
+                //     url:"{{ route('request.view') }}",
+                //     method:"POST",
+                //     dataType: 'json',
+                //     data:{
+                //         key: key,
+                //         _token: _token
+                //     },
+                //     success:function(result){
+                //         $('#req_number').html(result.req_number);
+                //         $('#event_date').html(result.event_date);
+                //         $('#venue').html(result.venue);
+                //         $('#trainer').html(result.trainer);
+                //         if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
+                //             $('#approveButton').prop('disabled', false);
+                //             // $('#approveButton').attr('href', `/request/approve/${result.key}`);
+                //         }else{
+                //             $('#approveButton').prop('disabled', 'true');
+                //         }
+
+                //         $('#name').html(result.name);
+                //         $('#address').html(result.address);
+
+                //         if(result.cp1_name != ''){
+                //             $('#cp1_name').html(result.cp1_name);
+                //             $('#cp1_number').html(result.cp1_number);
+                //             $('#cp1_email').html(result.cp1_email);
+                //         }else{
+                //             $('#cp1_div').addClass('hidden');
+                //         }
+
+                //         if(result.cp2_name != ''){
+                //             $('#cp2_name').html(result.cp2_name);
+                //             $('#cp2_number').html(result.cp2_number);
+                //             $('#cp2_email').html(result.cp2_email);
+                //         }else{
+                //             $('#cp2_div').addClass('hidden');
+                //         }
+
+                //         if(result.cp3_name != ''){
+                //             $('#cp3_name').html(result.cp3_name);
+                //             $('#cp3_number').html(result.cp3_number);
+                //             $('#cp3_email').html(result.cp3_email);
+                //         }else{
+                //             $('#cp3_div').addClass('hidden');
+                //         }
+
+                //         $('#area').html(result.area);
+                //         $('#category').html(result.category);
+
+                //         if(result.is_PM == 1){
+                //             $('#con_details_div').removeClass('hidden');
+                //             if(result.contract_details == null){
+                //                 $('#contract_details').addClass('pointer-events-none opacity-50');
+                //             }else{
+                //                 $('#contract_details').removeClass('pointer-events-none opacity-50');
+                //                 $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
+                //             }
+                //         }else{
+                //             $('#con_details_div').addClass('hidden');
+                //         }
+
+                //         $('#brand').html(result.brand);
+                //         $('#model').html(result.model);
+                //         $('#unit_type').html(result.unit_type);
+                //         $('#billing_type').html(result.billing_type);
+                //         $('#no_of_attendees').html(result.no_of_attendees);
+                //         $('#knowledge_of_participants').html(result.knowledge_of_participants);
+                //         $('#remarks').html(result.remarks);
+
+                //         $('#confirmApproveButtona').attr('href', `/request/approve/${result.key}`);
+
+                //         $('#logsDiv').html(result.logRes);
                         
-                        $('#viewRequestButton').click();
-                        autoResize();
-                    }
-                })
+                //         $('#viewRequestButton').click();
+                //         autoResize();
+                //     }
+                // })
             });
 
             function autoResize() {

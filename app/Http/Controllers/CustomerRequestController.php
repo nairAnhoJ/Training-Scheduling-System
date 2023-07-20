@@ -15,7 +15,7 @@ class CustomerRequestController extends Controller
         $sheetsService = new Sheets($client);
     
         $spreadsheetId = config('google.spreadsheet_id');
-        $range = 'Form Responses Test!A1:Z'; // Replace with the desired range
+        $range = 'Form Responses 1!A1:Z'; // Replace with the desired range
         $response = $sheetsService->spreadsheets_values->get($spreadsheetId, $range);
         $values = $response->getValues();
 
