@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','REQUESTS')
+@section('title','REQUESTS FROM CUSTOMERS')
 @section('content')
 
     @if(session('success'))
@@ -20,27 +20,205 @@
     {{-- APPROVE MODAL --}}
         <!-- Main modal -->
         <div id="confirmApproveModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <form action="{{ route('customer.request.approve') }}" method="POST" class="relative shadow text-gray-700">
+                    @csrf
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
                         <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">APPROVE</h3>
-                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmApproveModal">
+                        <button type="button" class="closeConfirmApproveButton text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmApproveModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
                         </button>
                     </div>
                     <!-- Modal body -->
                     <div class="p-6">
-                        Are you sure you want to approve this request?
+                        <h1 class="text-gray-600 font-bold text-xl mb-2">COMPANY DETAILS</h1>
+                        <input type="hidden" id="inputID" name="id">
+                        <input type="hidden" id="inputCategory" name="category">
+                        <input type="hidden" id="inputBrand" name="brand">
+                        <input type="hidden" id="inputModel" name="model">
+                        <input type="hidden" id="inputUnitType" name="unit_type">
+                        <input type="hidden" id="inputNoUnit" name="no_of_unit">
+                        <input type="hidden" id="inputNoAttendees" name="no_of_attendees">
+                        <input type="hidden" id="inputKnowledge" name="knowledge_of_participants">
+
+                        <div class="grid grid-cols-2 overflow-y-auto overflow-x-hidden h-[calc(100vh-330px)]">
+                            <div class="border-r pr-10">
+                                <div class="">
+                                    <div class="flex flex-col relative optionDiv mb-3">
+                                        <label for="inputName" class="block text-sm font-semibold text-gray-600">Company Name <span class="text-red-500">*</span></label>
+                                        <input type="text" id="inputName" name="name" class="inputOption block w-full p-2.5 text-gray-600 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm" required autocomplete="off">
+                                        <div class="listOption hidden absolute top-[62px] w-full rounded-lg border-x border-b border-gray-300 overflow-y-auto max-h-[30vh] text-gray-600 bg-white z-[99] shadow-xl">
+                                            <ul>
+                                                @foreach ($customers as $customer)
+                                                    <li data-id="{{ $customer->id }}" class="p-2 first:border-0 border-t border-gray-300 hover:bg-gray-200 cursor-pointer">{{ $customer->name }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="mb-3">
+                                        <label for="inputAddress" class="block text-sm font-semibold text-gray-600">Address <span class="text-red-500">*</span></label>
+                                        <input type="text" id="inputAddress" name="adress" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
+                                    </div>
+                    
+                                    <div class="mb-3">
+                                        <label for="inputArea" class="block text-sm font-semibold text-gray-600">Area <span class="text-red-500">*</span></label>
+                                        <select id="inputArea" name="area" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                            <option value="CENTRAL">Central</option>
+                                            <option value="NORTH">North</option>
+                                            <option value="SOUTH">South</option>
+                                        </select>
+                                    </div>
+                                    {{-- CONTACT PERSON --}}
+                                        <div class="mb-3">
+                                            <h1 class="text-gray-600 font-semibold">CONTACT PERSON/s</h1>
+                                            <div class="pl-5">
+                                                <div class="mb-3">
+                                                    <h1 class="text-gray-600">#1</h1>
+                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
+                                                        <div class="mb-3 w-full">
+                                                            <label for="inputCP1_name" class="block text-sm font-semibold text-gray-600">Name</label>
+                                                            <input type="text" id="inputCP1_name" name="cp1_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="inputCP1_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
+                                                            <input type="text" id="inputCP1_number" name="cp1_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="inputCP1_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
+                                                            <input type="text" id="inputCP1_email" name="cp1_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <h1 class="text-gray-600">#2</h1>
+                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
+                                                        <div class="mb-3 w-full">
+                                                            <label for="inputCP2_name" class="block text-sm font-semibold text-gray-600">Name</label>
+                                                            <input type="text" id="inputCP2_name" name="cp2_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="inputCP2_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
+                                                            <input type="text" id="inputCP2_number" name="cp2_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="inputCP2_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
+                                                            <input type="text" id="inputCP2_email" name="cp2_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h1 class="text-gray-600">#3</h1>
+                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
+                                                        <div class="mb-3 w-full">
+                                                            <label for="inputCP3_name" class="block text-sm font-semibold text-gray-600">Name</label>
+                                                            <input type="text" id="inputCP3_name" name="cp3_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="inputCP3_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
+                                                            <input type="text" id="inputCP3_number" name="cp3_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="inputCP3_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
+                                                            <input type="text" id="inputCP3_email" name="cp3_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{-- CONTACT PERSON END --}}
+                                </div>
+                            </div>
+                            <div class="pl-10">
+                                <div class="">
+                                    <div class="flex flex-col relative optionDiv mb-3">
+                                        <label for="appname" class="block text-sm font-semibold text-gray-600">Company Name</label>
+                                        <input type="text" id="appname" class="block w-full p-2.5 text-gray-600 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm" required autocomplete="off" readonly>
+                                    </div>
+                    
+                                    <div class="mb-3">
+                                        <label for="appaddress" class="block text-sm font-semibold text-gray-600">Address <span class="text-red-500">*</span></label>
+                                        <input type="text" id="appaddress" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off" readonly>
+                                    </div>
+                    
+                                    <div class="mb-3">
+                                        <label for="apparea" class="opacity-50 block text-sm font-semibold text-gray-600">Area <span class="text-red-500">*</span></label>
+                                        <select id="apparea" class=" disabled:opacity-50 bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
+                                            <option value="CENTRAL"></option>
+                                        </select>
+                                    </div>
+                                    {{-- CONTACT PERSON --}}
+                                        <div class="mb-3">
+                                            <h1 class="text-gray-600 font-semibold">CONTACT PERSON/s</h1>
+                                            <div class="pl-5">
+                                                <div class="mb-3">
+                                                    <h1 class="text-gray-600">#1</h1>
+                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
+                                                        <div class="mb-3 w-full">
+                                                            <label for="appcp1_name" class="block text-sm font-semibold text-gray-600">Name</label>
+                                                            <input type="text" id="appcp1_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="appcp1_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
+                                                            <input type="text" id="appcp1_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="appcp1_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
+                                                            <input type="text" id="appcp1_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <h1 class="text-gray-600">#2</h1>
+                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
+                                                        <div class="mb-3 w-full">
+                                                            <label for="appcp2_name" class="block text-sm font-semibold text-gray-600">Name</label>
+                                                            <input type="text" id="appcp2_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="appcp2_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
+                                                            <input type="text" id="appcp2_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="appcp2_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
+                                                            <input type="text" id="appcp2_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h1 class="text-gray-600">#3</h1>
+                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
+                                                        <div class="mb-3 w-full">
+                                                            <label for="appcp3_name" class="block text-sm font-semibold text-gray-600">Name</label>
+                                                            <input type="text" id="appcp3_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="appcp3_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
+                                                            <input type="text" id="appcp3_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
+                                                        </div>
+                                                        <div class="mb-3 w-full">
+                                                            <label for="appcp3_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
+                                                            <input type="text" id="appcp3_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {{-- CONTACT PERSON END --}}
+                                </div>
+                            </div>
+                        </div>
+                        <p class="italic pt-4">Kindly double-check the information provided above prior to submitting the form.</p>
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        <button id="confirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</button>
-                        <button id="closeConfirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                        <input type="submit" value="Submit" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60 cursor-pointer">
+                        <button data-modal-hide="confirmApproveModal" type="button" class="closeConfirmApproveButton text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     {{-- APPROVE MODAL END --}}
@@ -66,7 +244,7 @@
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
                         <a id="confirmDeleteButton" type="button" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">DELETE</a>
-                        <button id="closeConfirmApproveButton" data-modal-hide="confirmDeleteModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                        <button id="" data-modal-hide="confirmDeleteModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
             </div>
@@ -164,8 +342,8 @@
                                     <div id="model" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Type of Unit: </div>
                                     <div id="unit_type" class="col-span-4 font-semibold text-lg"></div>
-                                    {{-- <div class="col-span-2">Billing Type: </div>
-                                    <div id="billing_type" class="col-span-4 font-semibold text-lg"></div> --}}
+                                    <div class="col-span-2">Number of Unit: </div>
+                                    <div id="no_of_unit" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Number of Attendees: </div>
                                     <div id="no_of_attendees" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Knowledge of Participants: </div>
@@ -206,7 +384,6 @@
         <div class="bg-white shadow-xl rounded-lg p-3 h-full">
             <div class="overflow-hidden rounded-lg p-4">
                 {{-- CONTROLS --}}
-                    @csrf
                     {{-- <div class="mb-3">
                         <div class="md:grid md:grid-cols-2">
                             <div class="w-24 mb-3 md:mb-0">
@@ -216,7 +393,6 @@
                             </div>
                             <div class="justify-self-end w-full xl:w-4/5">
                                 <form method="POST" action="{{ route('request.search') }}" id="searchForm" class="w-full">
-                                    @csrf
                                     <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -397,15 +573,19 @@
                 id = $(this).find('span').data('id');
                 var name = $(this).find('span').data('name');
                 var address = $(this).find('span').data('address');
+                
                 var cp1_name = $(this).find('span').data('cp1_name');
                 var cp1_number = $(this).find('span').data('cp1_number');
                 var cp1_email = $(this).find('span').data('cp1_email');
+                
                 var cp2_name = $(this).find('span').data('cp2_name');
                 var cp2_number = $(this).find('span').data('cp2_number');
                 var cp2_email = $(this).find('span').data('cp2_email');
+                
                 var cp3_name = $(this).find('span').data('cp3_name');
                 var cp3_number = $(this).find('span').data('cp3_number');
                 var cp3_email = $(this).find('span').data('cp3_email');
+
                 var category = $(this).find('span').data('category');
                 var brand = $(this).find('span').data('brand');
                 var model = $(this).find('span').data('model');
@@ -416,13 +596,28 @@
 
 
                 $('#name').html(name.toUpperCase());
+                $('#appname').val(name.toUpperCase());
                 $('#address').html(address.toUpperCase());
+                $('#appaddress').val(address.toUpperCase());
+
+                $('#appcp1_name').val(cp1_name.toUpperCase());
+                $('#appcp1_number').val(cp1_number);
+                $('#appcp1_email').val(cp1_email);
+
+                $('#appcp2_name').val(cp2_name.toUpperCase());
+                $('#appcp2_number').val(cp2_number);
+                $('#appcp2_email').val(cp2_email);
+
+                $('#appcp3_name').val(cp3_name.toUpperCase());
+                $('#appcp3_number').val(cp3_number);
+                $('#appcp3_email').val(cp3_email);
+
 
                 if(cp1_name != '' || cp1_number != '' || cp1_email != ''){
                     $('#cp1_name').html(cp1_name.toUpperCase());
                     $('#cp1_number').html(cp1_number);
                     $('#cp1_email').html(cp1_email);
-                    $('#cp3_div').removeClass('hidden');
+                    $('#cp1_div').removeClass('hidden');
                 }else{
                     $('#cp1_div').addClass('hidden');
                 }
@@ -431,7 +626,7 @@
                     $('#cp2_name').html(cp2_name.toUpperCase());
                     $('#cp2_number').html(cp2_number);
                     $('#cp2_email').html(cp2_email);
-                    $('#cp3_div').removeClass('hidden');
+                    $('#cp2_div').removeClass('hidden');
                 }else{
                     $('#cp2_div').addClass('hidden');
                 }
@@ -445,110 +640,112 @@
                     $('#cp3_div').addClass('hidden');
                 }
 
+                $('#category').html(category.toUpperCase());
                 $('#brand').html(brand.toUpperCase());
                 $('#model').html(model.toUpperCase());
                 $('#unit_type').html(unit_type.toUpperCase());
+                $('#no_of_unit').html(no_of_unit);
                 $('#no_of_attendees').html(no_of_attendees);
                 $('#knowledge_of_participants').html(knowledge_of_participants.toUpperCase());
 
+                $('#inputID').val(id);
+                $('#inputCategory').val(category.toUpperCase());
+                $('#inputBrand').val(brand.toUpperCase());
+                $('#inputModel').val(model.toUpperCase());
+                $('#inputUnitType').val(unit_type.toUpperCase());
+                $('#inputNoUnit').val(no_of_unit);
+                $('#inputNoAttendees').val(no_of_attendees);
+                $('#inputKnowledge').val(knowledge_of_participants.toUpperCase());
+
                 $('#viewRequestButton').click();
-
-
-                // var _token = $('input[name="_token"]').val();
-
-                // $.ajax({
-                //     url:"{{ route('request.view') }}",
-                //     method:"POST",
-                //     dataType: 'json',
-                //     data:{
-                //         key: key,
-                //         _token: _token
-                //     },
-                //     success:function(result){
-                //         $('#req_number').html(result.req_number);
-                //         $('#event_date').html(result.event_date);
-                //         $('#venue').html(result.venue);
-                //         $('#trainer').html(result.trainer);
-                //         if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
-                //             $('#approveButton').prop('disabled', false);
-                //             // $('#approveButton').attr('href', `/request/approve/${result.key}`);
-                //         }else{
-                //             $('#approveButton').prop('disabled', 'true');
-                //         }
-
-                //         $('#name').html(result.name);
-                //         $('#address').html(result.address);
-
-                //         if(result.cp1_name != ''){
-                //             $('#cp1_name').html(result.cp1_name);
-                //             $('#cp1_number').html(result.cp1_number);
-                //             $('#cp1_email').html(result.cp1_email);
-                //         }else{
-                //             $('#cp1_div').addClass('hidden');
-                //         }
-
-                //         if(result.cp2_name != ''){
-                //             $('#cp2_name').html(result.cp2_name);
-                //             $('#cp2_number').html(result.cp2_number);
-                //             $('#cp2_email').html(result.cp2_email);
-                //         }else{
-                //             $('#cp2_div').addClass('hidden');
-                //         }
-
-                //         if(result.cp3_name != ''){
-                //             $('#cp3_name').html(result.cp3_name);
-                //             $('#cp3_number').html(result.cp3_number);
-                //             $('#cp3_email').html(result.cp3_email);
-                //         }else{
-                //             $('#cp3_div').addClass('hidden');
-                //         }
-
-                //         $('#area').html(result.area);
-                //         $('#category').html(result.category);
-
-                //         if(result.is_PM == 1){
-                //             $('#con_details_div').removeClass('hidden');
-                //             if(result.contract_details == null){
-                //                 $('#contract_details').addClass('pointer-events-none opacity-50');
-                //             }else{
-                //                 $('#contract_details').removeClass('pointer-events-none opacity-50');
-                //                 $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
-                //             }
-                //         }else{
-                //             $('#con_details_div').addClass('hidden');
-                //         }
-
-                //         $('#brand').html(result.brand);
-                //         $('#model').html(result.model);
-                //         $('#unit_type').html(result.unit_type);
-                //         $('#billing_type').html(result.billing_type);
-                //         $('#no_of_attendees').html(result.no_of_attendees);
-                //         $('#knowledge_of_participants').html(result.knowledge_of_participants);
-                //         $('#remarks').html(result.remarks);
-
-                //         $('#confirmApproveButtona').attr('href', `/request/approve/${result.key}`);
-
-                //         $('#logsDiv').html(result.logRes);
-                        
-                //         $('#viewRequestButton').click();
-                //         autoResize();
-                //     }
-                // })
             });
 
-            function autoResize() {
-                var textarea = $('#remarks');
-                textarea.css('height', 'auto');
-                textarea.css('height', textarea[0].scrollHeight + 'px');
+            
+            jQuery(document).on( "click", ".inputOption", function(e){
+                $('.content').not($(this).closest('.optionDiv').find('.listOption')).addClass('hidden');
+                $(this).closest('.optionDiv').find('.listOption').toggleClass('hidden');
+                var value = $(this).val().toLowerCase();
+                searchFilter(value);
+                e.stopPropagation();
+            });
+
+            function searchFilter(searchInput){
+                $(".listOption li").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(searchInput) > -1)
+                });
             }
 
+            function decodeHTMLEntities(encodedString) {
+                const elem = document.createElement("textarea");
+                elem.innerHTML = encodedString;
+                return elem.value;
+            }
+            
+            jQuery(document).on( "keydown", ".inputOption", function(e){
+                var value = $(this).val().toLowerCase();
+                searchFilter(value);
+
+                if (event.keyCode === 9) {
+                    $('.listOption').addClass('hidden');
+                }
+            });
+
+            jQuery(document).on( "click", ".listOption li", function(){
+                var name = decodeHTMLEntities($(this).html());
+                var id = $(this).data('id');
+                var _token = $('input[name="_token"]').val();
+
+
+                $.ajax({
+                    url:"{{ route('request.getcom') }}",
+                    method:"POST",
+                    dataType: 'json',
+                    data:{
+                        id: id,
+                        _token: _token
+                    },
+                    success:function(result){
+                        $('#inputAddress').val(result.address);
+                        $('#inputArea').val(result.area);
+
+                        $('#inputCP1_name').val(result.cp1_name);
+                        $('#inputCP1_number').val(result.cp1_number);
+                        $('#inputCP1_email').val(result.cp1_email);
+
+                        $('#inputCP2_name').val(result.cp2_name);
+                        $('#inputCP2_number').val(result.cp2_number);
+                        $('#inputCP2_email').val(result.cp2_email);
+
+                        $('#inputCP3_name').val(result.cp3_name);
+                        $('#inputCP3_number').val(result.cp3_number);
+                        $('#inputCP3_email').val(result.cp3_email);
+
+                        $(".listOption li").closest('.optionDiv').find('input').val(name);
+                        $('.listOption').addClass('hidden');
+                    }
+                })
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+            
             $('#approveButton').click(function(){
                 $('#viewRequestModal').removeClass('z-50');
                 $('#viewRequestModal').addClass('z-30');
 
             });
 
-            $('#closeConfirmApproveButton').click(function(){
+            $('.closeConfirmApproveButton').click(function(){
                 $('#viewRequestModal').addClass('z-50');
                 $('#viewRequestModal').removeClass('z-30');
             });
@@ -557,13 +754,13 @@
                 key = $(this).data('key');
             });
 
-            $('#confirmDeleteButton').click(function(){
-                window.location.href = `/request/delete/${key}`;
-            });
+            // $('#confirmDeleteButton').click(function(){
+            //     window.location.href = `/requests/delete/${key}`;
+            // });
 
-            $('#confirmApproveButton').click(function(){
-                window.location.href = `/request/approve/${key}`;
-            });
+            // $('#confirmApproveButton').click(function(){
+            //     window.location.href = `/request/approve/${key}`;
+            // });
 
             $('#clearButton').click(function(){
                 $('#search').val('');

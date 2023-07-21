@@ -126,6 +126,7 @@ Route::middleware('auth')->group(function () {
 
     // REQUEST FROM CUSTOMERS
     Route::get('/request-from-customers', [CustomerRequestController::class, 'index'])->name('customer.request.index');
+    Route::post('/request-from-customers/approve', [CustomerRequestController::class, 'approve'])->name('customer.request.approve');
 
     // TRAINING
     Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');

@@ -270,7 +270,7 @@
                                         @foreach ($requests as $request)
                                             <tr class="requestRow bg-white border-b cursor-pointer hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/request/edit/'.$request->key) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</button>
+                                                    <a href="{{ url('/requests/edit/'.$request->key) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</button>
                                                 </td>
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                                     <span data-key="{{ $request->key }}">
@@ -345,7 +345,7 @@
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Action</div>
                                                 <div class="">
-                                                    <a href="{{ url('/request/edit/'.$request->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | 
+                                                    <a href="{{ url('/requests/edit/'.$request->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | 
                                                     <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Delete</button>
                                                 </div>
                                             </div>
@@ -442,7 +442,7 @@
                                 $('#contract_details').addClass('pointer-events-none opacity-50');
                             }else{
                                 $('#contract_details').removeClass('pointer-events-none opacity-50');
-                                $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
+                                $('#contract_details').attr('href', `/requests/view/contract-details/${result.key}`);
                             }
                         }else{
                             $('#con_details_div').addClass('hidden');
@@ -456,7 +456,7 @@
                         $('#knowledge_of_participants').html(result.knowledge_of_participants);
                         $('#remarks').html(result.remarks);
 
-                        $('#confirmApproveButtona').attr('href', `/request/approve/${result.key}`);
+                        $('#confirmApproveButtona').attr('href', `/requests/approve/${result.key}`);
 
                         $('#logsDiv').html(result.logRes);
                         
@@ -488,11 +488,11 @@
             });
 
             $('#confirmDeleteButton').click(function(){
-                window.location.href = `/request/delete/${key}`;
+                window.location.href = `/requests/delete/${key}`;
             });
 
             $('#confirmApproveButton').click(function(){
-                window.location.href = `/request/approve/${key}`;
+                window.location.href = `/requests/approve/${key}`;
             });
 
             $('#clearButton').click(function(){
