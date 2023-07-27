@@ -12,7 +12,11 @@ class CheckAuthMiddleware
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
-            return $next($request);
+            if(Auth()->user()->first_time_login === '1'){
+                return redirect()->route('password.change');
+            }else{
+                return $next($request);
+            }
         }
 
         return redirect('/login');

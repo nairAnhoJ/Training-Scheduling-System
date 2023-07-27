@@ -223,4 +223,65 @@ class CustomerRequestController extends Controller
 
         return redirect()->route('customer.request.index')->with('success', 'Request Successfully Approved');
     }
+
+    public function decline($id){
+        $client = new Client();
+        $client->setAuthConfig(config('google.credentials_json'));
+        $client->addScope(Sheets::SPREADSHEETS);
+        $sheetsService = new Sheets($client);
+    
+        $spreadsheetId = config('google.spreadsheet_id');
+        $range = 'Form Responses 1!A1:V'; // Replace with the desired range
+        $response = $sheetsService->spreadsheets_values->get($spreadsheetId, $range);
+        $values = $response->getValues();
+
+
+        // Search for the row where the id is equal to 2
+        $targetRow = null;
+        if (!empty($values)) {
+            foreach ($values as $rowIndex => $row) {
+                if (isset($row[0]) && $row[0] == $id) {
+                    $targetRow = $rowIndex + 1; // Add 2 to account for 1-based indexing (since the data starts from the second row)
+                    break;
+                }
+            }
+        }
+        
+        // If the target row was found, delete it
+        if ($targetRow !== null) {
+            $sheetProperties = $sheetsService->spreadsheets->get($spreadsheetId)->getSheets();
+            $sheetId = null;
+        
+            // Find the sheet ID based on the sheet title
+            foreach ($sheetProperties as $sheetProperty) {
+                if ($sheetProperty->getProperties()->getTitle() === 'Form Responses 1') {
+                    $sheetId = $sheetProperty->getProperties()->getSheetId();
+                    break;
+                }
+            }
+        
+            if ($sheetId) {
+                $deleteRange = 'Form Responses 1!A' . $targetRow . ':Z' . $targetRow;
+                $batchUpdateRequest = new BatchUpdateSpreadsheetRequest([
+                    'requests' => [
+                        [
+                            'deleteDimension' => [
+                                'range' => [
+                                    'sheetId' => $sheetId,
+                                    'dimension' => 'ROWS',
+                                    'startIndex' => $targetRow - 1, // Subtract 1 to account for 0-based indexing
+                                    'endIndex' => $targetRow,
+                                ],
+                            ],
+                        ],
+                    ],
+                ]);
+        
+                // Execute the batch update request to delete the row
+                $sheetsService->spreadsheets->batchUpdate($spreadsheetId, $batchUpdateRequest);
+            }
+        }
+
+        return redirect()->route('customer.request.index')->with('success', 'Request Successfully Declined');
+    }
 }

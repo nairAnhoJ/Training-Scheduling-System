@@ -93,9 +93,13 @@ Route::get('/', function () {
 });
 
 Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/change-password', [LoginController::class, 'change'])->name('password.change');
+Route::post('/change-password', [LoginController::class, 'changeConfirm'])->name('password.changeConfirm');
 Route::post('/view', [GuestController::class, 'view'])->name('guest.view');
 Route::post('/event', [GuestController::class, 'event'])->name('guest.event');
 Route::post('/auth', [AuthController::class, 'auth'])->name('login.auth');
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -108,8 +112,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/schedule-board/event/add', [EventController::class, 'add'])->name('event.add');
     Route::post('/schedule-board/event/view', [EventController::class, 'view'])->name('event.view');
     Route::get('/schedule-board/event/delete/{key}', [EventController::class, 'delete'])->name('event.delete');
-
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // REQUEST
     Route::get('/requests', [RequestController::class, 'index'])->name('request.index');
@@ -127,6 +129,7 @@ Route::middleware('auth')->group(function () {
     // REQUEST FROM CUSTOMERS
     Route::get('/request-from-customers', [CustomerRequestController::class, 'index'])->name('customer.request.index');
     Route::post('/request-from-customers/approve', [CustomerRequestController::class, 'approve'])->name('customer.request.approve');
+    Route::get('/request-from-customers/decline/{id}', [CustomerRequestController::class, 'decline'])->name('customer.request.decline');
 
     // TRAINING
     Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');

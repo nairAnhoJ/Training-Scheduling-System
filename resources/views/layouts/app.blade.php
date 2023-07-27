@@ -58,7 +58,9 @@
 <body>
     <div class="w-screen h-screen overflow-hidden">
         @if(Auth::user())
-            @include('layouts.navigation')
+            @if(Auth()->user()->first_time_login != '1')
+                @include('layouts.navigation')
+            @endif
         @endif
         
         @yield('content')

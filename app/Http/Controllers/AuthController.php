@@ -15,7 +15,11 @@ class AuthController extends Controller
 
         if (Auth::attempt(['id_number' => $credentials['id_number'], 'password' => $credentials['password']])) {
             // Authentication passed
-            return redirect()->route('dashboard.index');
+            if(Auth()->user()->first_time_login === '1'){
+                return redirect()->route('password.change');
+            }else{
+                return redirect()->route('dashboard.index');
+            }
         }
 
         // Authentication failed
