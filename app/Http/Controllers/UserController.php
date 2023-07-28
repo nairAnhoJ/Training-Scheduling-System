@@ -100,6 +100,18 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User Successfully Updated');
     }
 
+    public function reset($key){
+        DB::table('users')
+            ->where('key', $key)
+            ->update([
+                'password' => '$2y$10$7v4/HKTwejrkpXieBOVI3eXtiIvBI2ofaAvsTVLb/i6RPDFgwD5Mm',
+                'first_time_login' => 1,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+
+        return redirect()->route('users.index')->with('success', 'Password Reset Successful!');
+    }
+
     public function delete($key){
         DB::table('users')
             ->where('key', $key)

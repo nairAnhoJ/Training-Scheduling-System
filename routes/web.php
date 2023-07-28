@@ -164,6 +164,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/system-management/users/store', [UserController::class, 'store'])->name('users.store');
     Route::get('/system-management/users/edit/{key}', [UserController::class, 'edit'])->name('users.edit');
     Route::post('/system-management/users/update/{key}', [UserController::class, 'update'])->name('users.update');
+    Route::get('/system-management/users/reset/{key}', [UserController::class, 'reset'])->name('users.reset');
     Route::get('/system-management/users/delete/{key}', [UserController::class, 'delete'])->name('users.delete');
 
     // DEPARTMENTS

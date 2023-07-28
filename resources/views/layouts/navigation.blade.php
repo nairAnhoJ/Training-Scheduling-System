@@ -83,11 +83,11 @@
                <li>
                   <a href="{{ route('logs.trainings.index') }}" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/system-management/users'))) ? 'bg-gray-300 border border-gray-300 shadow' : '' }}">Trainings</a>
                </li>
-               @if (Auth::user()->role == 0)
+               {{-- @if (Auth::user()->role == 0)
                   <li>
                      <a href="{{ route('departments.index') }}" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/system-management/departments'))) ? 'bg-gray-300 border border-gray-300 shadow' : '' }}">System Management</a>
                   </li>
-               @endif
+               @endif --}}
             </ul>
          </li>
 

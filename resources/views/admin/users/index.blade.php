@@ -16,8 +16,43 @@
         </div>
     @endif
 
+    {{-- RESET PASS MODAL --}}
+        <!-- Modal toggle -->
+        {{-- <button data-modal-target="resetModal" data-modal-toggle="resetModal" id="viewEventButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
+            Toggle modal
+        </button> --}}
+        
+        <!-- Main modal -->
+        <div id="resetModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
+            <div class="relative w-full max-w-3xl bg-white rounded-lg overflow-x-hidden overflow-y-auto">
+                <!-- Modal content -->
+                <div class="relative shadow text-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 border-b rounded-t">
+                        <div class="flex items-center">
+                            <svg aria-hidden="true" class="w-6 h-6 text-yellow-500 mr-2" fill="currentColor" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg"><path xmlns="http://www.w3.org/2000/svg" d="m40-120 440-760 440 760H40Zm104-60h672L480-760 144-180Zm340.175-57q12.825 0 21.325-8.675 8.5-8.676 8.5-21.5 0-12.825-8.675-21.325-8.676-8.5-21.5-8.5-12.825 0-21.325 8.675-8.5 8.676-8.5 21.5 0 12.825 8.675 21.325 8.676 8.5 21.5 8.5ZM454-348h60v-224h-60v224Zm26-122Z"/></svg>
+                            <h3 class="text-xl tracking-wide font-semibold text-yellow-500 flex items-center">Reset Password</h3>
+                        </div>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="resetModal">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-6 overflow-y-auto overflow-x-hidden">
+                        Are you sure you want to reset the password of this user?
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+                        <a href="" data-modal-hide="resetModal" id="confirmReset" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete</a>
+                        <button data-modal-hide="resetModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{-- RESET PASS MODAL END --}}
 
-    {{-- VIEW EVENT MODAL --}}
+    {{-- DELETE MODAL --}}
         <!-- Modal toggle -->
         <button data-modal-target="deleteModal" data-modal-toggle="deleteModal" id="viewEventButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
             Toggle modal
@@ -51,7 +86,7 @@
                 </div>
             </div>
         </div>
-    {{-- VIEW EVENT MODAL END --}}
+    {{-- DELETE MODAL END --}}
 
     <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
         <div class="bg-white shadow-xl rounded-lg p-3 h-full">
@@ -142,7 +177,8 @@
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     <a href="{{ url('/system-management/users/edit/'.$user->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a>
                                                     @if ($user->id != 1)
-                                                     | <a type="button" data-key="{{ $user->key }}" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
+                                                        | <a type="button" data-key="{{ $user->key }}" data-modal-target="resetModal" data-modal-toggle="resetModal" class="resetButton text-orange-600 hover:underline font-semibold text-sm cursor-pointer">Reset</a>
+                                                        | <a type="button" data-key="{{ $user->key }}" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -231,6 +267,11 @@
             $('.deleteButton').click(function(){
                 var key = $(this).data('key');
                 $('#confirmDelete').attr('href', `{{ url('/system-management/users/delete/${key}') }}`)
+            });
+
+            $('.resetButton').click(function(){
+                var key = $(this).data('key');
+                $('#confirmReset').attr('href', `{{ url('/system-management/users/reset/${key}') }}`)
             });
         });
     </script>
