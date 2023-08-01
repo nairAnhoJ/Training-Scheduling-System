@@ -244,7 +244,7 @@
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
                         <a id="confirmDeleteButton" type="button" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60 cursor-pointer">DECLINE</a>
-                        <button id="" data-modal-hide="confirmDeleteModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                        <button id="" data-modal-hide="confirmDeleteModal" type="button" class="closeConfirmApproveButton text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
             </div>
@@ -748,6 +748,11 @@
                 $('#viewRequestModal').removeClass('z-50');
                 $('#viewRequestModal').addClass('z-30');
 
+            });
+
+            $('.closeConfirmApproveButton').click(function(){
+                $('#viewRequestModal').addClass('z-50');
+                $('#viewRequestModal').removeClass('z-30');
             });
 
             $('.closeConfirmApproveButton').click(function(){

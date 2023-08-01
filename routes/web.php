@@ -42,7 +42,7 @@ Route::get('/', function () {
         $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
         $events = DB::table('requests')
             // ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'requests.training_date', 'requests.id', 'users.id as uid', 'users.first_name', 'users.last_name', 'users.color')
-            ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color')
+            ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.end_date', 'requests.key', 'users.color')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->join('users', 'requests.trainer', '=', 'users.id')
             ->where('is_approved', 1)
@@ -57,6 +57,7 @@ Route::get('/', function () {
                 'id' => $event->key,
                 'title' => $event->name,
                 'start' => date('Y-m-d', strtotime($event->training_date)),
+                'end' => date('Y-m-d', strtotime($event->end_date.'+1 day')),
                 'color' => $event->color,
                 'extendedProps' => [
                     'isTraining' => true
@@ -78,6 +79,7 @@ Route::get('/', function () {
                 'id' => $event->key,
                 'title' => $event->description,
                 'start' => date('Y-m-d', strtotime($event->date)),
+                'end' => date('Y-m-d', strtotime($event->date)),
                 'color' => $event->color,
                 'extendedProps' => [
                     'isTraining' => false
@@ -108,6 +110,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/schedule-board/view', [DashboardController::class, 'view'])->name('dashboard.view');
     Route::post('/schedule-board/comment', [CommentController::class, 'store'])->name('comment.store');
     Route::get('/schedule-board/cancel/{key}', [DashboardController::class, 'cancel'])->name('dashboard.cancel');
+    Route::get('/schedule-board/extend/{key}', [DashboardController::class, 'extend'])->name('dashboard.extend');
+    Route::get('/schedule-board/complete/{key}', [DashboardController::class, 'complete'])->name('dashboard.complete');
 
     Route::post('/schedule-board/event/add', [EventController::class, 'add'])->name('event.add');
     Route::post('/schedule-board/event/view', [EventController::class, 'view'])->name('event.view');

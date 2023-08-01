@@ -11,13 +11,6 @@ use Illuminate\Support\Facades\Hash;
 class LoginController extends Controller
 {
     public function login(){
-
-        $currentDate = date('Y-m-d');
-        
-        DB::table('requests')
-            ->whereRaw('STR_TO_DATE(training_date, "%m/%d/%Y") < ?', [$currentDate])
-            ->update(['status' => 'COMPLETED']);
-
         return view('login');
     }
 
@@ -25,7 +18,7 @@ class LoginController extends Controller
         if(Auth()->user()->first_time_login === '1'){
             return view('change-password');
         }else{
-            return redirect()->route('dashboard.index');
+            return redirect()->route('users.index');
         }
     }
 

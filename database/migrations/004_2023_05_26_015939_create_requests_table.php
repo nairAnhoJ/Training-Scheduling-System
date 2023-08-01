@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('no_of_attendees')->nullable();
             $table->string('venue')->nullable(); 
             $table->string('training_date')->nullable();
+            $table->string('end_date')->nullable();
             $table->string('knowledge_of_participants')->nullable();
             $table->string('trainer')->nullable();
             $table->string('remarks')->nullable();

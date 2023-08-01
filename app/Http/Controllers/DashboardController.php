@@ -15,49 +15,13 @@ class DashboardController extends Controller
     }
 
     public function index(){
-        $currentDate = date('Y-m-d');
-        
-        DB::table('requests')
-            ->whereRaw('STR_TO_DATE(training_date, "%m/%d/%Y") < ?', [$currentDate])
-            ->update(['status' => 'COMPLETED']);
-
-
         $requestCount = DB::table('requests')->where('is_approved', 0)->where('is_deleted', 0)->where('status', 'PENDING')->count();
         $trainingCount = DB::table('requests')->where('is_approved', 1)->where('is_deleted', 0)->where('status', 'SCHEDULED')->count();
 
-
-
-
-
-
-
-
-
-
         $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
-        // $events = DB::table('requests')
-        //     ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color', DB::raw('COUNT(comments.id) as commentCount'))
-        //     ->join('customers', 'requests.customer_id', '=', 'customers.id')
-        //     ->join('users', 'requests.trainer', '=', 'users.id')
-        //     ->join('comments', 'requests.key', '=', 'comments.key')
-        //     ->where('is_approved', 1)
-        //     ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
-        //     ->get();
-
-        // $events = DB::table('requests')
-        //     ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color', DB::raw('IFNULL(COUNT(comments.id), 0) as commentCount'))
-        //     ->join('customers', 'requests.customer_id', '=', 'customers.id')
-        //     ->join('users', 'requests.trainer', '=', 'users.id')
-        //     ->leftJoin('comments', 'requests.key', '=', 'comments.req_id')
-        //     ->where('is_approved', 1)
-        //     ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
-        //     ->where('comments.is_read', 0)
-        //     ->where('comments.user_id', Auth::user()->key)
-        //     ->groupBy('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color')
-        //     ->get();
 
         $events = DB::table('requests')
-            ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color', DB::raw('IFNULL(COUNT(comments.id), 0) as commentCount'))
+            ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.end_date', 'requests.key', 'users.color', DB::raw('IFNULL(COUNT(comments.id), 0) as commentCount'))
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->join('users', 'requests.trainer', '=', 'users.id')
             ->leftJoin('comments', function ($join) {
@@ -67,7 +31,7 @@ class DashboardController extends Controller
             })
             ->where('is_approved', 1)
             ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
-            ->groupBy('requests.id', 'customers.name', 'requests.training_date', 'requests.key', 'users.color')
+            ->groupBy('requests.id', 'customers.name', 'requests.training_date', 'requests.end_date', 'requests.key', 'users.color')
             ->get();
 
         $eventArray = [];
@@ -78,6 +42,7 @@ class DashboardController extends Controller
                 'id' => $event->key,
                 'title' => $event->name,
                 'start' => date('Y-m-d', strtotime($event->training_date)),
+                'end' => date('Y-m-d', strtotime($event->end_date.'+1 day')),
                 'color' => $event->color,
                 'notificationCount' => $event->commentCount,
                 'extendedProps' => [
@@ -100,6 +65,7 @@ class DashboardController extends Controller
                 'id' => $event->key,
                 'title' => $event->description,
                 'start' => date('Y-m-d', strtotime($event->date)),
+                'end' => date('Y-m-d', strtotime($event->date)),
                 'color' => $event->color,
                 'notificationCount' => 0,
                 'extendedProps' => [
@@ -116,7 +82,7 @@ class DashboardController extends Controller
     public function view(Request $request){
         $id = $request->id;
         $thisRequest = DB::table('requests')
-            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.number', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.status', 'requests.key', 'users.first_name', 'users.last_name')
+            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.number', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.end_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.status', 'requests.key', 'users.first_name', 'users.last_name')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->join('users', 'requests.trainer', '=', 'users.id')
             ->where('requests.key', $id)
@@ -153,6 +119,7 @@ class DashboardController extends Controller
         $result = array(
             'status' => $thisRequest->status,
             'event_date' => $thisRequest->training_date,
+            'end_date' => $thisRequest->end_date,
             'venue' => $thisRequest->venue,
             'trainer' => $thisRequest->first_name.' '.$thisRequest->last_name,
             'training_number' => $thisRequest->number,
@@ -192,6 +159,22 @@ class DashboardController extends Controller
         );
 
         echo json_encode($result);
+    }
+
+    public function complete($key){
+        DB::table('requests')->where('key', $key)->update([
+            'status' => 'COMPLETED',
+        ]);
+
+        return redirect()->route('dashboard.index')->with('success', 'Training Has Been Cancelled');
+    }
+
+    public function extend($key){
+        DB::table('requests')->where('key', $key)->update([
+            'end_date' => DB::raw("DATE_ADD(STR_TO_DATE(end_date, '%m/%d/%Y'), INTERVAL 1 DAY)")
+        ]);
+
+        return redirect()->route('dashboard.index')->with('success', 'Training Has Been Cancelled');
     }
 
     public function cancel($key){
