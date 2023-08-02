@@ -483,7 +483,7 @@
                                                     {{ strtoupper($request->unit_type) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->timestamp }}
+                                                    {{ $request->created_at }}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -535,7 +535,7 @@
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Date Submitted</div>
                                                 <div class="cfont-semibold text-sm">
-                                                    {{ $request->timestamp }}
+                                                    {{ $request->created_at }}
                                                 </div>
                                             </div>
                                             {{-- <div class="grid grid-cols-2">
