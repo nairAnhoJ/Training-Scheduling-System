@@ -151,42 +151,6 @@ class CustomerController extends Controller
             $log->save();
         }
 
-
-
-        // $name = strtoupper($request->name);
-        // $address = strtoupper($request->address);
-        // $area = $request->area;
-
-        // $cp1_name = strtoupper($request->cp1_name);
-        // $cp1_number = $request->cp1_number;
-        // $cp1_email = $request->cp1_email;
-
-        // $cp2_name = strtoupper($request->cp2_name);
-        // $cp2_number = $request->cp2_number;
-        // $cp2_email = $request->cp2_email;
-
-        // $cp3_name = strtoupper($request->cp3_name);
-        // $cp3_number = $request->cp3_number;
-        // $cp3_email = $request->cp3_email;
-        
-        // DB::table('customers')
-        //     ->where('key', $key)
-        //     ->update([
-        //         'name' => $name,
-        //         'address' => $address,
-        //         'area' => $area,
-        //         'cp1_name' => $cp1_name,
-        //         'cp1_number' => $cp1_number,
-        //         'cp1_email' => $cp1_email,
-        //         'cp2_name' => $cp2_name,
-        //         'cp2_number' => $cp2_number,
-        //         'cp2_email' => $cp2_email,
-        //         'cp3_name' => $cp3_name,
-        //         'cp3_number' => $cp3_number,
-        //         'cp3_email' => $cp3_email,
-        //         'updated_at' => date('Y-m-d H:i:s'),
-        //     ]);
-
         return redirect()->route('customer.index')->with('success', 'Customer Successfully Added');
     }
 

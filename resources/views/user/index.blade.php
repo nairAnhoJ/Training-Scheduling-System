@@ -430,15 +430,21 @@
     <script>
         $(document).ready(function(){
             var id;
+            var role = '{{ $role }}';
             var eventArray = @json($eventArray);
+
+            var headerConfig = {
+                center: 'title',
+                right: 'prev,next today'
+            };
+
+            if (role == 1 || role == 0) {
+                headerConfig.left = 'AddEvent';
+            }
 
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                headerToolbar: {
-                    left: 'AddEvent',
-                    center: 'title',
-                    right: 'prev,next today'
-                },
+                headerToolbar: headerConfig,
                 customButtons: {
                     AddEvent: {
                         text: 'Add Event',

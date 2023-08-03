@@ -211,14 +211,34 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        <button id="cancelButton" data-modal-target="confirmCancelModal" data-modal-toggle="confirmCancelModal" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">CANCEL SCHEDULE</button>
-                        <button id="rescheduleButton" data-modal-target="rescheduleModal" data-modal-toggle="rescheduleModal" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">RESCHEDULE</button>
+                        @if (Auth::check())
+                            <button id="cancelButton" data-modal-target="confirmCancelModal" data-modal-toggle="confirmCancelModal" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">CANCEL SCHEDULE</button>
+                            <button id="rescheduleButton" data-modal-target="rescheduleModal" data-modal-toggle="rescheduleModal" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">RESCHEDULE</button>
+                        @endif
                         <button data-modal-hide="viewRequestModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
             </div>
         </div>
     {{-- VIEW EVENT MODAL END --}}
+    
+    @if (!Auth::check())
+        <nav class="w-screen bg-blue-500 h-14">
+            <div class="flex justify-between h-full">
+                <div class="w-32 h-full p-2.5">
+                    <a href="{{ url('') }}" class="bg-white text-blue-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex items-center pl-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-4 h-4"><path xmlns="http://www.w3.org/2000/svg" d="M810,220L360,-230l450-450v900Z" fill="currentColor" transform="translate(137-250)"/></svg>
+                        <span class="h-full leading-[39px] ml-1">BACK</span>
+                    </a>
+                </div>
+                <div class="w-36 h-full p-2.5">
+                    <a href="{{ route('login') }}" class="bg-white text-blue-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
+                        <span>LOGIN</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    @endif
 
     <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
         <div class="bg-white shadow-xl rounded-lg p-3 h-full">
@@ -259,9 +279,11 @@
                                 <table class="w-full text-sm text-left text-gray-500">
                                     <thead class="text-xs text-gray-600 uppercase bg-gray-100">
                                         <tr>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Action
-                                            </th>
+                                            @if (Auth::check())
+                                                <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                    Action
+                                                </th>
+                                            @endif
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Date
                                             </th>
@@ -294,12 +316,13 @@
                                                 }
                                             @endphp
                                             <tr class="requestRow bg-white border-b cursor-pointer hover:bg-gray-200 even:bg-gray-100">
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    @if ($request->status == 'SCHEDULED')
-                                                        <a href="{{ url('/trainings/edit/'.$request->key) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a>
-                                                    @endif
-                                                     {{-- | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</button> --}}
-                                                </td>
+                                                @if (Auth::check())
+                                                    <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                        @if ($request->status == 'SCHEDULED')
+                                                            <a href="{{ url('/trainings/edit/'.$request->key) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a>
+                                                        @endif
+                                                    </td>
+                                                @endif
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ date('F j, Y', strtotime($request->training_date)) }}
                                                 </td>

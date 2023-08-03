@@ -76,7 +76,9 @@ class DashboardController extends Controller
             $eventArray[] = $newArray;
         }
 
-        return view('user.index', compact('events', 'eventArray', 'trainers', 'requestCount', 'trainingCount'));
+        $role = Auth::user()->role;
+
+        return view('user.index', compact('events', 'eventArray', 'trainers', 'requestCount', 'trainingCount', 'role'));
     }
 
     public function view(Request $request){

@@ -148,9 +148,6 @@ class TrainingController extends Controller
             $log->save();
         }
 
-
-
-
         $contract_details_path = null;
         if($contract_details != null){
             $nid = DB::table('requests')->latest('id')->value('id');
@@ -281,134 +278,6 @@ class TrainingController extends Controller
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // $name = strtoupper($request->name);
-        // $address = strtoupper($request->address);
-        // $area = $request->area;
-
-        // $cp1_name = strtoupper($request->cp1_name);
-        // $cp1_number = $request->cp1_number;
-        // $cp1_email = $request->cp1_email;
-
-        // $cp2_name = strtoupper($request->cp2_name);
-        // $cp2_number = $request->cp2_number;
-        // $cp2_email = $request->cp2_email;
-
-        // $cp3_name = strtoupper($request->cp3_name);
-        // $cp3_number = $request->cp3_number;
-        // $cp3_email = $request->cp3_email;
-
-        // $category = $request->category;
-        // $contract_details = $request->contract_details;
-        // $brand = $request->brand;
-        // $model = strtoupper($request->model);
-        // $unit_type = $request->unit_type;
-        // $no_of_unit = $request->no_of_unit;
-        // $billing_type = $request->billing_type;
-        // $no_of_attendees = $request->no_of_attendees;
-        // $knowledge_of_participants = $request->knowledge_of_participants;
-        // $venue = strtoupper($request->venue);
-        // $event_date = $request->event_date;
-        // $trainer = $request->trainer;
-        // $remarks = $request->remarks;
-
-        // DB::table('customers')
-        //     ->where('name', $name)
-        //     ->update([
-        //         'address' => $address,
-        //         'area' => $area,
-        //         'cp1_name' => $cp1_name,
-        //         'cp1_number' => $cp1_number,
-        //         'cp1_email' => $cp1_email,
-        //         'cp2_name' => $cp2_name,
-        //         'cp2_number' => $cp2_number,
-        //         'cp2_email' => $cp2_email,
-        //         'cp3_name' => $cp3_name,
-        //         'cp3_number' => $cp3_number,
-        //         'cp3_email' => $cp3_email,
-        //         'updated_at' => date('Y-m-d H:i:s'),
-        //     ]);
-
-        // $contract_details_path = null;
-        // if($contract_details != null){
-        //     $nid = DB::table('requests')->latest('id')->value('id');
-        //     if($nid != null){
-        //         $nid += $nid;
-        //     }else{
-        //         $nid = 1;
-        //     }
-
-        //     $filename = 'R_'.$nid.'_'.date('md_Y').'.'.$request->file('contract_details')->getClientOriginalExtension();
-        //     $path = "files/contract_details/";
-        //     $contract_details_path = $path.$filename;
-        //     $request->file('contract_details')->move(public_path('storage/'.$path), $filename);
-
-        //     DB::table('requests')
-        //         ->where('key', $key)
-        //         ->update([
-        //             'category' => $category,
-        //             'contract_details' => $contract_details_path,
-        //             'unit_type' => $unit_type,
-        //             'brand' => $brand,
-        //             'model' => $model,
-        //             'no_of_unit' => $no_of_unit,
-        //             'billing_type' => $billing_type,
-        //             'no_of_attendees' => $no_of_attendees,
-        //             'venue' => $venue,
-        //             'training_date' => $event_date,
-        //             'knowledge_of_participants' => $knowledge_of_participants,
-        //             'trainer' => $trainer,
-        //             'remarks' => $remarks,
-        //             'updated_at' => date('Y-m-d H:i:s'),
-        //         ]);
-        // }else{
-        //     DB::table('requests')
-        //         ->where('key', $key)
-        //         ->update([
-        //             'category' => $category,
-        //             'unit_type' => $unit_type,
-        //             'brand' => $brand,
-        //             'model' => $model,
-        //             'no_of_unit' => $no_of_unit,
-        //             'billing_type' => $billing_type,
-        //             'no_of_attendees' => $no_of_attendees,
-        //             'venue' => $venue,
-        //             'training_date' => $event_date,
-        //             'knowledge_of_participants' => $knowledge_of_participants,
-        //             'trainer' => $trainer,
-        //             'remarks' => $remarks,
-        //             'updated_at' => date('Y-m-d H:i:s'),
-        //         ]);
-        // }
-
         return redirect()->route('trainings.index')->with('success', 'Request Successfully Updated');
     }
 
@@ -452,6 +321,15 @@ class TrainingController extends Controller
         $logRes = '';
 
         foreach($logs as $log){
+            if($log->field == 'Training Date'){
+                $color = 'text-blue-600';
+            }else if($log->action == 'APPROVE' || $log->action == 'RESCHEDULE'){
+                $color = 'text-emerald-600';
+            }else if($log->action == 'CANCEL'){
+                $color = 'text-red-600';
+            }else{
+                $color = '';
+            }
             $logRes .= '
                 <div class="text-sm mt-2">
                     <div class="flex justify-between bg-gray-200 px-1.5 py-0.5">
@@ -459,7 +337,7 @@ class TrainingController extends Controller
                         <p>'.$log->first_name.' '.$log->last_name.'</p>
                     </div>
                     <div id="logsDiv" class="pl-7">
-                        <div>
+                        <div class="'.$color.'">
                             • <span>'.ucfirst(strtolower($log->action)).'</span> <span>'.ucwords(strtolower($log->field)).'</span>: <span></span><span>'.$log->before.'</span> ⇒ <span>'.$log->after.'</span>
                         </div>
                     </div>
@@ -518,8 +396,10 @@ class TrainingController extends Controller
     }
 
     public function approve($key){
+        $req = ModelsRequest::where('key', $key)->firstOrFail();
         DB::table('requests')->where('key', $key)->update([
             'status' => 'SCHEDULED',
+            'end_date' => $req->training_date,
             'is_approved' => 1,
         ]);
 
@@ -547,10 +427,24 @@ class TrainingController extends Controller
     }
 
     public function reschedule(Request $request){
+        $req = ModelsRequest::where('key', $request->key)->firstOrFail();
         DB::table('requests')->where('key', $request->key)->update([
             'status' => 'SCHEDULED',
             'training_date' => $request->rescheduleDate,
+            'end_date' => $request->rescheduleDate,
         ]);
+
+        $req = ModelsRequest::where('key', $request->key)->firstOrFail();
+
+        $log = new Logs();
+        $log->table = 'REQUEST';
+        $log->table_key = $request->key;
+        $log->action = "RESCHEDULE";
+        $log->description = 'Request Number >> '.$req->number;
+        $log->before = $req->training_date;
+        $log->after = $request->rescheduleDate;
+        $log->user_id = Auth::id();
+        $log->save();
 
         return redirect()->route('trainings.index')->with('success', 'Training Has Been Rescheduled');
     }

@@ -32,12 +32,6 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 */
  
 Route::get('/', function () {
-    $currentDate = date('Y-m-d');
-    
-    DB::table('requests')
-        ->whereRaw('STR_TO_DATE(training_date, "%m/%d/%Y") < ?', [$currentDate])
-        ->update(['status' => 'COMPLETED']);
-
     if(!Auth::user()){
         $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
         $events = DB::table('requests')
@@ -101,6 +95,12 @@ Route::post('/view', [GuestController::class, 'view'])->name('guest.view');
 Route::post('/event', [GuestController::class, 'event'])->name('guest.event');
 Route::post('/auth', [AuthController::class, 'auth'])->name('login.auth');
 
+Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
+Route::post('/requests', [TrainingController::class, 'search'])->name('trainings.search');
+Route::post('/trainings/view', [TrainingController::class, 'view'])->name('trainings.view');
+Route::get('/trainings/view/contract-details/{key}', [TrainingController::class, 'contractDetails']);
+
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
@@ -136,10 +136,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/request-from-customers/decline/{id}', [CustomerRequestController::class, 'decline'])->name('customer.request.decline');
 
     // TRAINING
-    Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
-    Route::post('/trainings/view', [TrainingController::class, 'view'])->name('trainings.view');
+    // Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
+    // Route::post('/trainings/view', [TrainingController::class, 'view'])->name('trainings.view');
     Route::post('/trainings/reschedule', [TrainingController::class, 'reschedule'])->name('trainings.reschedule');
-    Route::get('/trainings/view/contract-details/{key}', [TrainingController::class, 'contractDetails']);
+    // Route::get('/trainings/view/contract-details/{key}', [TrainingController::class, 'contractDetails']);
     Route::get('/trainings/edit/{key}', [TrainingController::class, 'edit'])->name('trainings.edit');
     Route::get('/trainings/delete/{key}', [TrainingController::class, 'delete'])->name('trainings.delete');
     Route::post('/trainings/update/{key}', [TrainingController::class, 'update'])->name('trainings.update');
