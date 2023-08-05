@@ -164,8 +164,8 @@
                         @php
                             $prev = $page - 1;
                             $next = $page + 1;
-                            $from = ($prev * 100) + 1;
-                            $to = $page * 100;
+                            $from = ($prev * 50) + 1;
+                            $to = $page * 50;
                             if($to > $logsCount){
                                 $to = $logsCount;
                             }if($logsCount == 0){

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Customer;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,7 @@ class DashboardController extends Controller
     }
 
     public function index(){
+
         $requestCount = DB::table('requests')->where('is_approved', 0)->where('is_deleted', 0)->where('status', 'PENDING')->count();
         $trainingCount = DB::table('requests')->where('is_approved', 1)->where('is_deleted', 0)->where('status', 'SCHEDULED')->count();
 

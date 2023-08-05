@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
+    <div class="p-5 w-full bg-gray-200 overflow-auto">
         <div class="bg-white shadow-xl rounded-lg p-3 h-full">
             <div class="overflow-hidden rounded-lg p-4">
                 {{-- CONTROLS --}}
@@ -83,7 +83,7 @@
                                                     {{ $log->created_at }}
                                                 </td>
                                                 <td class="px-6 py-2 text-center whitespace-nowrap border-r border-gray-400">
-                                                    {{ $log->first_name.' '.$log->last_name }}
+                                                    {{ $log->user->first_name.' '.$log->user->last_name }}
                                                 </td>
                                                 <td class="px-6 py-2 text-center whitespace-nowrap border-r border-gray-400">
                                                     {{ $log->action }}
@@ -164,8 +164,8 @@
                         @php
                             $prev = $page - 1;
                             $next = $page + 1;
-                            $from = ($prev * 100) + 1;
-                            $to = $page * 100;
+                            $from = ($prev * 50) + 1;
+                            $to = $page * 50;
                             if($to > $logsCount){
                                 $to = $logsCount;
                             }if($logsCount == 0){
