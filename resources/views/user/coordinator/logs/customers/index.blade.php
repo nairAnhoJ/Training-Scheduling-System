@@ -208,7 +208,7 @@
 
             $('#clearButton').click(function() {
                 var searchValue = '';
-                var pageValue = '<?php echo $page; ?>';
+                var pageValue = 1;
                 var actionUrl = "{{ url('/logs/customers/') }}" + "/" + pageValue + "/" + searchValue;
 
                 $('#searchForm').attr('action', actionUrl);

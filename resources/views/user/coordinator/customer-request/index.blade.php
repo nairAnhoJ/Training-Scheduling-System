@@ -384,14 +384,13 @@
         <div class="bg-white shadow-xl rounded-lg p-3 h-full">
             <div class="overflow-hidden rounded-lg p-4">
                 {{-- CONTROLS --}}
-                    {{-- <div class="mb-3">
-                        <div class="md:grid md:grid-cols-2">
-                            <div class="w-24 mb-3 md:mb-0">
-                                <a href="{{ route('request.add') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 mr-1" fill="currentColor" viewBox="0 -960 960 960"><path d="M440.391-190.391v-250h-250v-79.218h250v-250h79.218v250h250v79.218h-250v250h-79.218Z"/></svg>
-                                    <span>ADD</span></a>
+                    <div class="mb-3">
+                        <div class="flex flex-row-reverse">
+                            <div class="w-52 mb-3 md:mb-0">
+                                <a href="{{ route('customer.request.declined') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
+                                    <span>DECLINED REQUESTS</span></a>
                             </div>
-                            <div class="justify-self-end w-full xl:w-4/5">
+                            {{-- <div class="justify-self-end w-full xl:w-4/5">
                                 <form method="POST" action="{{ route('request.search') }}" id="searchForm" class="w-full">
                                     <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                                     <div class="relative">
@@ -405,9 +404,9 @@
                                         <button id="searchSubmit" type="submit" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
                                     </div>
                                 </form>
-                            </div>
+                            </div> --}}
                         </div>
-                    </div> --}}
+                    </div>
                 {{-- CONTROLS END --}}
 
                 <div>

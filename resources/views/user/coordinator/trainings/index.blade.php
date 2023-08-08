@@ -223,16 +223,16 @@
     {{-- VIEW EVENT MODAL END --}}
     
     @if (!Auth::check())
-        <nav class="w-screen bg-blue-500 h-14">
+        <nav class="w-screen bg-red-500 h-14">
             <div class="flex justify-between h-full">
                 <div class="w-32 h-full p-2.5">
-                    <a href="{{ url('') }}" class="bg-white text-blue-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex items-center pl-4">
+                    <a href="{{ url('') }}" class="bg-white text-red-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex items-center pl-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-4 h-4"><path xmlns="http://www.w3.org/2000/svg" d="M810,220L360,-230l450-450v900Z" fill="currentColor" transform="translate(137-250)"/></svg>
                         <span class="h-full leading-[39px] ml-1">BACK</span>
                     </a>
                 </div>
                 <div class="w-36 h-full p-2.5">
-                    <a href="{{ route('login') }}" class="bg-white text-blue-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
+                    <a href="{{ route('login') }}" class="bg-white text-red-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
                         <span>LOGIN</span>
                     </a>
                 </div>
@@ -533,7 +533,7 @@
                                 $('#contract_details').addClass('pointer-events-none opacity-50');
                             }else{
                                 $('#contract_details').removeClass('pointer-events-none opacity-50');
-                                $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
+                                $('#contract_details').attr('href', `/trainings/view/contract-details/${result.key}`);
                             }
                         }else{
                             $('#con_details_div').addClass('hidden');

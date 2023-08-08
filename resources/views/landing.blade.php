@@ -213,15 +213,15 @@
   
 
         <div class="w-screen h-screen overflow-hidden">
-            <nav class="w-screen bg-blue-500 h-14">
+            <nav class="w-screen bg-red-400 h-14">
                 <div class="flex justify-between h-full">
                     <div class="w-72 h-full p-2.5">
-                        <a href="{{ route('trainings.index') }}" class="bg-white text-blue-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex items-center justify-center">
+                        <a href="{{ route('trainings.index') }}" class="bg-white text-red-500 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex items-center justify-center">
                             <span class="h-full leading-[39px] ml-1">SCHEDULED TRAININGS</span>
                         </a>
                     </div>
                     <div class="w-36 h-full p-2.5">
-                        <a href="{{ route('login') }}" class="bg-white text-blue-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
+                        <a href="{{ route('login') }}" class="bg-white text-red-500 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
                             <span>LOGIN</span>
                         </a>
                     </div>

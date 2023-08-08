@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
+    <div class="p-5 w-full bg-gray-200">
         <div class="bg-white shadow-xl rounded-lg p-3 h-full">
             <div class="overflow-hidden rounded-lg p-4">
                 {{-- CONTROLS --}}
@@ -83,7 +83,7 @@
                                                     {{ $log->created_at }}
                                                 </td>
                                                 <td class="px-6 py-2 text-center whitespace-nowrap border-r border-gray-400">
-                                                    {{ $log->first_name.' '.$log->last_name }}
+                                                    {{ $log->user->first_name.' '.$log->user->last_name }}
                                                 </td>
                                                 <td class="px-6 py-2 text-center whitespace-nowrap border-r border-gray-400">
                                                     {{ $log->action }}
@@ -179,11 +179,11 @@
                             </span>
                             <!-- Buttons -->
                             <div class="inline-flex xs:mt-0">
-                                <a href="{{ url('/logs/customers/'.$prev.'/'.$search) }}" class="{{ ($page == 1) ? 'pointer-events-none' : ''; }} inline-flex items-center px-4 py-2 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-400 rounded-lg hover:bg-gray-100 hover:text-gray-700 w-32">
+                                <a href="{{ url('/logs/trainings/'.$prev.'/'.$search) }}" class="{{ ($page == 1) ? 'pointer-events-none' : ''; }} inline-flex items-center px-4 py-2 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-400 rounded-lg hover:bg-gray-100 hover:text-gray-700 w-32">
                                     <svg aria-hidden="true" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
                                     Previous
                                 </a>
-                                <a href="{{ url('/logs/customers/'.$next.'/'.$search) }}" class="{{ ($to == $logsCount) ? 'pointer-events-none' : ''; }} flex items-center text-center px-8 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-400 rounded-lg hover:bg-gray-100 hover:text-gray-700 w-32">
+                                <a href="{{ url('/logs/trainings/'.$next.'/'.$search) }}" class="{{ ($to == $logsCount) ? 'pointer-events-none' : ''; }} flex items-center text-center px-8 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-400 rounded-lg hover:bg-gray-100 hover:text-gray-700 w-32">
                                     Next
                                     <svg aria-hidden="true" class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                 </a>
@@ -200,7 +200,7 @@
             $('#searchSubmit').click(function() {
                 var searchValue = $('#search').val();
                 var pageValue = '<?php echo $page; ?>';
-                var actionUrl = "{{ url('/logs/customers/') }}" + "/" + pageValue + "/" + searchValue;
+                var actionUrl = "{{ url('/logs/trainings/') }}" + "/" + pageValue + "/" + searchValue;
 
                 $('#searchForm').attr('action', actionUrl);
                 $('#searchForm').submit();
@@ -208,8 +208,8 @@
 
             $('#clearButton').click(function() {
                 var searchValue = '';
-                var pageValue = '<?php echo $page; ?>';
-                var actionUrl = "{{ url('/logs/customers/') }}" + "/" + pageValue + "/" + searchValue;
+                var pageValue = '';
+                var actionUrl = "{{ url('/logs/trainings') }}";
 
                 $('#searchForm').attr('action', actionUrl);
                 $('#searchForm').submit();

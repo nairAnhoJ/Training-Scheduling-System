@@ -540,13 +540,11 @@ class RequestController extends Controller
             ->where('requests.key', $key)
             ->first();
 
+        $logs = Logs::with('user')
+            ->where('logs.table_key', $key)
+            ->orderByDesc('id')
+            ->get();
 
-        $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
-        ->select('logs.*', 'users.first_name', 'users.last_name')
-        ->where('table', 'REQUEST')
-        ->where('logs.table_key', $key)
-        ->orderByDesc('id')
-        ->get();
         $logRes = '';
 
         foreach($logs as $log){
@@ -554,7 +552,7 @@ class RequestController extends Controller
                 <div class="text-sm mt-2">
                     <div class="flex justify-between bg-gray-200 px-1.5 py-0.5">
                         <p class="font-semibold">'.$log->created_at.'</p>
-                        <p>'.$log->first_name.' '.$log->last_name.'</p>
+                        <p>'.$log->user->first_name.' '.$log->user->last_name.'</p>
                     </div>
                     <div id="logsDiv" class="pl-7">
                         <div>

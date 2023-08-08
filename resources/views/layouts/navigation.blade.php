@@ -1,9 +1,9 @@
 
-<nav class="w-screen bg-blue-500 h-14 shadow-lg">
+<nav class="w-screen bg-red-500 h-14 shadow-lg">
     <div class="grid grid-cols-3 h-full">
         <div class="h-full">
             <div class="flex items-center h-full">
-               <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mx-3 text-sm text-blue-600 rounded-lg bg-white hover:scale-105 shadow-xl"> 
+               <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mx-3 text-sm text-red-600 rounded-lg bg-white hover:scale-105 shadow-xl"> 
                    <span class="sr-only">Open sidebar</span>
                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
@@ -23,7 +23,7 @@
 
         <form method="POST" action="{{ route('logout') }}" class="w-36 h-full p-2.5 justify-self-end">
             @csrf
-            <button type="submit" class="bg-white text-blue-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
+            <button type="submit" class="bg-white text-red-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
                 <span>LOGOUT</span>
             </button>
         </form>
@@ -74,17 +74,17 @@
                </a>
             </li>
             <li>
-               <button type="button" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/system-management/users'))) || (Str::contains(url()->current(), url('/system-management/departments'))) ? 'scale-105 bg-gray-300 border border-gray-300 shadow' : '' }}" aria-controls="system-logs" data-collapse-toggle="system-logs">
+               <button type="button" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/logs/customers'))) || (Str::contains(url()->current(), url('/logs/trainings'))) ? 'scale-105 bg-gray-300 border border-gray-300 shadow' : '' }}" aria-controls="system-logs" data-collapse-toggle="system-logs">
                   <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="m800-134 28-28-75-75v-112h-40v128l87 87Zm-620 14q-24.75 0-42.375-17.625T120-180v-600q0-24.75 17.625-42.375T180-840h600q24.75 0 42.375 17.625T840-780v329q-14-8-29.5-13t-30.5-8v-308H180v600h309q4 16 9.023 31.172Q503.045-133.655 510-120H180Zm0-107v47-600 308-4 249Zm100-53h211q4-16 9-31t13-29H280v60Zm0-170h344q14-7 27-11.5t29-8.5v-40H280v60Zm0-170h400v-60H280v60ZM732.5-41Q655-41 600-96.5T545-228q0-78.435 54.99-133.717Q654.98-417 733-417q77 0 132.5 55.283Q921-306.435 921-228q0 76-55.5 131.5T732.5-41Z"/></svg>
                      <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Logs</span>
                      <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                </button>
                <ul id="system-logs" class="hidden py-2 space-y-2">
                   <li>
-                     <a href="{{ route('logs.customer.index') }}" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/system-management/users'))) ? 'bg-gray-300 border border-gray-300 shadow' : '' }}">Customers</a>
+                     <a href="{{ route('logs.customer.index') }}" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/logs/customers'))) ? 'bg-gray-300 border border-gray-300 shadow' : '' }}">Customers</a>
                   </li>
                   <li>
-                     <a href="{{ route('logs.trainings.index') }}" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/system-management/users'))) ? 'bg-gray-300 border border-gray-300 shadow' : '' }}">Trainings</a>
+                     <a href="{{ route('logs.trainings.index') }}" class="flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/logs/trainings'))) ? 'bg-gray-300 border border-gray-300 shadow' : '' }}">Trainings</a>
                   </li>
                   {{-- @if (Auth::user()->role == 0)
                      <li>

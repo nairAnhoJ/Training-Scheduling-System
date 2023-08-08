@@ -126,7 +126,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/requests/store', [RequestController::class, 'store'])->name('request.store');
     Route::post('/requests/view', [RequestController::class, 'view'])->name('request.view');
     Route::get('/requests/approve/{key}', [RequestController::class, 'approve']);
-    Route::get('/requests/view/contract-details/{key}', [RequestController::class, 'contractDetails']);
     Route::get('/requests/edit/{key}', [RequestController::class, 'edit'])->name('request.edit');
     Route::get('/requests/delete/{key}', [RequestController::class, 'delete'])->name('request.delete');
     Route::post('/requests/update/{key}', [RequestController::class, 'update'])->name('request.update');
@@ -135,6 +134,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/request-from-customers', [CustomerRequestController::class, 'index'])->name('customer.request.index');
     Route::post('/request-from-customers/approve', [CustomerRequestController::class, 'approve'])->name('customer.request.approve');
     Route::get('/request-from-customers/decline/{id}', [CustomerRequestController::class, 'decline'])->name('customer.request.decline');
+    Route::get('/request-from-customers/declined', [CustomerRequestController::class, 'declined'])->name('customer.request.declined');
 
     // TRAINING
     // Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
@@ -181,16 +181,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/system-management/departments/delete/{key}', [DepartmentController::class, 'delete'])->name('departments.delete');
 
 
-
-
-
-
     // LOGS
         // CUSTOMERS
             Route::get('/logs/customers', [LogsController::class, 'customerIndex'])->name('logs.customer.index');
             Route::get('/logs/customers/{page}/{search?}', [LogsController::class, 'customerPaginate'])->name('logs.customer.paginate');
         // CUSTOMERS END
-
+ 
 
         // REQUEST
             Route::get('/logs/trainings', [LogsController::class, 'trainingsIndex'])->name('logs.trainings.index');

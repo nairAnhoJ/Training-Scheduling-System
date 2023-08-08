@@ -10,34 +10,40 @@ class LogsController extends Controller
     public function customerIndex(){
         $page = 1;
         $search = '';
-        // $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
-        //     ->select('logs.*', 'users.first_name', 'users.last_name')
-        //     ->where('table', 'CUSTOMERS')
-        //     ->orderByDesc('id')
-        //     ->paginate(50, ['*'], 'page', $page);
 
-        $logs = Logs::with('user')  // Eager load the 'user' relationship
+        $logs = Logs::with('user')
             ->where('table', 'CUSTOMERS')
             ->orderByDesc('id')
             ->paginate(50, ['*'], 'page', $page);
 
-        $logsCount = Logs::where('table', 'CUSTOMERS')->count();
+        // $logsCount = Logs::where('table', 'CUSTOMERS')->count();
+        $logsCount = $logs->total();
 
         return view('user.coordinator.logs.customers.index', compact('page', 'search', 'logs', 'logsCount'));
     }
 
     public function customerPaginate($page, $search = null){
-        $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
-            ->select('logs.*', 'users.first_name', 'users.last_name')
-            ->where('table', 'CUSTOMERS')
-            ->whereRaw("CONCAT_WS(' ', logs.action, logs.description, logs.field, logs.before, logs.after, logs.created_at, users.first_name, users.last_name) LIKE '%{$search}%'")
-            ->orderByDesc('id')
-            ->paginate(50, ['*'], 'page', $page);
-        $logsCount = Logs::join('users', 'logs.user_id', '=', 'users.id')
-            ->select('logs.*', 'users.first_name', 'users.last_name')
-            ->where('table', 'CUSTOMERS')
-            ->whereRaw("CONCAT_WS(' ', logs.action, logs.description, logs.field, logs.before, logs.after, logs.created_at, users.first_name, users.last_name) LIKE '%{$search}%'")
-            ->count();
+        if($search == null){
+            $logs = Logs::with('user')
+                ->where('table', 'CUSTOMERS')
+                ->orderByDesc('id')
+                ->paginate(50, ['*'], 'page', $page);
+        }else{
+            $searchTerm = '%' . $search . '%';
+    
+            $logs = Logs::with('user')
+                ->where('table', 'CUSTOMERS')
+                ->where(function ($query) use ($searchTerm) {
+                    $query->whereRaw("CONCAT_WS(' ', action, description, field, `before`, `after`, created_at) LIKE ?", [$searchTerm])
+                        ->orWhereHas('user', function ($userQuery) use ($searchTerm) {
+                            $userQuery->whereRaw("CONCAT_WS(' ', first_name, last_name) LIKE ?", [$searchTerm]);
+                        });
+                })
+                ->orderByDesc('id')
+                ->paginate(50, ['*'], 'page', $page);
+        }
+
+        $logsCount = $logs->total();
 
         return view('user.coordinator.logs.customers.index', compact('page', 'search', 'logs', 'logsCount'));
     }
@@ -55,28 +61,39 @@ class LogsController extends Controller
     public function trainingsIndex(){
         $page = 1;
         $search = '';
-        $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
-            ->select('logs.*', 'users.first_name', 'users.last_name')
+
+        $logs = Logs::with('user')
             ->where('table', 'REQUEST')
             ->orderByDesc('id')
             ->paginate(50, ['*'], 'page', $page);
-        $logsCount = Logs::where('table', 'REQUEST')->count();
+
+        $logsCount = $logs->total();
 
         return view('user.coordinator.logs.requests.index', compact('page', 'search', 'logs', 'logsCount'));
     }
 
     public function trainingsPaginate($page, $search = null){
-        $logs = Logs::join('users', 'logs.user_id', '=', 'users.id')
-            ->select('logs.*', 'users.first_name', 'users.last_name')
-            ->where('table', 'REQUEST')
-            ->whereRaw("CONCAT_WS(' ', logs.action, logs.description, logs.field, logs.before, logs.after, users.first_name, users.last_name) LIKE '%{$search}%'")
-            ->orderByDesc('id')
-            ->paginate(50, ['*'], 'page', $page);
-        $logsCount = Logs::join('users', 'logs.user_id', '=', 'users.id')
-            ->select('logs.*', 'users.first_name', 'users.last_name')
-            ->where('table', 'REQUEST')
-            ->whereRaw("CONCAT_WS(' ', logs.action, logs.description, logs.field, logs.before, logs.after, users.first_name, users.last_name) LIKE '%{$search}%'")
-            ->count();
+        if($search == null){
+            $logs = Logs::with('user')
+                ->where('table', 'REQUEST')
+                ->orderByDesc('id')
+                ->paginate(50, ['*'], 'page', $page);
+        }else{
+            $searchTerm = '%' . $search . '%';
+    
+            $logs = Logs::with('user')
+                ->where('table', 'REQUEST')
+                ->where(function ($query) use ($searchTerm) {
+                    $query->whereRaw("CONCAT_WS(' ', action, description, field, `before`, `after`, created_at) LIKE ?", [$searchTerm])
+                        ->orWhereHas('user', function ($userQuery) use ($searchTerm) {
+                            $userQuery->whereRaw("CONCAT_WS(' ', first_name, last_name) LIKE ?", [$searchTerm]);
+                        });
+                })
+                ->orderByDesc('id')
+                ->paginate(50, ['*'], 'page', $page);
+        }
+
+        $logsCount = $logs->total();
 
         return view('user.coordinator.logs.requests.index', compact('page', 'search', 'logs', 'logsCount'));
     }
