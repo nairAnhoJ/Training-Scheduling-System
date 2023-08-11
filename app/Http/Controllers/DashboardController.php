@@ -178,7 +178,7 @@ class DashboardController extends Controller
             'end_date' => DB::raw("DATE_ADD(STR_TO_DATE(end_date, '%m/%d/%Y'), INTERVAL 1 DAY)")
         ]);
 
-        return redirect()->route('dashboard.index')->with('success', 'Training Has Been Cancelled');
+        return redirect()->route('dashboard.index')->with('success', 'Training Has Been Succesfuly Extended.');
     }
 
     public function cancel($key){

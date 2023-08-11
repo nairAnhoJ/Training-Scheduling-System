@@ -242,9 +242,10 @@ class TrainingController extends Controller
             $data['remarks'] = $remarks;
             $data['updated_at'] = Carbon::now();
             $model->update($data);
+
     
             $changedColumns = array_keys(array_diff_assoc($data, $originalData));
-            $changedColumns = array_diff($changedColumns, ['updated_at','event_date']);
+            $changedColumns = array_diff($changedColumns, ['updated_at','event_date','end_date']);
     
             foreach ($changedColumns as $column) {
                 $changed = '';
@@ -277,6 +278,11 @@ class TrainingController extends Controller
                 $log->save();
             }
         }
+
+        $ereq = ModelsRequest::where('key', $key)->firstOrFail();
+        $ereq->end_date = $event_date;
+        $ereq->save();
+        
 
         return redirect()->route('trainings.index')->with('success', 'Request Successfully Updated');
     }

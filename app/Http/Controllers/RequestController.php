@@ -614,9 +614,11 @@ class RequestController extends Controller
     }
 
     public function approve($key){
+        $req = ModelsRequest::where('key', $key)->firstOrFail();
         DB::table('requests')->where('key', $key)->update([
             'status' => 'SCHEDULED',
             'is_approved' => 1,
+            'end_date' => $req->training_date,
         ]);
 
         $req = ModelsRequest::where('key', $key)->firstOrFail();
