@@ -398,7 +398,7 @@
                                         <h1 class="text-sm lg:text-xs 2xl:text-sm">Pending Request From Customer</h1>
                                     </div>
                                     <div class="flex items-center">
-                                        <a href="#">
+                                        <a href="{{ route('customer.request.index') }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-500 hover:text-gray-600 transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M686-450H160v-60h526L438-758l42-42 320 320-320 320-42-42 248-248Z"/></svg>
                                         </a>
                                     </div>
@@ -462,6 +462,7 @@
                     info.el.classList.add('hover:scale-105');
                 },
                 eventClick: function(calEvent, jsEvent, view) {
+                    $('#loading').toggleClass('hidden');
                     id = calEvent.event.id;
                     var isTraining = calEvent.event.extendedProps.isTraining;
                     var _token = $('input[name="_token"]').val();
@@ -573,6 +574,7 @@
                                 $('#commentInput').val('');
                                 $('#commentInput').focus();
 
+                                $('#loading').toggleClass('hidden');
                                 $('#viewEventButton').click();
                                 autoScroll();
                             }
@@ -591,6 +593,7 @@
                                 $('#cusDate').html(result.date);
                                 $('#cusTrainer').html(result.trainer);
                                 
+                                $('#loading').toggleClass('hidden');
                                 $('#viewCustomEventButton').click();
                             }
                         })

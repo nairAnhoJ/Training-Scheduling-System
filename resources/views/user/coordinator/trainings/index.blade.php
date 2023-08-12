@@ -226,13 +226,13 @@
         <nav class="w-screen bg-red-500 h-14">
             <div class="flex justify-between h-full">
                 <div class="w-32 h-full p-2.5">
-                    <a href="{{ url('') }}" class="bg-white text-red-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex items-center pl-4">
+                    <a href="{{ url('') }}" onclick="$('#loading').toggleClass('hidden');" class="bg-white text-red-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex items-center pl-4">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-4 h-4"><path xmlns="http://www.w3.org/2000/svg" d="M810,220L360,-230l450-450v900Z" fill="currentColor" transform="translate(137-250)"/></svg>
                         <span class="h-full leading-[39px] ml-1">BACK</span>
                     </a>
                 </div>
                 <div class="w-36 h-full p-2.5">
-                    <a href="{{ route('login') }}" class="bg-white text-red-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
+                    <a href="{{ route('login') }}" onclick="$('#loading').toggleClass('hidden');" class="bg-white text-red-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
                         <span>LOGIN</span>
                     </a>
                 </div>
@@ -253,7 +253,7 @@
                                     <span>ADD</span></a>
                             </div> --}}
                             <div class="justify-self-end w-full xl:w-2/5">
-                                <form method="POST" action="{{ route('request.search') }}" id="searchForm" class="w-full">
+                                <form method="POST" action="{{ route('trainings.search') }}" id="searchForm" class="w-full">
                                     @csrf
                                     <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                                     <div class="relative">
@@ -443,6 +443,7 @@
             });
 
             $('.requestRow').click(function(){
+                $('#loading').toggleClass('hidden');
                 key = $(this).find('span').data('key');
                 var _token = $('input[name="_token"]').val();
 
@@ -549,6 +550,7 @@
 
                         $('#logsDiv').html(result.logRes);
                         
+                        $('#loading').toggleClass('hidden');
                         $('#viewRequestButton').click();
                         autoResize();
                     }

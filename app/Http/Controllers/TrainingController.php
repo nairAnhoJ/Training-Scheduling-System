@@ -34,7 +34,7 @@ class TrainingController extends Controller
     public function search(Request $request){
         $search = $request->search;
         $requests = DB::table('requests')
-            ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'users.first_name', 'users.last_name')
+            ->select('customers.name', 'customers.area', 'requests.trainer', 'requests.training_date', 'requests.status', 'requests.updated_at', 'requests.key', 'users.first_name', 'users.last_name')
             ->join('customers', 'requests.customer_id', '=', 'customers.id')
             ->leftJoin('users', 'requests.trainer', '=', 'users.id')
             ->whereRaw("CONCAT_WS(' ', customers.name, requests.category, requests.unit_type, requests.billing_type, customers.area, requests.updated_at, users.first_name, users.last_name) LIKE '%{$search}%'")
@@ -245,7 +245,7 @@ class TrainingController extends Controller
 
     
             $changedColumns = array_keys(array_diff_assoc($data, $originalData));
-            $changedColumns = array_diff($changedColumns, ['updated_at','event_date','end_date']);
+            $changedColumns = array_diff($changedColumns, ['updated_at','event_date']);
     
             foreach ($changedColumns as $column) {
                 $changed = '';

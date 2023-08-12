@@ -55,4 +55,8 @@
             <div class="absolute left-[64%] -top-[29%] w-[150vw] h-[150vh] bg-gradient-to-t from-sky-800 to-sky-300 opacity-70 rounded-[100px] rotate-[18deg] z-10"></div>
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+        });
+    </script>
 @endsection

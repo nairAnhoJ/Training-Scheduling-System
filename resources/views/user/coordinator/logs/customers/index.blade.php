@@ -198,6 +198,7 @@
     <script>
         $(document).ready(function(){
             $('#searchSubmit').click(function() {
+                $('#loading').toggleClass('hidden');
                 var searchValue = $('#search').val();
                 var pageValue = '<?php echo $page; ?>';
                 var actionUrl = "{{ url('/logs/customers/') }}" + "/" + pageValue + "/" + searchValue;
@@ -207,6 +208,7 @@
             });
 
             $('#clearButton').click(function() {
+                $('#loading').toggleClass('hidden');
                 var searchValue = '';
                 var pageValue = 1;
                 var actionUrl = "{{ url('/logs/customers/') }}" + "/" + pageValue + "/" + searchValue;

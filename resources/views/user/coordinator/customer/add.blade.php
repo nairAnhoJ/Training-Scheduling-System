@@ -98,7 +98,6 @@
 
     <script>
         $(document).ready(function(){
-            
             jQuery(document).on( "click", ".inputOption", function(e){
                 $('.content').not($(this).closest('.optionDiv').find('.listOption')).addClass('hidden');
                 $(this).closest('.optionDiv').find('.listOption').toggleClass('hidden');

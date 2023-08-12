@@ -14,6 +14,29 @@ use Illuminate\Support\Str;
 class CustomerRequestController extends Controller
 {
     public function index(){
+        $customers = DB::table('customers')->where('is_deleted', 0)->get();
+
+        $requests = DB::table('customer_requests')->where('is_decline', 0)->get();
+
+        $search = '';
+        return view('user.coordinator.customer-request.index', compact('requests', 'search', 'customers'));
+    }
+
+    public function search(Request $request){
+        $search = $request->search;
+        $customers = DB::table('customers')
+            ->where('is_deleted', 0)
+            ->get();
+
+        $requests = DB::table('customer_requests')
+            ->where('is_decline', 0)
+            ->whereRaw("CONCAT_WS(' ', name, address, category, brand, model, unit_type, knowledge_of_participants) LIKE '%{$search}%'")
+            ->get();
+
+        return view('user.coordinator.customer-request.index', compact('requests', 'search', 'customers'));
+    }
+
+    public function sync(){
         $client = new Client();
         $client->setAuthConfig(config('google.credentials_json'));
         $client->addScope(Sheets::SPREADSHEETS);
@@ -87,12 +110,37 @@ class CustomerRequestController extends Controller
             }
         }
 
-        $customers = DB::table('customers')->where('is_deleted', 0)->get();
+        return redirect()->back();
+    }
 
-        $requests = DB::table('customer_requests')->where('is_decline', 0)->get();
+    public function view(Request $request){
+        $cr = CustomerRequest::where('id', $request->id)->first();
 
-        $search = '';
-        return view('user.coordinator.customer-request.index', compact('requests', 'search', 'customers'));
+        $result = array(
+            'name' => $cr->name,
+            'address' => $cr->address,
+            'cp1_name' => $cr->cp1_name,
+            'cp1_number' => $cr->cp1_number,
+            'cp1_email' => $cr->cp1_email,
+
+            'cp2_name' => $cr->cp2_name,
+            'cp2_number' => $cr->cp2_number,
+            'cp2_email' => $cr->cp2_email,
+
+            'cp3_name' => $cr->cp3_name,
+            'cp3_number' => $cr->cp3_number,
+            'cp3_email' => $cr->cp3_email,
+
+            'category' => $cr->category,
+            'brand' => $cr->brand,
+            'model' => $cr->model,
+            'unit_type' => $cr->unit_type,
+            'no_of_unit' => $cr->no_of_unit,
+            'no_of_attendees' => $cr->no_of_attendees,
+            'knowledge_of_participants' => $cr->knowledge_of_participants,
+        );
+
+        echo json_encode($result);
     }
 
     public function approve(Request $request){
@@ -126,7 +174,6 @@ class CustomerRequestController extends Controller
         $com = DB::table('customers')
             ->where('name', $name)
             ->first();
-
 
         if($com != ''){
             DB::table('customers')
@@ -216,62 +263,7 @@ class CustomerRequestController extends Controller
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
 
-            $client = new Client();
-            $client->setAuthConfig(config('google.credentials_json'));
-            $client->addScope(Sheets::SPREADSHEETS);
-            $sheetsService = new Sheets($client);
-        
-            $spreadsheetId = config('google.spreadsheet_id');
-            $range = 'Form Responses 1!A1:V'; // Replace with the desired range
-            $response = $sheetsService->spreadsheets_values->get($spreadsheetId, $range);
-            $values = $response->getValues();
-
-
-            // Search for the row where the id is equal to 2
-            $targetRow = null;
-            if (!empty($values)) {
-                foreach ($values as $rowIndex => $row) {
-                    if (isset($row[0]) && $row[0] == $request->id) {
-                        $targetRow = $rowIndex + 1; // Add 2 to account for 1-based indexing (since the data starts from the second row)
-                        break;
-                    }
-                }
-            }
-            
-            // If the target row was found, delete it
-            if ($targetRow !== null) {
-                $sheetProperties = $sheetsService->spreadsheets->get($spreadsheetId)->getSheets();
-                $sheetId = null;
-            
-                // Find the sheet ID based on the sheet title
-                foreach ($sheetProperties as $sheetProperty) {
-                    if ($sheetProperty->getProperties()->getTitle() === 'Form Responses 1') {
-                        $sheetId = $sheetProperty->getProperties()->getSheetId();
-                        break;
-                    }
-                }
-            
-                if ($sheetId) {
-                    $deleteRange = 'Form Responses 1!A' . $targetRow . ':Z' . $targetRow;
-                    $batchUpdateRequest = new BatchUpdateSpreadsheetRequest([
-                        'requests' => [
-                            [
-                                'deleteDimension' => [
-                                    'range' => [
-                                        'sheetId' => $sheetId,
-                                        'dimension' => 'ROWS',
-                                        'startIndex' => $targetRow - 1, // Subtract 1 to account for 0-based indexing
-                                        'endIndex' => $targetRow,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ]);
-            
-                    // Execute the batch update request to delete the row
-                    $sheetsService->spreadsheets->batchUpdate($spreadsheetId, $batchUpdateRequest);
-                }
-            }
+        CustomerRequest::where('id', $request->id)->delete();
 
         return redirect()->route('customer.request.index')->with('success', 'Request Successfully Approved');
     }
@@ -282,5 +274,27 @@ class CustomerRequestController extends Controller
         ]);
 
         return redirect()->route('customer.request.index')->with('success', 'Request Successfully Declined');
+    }
+
+    public function declined(){
+        $requests = DB::table('customer_requests')->where('is_decline', 1)->get();
+
+        $search = '';
+
+        return view('user.coordinator.customer-request.declined.index', compact('requests', 'search'));
+    }
+
+    public function declinedRestore($id){
+        DB::table('customer_requests')->where('id', $id)->update([
+            'is_decline' => 0
+        ]);
+
+        return redirect()->route('customer.request.declined')->with('success', 'Request Successfully Restored');
+    }
+
+    public function declinedDelete($id){
+        DB::table('customer_requests')->where('id', $id)->delete();
+
+        return redirect()->route('customer.request.declined')->with('success', 'Request Successfully Restored');
     }
 }

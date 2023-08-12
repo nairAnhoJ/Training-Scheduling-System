@@ -271,6 +271,7 @@
             });
 
             $('.requestRow').click(function(){
+                $('#loading').toggleClass('hidden');
                 key = $(this).find('span').data('key');
                 var _token = $('input[name="_token"]').val();
 
@@ -301,7 +302,7 @@
 
                         $('#logsDiv').html(result.logRes);
 
-
+                        $('#loading').toggleClass('hidden');
                         $('#viewCustomerButton').click();
                     }
                 })

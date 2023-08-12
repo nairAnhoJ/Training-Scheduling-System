@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','REQUESTS')
+@section('title','REQUESTS FROM CUSTOMERS')
 @section('content')
 
     @if(session('success'))
@@ -16,8 +16,7 @@
         </div>
     @endif
 
-
-    {{-- APPROVE MODAL --}}
+    {{-- RESTORE MODAL --}}
         <!-- Main modal -->
         <div id="confirmApproveModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
             <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
@@ -25,25 +24,25 @@
                 <div class="relative shadow text-gray-700">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">APPROVE</h3>
+                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">RESTORE</h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmApproveModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="p-6">
-                        Are you sure you want to approve this request?
+                    <div class="p-6"> 
+                        Are you sure you want to restore this request?
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        <button id="confirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</button>
-                        <button id="closeConfirmApproveButton" data-modal-hide="confirmApproveModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                        <a id="confirmRestoreButton" type="button" class="text-white bg-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60 cursor-pointer">RESTORE</a>
+                        <button id="" data-modal-hide="confirmApproveModal" type="button" class="closeConfirmApproveButton text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
             </div>
         </div>
-    {{-- APPROVE MODAL END --}}
+    {{-- RESTORE MODAL END --}}
 
     {{-- DELETE MODAL --}}
         <!-- Main modal -->
@@ -60,13 +59,13 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="p-6">
-                        Are you sure you want to decline this request?
+                    <div class="p-6"> 
+                        Are you sure you want to permanently delete this request?
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        <a id="confirmDeleteButton" type="button" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">DELETE</a>
-                        <button id="closeConfirmApproveButton" data-modal-hide="confirmDeleteModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                        <a id="confirmDeleteButton" type="button" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60 cursor-pointer">DECLINE</a>
+                        <button id="" data-modal-hide="confirmDeleteModal" type="button" class="closeConfirmApproveButton text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
             </div>
@@ -79,7 +78,7 @@
         
         <!-- Main modal -->
         <div id="viewRequestModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative max-w-[1024px] w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
                 <div class="relative shadow text-gray-700">
                     <!-- Modal header -->
@@ -91,23 +90,9 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="p-6 overflow-y-hidden overflow-x-hidden grid grid-cols-5 h-[calc(100vh-220px)]">
-                        <div class="col-span-3 border-r p-4 overflow-y-auto overflow-x-hidden h-[calc(100vh-268px)]">
-                            <div class="grid grid-cols-6">
-                                <div class="col-span-2">Request Number: </div>
-                                <div id="req_number" class="col-span-4 font-semibold text-lg"></div>
-
-                                <div class="col-span-2">Date: </div>
-                                <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
-
-                                <div class="col-span-2">Venue: </div>
-                                <div id="venue" class="col-span-4 font-semibold text-lg"></div>
-
-                                <div class="col-span-2">Trainer: </div>
-                                <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
-                            </div>
-
-                            <div class="mt-5">
+                    <div class="p-6 overflow-y-hidden overflow-x-hidden h-[calc(100vh-220px)]">
+                        <div class="border-r p-4 overflow-y-auto overflow-x-hidden h-[calc(100vh-268px)]">
+                            <div class="">
                                 <div class="flex items-center">
                                     <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
                                 </div>
@@ -150,51 +135,29 @@
                                     <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
                                 </div>
                                 <div class="grid grid-cols-6">
-                                    <div class="col-span-2">Area: </div>
-                                    <div id="area" class="col-span-4 font-semibold text-lg">NORTH</div>
                                     <div class="col-span-2">Category: </div>
-                                    <div id="category" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
-                                    <div id="con_details_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="col-span-2">Contract Details: </div>
-                                        <a href="#" id="contract_details" target="_blank" class="col-span-4 font-semibold text-lg text-white bg-blue-500 rounded-lg w-40 tracking-wide text-center hover:scale-105">VIEW</a>
-                                    </div>
+                                    <div id="category" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Brand: </div>
-                                    <div id="brand" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
+                                    <div id="brand" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Model: </div>
-                                    <div id="model" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
+                                    <div id="model" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Type of Unit: </div>
-                                    <div id="unit_type" class="col-span-4 font-semibold text-lg">RENTAL UNIT</div>
-                                    <div class="col-span-2">Billing Type: </div>
-                                    <div id="billing_type" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
+                                    <div id="unit_type" class="col-span-4 font-semibold text-lg"></div>
+                                    <div class="col-span-2">Number of Unit: </div>
+                                    <div id="no_of_unit" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Number of Attendees: </div>
-                                    <div id="no_of_attendees" class="col-span-4 font-semibold text-lg">13</div>
+                                    <div id="no_of_attendees" class="col-span-4 font-semibold text-lg"></div>
                                     <div class="col-span-2">Knowledge of Participants: </div>
                                     <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg"></div>
-                                    <div class="col-span-2">Notes: </div>
-                                    <div class="col-span-4 font-semibold">
-                                        <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="px-4 col-span-2 h-full overflow-x-hidden overflow-y-auto">
-                            <div class="relative">
-                                <div class="sticky top-0 bg-white py-2">
-                                    <div class="flex items-center mb-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="h-6 w-6"><path d="M477-120q-149 0-253-105.5T120-481h60q0 125 86 213t211 88q127 0 215-89t88-216q0-124-89-209.5T477-780q-68 0-127.5 31T246-667h105v60H142v-208h60v106q52-61 123.5-96T477-840q75 0 141 28t115.5 76.5Q783-687 811.5-622T840-482q0 75-28.5 141t-78 115Q684-177 618-148.5T477-120Zm128-197L451-469v-214h60v189l137 134-43 43Z"/></svg>
-                                        <h3 class="ml-1">History Logs</h3>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div id="logsDiv">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
-                        <button id="approveButton" data-modal-target="confirmApproveModal" data-modal-toggle="confirmApproveModal" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">APPROVE</button>
-                        <button data-modal-hide="viewRequestModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                        <button id="approveButton" data-modal-target="confirmApproveModal" data-modal-toggle="confirmApproveModal" class="text-white bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">RESTORE</button>
+                        <button id="declineButton" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center tracking-wide disabled:pointer-events-none disabled:opacity-60">DELETE</button>
+                        <button data-modal-hide="viewRequestModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-lg border border-gray-200 text-sm font-black tracking-wide px-5 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
                     </div>
                 </div>
             </div>
@@ -205,16 +168,10 @@
         <div class="bg-white shadow-xl rounded-lg p-3 h-full">
             <div class="overflow-hidden rounded-lg p-4">
                 {{-- CONTROLS --}}
-                    @csrf
                     <div class="mb-3">
-                        <div class="md:grid md:grid-cols-2">
-                            <div class="w-24 mb-3 md:mb-0">
-                                <a href="{{ route('request.add') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 mr-1" fill="currentColor" viewBox="0 -960 960 960"><path d="M440.391-190.391v-250h-250v-79.218h250v-250h79.218v250h250v79.218h-250v250h-79.218Z"/></svg>
-                                    <span>ADD</span></a>
-                            </div>
-                            <div class="justify-self-end w-full xl:w-4/5">
-                                <form method="POST" action="{{ route('request.search') }}" id="searchForm" class="w-full">
+                        <div class="flex flex-row-reverse items-center justify-between">
+                            <div class="justify-self-end w-[500px] flex items-center">
+                                <form method="POST" action="{{ route('customer.request.search') }}" id="searchForm" class="w-full pr-1">
                                     @csrf
                                     <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                                     <div class="relative">
@@ -225,9 +182,13 @@
                                         <button id="clearButton" type="button" class="absolute right-20 bottom-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 group-hover:text-gray-900 mr-1 text-gray-500" fill="currentColor" viewBox="0 -960 960 960"><path d="M249-193.434 193.434-249l231-231-231-231L249-766.566l231 231 231-231L766.566-711l-231 231 231 231L711-193.434l-231-231-231 231Z"/></svg>
                                         </button>
-                                        <button id="searchSubmit" type="submit" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
+                                        <button id="searchSubmit" onclick="$('#loading').toggleClass('hidden');" type="submit" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
                                     </div>
                                 </form>
+                            </div>
+                            <div class="w-32 md:mb-0">
+                                <a href="{{ route('customer.request.index') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
+                                BACK</a>
                             </div>
                         </div>
                     </div>
@@ -240,9 +201,9 @@
                                 <table class="w-full text-sm text-left text-gray-500">
                                     <thead class="text-xs text-gray-600 uppercase bg-gray-100">
                                         <tr>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                            {{-- <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Action
-                                            </th>
+                                            </th> --}}
                                             <th scope="col" class="px-6 py-3 whitespace-nowrap">
                                                 Company Name
                                             </th>
@@ -250,50 +211,44 @@
                                                 Category
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Brand
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Model
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Type of Unit
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Billing Type
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Area
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Trainer
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Last Updated
+                                                Date Submitted
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($requests as $request)
                                             <tr class="requestRow bg-white border-b cursor-pointer hover:bg-gray-200 even:bg-gray-100">
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/requests/edit/'.$request->key) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a> | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Decline</button>
-                                                </td>
+                                                {{-- <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-id="{{ $request->id }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Decline</button>
+                                                </td> --}}
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                    <span data-key="{{ $request->key }}">
-                                                        {{ $request->name }}
+                                                    <span data-id="{{ $request->id }}">
+                                                        {{ strtoupper($request->name) }}
                                                     </span>
                                                 </th>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->category }}
+                                                    {{ strtoupper($request->category) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->unit_type }}
+                                                    {{ strtoupper($request->brand) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->billing_type }}
+                                                    {{ strtoupper($request->model) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->area }}
+                                                    {{ strtoupper($request->unit_type) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->first_name.' '.$request->last_name }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ date('F j, Y', strtotime($request->updated_at)) }}
+                                                    {{ $request->created_at }}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -325,30 +280,35 @@
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
+                                                <div class="text-xs leading-5">Brand</div>
+                                                <div class=" font-semibold text-sm">
+                                                    {{ $request->brand }}
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2">
+                                                <div class="text-xs leading-5">Model</div>
+                                                <div class=" font-semibold text-sm">
+                                                    {{ $request->model }}
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Type of Unit</div>
                                                 <div class=" font-semibold text-sm">
                                                     {{ $request->unit_type }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Billing Type</div>
-                                                <div class="font-semibold text-sm">
-                                                    {{ $request->billing_type }}
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Area</div>
+                                                <div class="text-xs leading-5">Date Submitted</div>
                                                 <div class="cfont-semibold text-sm">
-                                                    {{ $request->area }}
+                                                    {{ $request->created_at }}
                                                 </div>
                                             </div>
-                                            <div class="grid grid-cols-2">
+                                            {{-- <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Action</div>
                                                 <div class="">
-                                                    <a href="{{ url('/requests/edit/'.$request->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a> | 
-                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Delete</button>
+                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->id }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Decline</button>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     @php
@@ -365,15 +325,7 @@
 
     <script>
         $(document).ready(function(){
-            var key = '';
-
-            $('.requestRow').on('click', '.editButton', function(e) {
-                e.stopPropagation();
-            });
-
-            $('.requestRow').on('click', '.deleteButton', function(e) {
-                e.stopPropagation();
-            });
+            var id = '';
 
             $(document).click(function(){
                 $('#alert-3').addClass('opacity-0');
@@ -383,118 +335,141 @@
             });
 
             $('.requestRow').click(function(){
-                $('#loading').toggleClass('hidden');
-                key = $(this).find('span').data('key');
+                    $('#loading').toggleClass('hidden');
+                id = $(this).find('span').data('id');
                 var _token = $('input[name="_token"]').val();
 
                 $.ajax({
-                    url:"{{ route('request.view') }}",
+                    url:"{{ route('customer.request.view') }}",
                     method:"POST",
                     dataType: 'json',
                     data:{
-                        key: key,
+                        id: id,
                         _token: _token
                     },
                     success:function(result){
-                        $('#req_number').html(result.req_number);
-                        $('#event_date').html(result.event_date);
-                        $('#venue').html(result.venue);
-                        $('#trainer').html(result.trainer);
-                        if(result.event_date != '' && result.venue != '' && result.trainer != '' && result.event_date != null && result.venue != null && result.trainer != null){
-                            $('#approveButton').prop('disabled', false);
-                            // $('#approveButton').attr('href', `/request/approve/${result.key}`);
-                        }else{
-                            $('#approveButton').prop('disabled', 'true');
-                        }
+                        var name = result.name;
+                        var address = result.address;
+                        
+                        var cp1_name = result.cp1_name;
+                        var cp1_number = result.cp1_number;
+                        var cp1_email = result.cp1_email;
+                        
+                        var cp2_name = result.cp2_name;
+                        var cp2_number = result.cp2_name;
+                        var cp2_email = result.cp2_email;
+                        
+                        var cp3_name = result.cp3_name;
+                        var cp3_number = result.cp3_number;
+                        var cp3_email = result.cp3_email;
 
-                        $('#name').html(result.name);
-                        $('#address').html(result.address);
+                        var category = result.category;
+                        var brand = result.brand;
+                        var model = result.model;
+                        var unit_type = result.unit_type;
+                        var no_of_unit = result.no_of_unit;
+                        var no_of_attendees = result.no_of_attendees;
+                        var knowledge_of_participants = result.knowledge_of_participants;
 
-                        if(result.cp1_name != ''){
-                            $('#cp1_name').html(result.cp1_name);
-                            $('#cp1_number').html(result.cp1_number);
-                            $('#cp1_email').html(result.cp1_email);
+
+                        $('#name').html(name.toUpperCase());
+                        $('#appname').val(name.toUpperCase());
+                        $('#address').html(address.toUpperCase());
+                        $('#appaddress').val(address.toUpperCase());
+
+                        $('#appcp1_name').val(cp1_name.toUpperCase());
+                        $('#appcp1_number').val(cp1_number);
+                        $('#appcp1_email').val(cp1_email);
+
+                        $('#appcp2_name').val(cp2_name.toUpperCase());
+                        $('#appcp2_number').val(cp2_number);
+                        $('#appcp2_email').val(cp2_email);
+
+                        $('#appcp3_name').val(cp3_name.toUpperCase());
+                        $('#appcp3_number').val(cp3_number);
+                        $('#appcp3_email').val(cp3_email);
+
+
+                        if(cp1_name != '' || cp1_number != '' || cp1_email != ''){
+                            $('#cp1_name').html(cp1_name.toUpperCase());
+                            $('#cp1_number').html(cp1_number);
+                            $('#cp1_email').html(cp1_email);
+                            $('#cp1_div').removeClass('hidden');
                         }else{
                             $('#cp1_div').addClass('hidden');
                         }
 
-                        if(result.cp2_name != ''){
-                            $('#cp2_name').html(result.cp2_name);
-                            $('#cp2_number').html(result.cp2_number);
-                            $('#cp2_email').html(result.cp2_email);
+                        if(cp2_name != '' || cp2_number != '' || cp2_email != ''){
+                            $('#cp2_name').html(cp2_name.toUpperCase());
+                            $('#cp2_number').html(cp2_number);
+                            $('#cp2_email').html(cp2_email);
+                            $('#cp2_div').removeClass('hidden');
                         }else{
                             $('#cp2_div').addClass('hidden');
                         }
 
-                        if(result.cp3_name != ''){
-                            $('#cp3_name').html(result.cp3_name);
-                            $('#cp3_number').html(result.cp3_number);
-                            $('#cp3_email').html(result.cp3_email);
+                        if(cp3_name != '' || cp3_number != '' || cp3_email != ''){
+                            $('#cp3_name').html(cp3_name.toUpperCase());
+                            $('#cp3_number').html(cp3_number);
+                            $('#cp3_email').html(cp3_email);
+                            $('#cp3_div').removeClass('hidden');
                         }else{
                             $('#cp3_div').addClass('hidden');
                         }
 
-                        $('#area').html(result.area);
-                        $('#category').html(result.category);
+                        $('#category').html(category.toUpperCase());
+                        $('#brand').html(brand.toUpperCase());
+                        $('#model').html(model.toUpperCase());
+                        $('#unit_type').html(unit_type.toUpperCase());
+                        $('#no_of_unit').html(no_of_unit);
+                        $('#no_of_attendees').html(no_of_attendees);
+                        $('#knowledge_of_participants').html(knowledge_of_participants.toUpperCase());
 
-                        if(result.is_PM == 1){
-                            $('#con_details_div').removeClass('hidden');
-                            if(result.contract_details == null){
-                                $('#contract_details').addClass('pointer-events-none opacity-50');
-                            }else{
-                                $('#contract_details').removeClass('pointer-events-none opacity-50');
-                                $('#contract_details').attr('href', `/requests/view/contract-details/${result.key}`);
-                            }
-                        }else{
-                            $('#con_details_div').addClass('hidden');
-                        }
+                        $('#inputID').val(id);
+                        $('#inputCategory').val(category.toUpperCase());
+                        $('#inputBrand').val(brand.toUpperCase());
+                        $('#inputModel').val(model.toUpperCase());
+                        $('#inputUnitType').val(unit_type.toUpperCase());
+                        $('#inputNoUnit').val(no_of_unit);
+                        $('#inputNoAttendees').val(no_of_attendees);
+                        $('#inputKnowledge').val(knowledge_of_participants.toUpperCase());
 
-                        $('#brand').html(result.brand);
-                        $('#model').html(result.model);
-                        $('#unit_type').html(result.unit_type);
-                        $('#billing_type').html(result.billing_type);
-                        $('#no_of_attendees').html(result.no_of_attendees);
-                        $('#knowledge_of_participants').html(result.knowledge_of_participants);
-                        $('#remarks').html(result.remarks);
-
-                        $('#confirmApproveButtona').attr('href', `/requests/approve/${result.key}`);
-
-                        $('#logsDiv').html(result.logRes);
-                        
                         $('#loading').toggleClass('hidden');
                         $('#viewRequestButton').click();
-                        autoResize();
                     }
                 })
             });
 
-            function autoResize() {
-                var textarea = $('#remarks');
-                textarea.css('height', 'auto');
-                textarea.css('height', textarea[0].scrollHeight + 'px');
-            }
 
+
+
+
+
+
+            
             $('#approveButton').click(function(){
                 $('#viewRequestModal').removeClass('z-50');
                 $('#viewRequestModal').addClass('z-30');
 
             });
 
-            $('#closeConfirmApproveButton').click(function(){
+            $('#declineButton').click(function(){
+                $('#viewRequestModal').removeClass('z-50');
+                $('#viewRequestModal').addClass('z-30');
+
+            });
+
+            $('.closeConfirmApproveButton').click(function(){
                 $('#viewRequestModal').addClass('z-50');
                 $('#viewRequestModal').removeClass('z-30');
             });
 
-            $('.deleteButton').click(function(){
-                key = $(this).data('key');
-            });
-
             $('#confirmDeleteButton').click(function(){
-                window.location.href = `/requests/delete/${key}`;
+                window.location.href = `/request-from-customers/declined/delete/${id}`;
             });
 
-            $('#confirmApproveButton').click(function(){
-                window.location.href = `/requests/approve/${key}`;
+            $('#confirmRestoreButton').click(function(){
+                window.location.href = `/request-from-customers/declined/restore/${id}`;
             });
 
             $('#clearButton').click(function(){

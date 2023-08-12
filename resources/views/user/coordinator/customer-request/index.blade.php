@@ -16,7 +16,6 @@
         </div>
     @endif
 
-
     {{-- APPROVE MODAL --}}
         <!-- Main modal -->
         <div id="confirmApproveModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
@@ -385,13 +384,14 @@
             <div class="overflow-hidden rounded-lg p-4">
                 {{-- CONTROLS --}}
                     <div class="mb-3">
-                        <div class="flex flex-row-reverse">
+                        <div class="flex flex-row-reverse items-center justify-between">
                             <div class="w-52 mb-3 md:mb-0">
                                 <a href="{{ route('customer.request.declined') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
                                     <span>DECLINED REQUESTS</span></a>
                             </div>
-                            {{-- <div class="justify-self-end w-full xl:w-4/5">
-                                <form method="POST" action="{{ route('request.search') }}" id="searchForm" class="w-full">
+                            <div class="justify-self-end w-[500px] flex items-center">
+                                <form method="POST" action="{{ route('customer.request.search') }}" id="searchForm" class="w-full pr-1">
+                                    @csrf
                                     <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -401,10 +401,15 @@
                                         <button id="clearButton" type="button" class="absolute right-20 bottom-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 group-hover:text-gray-900 mr-1 text-gray-500" fill="currentColor" viewBox="0 -960 960 960"><path d="M249-193.434 193.434-249l231-231-231-231L249-766.566l231 231 231-231L766.566-711l-231 231 231 231L711-193.434l-231-231-231 231Z"/></svg>
                                         </button>
-                                        <button id="searchSubmit" type="submit" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
+                                        <button id="searchSubmit" onclick="$('#loading').toggleClass('hidden');" type="submit" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
                                     </div>
                                 </form>
-                            </div> --}}
+                                <span class="mx-3 text-2xl cursor-default">|</span>
+                                <a id="sync" href="{{ route('customer.request.sync') }}" class="text-blue-600 text-sm hover:scale-105 flex items-center gap-x-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" class="w-8 h-8"><path xmlns="http://www.w3.org/2000/svg" d="M238-211q-57-53-87.5-122.5T120-480q0-150 105-255t255-105v-80l183 140-183 140v-80q-100 0-170 70t-70 170q0 57 25 107.5t67 88.5l-94 73ZM480-40 297-180l183-140v80q100 0 170-70t70-170q0-57-25-108t-70-88l95-71q58 51 89 120.5T840-480q0 150-105 255T480-120v80Z"/></svg>
+                                    Sync
+                                </a>
+                            </div>
                         </div>
                     </div>
                 {{-- CONTROLS END --}}
@@ -446,27 +451,8 @@
                                                     <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-id="{{ $request->id }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Decline</button>
                                                 </td> --}}
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                    <span 
-                                                        data-id="{{ $request->id }}"
-                                                        data-name="{{ $request->name }}"
-                                                        data-address="{{ $request->address }}"
-                                                        data-cp1_name="{{ $request->cp1_name }}"
-                                                        data-cp1_number="{{ $request->cp1_number }}"
-                                                        data-cp1_email="{{ $request->cp1_email }}"
-                                                        data-cp2_name="{{ $request->cp2_name }}"
-                                                        data-cp2_number="{{ $request->cp2_number }}"
-                                                        data-cp2_email="{{ $request->cp2_email }}"
-                                                        data-cp3_name="{{ $request->cp3_name }}"
-                                                        data-cp3_number="{{ $request->cp3_number }}"
-                                                        data-cp3_email="{{ $request->cp3_email }}"
-                                                        data-category="{{ $request->category }}"
-                                                        data-brand="{{ $request->brand }}"
-                                                        data-model="{{ $request->model }}"
-                                                        data-unit_type="{{ $request->unit_type }}"
-                                                        data-no_of_unit="{{ $request->no_of_unit }}"
-                                                        data-no_of_attendees="{{ $request->no_of_attendees }}"
-                                                        data-knowledge_of_participants="{{ $request->knowledge_of_participants }}">
-                                                            {{ strtoupper($request->name) }}
+                                                    <span data-id="{{ $request->id }}">
+                                                        {{ strtoupper($request->name) }}
                                                     </span>
                                                 </th>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
@@ -569,97 +555,111 @@
             });
 
             $('.requestRow').click(function(){
+                    $('#loading').toggleClass('hidden');
                 id = $(this).find('span').data('id');
-                var name = $(this).find('span').data('name');
-                var address = $(this).find('span').data('address');
-                
-                var cp1_name = $(this).find('span').data('cp1_name');
-                var cp1_number = $(this).find('span').data('cp1_number');
-                var cp1_email = $(this).find('span').data('cp1_email');
-                
-                var cp2_name = $(this).find('span').data('cp2_name');
-                var cp2_number = $(this).find('span').data('cp2_number');
-                var cp2_email = $(this).find('span').data('cp2_email');
-                
-                var cp3_name = $(this).find('span').data('cp3_name');
-                var cp3_number = $(this).find('span').data('cp3_number');
-                var cp3_email = $(this).find('span').data('cp3_email');
+                var _token = $('input[name="_token"]').val();
 
-                var category = $(this).find('span').data('category');
-                var brand = $(this).find('span').data('brand');
-                var model = $(this).find('span').data('model');
-                var unit_type = $(this).find('span').data('unit_type');
-                var no_of_unit = $(this).find('span').data('no_of_unit');
-                var no_of_attendees = $(this).find('span').data('no_of_attendees');
-                var knowledge_of_participants = $(this).find('span').data('knowledge_of_participants');
+                $.ajax({
+                    url:"{{ route('customer.request.view') }}",
+                    method:"POST",
+                    dataType: 'json',
+                    data:{
+                        id: id,
+                        _token: _token
+                    },
+                    success:function(result){
+                        var name = result.name;
+                        var address = result.address;
+                        
+                        var cp1_name = result.cp1_name;
+                        var cp1_number = result.cp1_number;
+                        var cp1_email = result.cp1_email;
+                        
+                        var cp2_name = result.cp2_name;
+                        var cp2_number = result.cp2_name;
+                        var cp2_email = result.cp2_email;
+                        
+                        var cp3_name = result.cp3_name;
+                        var cp3_number = result.cp3_number;
+                        var cp3_email = result.cp3_email;
 
-
-                $('#name').html(name.toUpperCase());
-                $('#appname').val(name.toUpperCase());
-                $('#address').html(address.toUpperCase());
-                $('#appaddress').val(address.toUpperCase());
-
-                $('#appcp1_name').val(cp1_name.toUpperCase());
-                $('#appcp1_number').val(cp1_number);
-                $('#appcp1_email').val(cp1_email);
-
-                $('#appcp2_name').val(cp2_name.toUpperCase());
-                $('#appcp2_number').val(cp2_number);
-                $('#appcp2_email').val(cp2_email);
-
-                $('#appcp3_name').val(cp3_name.toUpperCase());
-                $('#appcp3_number').val(cp3_number);
-                $('#appcp3_email').val(cp3_email);
+                        var category = result.category;
+                        var brand = result.brand;
+                        var model = result.model;
+                        var unit_type = result.unit_type;
+                        var no_of_unit = result.no_of_unit;
+                        var no_of_attendees = result.no_of_attendees;
+                        var knowledge_of_participants = result.knowledge_of_participants;
 
 
-                if(cp1_name != '' || cp1_number != '' || cp1_email != ''){
-                    $('#cp1_name').html(cp1_name.toUpperCase());
-                    $('#cp1_number').html(cp1_number);
-                    $('#cp1_email').html(cp1_email);
-                    $('#cp1_div').removeClass('hidden');
-                }else{
-                    $('#cp1_div').addClass('hidden');
-                }
+                        $('#name').html(name.toUpperCase());
+                        $('#appname').val(name.toUpperCase());
+                        $('#address').html(address.toUpperCase());
+                        $('#appaddress').val(address.toUpperCase());
 
-                if(cp2_name != '' || cp2_number != '' || cp2_email != ''){
-                    $('#cp2_name').html(cp2_name.toUpperCase());
-                    $('#cp2_number').html(cp2_number);
-                    $('#cp2_email').html(cp2_email);
-                    $('#cp2_div').removeClass('hidden');
-                }else{
-                    $('#cp2_div').addClass('hidden');
-                }
+                        $('#appcp1_name').val(cp1_name.toUpperCase());
+                        $('#appcp1_number').val(cp1_number);
+                        $('#appcp1_email').val(cp1_email);
 
-                if(cp3_name != '' || cp3_number != '' || cp3_email != ''){
-                    $('#cp3_name').html(cp3_name.toUpperCase());
-                    $('#cp3_number').html(cp3_number);
-                    $('#cp3_email').html(cp3_email);
-                    $('#cp3_div').removeClass('hidden');
-                }else{
-                    $('#cp3_div').addClass('hidden');
-                }
+                        $('#appcp2_name').val(cp2_name.toUpperCase());
+                        $('#appcp2_number').val(cp2_number);
+                        $('#appcp2_email').val(cp2_email);
 
-                $('#category').html(category.toUpperCase());
-                $('#brand').html(brand.toUpperCase());
-                $('#model').html(model.toUpperCase());
-                $('#unit_type').html(unit_type.toUpperCase());
-                $('#no_of_unit').html(no_of_unit);
-                $('#no_of_attendees').html(no_of_attendees);
-                $('#knowledge_of_participants').html(knowledge_of_participants.toUpperCase());
+                        $('#appcp3_name').val(cp3_name.toUpperCase());
+                        $('#appcp3_number').val(cp3_number);
+                        $('#appcp3_email').val(cp3_email);
 
-                $('#inputID').val(id);
-                $('#inputCategory').val(category.toUpperCase());
-                $('#inputBrand').val(brand.toUpperCase());
-                $('#inputModel').val(model.toUpperCase());
-                $('#inputUnitType').val(unit_type.toUpperCase());
-                $('#inputNoUnit').val(no_of_unit);
-                $('#inputNoAttendees').val(no_of_attendees);
-                $('#inputKnowledge').val(knowledge_of_participants.toUpperCase());
 
-                $('#viewRequestButton').click();
+                        if(cp1_name != '' || cp1_number != '' || cp1_email != ''){
+                            $('#cp1_name').html(cp1_name.toUpperCase());
+                            $('#cp1_number').html(cp1_number);
+                            $('#cp1_email').html(cp1_email);
+                            $('#cp1_div').removeClass('hidden');
+                        }else{
+                            $('#cp1_div').addClass('hidden');
+                        }
+
+                        if(cp2_name != '' || cp2_number != '' || cp2_email != ''){
+                            $('#cp2_name').html(cp2_name.toUpperCase());
+                            $('#cp2_number').html(cp2_number);
+                            $('#cp2_email').html(cp2_email);
+                            $('#cp2_div').removeClass('hidden');
+                        }else{
+                            $('#cp2_div').addClass('hidden');
+                        }
+
+                        if(cp3_name != '' || cp3_number != '' || cp3_email != ''){
+                            $('#cp3_name').html(cp3_name.toUpperCase());
+                            $('#cp3_number').html(cp3_number);
+                            $('#cp3_email').html(cp3_email);
+                            $('#cp3_div').removeClass('hidden');
+                        }else{
+                            $('#cp3_div').addClass('hidden');
+                        }
+
+                        $('#category').html(category.toUpperCase());
+                        $('#brand').html(brand.toUpperCase());
+                        $('#model').html(model.toUpperCase());
+                        $('#unit_type').html(unit_type.toUpperCase());
+                        $('#no_of_unit').html(no_of_unit);
+                        $('#no_of_attendees').html(no_of_attendees);
+                        $('#knowledge_of_participants').html(knowledge_of_participants.toUpperCase());
+
+                        $('#inputID').val(id);
+                        $('#inputCategory').val(category.toUpperCase());
+                        $('#inputBrand').val(brand.toUpperCase());
+                        $('#inputModel').val(model.toUpperCase());
+                        $('#inputUnitType').val(unit_type.toUpperCase());
+                        $('#inputNoUnit').val(no_of_unit);
+                        $('#inputNoAttendees').val(no_of_attendees);
+                        $('#inputKnowledge').val(knowledge_of_participants.toUpperCase());
+
+                        $('#loading').toggleClass('hidden');
+                        $('#viewRequestButton').click();
+                    }
+                })
             });
 
-            
             jQuery(document).on( "click", ".inputOption", function(e){
                 $('.content').not($(this).closest('.optionDiv').find('.listOption')).addClass('hidden');
                 $(this).closest('.optionDiv').find('.listOption').toggleClass('hidden');
@@ -694,7 +694,6 @@
                 var id = $(this).data('id');
                 var _token = $('input[name="_token"]').val();
 
-
                 $.ajax({
                     url:"{{ route('request.getcom') }}",
                     method:"POST",
@@ -723,16 +722,10 @@
                         $('.listOption').addClass('hidden');
                     }
                 })
-
             });
 
 
 
-
-
-
-
-            
 
 
 
@@ -743,6 +736,7 @@
                 $('#viewRequestModal').addClass('z-30');
 
             });
+
             $('#declineButton').click(function(){
                 $('#viewRequestModal').removeClass('z-50');
                 $('#viewRequestModal').addClass('z-30');
@@ -762,10 +756,6 @@
             $('#confirmDeleteButton').click(function(){
                 window.location.href = `/request-from-customers/decline/${id}`;
             });
-
-            // $('#confirmApproveButton').click(function(){
-            //     window.location.href = `/request/approve/${key}`;
-            // });
 
             $('#clearButton').click(function(){
                 $('#search').val('');

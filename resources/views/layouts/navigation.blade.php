@@ -114,4 +114,12 @@
          @endif
       </ul>
    </div>
+
+   <script>
+      $(document).ready(function(){
+         $('a').click(function(){
+            $('#loading').removeClass('hidden');
+         });
+      });
+   </script>
 </aside>

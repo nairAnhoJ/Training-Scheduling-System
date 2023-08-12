@@ -97,7 +97,7 @@ Route::post('/event', [GuestController::class, 'event'])->name('guest.event');
 Route::post('/auth', [AuthController::class, 'auth'])->name('login.auth');
 
 Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
-Route::post('/requests', [TrainingController::class, 'search'])->name('trainings.search');
+Route::post('/trainings', [TrainingController::class, 'search'])->name('trainings.search');
 Route::post('/trainings/view', [TrainingController::class, 'view'])->name('trainings.view');
 Route::get('/trainings/view/contract-details/{key}', [TrainingController::class, 'contractDetails']);
 
@@ -132,9 +132,14 @@ Route::middleware('auth')->group(function () {
 
     // REQUEST FROM CUSTOMERS
     Route::get('/request-from-customers', [CustomerRequestController::class, 'index'])->name('customer.request.index');
+    Route::post('/request-from-customers', [CustomerRequestController::class, 'search'])->name('customer.request.search');
+    Route::get('/request-from-customers/sync', [CustomerRequestController::class, 'sync'])->name('customer.request.sync');
+    Route::post('/request-from-customers/view', [CustomerRequestController::class, 'view'])->name('customer.request.view');
     Route::post('/request-from-customers/approve', [CustomerRequestController::class, 'approve'])->name('customer.request.approve');
     Route::get('/request-from-customers/decline/{id}', [CustomerRequestController::class, 'decline'])->name('customer.request.decline');
     Route::get('/request-from-customers/declined', [CustomerRequestController::class, 'declined'])->name('customer.request.declined');
+    Route::get('/request-from-customers/declined/restore/{id}', [CustomerRequestController::class, 'declinedRestore'])->name('customer.request.declined.restore');
+    Route::get('/request-from-customers/declined/delete/{id}', [CustomerRequestController::class, 'declinedDelete'])->name('customer.request.declined.delete');
 
     // TRAINING
     // Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
