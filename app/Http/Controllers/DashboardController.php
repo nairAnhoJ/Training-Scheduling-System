@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Customer;
+use App\Models\Event;
+use App\Models\Request as ModelsRequest;
+use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,23 +20,22 @@ class DashboardController extends Controller
 
     public function index(){
 
-        $requestCount = DB::table('requests')->where('is_approved', 0)->where('is_deleted', 0)->where('status', 'PENDING')->count();
-        $trainingCount = DB::table('requests')->where('is_approved', 1)->where('is_deleted', 0)->where('status', 'SCHEDULED')->count();
+        $requestCount = ModelsRequest::where('is_approved', 0)->where('is_deleted', 0)->where('status', 'PENDING')->count();
+        $trainingCount = ModelsRequest::where('is_approved', 1)->where('is_deleted', 0)->where('status', 'SCHEDULED')->count();
 
-        $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
+        $trainers = User::where('role', 2)->where('is_active', 1)->get();
 
-        $events = DB::table('requests')
-            ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.end_date', 'requests.key', 'users.color', DB::raw('IFNULL(COUNT(comments.id), 0) as commentCount'))
-            ->join('customers', 'requests.customer_id', '=', 'customers.id')
-            ->join('users', 'requests.trainer', '=', 'users.id')
-            ->leftJoin('comments', function ($join) {
-                $join->on('requests.key', '=', 'comments.req_id')
-                    ->where('comments.is_read', 0)
-                    ->where('comments.user_id', Auth::user()->key);
+        $events = ModelsRequest::select('tss_requests.id', 'customers.name', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.key', 'tss_users.color', DB::raw('IFNULL(COUNT(tss_comments.id), 0) as commentCount'))
+            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
+            ->join('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
+            ->leftJoin('tss_comments', function ($join) {
+                $join->on('tss_requests.key', '=', 'tss_comments.req_id')
+                    ->where('tss_comments.is_read', 0)
+                    ->where('tss_comments.user_id', Auth::user()->key);
             })
             ->where('is_approved', 1)
             ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
-            ->groupBy('requests.id', 'customers.name', 'requests.training_date', 'requests.end_date', 'requests.key', 'users.color')
+            ->groupBy('tss_requests.id', 'customers.name', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.key', 'tss_users.color')
             ->get();
 
         $eventArray = [];
@@ -55,9 +57,8 @@ class DashboardController extends Controller
             $eventArray[] = $newArray;
         }
 
-        $events2 = DB::table('events')
-            ->leftJoin('users', 'events.trainer', '=', 'users.id')
-            ->select('events.*', DB::raw('IF(events.trainer = 0, "#FE2C55", users.color) as color'))
+        $events2 = Event::leftJoin('tss_users', 'tss_events.trainer', '=', 'tss_users.id')
+            ->select('tss_events.*', DB::raw('IF(tss_events.trainer = 0, "#FE2C55", tss_users.color) as color'))
             ->get();
 
         foreach ($events2 as $event) {
@@ -85,19 +86,17 @@ class DashboardController extends Controller
 
     public function view(Request $request){
         $id = $request->id;
-        $thisRequest = DB::table('requests')
-            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.number', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.end_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.status', 'requests.key', 'users.first_name', 'users.last_name')
-            ->join('customers', 'requests.customer_id', '=', 'customers.id')
-            ->join('users', 'requests.trainer', '=', 'users.id')
-            ->where('requests.key', $id)
+        $thisRequest = ModelsRequest::select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'tss_requests.number', 'tss_requests.category', 'tss_requests.unit_type', 'tss_requests.brand', 'tss_requests.model', 'tss_requests.no_of_unit', 'tss_requests.billing_type', 'tss_requests.is_PM', 'tss_requests.contract_details', 'tss_requests.no_of_attendees', 'tss_requests.venue', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.knowledge_of_participants', 'tss_requests.trainer', 'tss_requests.remarks', 'tss_requests.status', 'tss_requests.key', 'tss_users.first_name', 'tss_users.last_name')
+            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
+            ->join('users', 'tss_requests.trainer', '=', 'tss_users.id')
+            ->where('tss_requests.key', $id)
             ->first();
         
         $com = '';
 
-        $comments = DB::table('comments')
-            ->select('comments.key', DB::raw('MAX(comments.content) as content'), DB::raw('MAX(comments.created_at) as created_at'), DB::raw('MAX(users.first_name) as ufname'), DB::raw('MAX(users.last_name) as ulname'))
-            ->join('users', 'comments.commenter_id', '=', 'users.key')
-            ->where('comments.req_id', $request->id)
+        $comments = Comment::select('tss_comments.key', DB::raw('MAX(tss_comments.content) as content'), DB::raw('MAX(tss_comments.created_at) as created_at'), DB::raw('MAX(tss_users.first_name) as ufname'), DB::raw('MAX(tss_users.last_name) as ulname'))
+            ->join('users', 'tss_comments.commenter_id', '=', 'tss_users.key')
+            ->where('tss_comments.req_id', $request->id)
             ->groupBy('key')
             ->get();
 
@@ -116,7 +115,7 @@ class DashboardController extends Controller
             ';
         }
 
-        DB::table('comments')->where('req_id', $request->id)->where('user_id', Auth::user()->key)->update([
+        Comment::where('req_id', $request->id)->where('user_id', Auth::user()->key)->update([
             'is_read' => 1
         ]);
 
@@ -166,7 +165,7 @@ class DashboardController extends Controller
     }
 
     public function complete($key){
-        DB::table('requests')->where('key', $key)->update([
+        ModelsRequest::where('key', $key)->update([
             'status' => 'COMPLETED',
         ]);
 
@@ -174,7 +173,7 @@ class DashboardController extends Controller
     }
 
     public function extend($key){
-        DB::table('requests')->where('key', $key)->update([
+        ModelsRequest::where('key', $key)->update([
             'end_date' => DB::raw("DATE_ADD(STR_TO_DATE(end_date, '%m/%d/%Y'), INTERVAL 1 DAY)")
         ]);
 
@@ -182,7 +181,7 @@ class DashboardController extends Controller
     }
 
     public function cancel($key){
-        DB::table('requests')->where('key', $key)->update([
+        ModelsRequest::where('key', $key)->update([
             'status' => 'CANCELLED',
         ]);
 

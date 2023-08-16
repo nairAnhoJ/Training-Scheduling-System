@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,7 +42,7 @@ class LoginController extends Controller
         }
 
         $hashedPassword = Hash::make($request->password);
-        DB::table('users')->where('id', Auth::user()->id)->update([
+        User::where('id', Auth::user()->id)->update([
             'password' => $hashedPassword,
             'first_time_login' => 0
         ]);

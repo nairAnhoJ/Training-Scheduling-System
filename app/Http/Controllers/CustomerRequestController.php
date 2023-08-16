@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\CustomerRequest;
+use App\Models\Request as ModelsRequest;
 use Illuminate\Http\Request;
 use Google\Client;
 use Google\Service\Sheets;
@@ -14,9 +16,9 @@ use Illuminate\Support\Str;
 class CustomerRequestController extends Controller
 {
     public function index(){
-        $customers = DB::table('customers')->where('is_deleted', 0)->get();
+        $customers = Customer::where('is_deleted', 0)->get();
 
-        $requests = DB::table('customer_requests')->where('is_decline', 0)->get();
+        $requests = CustomerRequest::where('is_decline', 0)->get();
 
         $search = '';
         return view('user.coordinator.customer-request.index', compact('requests', 'search', 'customers'));
@@ -24,12 +26,10 @@ class CustomerRequestController extends Controller
 
     public function search(Request $request){
         $search = $request->search;
-        $customers = DB::table('customers')
-            ->where('is_deleted', 0)
+        $customers = Customer::where('is_deleted', 0)
             ->get();
 
-        $requests = DB::table('customer_requests')
-            ->where('is_decline', 0)
+        $requests = CustomerRequest::where('is_decline', 0)
             ->whereRaw("CONCAT_WS(' ', name, address, category, brand, model, unit_type, knowledge_of_participants) LIKE '%{$search}%'")
             ->get();
 
@@ -144,7 +144,7 @@ class CustomerRequestController extends Controller
     }
 
     public function approve(Request $request){
-        $id = DB::table('requests')->orderBy('id', 'desc')->value('id') + 1;
+        $id = ModelsRequest::orderBy('id', 'desc')->value('id') + 1;
         $user_id = Auth::user()->id;
 
         if($id == null || $id == ''){
@@ -171,13 +171,11 @@ class CustomerRequestController extends Controller
         $cp3_number = $request->cp3_number;
         $cp3_email = $request->cp3_email;
 
-        $com = DB::table('customers')
-            ->where('name', $name)
+        $com = Customer::where('name', $name)
             ->first();
 
         if($com != ''){
-            DB::table('customers')
-                ->where('name', $name)
+            Customer::where('name', $name)
                 ->update([
                     'name' => $name,
                     'address' => $adress,
@@ -200,14 +198,13 @@ class CustomerRequestController extends Controller
     
             while (!$unique) {
                 $key = Str::uuid()->toString();
-                $existingModel = DB::table('customers')->where('key', $key)->first();
+                $existingModel = Customer::where('key', $key)->first();
                 if (!$existingModel) {
                     $unique = true;
                 }
             }
 
-            $customer = DB::table('customers')
-                ->insertGetId([
+            $customer = Customer::insertGetId([
                     'name' => $name,
                     'address' => $adress,
                     'area' => $area,
@@ -240,14 +237,13 @@ class CustomerRequestController extends Controller
 
         while (!$unique) {
             $key = Str::uuid()->toString();
-            $existingModel = DB::table('requests')->where('key', $key)->first();
+            $existingModel = ModelsRequest::where('key', $key)->first();
             if (!$existingModel) {
                 $unique = true;
             }
         }
 
-        DB::table('requests')
-            ->insert([
+        ModelsRequest::insert([
                 'number' => $number,
                 'customer_id' => $cusID,
                 'category' => $category,
@@ -269,7 +265,7 @@ class CustomerRequestController extends Controller
     }
 
     public function decline($id){
-        DB::table('customer_requests')->where('id', $id)->update([
+        CustomerRequest::where('id', $id)->update([
             'is_decline' => 1
         ]);
 
@@ -277,7 +273,7 @@ class CustomerRequestController extends Controller
     }
 
     public function declined(){
-        $requests = DB::table('customer_requests')->where('is_decline', 1)->get();
+        $requests = CustomerRequest::where('is_decline', 1)->get();
 
         $search = '';
 
@@ -285,7 +281,7 @@ class CustomerRequestController extends Controller
     }
 
     public function declinedRestore($id){
-        DB::table('customer_requests')->where('id', $id)->update([
+        CustomerRequest::where('id', $id)->update([
             'is_decline' => 0
         ]);
 
@@ -293,7 +289,7 @@ class CustomerRequestController extends Controller
     }
 
     public function declinedDelete($id){
-        DB::table('customer_requests')->where('id', $id)->delete();
+        CustomerRequest::where('id', $id)->delete();
 
         return redirect()->route('customer.request.declined')->with('success', 'Request Successfully Restored');
     }

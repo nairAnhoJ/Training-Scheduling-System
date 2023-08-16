@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'description',
+        'date',
+        'trainer',
+        'key',
+        'created_at', 
+        'updated_at'
+    ];
+    
+    protected $table = 'tss_events';
 }

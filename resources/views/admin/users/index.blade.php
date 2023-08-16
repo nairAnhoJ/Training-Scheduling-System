@@ -177,8 +177,8 @@
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     <a href="{{ url('/system-management/users/edit/'.$user->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a>
                                                     @if ($user->id != 1)
-                                                        | <a type="button" data-key="{{ $user->key }}" data-modal-target="resetModal" data-modal-toggle="resetModal" class="resetButton text-orange-600 hover:underline font-semibold text-sm cursor-pointer">Reset</a>
-                                                        | <a type="button" data-key="{{ $user->key }}" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</a>
+                                                        | <button type="button" data-key="{{ $user->key }}" data-modal-target="resetModal" data-modal-toggle="resetModal" class="resetButton text-orange-600 hover:underline font-semibold text-sm cursor-pointer">Reset</button>
+                                                        | <button type="button" data-key="{{ $user->key }}" data-modal-target="deleteModal" data-modal-toggle="deleteModal" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Delete</button>
                                                     @endif
                                                 </td>
                                             </tr>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Logs;
 use App\Models\Request as ModelsRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,13 +16,12 @@ use Carbon\Carbon;
 class RequestController extends Controller
 {
     public function index(){
-        $requests = DB::table('requests')
-            ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'users.first_name', 'users.last_name')
-            ->join('customers', 'requests.customer_id', '=', 'customers.id')
-            ->leftJoin('users', 'requests.trainer', '=', 'users.id')
-            ->where('requests.is_approved', 0)
-            ->where('requests.is_deleted', 0)
-            ->orderBy('requests.id', 'desc')
+        $requests = ModelsRequest::select('customers.name', 'tss_requests.category', 'tss_requests.unit_type', 'tss_requests.billing_type', 'customers.area', 'tss_requests.trainer', 'tss_requests.updated_at', 'tss_requests.key', 'tss_users.first_name', 'tss_users.last_name')
+            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
+            ->leftJoin('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
+            ->where('tss_requests.is_approved', 0)
+            ->where('tss_requests.is_deleted', 0)
+            ->orderBy('tss_requests.id', 'desc')
             ->get();
 
         $search = '';
@@ -31,14 +31,13 @@ class RequestController extends Controller
 
     public function search(Request $request){
         $search = $request->search;
-        $requests = DB::table('requests')
-            ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'users.first_name', 'users.last_name')
-            ->join('customers', 'requests.customer_id', '=', 'customers.id')
-            ->leftJoin('users', 'requests.trainer', '=', 'users.id')
-            ->whereRaw("CONCAT_WS(' ', customers.name, requests.category, requests.unit_type, requests.billing_type, customers.area, requests.updated_at, users.first_name, users.last_name) LIKE '%{$search}%'")
-            ->where('requests.is_approved', 0)
-            ->where('requests.is_deleted', 0)
-            ->orderBy('requests.id', 'desc')
+        $requests = ModelsRequest::select('customers.name', 'tss_requests.category', 'tss_requests.unit_type', 'tss_requests.billing_type', 'customers.area', 'tss_requests.trainer', 'tss_requests.updated_at', 'tss_requests.key', 'tss_users.first_name', 'tss_users.last_name')
+            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
+            ->leftJoin('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
+            ->whereRaw("CONCAT_WS(' ', customers.name, tss_requests.category, tss_requests.unit_type, tss_requests.billing_type, customers.area, tss_requests.updated_at, tss_users.first_name, tss_users.last_name) LIKE '%{$search}%'")
+            ->where('tss_requests.is_approved', 0)
+            ->where('tss_requests.is_deleted', 0)
+            ->orderBy('tss_requests.id', 'desc')
             ->get();
 
         // $page = 1;
@@ -46,8 +45,8 @@ class RequestController extends Controller
     }
 
     public function add(){
-        $customers = DB::table('customers')->get();
-        $trainers = DB::table('users')->where('role', 2)->get();
+        $customers = Customer::get();
+        $trainers = User::where('role', 2)->get();
 
         return view('user.coordinator.request.add', compact('customers', 'trainers'));
     }
@@ -55,7 +54,7 @@ class RequestController extends Controller
     public function getcom(Request $request){
         $id = $request->id;
 
-        $customer = DB::table('customers')->where('id', $id)->first();
+        $customer = Customer::where('id', $id)->first();
 
         $result = array(
             'address' => $customer->address,
@@ -78,7 +77,7 @@ class RequestController extends Controller
 
     public function store(Request $request){
 
-        $id = DB::table('requests')->orderBy('id', 'desc')->value('id') + 1;
+        $id = ModelsRequest::orderBy('id', 'desc')->value('id') + 1;
         $user_id = Auth::user()->id;
 
         if($id == null || $id == ''){
@@ -120,14 +119,12 @@ class RequestController extends Controller
         $trainer = $request->trainer;
         $remarks = $request->remarks;
 
-        $com = DB::table('customers')
-            ->where('name', $name)
+        $com = Customer::where('name', $name)
             ->first();
 
 
         if($com != ''){
-            DB::table('customers')
-                ->where('name', $name)
+            Customer::where('name', $name)
                 ->update([
                     'name' => $name,
                     'address' => $adress,
@@ -150,14 +147,13 @@ class RequestController extends Controller
     
             while (!$unique) {
                 $key = Str::uuid()->toString();
-                $existingModel = DB::table('customers')->where('key', $key)->first();
+                $existingModel = Customer::where('key', $key)->first();
                 if (!$existingModel) {
                     $unique = true;
                 }
             }
 
-            $customer = DB::table('customers')
-                ->insertGetId([
+            $customer = Customer::insertGetId([
                     'name' => $name,
                     'address' => $adress,
                     'area' => $area,
@@ -182,7 +178,7 @@ class RequestController extends Controller
 
         while (!$unique) {
             $key = Str::uuid()->toString();
-            $existingModel = DB::table('requests')->where('key', $key)->first();
+            $existingModel = ModelsRequest::where('key', $key)->first();
             if (!$existingModel) {
                 $unique = true;
             }
@@ -191,7 +187,7 @@ class RequestController extends Controller
         if ($pm == '1') {
             $contract_details_path = null;
             if($contract_details != null){
-                $nid = DB::table('requests')->latest('id')->value('id');
+                $nid = ModelsRequest::latest('id')->value('id');
                 if($nid != null){
                     $nid += $nid;
                 }else{
@@ -203,8 +199,7 @@ class RequestController extends Controller
                 $contract_details_path = $path.$filename;
                 $request->file('contract_details')->move(public_path('storage/'.$path), $filename);
     
-                DB::table('requests')
-                    ->insert([
+                ModelsRequest::insert([
                         'number' => $number,
                         'customer_id' => $cusID,
                         'category' => $category,
@@ -226,8 +221,7 @@ class RequestController extends Controller
                         'updated_at' => date('Y-m-d H:i:s'),
                     ]);
             }else{
-                DB::table('requests')
-                    ->insert([
+                ModelsRequest::insert([
                         'number' => $number,
                         'customer_id' => $cusID,
                         'category' => $category,
@@ -249,8 +243,7 @@ class RequestController extends Controller
                     ]);
             }
         } else {
-            DB::table('requests')
-                ->insert([
+            ModelsRequest::insert([
                     'number' => $number,
                     'customer_id' => $cusID,
                     'category' => $category,
@@ -276,12 +269,11 @@ class RequestController extends Controller
     }
 
     public function edit($key){
-        $request = DB::table('requests')
-            ->select('customers.*', 'requests.*')
-            ->join('customers', 'requests.customer_id', '=', 'customers.id')
-            ->where('requests.key', $key)
+        $request = ModelsRequest::select('customers.*', 'tss_requests.*')
+            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
+            ->where('tss_requests.key', $key)
             ->first();
-        $trainers = DB::table('users')->where('role', 2)->get();
+        $trainers = User::where('role', 2)->get();
 
         return view('user.coordinator.request.edit', compact('request', 'trainers', 'key'));
     }
@@ -381,7 +373,7 @@ class RequestController extends Controller
 
         $contract_details_path = null;
         if($contract_details != null){
-            $nid = DB::table('requests')->latest('id')->value('id');
+            $nid = ModelsRequest::latest('id')->value('id');
             if($nid != null){
                 $nid += $nid;
             }else{
@@ -514,7 +506,7 @@ class RequestController extends Controller
 
     public function delete($key){
         $req = ModelsRequest::where('key', $key)->firstOrFail();
-        DB::table('requests')->where('key', $key)->update([
+        ModelsRequest::where('key', $key)->update([
             'is_deleted' => 1
         ]);
 
@@ -533,15 +525,14 @@ class RequestController extends Controller
 
     public function view(Request $request){
         $key = $request->key;
-        $thisRequest = DB::table('requests')
-            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.number', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.status', 'requests.key', 'users.first_name', 'users.last_name')
-            ->join('customers', 'requests.customer_id', '=', 'customers.id')
-            ->leftJoin('users', 'requests.trainer', '=', 'users.id')
-            ->where('requests.key', $key)
+        $thisRequest = ModelsRequest::select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'tss_requests.number', 'tss_requests.category', 'tss_requests.unit_type', 'tss_requests.brand', 'tss_requests.model', 'tss_requests.no_of_unit', 'tss_requests.billing_type', 'tss_requests.is_PM', 'tss_requests.contract_details', 'tss_requests.no_of_attendees', 'tss_requests.venue', 'tss_requests.training_date', 'tss_requests.knowledge_of_participants', 'tss_requests.trainer', 'tss_requests.remarks', 'tss_requests.status', 'tss_requests.key', 'tss_users.first_name', 'tss_users.last_name')
+            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
+            ->leftJoin('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
+            ->where('tss_requests.key', $key)
             ->first();
 
         $logs = Logs::with('user')
-            ->where('logs.table_key', $key)
+            ->where('tss_logs.table_key', $key)
             ->orderByDesc('id')
             ->get();
 
@@ -608,14 +599,14 @@ class RequestController extends Controller
     }
 
     public function contractDetails($key){
-        $path = (DB::table('requests')->where('key', $key)->first())->contract_details;
+        $path = (ModelsRequest::where('key', $key)->first())->contract_details;
 
         return view('user.coordinator.request.view-contract-details', compact('path'));
     }
 
     public function approve($key){
         $req = ModelsRequest::where('key', $key)->firstOrFail();
-        DB::table('requests')->where('key', $key)->update([
+        ModelsRequest::where('key', $key)->update([
             'status' => 'SCHEDULED',
             'is_approved' => 1,
             'end_date' => $req->training_date,

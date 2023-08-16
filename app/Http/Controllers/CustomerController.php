@@ -13,8 +13,7 @@ use Illuminate\Support\Str;
 class CustomerController extends Controller
 {
     public function index(){
-        $customers = DB::table('customers')
-            ->where('is_deleted', 0)
+        $customers = Customer::where('is_deleted', 0)
             ->where('is_active', 1)
             ->orderBy('name', 'asc')
             ->get();
@@ -25,8 +24,7 @@ class CustomerController extends Controller
 
     public function search(Request $request){
         $search = $request->search;
-        $customers = DB::table('customers')
-            ->whereRaw("CONCAT_WS(' ', name, address, area) LIKE '%{$search}%'")
+        $customers = Customer::whereRaw("CONCAT_WS(' ', name, address, area) LIKE '%{$search}%'")
             ->where('is_deleted', 0)
             ->where('is_active', 1)
             ->orderBy('name', 'asc')
@@ -62,14 +60,13 @@ class CustomerController extends Controller
 
         while (!$unique) {
             $key = Str::uuid()->toString();
-            $existingModel = DB::table('customers')->where('key', $key)->first();
+            $existingModel = Customer::where('key', $key)->first();
             if (!$existingModel) {
                 $unique = true;
             }
         }
 
-        DB::table('customers')
-            ->insert([
+        Customer::insert([
                 'name' => $name,
                 'address' => $adress,
                 'area' => $area,
@@ -91,8 +88,7 @@ class CustomerController extends Controller
     }
 
     public function edit($key){
-        $customer = DB::table('customers')
-            ->where('key', $key)
+        $customer = Customer::where('key', $key)
             ->first();
 
         return view('user.coordinator.customer.edit', compact('customer', 'key'));
@@ -157,9 +153,6 @@ class CustomerController extends Controller
     public function delete($key){
         $cus = Customer::where('key', $key)->firstOrFail();
         Customer::where('key', $key)->update(['is_deleted' => 1]);
-        // DB::table('customers')->where('key', $key)->update([
-        //     'is_deleted' => 1
-        // ]);
 
         $log = new Logs();
         $log->table = 'CUSTOMERS';
@@ -176,8 +169,7 @@ class CustomerController extends Controller
 
     public function view(Request $request){
         $key = $request->key;
-        $thisRequest = DB::table('customers')
-            ->where('key', $key)
+        $thisRequest = Customer::where('key', $key)
             ->first();
 
         $logs = Logs::with('user')

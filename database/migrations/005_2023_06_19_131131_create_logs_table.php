@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('logs', function (Blueprint $table) {
-            $table->id();
+        Schema::create('tss_logs', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('table');
             $table->string('table_key');
             $table->string('action'); // SET, EDIT, DELETE
@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('before')->nullable();
             $table->string('after')->nullable();
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('tss_logs');
     }
 };

@@ -12,13 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('tss_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('id_number');
             $table->string('first_name');
             $table->string('last_name');
             $table->unsignedInteger('dept_id');
-            $table->foreign('dept_id')->references('id')->on('departments');
             $table->string('email');
             $table->string('role'); // 0 - ADMIN, 1 - TRAINING COORDINATOR, 2 - TRAINER, 2 - VIEWING ONLY
             $table->string('password')->default(Hash::make('password2023'));
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('tss_users');
     }
 };

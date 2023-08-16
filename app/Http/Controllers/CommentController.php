@@ -39,8 +39,7 @@ class CommentController extends Controller
         
         $result = '';
 
-        $comments = DB::table('comments')
-            ->select('comments.key', DB::raw('MAX(comments.content) as content'), DB::raw('MAX(comments.created_at) as created_at'), DB::raw('MAX(users.first_name) as ufname'), DB::raw('MAX(users.last_name) as ulname'))
+        $comments = Comment::select('comments.key', DB::raw('MAX(comments.content) as content'), DB::raw('MAX(comments.created_at) as created_at'), DB::raw('MAX(users.first_name) as ufname'), DB::raw('MAX(users.last_name) as ulname'))
             ->join('users', 'comments.commenter_id', '=', 'users.key')
             ->where('comments.req_id', $request->id)
             ->groupBy('key')

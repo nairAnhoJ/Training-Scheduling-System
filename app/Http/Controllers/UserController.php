@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -9,18 +11,17 @@ use Illuminate\Support\Str;
 class UserController extends Controller
 {
     public function index(){
-        $users = DB::table('users')
-            ->select('users.*', 'departments.name as dept')
-            ->join('departments', 'users.dept_id', '=', 'departments.id')
-            ->where('users.is_deleted', 0)
-            ->orderBy('users.first_name', 'asc')
+        $users = User::select('tss_users.*', 'departments.name as dept')
+            ->join('departments', 'tss_users.dept_id', '=', 'departments.id')
+            ->where('tss_users.is_deleted', 0)
+            ->orderBy('tss_users.first_name', 'asc')
             ->get();
         $search = '';
         return view('admin.users.index', compact('search', 'users'));
     }
 
     public function add(){
-        $departments = DB::table('departments')->where('is_deleted', 0)->orderBy('name', 'asc')->get();
+        $departments = Department::where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
         return view('admin.users.add', compact('departments'));
     }
@@ -42,14 +43,13 @@ class UserController extends Controller
 
         while (!$unique) {
             $key = Str::uuid()->toString();
-            $existingModel = DB::table('users')->where('key', $key)->first();
+            $existingModel = User::where('key', $key)->first();
             if (!$existingModel) {
                 $unique = true;
             }
         }
 
-        DB::table('users')
-            ->insert([
+        User::insert([
                 'id_number' => $id_number,
                 'first_name' => $first_name,
                 'last_name' => $last_name,
@@ -66,8 +66,8 @@ class UserController extends Controller
     }
 
     public function edit($key){
-        $user = DB::table('users')->where('key', $key)->first();
-        $departments = DB::table('departments')->orderBy('name', 'asc')->get();
+        $user = User::where('key', $key)->first();
+        $departments = Department::orderBy('name', 'asc')->get();
 
         return view('admin.users.edit', compact('departments', 'user', 'key'));
     }
@@ -84,8 +84,7 @@ class UserController extends Controller
             $color = '0';
         }
 
-        DB::table('users')
-            ->where('key', $key)
+        User::where('key', $key)
             ->update([
                 'id_number' => $id_number,
                 'first_name' => $first_name,
@@ -101,8 +100,7 @@ class UserController extends Controller
     }
 
     public function reset($key){
-        DB::table('users')
-            ->where('key', $key)
+        User::where('key', $key)
             ->update([
                 'password' => '$2y$10$7v4/HKTwejrkpXieBOVI3eXtiIvBI2ofaAvsTVLb/i6RPDFgwD5Mm',
                 'first_time_login' => 1,
@@ -113,8 +111,7 @@ class UserController extends Controller
     }
 
     public function delete($key){
-        DB::table('users')
-            ->where('key', $key)
+        User::where('key', $key)
             ->update([
                 'is_deleted' => 1,
                 'updated_at' => date('Y-m-d H:i:s'),

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Logs;
 use App\Models\Request as ModelsRequest;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,15 +16,13 @@ use Illuminate\Support\Str;
 class TrainingController extends Controller
 {
     public function index(){
-        $requests = DB::table('requests')
-            ->select('customers.name', 'customers.area', 'requests.trainer', 'requests.training_date', 'requests.status', 'requests.updated_at', 'requests.key', 'users.first_name', 'users.last_name')
-            ->join('customers', 'requests.customer_id', '=', 'customers.id')
-            ->leftJoin('users', 'requests.trainer', '=', 'users.id')
-            ->where('requests.is_approved', 1)
-            ->where('requests.is_deleted', 0)
-            ->orderByRaw("CASE WHEN requests.status = 'SCHEDULED' THEN 0 ELSE 1 END, requests.training_date ASC")
-            // ->orderByRaw("FIELD(requests.status, 'SCHEDULED')")
-            ->orderBy('requests.id', 'desc')
+        $requests = ModelsRequest::select('customers.name', 'customers.area', 'tss_requests.trainer', 'tss_requests.training_date', 'tss_requests.status', 'tss_requests.updated_at', 'tss_requests.key', 'tss_users.first_name', 'tss_users.last_name')
+            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
+            ->leftJoin('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
+            ->where('tss_requests.is_approved', 1)
+            ->where('tss_requests.is_deleted', 0)
+            ->orderByRaw("CASE WHEN tss_requests.status = 'SCHEDULED' THEN 0 ELSE 1 END, tss_requests.training_date ASC")
+            ->orderBy('tss_requests.id', 'desc')
             ->get();
 
         $search = '';
@@ -33,14 +32,13 @@ class TrainingController extends Controller
 
     public function search(Request $request){
         $search = $request->search;
-        $requests = DB::table('requests')
-            ->select('customers.name', 'customers.area', 'requests.trainer', 'requests.training_date', 'requests.status', 'requests.updated_at', 'requests.key', 'users.first_name', 'users.last_name')
-            ->join('customers', 'requests.customer_id', '=', 'customers.id')
-            ->leftJoin('users', 'requests.trainer', '=', 'users.id')
-            ->whereRaw("CONCAT_WS(' ', customers.name, requests.category, requests.unit_type, requests.billing_type, customers.area, requests.updated_at, users.first_name, users.last_name) LIKE '%{$search}%'")
-            ->where('requests.is_approved', 1)
-            ->where('requests.is_deleted', 0)
-            ->orderBy('requests.id', 'desc')
+        $requests = ModelsRequest::select('customers.name', 'customers.area', 'tss_requests.trainer', 'tss_requests.training_date', 'tss_requests.status', 'tss_requests.updated_at', 'tss_requests.key', 'tss_users.first_name', 'tss_users.last_name')
+            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
+            ->leftJoin('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
+            ->whereRaw("CONCAT_WS(' ', customers.name, tss_requests.category, tss_requests.unit_type, tss_requests.billing_type, customers.area, tss_requests.updated_at, tss_users.first_name, tss_users.last_name) LIKE '%{$search}%'")
+            ->where('tss_requests.is_approved', 1)
+            ->where('tss_requests.is_deleted', 0)
+            ->orderBy('tss_requests.id', 'desc')
             ->get();
 
         // $page = 1;
@@ -48,12 +46,11 @@ class TrainingController extends Controller
     }
 
     public function edit($key){
-        $request = DB::table('requests')
-            ->select('customers.*', 'requests.*')
-            ->join('customers', 'requests.customer_id', '=', 'customers.id')
-            ->where('requests.key', $key)
+        $request = ModelsRequest::select('customers.*', 'tss_requests.*')
+            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
+            ->where('tss_requests.key', $key)
             ->first();
-        $trainers = DB::table('users')->where('role', 2)->get();
+        $trainers = User::where('role', 2)->get();
 
         return view('user.coordinator.trainings.edit', compact('request', 'trainers', 'key'));
     }
@@ -150,7 +147,7 @@ class TrainingController extends Controller
 
         $contract_details_path = null;
         if($contract_details != null){
-            $nid = DB::table('requests')->latest('id')->value('id');
+            $nid = ModelsRequest::latest('id')->value('id');
             if($nid != null){
                 $nid += $nid;
             }else{
@@ -288,7 +285,7 @@ class TrainingController extends Controller
     }
 
     public function delete($key){
-        DB::table('requests')->where('key', $key)->update([
+        ModelsRequest::where('key', $key)->update([
             'is_deleted' => 1
         ]);
 
@@ -309,16 +306,14 @@ class TrainingController extends Controller
 
     public function view(Request $request){
         $key = $request->key;
-        $thisRequest = DB::table('requests')
-            // ->select('customers.*', 'requests.*', 'users.*')
-            ->select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'requests.number', 'requests.category', 'requests.unit_type', 'requests.brand', 'requests.model', 'requests.no_of_unit', 'requests.billing_type', 'requests.is_PM', 'requests.contract_details', 'requests.no_of_attendees', 'requests.venue', 'requests.training_date', 'requests.knowledge_of_participants', 'requests.trainer', 'requests.remarks', 'requests.status', 'requests.key', 'users.first_name', 'users.last_name')
-            ->join('customers', 'requests.customer_id', '=', 'customers.id')
-            ->leftJoin('users', 'requests.trainer', '=', 'users.id')
-            ->where('requests.key', $key)
+        $thisRequest = ModelsRequest::select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'tss_requests.number', 'tss_requests.category', 'tss_requests.unit_type', 'tss_requests.brand', 'tss_requests.model', 'tss_requests.no_of_unit', 'tss_requests.billing_type', 'tss_requests.is_PM', 'tss_requests.contract_details', 'tss_requests.no_of_attendees', 'tss_requests.venue', 'tss_requests.training_date', 'tss_requests.knowledge_of_participants', 'tss_requests.trainer', 'tss_requests.remarks', 'tss_requests.status', 'tss_requests.key', 'tss_users.first_name', 'tss_users.last_name')
+            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
+            ->leftJoin('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
+            ->where('tss_requests.key', $key)
             ->first();
 
         $logs = Logs::with('user')
-            ->where('logs.table_key', $key)
+            ->where('tss_logs.table_key', $key)
             ->orderByDesc('id')
             ->get();
 
@@ -394,14 +389,14 @@ class TrainingController extends Controller
     }
 
     public function contractDetails($key){
-        $path = (DB::table('requests')->where('key', $key)->first())->contract_details;
+        $path = (ModelsRequest::where('key', $key)->first())->contract_details;
 
         return view('user.coordinator.trainings.view-contract-details', compact('path'));
     }
 
     public function approve($key){
         $req = ModelsRequest::where('key', $key)->firstOrFail();
-        DB::table('requests')->where('key', $key)->update([
+        ModelsRequest::where('key', $key)->update([
             'status' => 'SCHEDULED',
             'end_date' => $req->training_date,
             'is_approved' => 1,
@@ -411,7 +406,7 @@ class TrainingController extends Controller
     }
 
     public function cancel($key){
-        DB::table('requests')->where('key', $key)->update([
+        ModelsRequest::where('key', $key)->update([
             'status' => 'CANCELLED', 
         ]);
 
@@ -432,7 +427,7 @@ class TrainingController extends Controller
 
     public function reschedule(Request $request){
         $req = ModelsRequest::where('key', $request->key)->firstOrFail();
-        DB::table('requests')->where('key', $request->key)->update([
+        ModelsRequest::where('key', $request->key)->update([
             'status' => 'SCHEDULED',
             'training_date' => $request->rescheduleDate,
             'end_date' => $request->rescheduleDate,

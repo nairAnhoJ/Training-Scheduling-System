@@ -7,14 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'req_id',
         'user_id',
         'commenter_id',
         'content',
         'is_read',
-        'key'
+        'key',
+        'created_at', 
+        'updated_at'
     ];
-
-    use HasFactory;
+    
+    protected $table = 'tss_comments';
 }

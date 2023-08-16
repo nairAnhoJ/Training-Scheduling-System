@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customer_requests', function (Blueprint $table) {
-            $table->id();
+        Schema::create('tss_customer_requests', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('name');
             $table->string('address');
 
@@ -46,6 +46,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customer_requests');
+        Schema::dropIfExists('tss_customer_requests');
     }
 };

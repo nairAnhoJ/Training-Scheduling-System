@@ -14,7 +14,9 @@ use App\Http\Controllers\RequestController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
 use App\Models\Customer;
+use App\Models\Event;
 use App\Models\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -34,12 +36,10 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
  
 Route::get('/', function () {
     if(!Auth::user()){
-        $trainers = DB::table('users')->where('role', 2)->where('is_active', 1)->get();
-        $events = DB::table('requests')
-            // ->select('customers.name', 'requests.category', 'requests.unit_type', 'requests.billing_type', 'customers.area', 'requests.trainer', 'requests.updated_at', 'requests.key', 'requests.training_date', 'requests.id', 'users.id as uid', 'users.first_name', 'users.last_name', 'users.color')
-            ->select('requests.id', 'customers.name', 'requests.training_date', 'requests.end_date', 'requests.key', 'users.color')
-            ->join('customers', 'requests.customer_id', '=', 'customers.id')
-            ->join('users', 'requests.trainer', '=', 'users.id')
+        $trainers = User::where('role', 2)->where('is_active', 1)->get();
+        $events = Request::select('tss_requests.id', 'customers.name', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.key', 'tss_users.color')
+            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
+            ->join('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
             ->where('is_approved', 1)
             ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
             ->get();
@@ -62,9 +62,8 @@ Route::get('/', function () {
             $eventArray[] = $newArray;
         }
 
-        $events2 = DB::table('events')
-            ->leftJoin('users', 'events.trainer', '=', 'users.id')
-            ->select('events.*', DB::raw('IF(events.trainer = 0, "#FE2C55", users.color) as color'))
+        $events2 = Event::leftJoin('tss_users', 'tss_events.trainer', '=', 'tss_users.id')
+            ->select('tss_events.*', DB::raw('IF(tss_events.trainer = 0, "#FE2C55", tss_users.color) as color'))
             ->get();
 
         foreach ($events2 as $event) {

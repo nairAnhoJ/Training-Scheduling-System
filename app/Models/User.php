@@ -18,10 +18,23 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'id_number',
+        'first_name',
+        'last_name',
+        'dept_id',
         'email',
+        'role',
         'password',
+        'color',
+        'first_time_login',
+        'is_deleted',
+        'is_active',
+        'key',
+        'created_at', 
+        'updated_at'
     ];
+    
+    protected $table = 'tss_users';
 
     /**
      * The attributes that should be hidden for serialization.

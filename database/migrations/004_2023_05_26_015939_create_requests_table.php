@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('requests', function (Blueprint $table) {
+        Schema::create('tss_requests', function (Blueprint $table) {
             $table->increments('id');
             $table->string('number'); // Request Number ,,, Training Number  ======== ym-(user_id)-000000(id)
             $table->unsignedInteger('customer_id');
@@ -39,9 +39,6 @@ return new class extends Migration
             $table->string('is_approved')->default(0);
             $table->string('is_deleted')->default(0);
             $table->string('status')->default('PENDING');
-            
-            // $table->string('type_of_payment')->nullable();
-            // $table->string('vat_zero_rated')->nullable();
 
             $table->string('key');
             $table->timestamps();
@@ -53,6 +50,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('requests');
+        Schema::dropIfExists('tss_requests');
     }
 };

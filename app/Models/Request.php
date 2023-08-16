@@ -30,6 +30,8 @@ class Request extends Model
         'updated_at', 
         'is_deleted'
     ];
+    
+    protected $table = 'tss_requests';
 
     use HasFactory;
 }

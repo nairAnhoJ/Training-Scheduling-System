@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
-            $table->id();
-            $table->string('req_id');
-            $table->string('user_id');
-            $table->string('commenter_id');
+        Schema::create('tss_comments', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedBigInteger('req_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('commenter_id');
             $table->binary('content');
             $table->string('is_read');
             $table->string('key');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('tss_comments');
     }
 };
