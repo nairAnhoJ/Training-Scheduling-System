@@ -39,9 +39,9 @@ class EventController extends Controller
     public function view(Request $request){
         $id = $request->id;
 
-        $event = Event::leftJoin('users', 'events.trainer', '=', 'users.id')
-            ->select('events.*', DB::raw('IF(events.trainer = 0, "#FE2C55", users.color) as color'), DB::raw('IF(events.trainer = 0, "ALL", users.first_name) as fname'), DB::raw('IF(events.trainer = 0, "", users.last_name) as lname'))
-            ->where('events.key', $id)
+        $event = Event::leftJoin('tss_users', 'tss_events.trainer', '=', 'tss_users.id')
+            ->select('tss_events.*', DB::raw('IF(tss_events.trainer = 0, "#FE2C55", tss_users.color) as color'), DB::raw('IF(tss_events.trainer = 0, "ALL", tss_users.first_name) as fname'), DB::raw('IF(tss_events.trainer = 0, "", tss_users.last_name) as lname'))
+            ->where('tss_events.key', $id)
             ->first();
 
         $result = array(

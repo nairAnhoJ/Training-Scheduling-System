@@ -173,7 +173,7 @@ class CustomerController extends Controller
             ->first();
 
         $logs = Logs::with('user')
-            ->where('logs.table_key', $key)
+            ->where('tss_logs.table_key', $key)
             ->orderByDesc('id')
             ->get();
 

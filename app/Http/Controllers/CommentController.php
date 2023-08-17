@@ -39,9 +39,9 @@ class CommentController extends Controller
         
         $result = '';
 
-        $comments = Comment::select('comments.key', DB::raw('MAX(comments.content) as content'), DB::raw('MAX(comments.created_at) as created_at'), DB::raw('MAX(users.first_name) as ufname'), DB::raw('MAX(users.last_name) as ulname'))
-            ->join('users', 'comments.commenter_id', '=', 'users.key')
-            ->where('comments.req_id', $request->id)
+        $comments = Comment::select('tss_comments.key', DB::raw('MAX(tss_comments.content) as content'), DB::raw('MAX(tss_comments.created_at) as created_at'), DB::raw('MAX(tss_users.first_name) as ufname'), DB::raw('MAX(tss_users.last_name) as ulname'))
+            ->join('tss_users', 'tss_comments.commenter_id', '=', 'tss_users.key')
+            ->where('tss_comments.req_id', $request->id)
             ->groupBy('key')
             ->get();
 

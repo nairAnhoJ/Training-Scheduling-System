@@ -88,14 +88,15 @@ class DashboardController extends Controller
         $id = $request->id;
         $thisRequest = ModelsRequest::select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'tss_requests.number', 'tss_requests.category', 'tss_requests.unit_type', 'tss_requests.brand', 'tss_requests.model', 'tss_requests.no_of_unit', 'tss_requests.billing_type', 'tss_requests.is_PM', 'tss_requests.contract_details', 'tss_requests.no_of_attendees', 'tss_requests.venue', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.knowledge_of_participants', 'tss_requests.trainer', 'tss_requests.remarks', 'tss_requests.status', 'tss_requests.key', 'tss_users.first_name', 'tss_users.last_name')
             ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
-            ->join('users', 'tss_requests.trainer', '=', 'tss_users.id')
+            ->join('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
             ->where('tss_requests.key', $id)
             ->first();
+
         
         $com = '';
 
         $comments = Comment::select('tss_comments.key', DB::raw('MAX(tss_comments.content) as content'), DB::raw('MAX(tss_comments.created_at) as created_at'), DB::raw('MAX(tss_users.first_name) as ufname'), DB::raw('MAX(tss_users.last_name) as ulname'))
-            ->join('users', 'tss_comments.commenter_id', '=', 'tss_users.key')
+            ->join('tss_users', 'tss_comments.commenter_id', '=', 'tss_users.key')
             ->where('tss_comments.req_id', $request->id)
             ->groupBy('key')
             ->get();
@@ -115,9 +116,11 @@ class DashboardController extends Controller
             ';
         }
 
-        Comment::where('req_id', $request->id)->where('user_id', Auth::user()->key)->update([
-            'is_read' => 1
-        ]);
+        if($com != ''){
+            Comment::where('req_id', $request->id)->where('user_id', Auth::user()->key)->update([
+                'is_read' => 1
+            ]);
+        }
 
         $result = array(
             'status' => $thisRequest->status,
