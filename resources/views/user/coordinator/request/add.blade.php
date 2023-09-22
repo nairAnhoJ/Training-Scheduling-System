@@ -3,20 +3,20 @@
 @section('content')
 
     <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-        <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full max-h-full overflow-y-auto">
+        <div class="h-full max-h-full py-5 pl-5 pr-8 overflow-y-auto bg-white rounded-lg shadow-xl">
             <form action="{{ route('request.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-10">
-                    <h1 class="text-gray-600 font-bold text-xl mb-2">COMPANY DETAILS</h1>
+                    <h1 class="mb-2 text-xl font-bold text-gray-600">COMPANY DETAILS</h1>
                     <div class="pl-3">
 
-                        <div class="flex flex-col relative optionDiv mb-3">
+                        <div class="relative flex flex-col mb-3 optionDiv">
                             <label for="name" class="block text-sm font-semibold text-gray-600">Company Name <span class="text-red-500">*</span></label>
                             <input type="text" id="name" name="name" class="inputOption block w-full p-2.5 text-gray-600 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm" required autocomplete="off">
                             <div class="listOption hidden absolute top-[62px] w-full rounded-lg border-x border-b border-gray-300 overflow-y-auto max-h-[30vh] text-gray-600 bg-white z-[99] shadow-xl">
                                 <ul>
                                     @foreach ($customers as $customer)
-                                        <li data-id="{{ $customer->id }}" class="p-2 first:border-0 border-t border-gray-300 hover:bg-gray-200 cursor-pointer">{{ $customer->name }}</li>
+                                        <li data-id="{{ $customer->id }}" class="p-2 border-t border-gray-300 cursor-pointer first:border-0 hover:bg-gray-200">{{ $customer->name }}</li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -31,26 +31,27 @@
                             <label for="area" class="block text-sm font-semibold text-gray-600">Area <span class="text-red-500">*</span></label>
                             <select id="area" name="area" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value="CENTRAL">Central</option>
-                                <option value="NORTH">North</option>
-                                <option value="SOUTH">South</option>
+                                <option value="LUZON">Luzon</option>
+                                <option value="VISAYAS">Visayas</option>
+                                <option value="MINDANAO">Mindanao</option>
                             </select>
                         </div>
                         {{-- CONTACT PERSON --}}
                             <div class="mb-3">
-                                <h1 class="text-gray-600 font-semibold">CONTACT PERSON/s</h1>
+                                <h1 class="font-semibold text-gray-600">CONTACT PERSON/s</h1>
                                 <div class="pl-5">
                                     <div class="mb-3">
                                         <h1 class="text-gray-600">#1</h1>
-                                        <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
-                                            <div class="mb-3 w-full">
+                                        <div class="flex flex-col w-full pl-5 lg:flex-row gap-x-8">
+                                            <div class="w-full mb-3">
                                                 <label for="cp1_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                 <input type="text" id="cp1_name" name="cp1_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp1_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                 <input type="text" id="cp1_number" name="cp1_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp1_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                 <input type="text" id="cp1_email" name="cp1_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
@@ -58,16 +59,16 @@
                                     </div>
                                     <div class="mb-3">
                                         <h1 class="text-gray-600">#2</h1>
-                                        <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
-                                            <div class="mb-3 w-full">
+                                        <div class="flex flex-col w-full pl-5 lg:flex-row gap-x-8">
+                                            <div class="w-full mb-3">
                                                 <label for="cp2_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                 <input type="text" id="cp2_name" name="cp2_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp2_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                 <input type="text" id="cp2_number" name="cp2_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp2_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                 <input type="text" id="cp2_email" name="cp2_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
@@ -75,16 +76,16 @@
                                     </div>
                                     <div>
                                         <h1 class="text-gray-600">#3</h1>
-                                        <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
-                                            <div class="mb-3 w-full">
+                                        <div class="flex flex-col w-full pl-5 lg:flex-row gap-x-8">
+                                            <div class="w-full mb-3">
                                                 <label for="cp3_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                 <input type="text" id="cp3_name" name="cp3_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp3_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                 <input type="text" id="cp3_number" name="cp3_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp3_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                 <input type="text" id="cp3_email" name="cp3_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
@@ -98,7 +99,7 @@
                 </div>
 
                 <div>
-                    <h1 class="text-gray-600 font-bold text-xl mb-2">OTHER DETAILS</h1>
+                    <h1 class="mb-2 text-xl font-bold text-gray-600">OTHER DETAILS</h1>
                     <div class="pl-3">
                         <div class="mb-3">
                             <label for="category" class="block text-sm font-medium text-gray-600">Category <span class="text-red-500">*</span></label>
@@ -109,7 +110,7 @@
                         </div>
 
                         {{-- PM --}}
-                            <div class="mb-3 mt-4 flex items-center">
+                            <div class="flex items-center mt-4 mb-3">
                                 <span class="mx-3 text-sm font-semibold text-gray-600">PM</span>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input type="checkbox" id="pm" name="pm" value="1" class="sr-only peer">
@@ -118,9 +119,9 @@
                             </div>
 
                             {{-- CONTRACT DETAILS --}}
-                                    <div id="contractDetailsContainer1" class="mb-0 h-0 overflow-hidden transition-all duration-500 py-0">
-                                        <div id="contractDetailsContainer" class="border border-gray-400 rounded-lg p-5 relative opacity-50">
-                                            <h1 class="font-bold text-gray-500 tracking-wide absolute top-0 -translate-y-1/2 left-5 bg-white px-2">Contract Details</h1>
+                                    <div id="contractDetailsContainer1" class="h-0 py-0 mb-0 overflow-hidden transition-all duration-500">
+                                        <div id="contractDetailsContainer" class="relative p-5 border border-gray-400 rounded-lg opacity-50">
+                                            <h1 class="absolute top-0 px-2 font-bold tracking-wide text-gray-500 -translate-y-1/2 bg-white left-5">Contract Details</h1>
                                             
                                             <div>
                                                 <label class="block text-sm font-semibold text-gray-900" for="contract_details">Upload file</label>
@@ -141,7 +142,7 @@
                             </select>
                         </div>
 
-                        <div class="mb-3 w-full">
+                        <div class="w-full mb-3">
                             <label for="model" class="block text-sm font-semibold text-gray-600">Model <span class="text-red-500">*</span></label>
                             <input type="text" id="model" name="model" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                         </div>
@@ -175,7 +176,7 @@
                                 <option value="NON-CHARGEABLE">Non-Chargeable</option>
                             </select>
                         </div>
-                        <div class="mb-3 w-full">
+                        <div class="w-full mb-3">
                             <label for="no_of_attendees" class="block text-sm font-semibold text-gray-600">Number of Attendees</label>
                             <input type="text" id="no_of_attendees" name="no_of_attendees" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" value="1" autocomplete="off">
                         </div>
@@ -183,15 +184,13 @@
                             <label for="knowledge_of_participants" class="block text-sm font-semibold text-gray-600">Knowledge of Attendees</label>
                             <select id="knowledge_of_participants" name="knowledge_of_participants" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value=""></option>
-                                <option value="WITH EXPERIENCE">With Experience</option>
-                                <option value="WITHOUT EXPERIENCE">Without Experience</option>
                             </select>
                         </div>
-                        <div class="mb-3 w-full">
+                        <div class="w-full mb-3">
                             <label for="venue" class="block text-sm font-semibold text-gray-600">Venue</label>
                             <input type="text" id="venue" name="venue" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         </div>
-                        <div class="mb-3 w-full">
+                        <div class="w-full mb-3">
                             <label for="event_date" class="block text-sm font-semibold text-gray-600">Date</label>
                             <div class="relative w-full">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -209,16 +208,16 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3 w-full">
+                        <div class="w-full mb-3">
                             <label for="remarks" class="block text-sm font-semibold text-gray-600">Remarks</label>
                             <input type="text" id="remarks" name="remarks" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-5 flex gap-x-8">
-                    <button class="bg-blue-500 w-1/2 py-2 rounded-lg text-white font-bold tracking-wider hover:scale-105">SAVE</button>
-                    <a href="{{ route('request.index') }}" class="bg-gray-500 w-1/2 py-2 rounded-lg text-white font-bold tracking-wider hover:scale-105 text-center">BACK</a>
+                <div class="flex mt-5 gap-x-8">
+                    <button class="w-1/2 py-2 font-bold tracking-wider text-white bg-blue-500 rounded-lg hover:scale-105">SAVE</button>
+                    <a href="{{ route('request.index') }}" class="w-1/2 py-2 font-bold tracking-wider text-center text-white bg-gray-500 rounded-lg hover:scale-105">BACK</a>
                 </div>
             </form>
         </div>
@@ -283,7 +282,6 @@
                         $('.listOption').addClass('hidden');
                     }
                 })
-
             });
 
             $(document).click(function() {

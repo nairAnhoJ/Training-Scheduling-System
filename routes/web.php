@@ -33,9 +33,9 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
- 
+
 Route::get('/', function () {
-    if(!Auth::user()){
+    if (!Auth::user()) {
         $trainers = User::where('role', 2)->where('is_active', 1)->get();
         $events = Request::select('tss_requests.id', 'customers.name', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.key', 'tss_users.color')
             ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
@@ -47,18 +47,18 @@ Route::get('/', function () {
         $eventArray = [];
         foreach ($events as $event) {
             $newArray = [];
-        
+
             $newArray = [
                 'id' => $event->key,
                 'title' => $event->name,
                 'start' => date('Y-m-d', strtotime($event->training_date)),
-                'end' => date('Y-m-d', strtotime($event->end_date.'+1 day')),
+                'end' => date('Y-m-d', strtotime($event->end_date . '+1 day')),
                 'color' => $event->color,
                 'extendedProps' => [
                     'isTraining' => true
                 ]
             ];
-        
+
             $eventArray[] = $newArray;
         }
 
@@ -68,7 +68,7 @@ Route::get('/', function () {
 
         foreach ($events2 as $event) {
             $newArray = [];
-        
+
             $newArray = [
                 'id' => $event->key,
                 'title' => $event->description,
@@ -79,11 +79,11 @@ Route::get('/', function () {
                     'isTraining' => false
                 ]
             ];
-        
+
             $eventArray[] = $newArray;
         }
         return view('landing', compact('events', 'eventArray', 'trainers'));
-    }else{
+    } else {
         return redirect()->route('dashboard.index');
     }
 });
@@ -165,7 +165,7 @@ Route::middleware('auth')->group(function () {
 
     // COMPANY
     Route::get('/scheduled-trainings', [RequestController::class, 'index'])->name('scheduled.index');
-    
+
 
     // USERS
     Route::get('/system-management/users', [UserController::class, 'index'])->name('users.index');
@@ -186,16 +186,16 @@ Route::middleware('auth')->group(function () {
 
 
     // LOGS
-        // CUSTOMERS
-            Route::get('/logs/customers', [LogsController::class, 'customerIndex'])->name('logs.customer.index');
-            Route::get('/logs/customers/{page}/{search?}', [LogsController::class, 'customerPaginate'])->name('logs.customer.paginate');
-        // CUSTOMERS END
- 
+    // CUSTOMERS
+    Route::get('/logs/customers', [LogsController::class, 'customerIndex'])->name('logs.customer.index');
+    Route::get('/logs/customers/{page}/{search?}', [LogsController::class, 'customerPaginate'])->name('logs.customer.paginate');
+    // CUSTOMERS END
 
-        // REQUEST
-            Route::get('/logs/trainings', [LogsController::class, 'trainingsIndex'])->name('logs.trainings.index');
-            Route::get('/logs/trainings/{page}/{search?}', [LogsController::class, 'trainingsPaginate'])->name('logs.trainings.paginate');
-        // REQUEST END
+
+    // REQUEST
+    Route::get('/logs/trainings', [LogsController::class, 'trainingsIndex'])->name('logs.trainings.index');
+    Route::get('/logs/trainings/{page}/{search?}', [LogsController::class, 'trainingsPaginate'])->name('logs.trainings.paginate');
+    // REQUEST END
 
     //  LOGS END
 
@@ -204,4 +204,3 @@ Route::middleware('auth')->group(function () {
 Route::fallback(function () {
     return view('404');
 });
-

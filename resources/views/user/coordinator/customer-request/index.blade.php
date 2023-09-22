@@ -19,13 +19,13 @@
     {{-- APPROVE MODAL --}}
         <!-- Main modal -->
         <div id="confirmApproveModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full overflow-x-hidden overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-xl">
                 <!-- Modal content -->
-                <form action="{{ route('customer.request.approve') }}" method="POST" class="relative shadow text-gray-700">
+                <form action="{{ route('customer.request.approve') }}" method="POST" class="relative text-gray-700 shadow">
                     @csrf
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">APPROVE</h3>
+                        <h3 class="flex items-center text-xl font-semibold tracking-wide text-gray-900">APPROVE</h3>
                         <button type="button" class="closeConfirmApproveButton text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmApproveModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -33,7 +33,7 @@
                     </div>
                     <!-- Modal body -->
                     <div class="p-6">
-                        <h1 class="text-gray-600 font-bold text-xl mb-2">COMPANY DETAILS</h1>
+                        <h1 class="mb-2 text-xl font-bold text-gray-600">COMPANY DETAILS</h1>
                         <input type="hidden" id="inputID" name="id">
                         <input type="hidden" id="inputCategory" name="category">
                         <input type="hidden" id="inputBrand" name="brand">
@@ -44,15 +44,15 @@
                         <input type="hidden" id="inputKnowledge" name="knowledge_of_participants">
 
                         <div class="grid grid-cols-2 overflow-y-auto overflow-x-hidden h-[calc(100vh-330px)]">
-                            <div class="border-r pr-10">
+                            <div class="pr-10 border-r">
                                 <div class="">
-                                    <div class="flex flex-col relative optionDiv mb-3">
+                                    <div class="relative flex flex-col mb-3 optionDiv">
                                         <label for="inputName" class="block text-sm font-semibold text-gray-600">Company Name <span class="text-red-500">*</span></label>
                                         <input type="text" id="inputName" name="name" class="inputOption block w-full p-2.5 text-gray-600 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm" required autocomplete="off">
                                         <div class="listOption hidden absolute top-[62px] w-full rounded-lg border-x border-b border-gray-300 overflow-y-auto max-h-[30vh] text-gray-600 bg-white z-[99] shadow-xl">
                                             <ul>
                                                 @foreach ($customers as $customer)
-                                                    <li data-id="{{ $customer->id }}" class="p-2 first:border-0 border-t border-gray-300 hover:bg-gray-200 cursor-pointer">{{ $customer->name }}</li>
+                                                    <li data-id="{{ $customer->id }}" class="p-2 border-t border-gray-300 cursor-pointer first:border-0 hover:bg-gray-200">{{ $customer->name }}</li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -67,26 +67,27 @@
                                         <label for="inputArea" class="block text-sm font-semibold text-gray-600">Area <span class="text-red-500">*</span></label>
                                         <select id="inputArea" name="area" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                             <option value="CENTRAL">Central</option>
-                                            <option value="NORTH">North</option>
-                                            <option value="SOUTH">South</option>
+                                            <option value="LUZON">Luzon</option>
+                                            <option value="VISAYAS">Visayas</option>
+                                            <option value="MINDANAO">Mindanao</option>
                                         </select>
                                     </div>
                                     {{-- CONTACT PERSON --}}
                                         <div class="mb-3">
-                                            <h1 class="text-gray-600 font-semibold">CONTACT PERSON/s</h1>
+                                            <h1 class="font-semibold text-gray-600">CONTACT PERSON/s</h1>
                                             <div class="pl-5">
                                                 <div class="mb-3">
                                                     <h1 class="text-gray-600">#1</h1>
-                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
-                                                        <div class="mb-3 w-full">
+                                                    <div class="flex flex-col w-full pl-5 gap-x-8">
+                                                        <div class="w-full mb-3">
                                                             <label for="inputCP1_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                             <input type="text" id="inputCP1_name" name="cp1_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="inputCP1_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                             <input type="text" id="inputCP1_number" name="cp1_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="inputCP1_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                             <input type="text" id="inputCP1_email" name="cp1_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                                         </div>
@@ -94,16 +95,16 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <h1 class="text-gray-600">#2</h1>
-                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
-                                                        <div class="mb-3 w-full">
+                                                    <div class="flex flex-col w-full pl-5 gap-x-8">
+                                                        <div class="w-full mb-3">
                                                             <label for="inputCP2_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                             <input type="text" id="inputCP2_name" name="cp2_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="inputCP2_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                             <input type="text" id="inputCP2_number" name="cp2_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="inputCP2_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                             <input type="text" id="inputCP2_email" name="cp2_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                                         </div>
@@ -111,16 +112,16 @@
                                                 </div>
                                                 <div>
                                                     <h1 class="text-gray-600">#3</h1>
-                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
-                                                        <div class="mb-3 w-full">
+                                                    <div class="flex flex-col w-full pl-5 gap-x-8">
+                                                        <div class="w-full mb-3">
                                                             <label for="inputCP3_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                             <input type="text" id="inputCP3_name" name="cp3_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="inputCP3_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                             <input type="text" id="inputCP3_number" name="cp3_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="inputCP3_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                             <input type="text" id="inputCP3_email" name="cp3_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                                         </div>
@@ -133,7 +134,7 @@
                             </div>
                             <div class="pl-10">
                                 <div class="">
-                                    <div class="flex flex-col relative optionDiv mb-3">
+                                    <div class="relative flex flex-col mb-3 optionDiv">
                                         <label for="appname" class="block text-sm font-semibold text-gray-600">Company Name</label>
                                         <input type="text" id="appname" class="block w-full p-2.5 text-gray-600 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm" required autocomplete="off" readonly>
                                     </div>
@@ -144,27 +145,27 @@
                                     </div>
                     
                                     <div class="mb-3">
-                                        <label for="apparea" class="opacity-50 block text-sm font-semibold text-gray-600">Area <span class="text-red-500">*</span></label>
+                                        <label for="apparea" class="block text-sm font-semibold text-gray-600 opacity-50">Area <span class="text-red-500">*</span></label>
                                         <select id="apparea" class=" disabled:opacity-50 bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" disabled>
                                             <option value="CENTRAL"></option>
                                         </select>
                                     </div>
                                     {{-- CONTACT PERSON --}}
                                         <div class="mb-3">
-                                            <h1 class="text-gray-600 font-semibold">CONTACT PERSON/s</h1>
+                                            <h1 class="font-semibold text-gray-600">CONTACT PERSON/s</h1>
                                             <div class="pl-5">
                                                 <div class="mb-3">
                                                     <h1 class="text-gray-600">#1</h1>
-                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
-                                                        <div class="mb-3 w-full">
+                                                    <div class="flex flex-col w-full pl-5 gap-x-8">
+                                                        <div class="w-full mb-3">
                                                             <label for="appcp1_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                             <input type="text" id="appcp1_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="appcp1_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                             <input type="text" id="appcp1_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="appcp1_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                             <input type="text" id="appcp1_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
                                                         </div>
@@ -172,16 +173,16 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <h1 class="text-gray-600">#2</h1>
-                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
-                                                        <div class="mb-3 w-full">
+                                                    <div class="flex flex-col w-full pl-5 gap-x-8">
+                                                        <div class="w-full mb-3">
                                                             <label for="appcp2_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                             <input type="text" id="appcp2_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="appcp2_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                             <input type="text" id="appcp2_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="appcp2_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                             <input type="text" id="appcp2_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
                                                         </div>
@@ -189,16 +190,16 @@
                                                 </div>
                                                 <div>
                                                     <h1 class="text-gray-600">#3</h1>
-                                                    <div class="pl-5 flex flex-col gap-x-8 w-full">
-                                                        <div class="mb-3 w-full">
+                                                    <div class="flex flex-col w-full pl-5 gap-x-8">
+                                                        <div class="w-full mb-3">
                                                             <label for="appcp3_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                             <input type="text" id="appcp3_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="appcp3_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                             <input type="text" id="appcp3_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
                                                         </div>
-                                                        <div class="mb-3 w-full">
+                                                        <div class="w-full mb-3">
                                                             <label for="appcp3_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                             <input type="text" id="appcp3_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" readonly>
                                                         </div>
@@ -210,7 +211,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="italic pt-4">Kindly double-check the information provided above prior to submitting the form.</p>
+                        <p class="pt-4 italic">Kindly double-check the information provided above prior to submitting the form.</p>
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
@@ -225,12 +226,12 @@
     {{-- DELETE MODAL --}}
         <!-- Main modal -->
         <div id="confirmDeleteModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full max-w-3xl overflow-x-hidden overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-xl">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">DECLINE</h3>
+                        <h3 class="flex items-center text-xl font-semibold tracking-wide text-gray-900">DECLINE</h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmDeleteModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -258,10 +259,10 @@
         <div id="viewRequestModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative max-w-[1024px] w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 id="name" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
+                        <h3 id="name" class="flex items-center text-xl font-semibold tracking-wide text-gray-900"></h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewRequestModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -272,93 +273,93 @@
                         <div class="border-r p-4 overflow-y-auto overflow-x-hidden h-[calc(100vh-268px)]">
                             {{-- <div class="grid grid-cols-6">
                                 <div class="col-span-2">Request Number: </div>
-                                <div id="req_number" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="req_number" class="col-span-4 text-lg font-semibold"></div>
 
                                 <div class="col-span-2">Date: </div>
-                                <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="event_date" class="col-span-4 text-lg font-semibold"></div>
 
                                 <div class="col-span-2">Venue: </div>
-                                <div id="venue" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="venue" class="col-span-4 text-lg font-semibold"></div>
 
                                 <div class="col-span-2">Trainer: </div>
-                                <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="trainer" class="col-span-4 text-lg font-semibold"></div>
                             </div> --}}
 
                             <div class="">
                                 <div class="flex items-center">
-                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                    <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">CUSTOMER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                 </div>
                                 <div class="grid grid-cols-6">
                                     <div class="col-span-2">Address: </div>
-                                    <div id="address" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="address" class="col-span-4 text-lg font-semibold"></div>
 
-                                    <h3 class="font-semibold col-span-6">Contact Person/s:</h3>
-                                    <div id="cp1_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 col-span-2">Name: </div>
-                                        <div id="cp1_name" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp1_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp1_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <h3 class="col-span-6 font-semibold">Contact Person/s:</h3>
+                                    <div id="cp1_div" class="grid grid-cols-6 col-span-6">
+                                        <div class="col-span-2 ml-10">Name: </div>
+                                        <div id="cp1_name" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div id="cp1_number" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">E-mail: </div>
+                                        <div id="cp1_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
 
-                                    <div id="cp2_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 mt-5 col-span-2">Name: </div>
-                                        <div id="cp2_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp2_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp2_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="cp2_div" class="grid grid-cols-6 col-span-6">
+                                        <div class="col-span-2 mt-5 ml-10">Name: </div>
+                                        <div id="cp2_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div id="cp2_number" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">E-mail: </div>
+                                        <div id="cp2_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
 
-                                    <div id="cp3_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 mt-5 col-span-2">Name: </div>
-                                        <div id="cp3_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp3_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp3_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="cp3_div" class="grid grid-cols-6 col-span-6">
+                                        <div class="col-span-2 mt-5 ml-10">Name: </div>
+                                        <div id="cp3_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div id="cp3_number" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">E-mail: </div>
+                                        <div id="cp3_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-5">
                                 <div class="flex items-center">
-                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                    <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">OTHER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                 </div>
                                 <div class="grid grid-cols-6">
                                     {{-- <div class="col-span-2">Area: </div>
-                                    <div id="area" class="col-span-4 font-semibold text-lg"></div> --}}
+                                    <div id="area" class="col-span-4 text-lg font-semibold"></div> --}}
                                     <div class="col-span-2">Category: </div>
-                                    <div id="category" class="col-span-4 font-semibold text-lg"></div>
-                                    {{-- <div id="con_details_div" class="col-span-6 grid grid-cols-6">
+                                    <div id="category" class="col-span-4 text-lg font-semibold"></div>
+                                    {{-- <div id="con_details_div" class="grid grid-cols-6 col-span-6">
                                         <div class="col-span-2">Contract Details: </div>
-                                        <a href="#" id="contract_details" target="_blank" class="col-span-4 font-semibold text-lg text-white bg-blue-500 rounded-lg w-40 tracking-wide text-center hover:scale-105">VIEW</a>
+                                        <a href="#" id="contract_details" target="_blank" class="w-40 col-span-4 text-lg font-semibold tracking-wide text-center text-white bg-blue-500 rounded-lg hover:scale-105">VIEW</a>
                                     </div> --}}
                                     <div class="col-span-2">Brand: </div>
-                                    <div id="brand" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="brand" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Model: </div>
-                                    <div id="model" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="model" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Type of Unit: </div>
-                                    <div id="unit_type" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="unit_type" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Number of Unit: </div>
-                                    <div id="no_of_unit" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="no_of_unit" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Number of Attendees: </div>
-                                    <div id="no_of_attendees" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="no_of_attendees" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Knowledge of Participants: </div>
-                                    <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="knowledge_of_participants" class="col-span-4 text-lg font-semibold"></div>
                                     {{-- <div class="col-span-2">Notes: </div>
                                     <div class="col-span-4 font-semibold">
-                                        <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
+                                        <textarea id="remarks" class="w-full p-0 text-lg border-0 cursor-default resize-none ring-0 focus:ring-0" readonly></textarea>
                                     </div> --}}
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="px-4 col-span-2 h-full overflow-x-hidden overflow-y-auto">
+                        {{-- <div class="h-full col-span-2 px-4 overflow-x-hidden overflow-y-auto">
                             <div class="relative">
-                                <div class="sticky top-0 bg-white py-2">
+                                <div class="sticky top-0 py-2 bg-white">
                                     <div class="flex items-center mb-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="h-6 w-6"><path d="M477-120q-149 0-253-105.5T120-481h60q0 125 86 213t211 88q127 0 215-89t88-216q0-124-89-209.5T477-780q-68 0-127.5 31T246-667h105v60H142v-208h60v106q52-61 123.5-96T477-840q75 0 141 28t115.5 76.5Q783-687 811.5-622T840-482q0 75-28.5 141t-78 115Q684-177 618-148.5T477-120Zm128-197L451-469v-214h60v189l137 134-43 43Z"/></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6"><path d="M477-120q-149 0-253-105.5T120-481h60q0 125 86 213t211 88q127 0 215-89t88-216q0-124-89-209.5T477-780q-68 0-127.5 31T246-667h105v60H142v-208h60v106q52-61 123.5-96T477-840q75 0 141 28t115.5 76.5Q783-687 811.5-622T840-482q0 75-28.5 141t-78 115Q684-177 618-148.5T477-120Zm128-197L451-469v-214h60v189l137 134-43 43Z"/></svg>
                                         <h3 class="ml-1">History Logs</h3>
                                     </div>
                                     <hr>
@@ -380,13 +381,13 @@
     {{-- VIEW EVENT MODAL END --}}
 
     <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-        <div class="bg-white shadow-xl rounded-lg p-3 h-full">
-            <div class="overflow-hidden rounded-lg p-4">
+        <div class="h-full p-3 bg-white rounded-lg shadow-xl">
+            <div class="p-4 overflow-hidden rounded-lg">
                 {{-- CONTROLS --}}
                     <div class="mb-3">
                         <div class="flex flex-row-reverse items-center justify-between">
-                            <div class="w-52 mb-3 md:mb-0">
-                                <a href="{{ route('customer.request.declined') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
+                            <div class="mb-3 w-52 md:mb-0">
+                                <a href="{{ route('customer.request.declined') }}" class="flex items-center justify-center py-2 mt-px text-sm font-semibold text-white bg-blue-600 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 focus:outline-none">
                                     <span>DECLINED REQUESTS</span></a>
                             </div>
                             <div class="justify-self-end w-[500px] flex items-center">
@@ -399,13 +400,13 @@
                                         </div>
                                         <input type="search" id="search" name="search" class="block z-10 w-full px-4 py-2.5 pl-10 text-sm text-gray-500 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="SEARCH" value="{{ $search }}" autocomplete="off">
                                         <button id="clearButton" type="button" class="absolute right-20 bottom-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 group-hover:text-gray-900 mr-1 text-gray-500" fill="currentColor" viewBox="0 -960 960 960"><path d="M249-193.434 193.434-249l231-231-231-231L249-766.566l231 231 231-231L766.566-711l-231 231 231 231L711-193.434l-231-231-231 231Z"/></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 -960 960 960"><path d="M249-193.434 193.434-249l231-231-231-231L249-766.566l231 231 231-231L766.566-711l-231 231 231 231L711-193.434l-231-231-231 231Z"/></svg>
                                         </button>
                                         <button id="searchSubmit" onclick="$('#loading').toggleClass('hidden');" type="submit" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
                                     </div>
                                 </form>
                                 <span class="mx-3 text-2xl cursor-default">|</span>
-                                <a id="sync" href="{{ route('customer.request.sync') }}" class="text-blue-600 text-sm hover:scale-105 flex items-center gap-x-1">
+                                <a id="sync" href="{{ route('customer.request.sync') }}" class="flex items-center text-sm text-blue-600 hover:scale-105 gap-x-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" class="w-8 h-8"><path xmlns="http://www.w3.org/2000/svg" d="M238-211q-57-53-87.5-122.5T120-480q0-150 105-255t255-105v-80l183 140-183 140v-80q-100 0-170 70t-70 170q0 57 25 107.5t67 88.5l-94 73ZM480-40 297-180l183-140v80q100 0 170-70t70-170q0-57-25-108t-70-88l95-71q58 51 89 120.5T840-480q0 150-105 255T480-120v80Z"/></svg>
                                     Sync
                                 </a>
@@ -417,7 +418,7 @@
                 <div>
                     {{-- TABLE --}}
                         <div class="hidden md:block">
-                            <div id="inventoryTable" class="overflow-auto w-full shadow-md sm:rounded-lg">
+                            <div id="inventoryTable" class="w-full overflow-auto shadow-md sm:rounded-lg">
                                 <table class="w-full text-sm text-left text-gray-500">
                                     <thead class="text-xs text-gray-600 uppercase bg-gray-100">
                                         <tr>
@@ -446,9 +447,9 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($requests as $request)
-                                            <tr class="requestRow bg-white border-b cursor-pointer hover:bg-gray-200 even:bg-gray-100">
+                                            <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 {{-- <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-id="{{ $request->id }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Decline</button>
+                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-id="{{ $request->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Decline</button>
                                                 </td> --}}
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                                     <span data-id="{{ $request->id }}">
@@ -495,38 +496,38 @@
                                         <div class="px-3 py-1.5 font-light border border-b border-gray-200">
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Category</div>
-                                                <div class=" font-semibold text-sm">
+                                                <div class="text-sm font-semibold ">
                                                     {{ $request->category }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Brand</div>
-                                                <div class=" font-semibold text-sm">
+                                                <div class="text-sm font-semibold ">
                                                     {{ $request->brand }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Model</div>
-                                                <div class=" font-semibold text-sm">
+                                                <div class="text-sm font-semibold ">
                                                     {{ $request->model }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Type of Unit</div>
-                                                <div class=" font-semibold text-sm">
+                                                <div class="text-sm font-semibold ">
                                                     {{ $request->unit_type }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Date Submitted</div>
-                                                <div class="cfont-semibold text-sm">
+                                                <div class="text-sm cfont-semibold">
                                                     {{ $request->created_at }}
                                                 </div>
                                             </div>
                                             {{-- <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Action</div>
                                                 <div class="">
-                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->id }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Decline</button>
+                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->id }}" class="text-sm font-semibold text-red-600 deleteButton hover:underline">Decline</button>
                                                 </div>
                                             </div> --}}
                                         </div>

@@ -19,12 +19,12 @@
     {{-- RESTORE MODAL --}}
         <!-- Main modal -->
         <div id="confirmApproveModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full max-w-3xl overflow-x-hidden overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-xl">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">RESTORE</h3>
+                        <h3 class="flex items-center text-xl font-semibold tracking-wide text-gray-900">RESTORE</h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmApproveModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -47,12 +47,12 @@
     {{-- DELETE MODAL --}}
         <!-- Main modal -->
         <div id="confirmDeleteModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full max-w-3xl overflow-x-hidden overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-xl">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">DELETE</h3>
+                        <h3 class="flex items-center text-xl font-semibold tracking-wide text-gray-900">DELETE</h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmDeleteModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -80,10 +80,10 @@
         <div id="viewRequestModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative max-w-[1024px] w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 id="name" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
+                        <h3 id="name" class="flex items-center text-xl font-semibold tracking-wide text-gray-900"></h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewRequestModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -94,61 +94,61 @@
                         <div class="border-r p-4 overflow-y-auto overflow-x-hidden h-[calc(100vh-268px)]">
                             <div class="">
                                 <div class="flex items-center">
-                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                    <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">CUSTOMER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                 </div>
                                 <div class="grid grid-cols-6">
                                     <div class="col-span-2">Address: </div>
-                                    <div id="address" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="address" class="col-span-4 text-lg font-semibold"></div>
 
-                                    <h3 class="font-semibold col-span-6">Contact Person/s:</h3>
-                                    <div id="cp1_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 col-span-2">Name: </div>
-                                        <div id="cp1_name" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp1_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp1_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <h3 class="col-span-6 font-semibold">Contact Person/s:</h3>
+                                    <div id="cp1_div" class="grid grid-cols-6 col-span-6">
+                                        <div class="col-span-2 ml-10">Name: </div>
+                                        <div id="cp1_name" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div id="cp1_number" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">E-mail: </div>
+                                        <div id="cp1_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
 
-                                    <div id="cp2_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 mt-5 col-span-2">Name: </div>
-                                        <div id="cp2_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp2_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp2_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="cp2_div" class="grid grid-cols-6 col-span-6">
+                                        <div class="col-span-2 mt-5 ml-10">Name: </div>
+                                        <div id="cp2_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div id="cp2_number" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">E-mail: </div>
+                                        <div id="cp2_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
 
-                                    <div id="cp3_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 mt-5 col-span-2">Name: </div>
-                                        <div id="cp3_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp3_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp3_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="cp3_div" class="grid grid-cols-6 col-span-6">
+                                        <div class="col-span-2 mt-5 ml-10">Name: </div>
+                                        <div id="cp3_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div id="cp3_number" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">E-mail: </div>
+                                        <div id="cp3_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-5">
                                 <div class="flex items-center">
-                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                    <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">OTHER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                 </div>
                                 <div class="grid grid-cols-6">
                                     <div class="col-span-2">Category: </div>
-                                    <div id="category" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="category" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Brand: </div>
-                                    <div id="brand" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="brand" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Model: </div>
-                                    <div id="model" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="model" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Type of Unit: </div>
-                                    <div id="unit_type" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="unit_type" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Number of Unit: </div>
-                                    <div id="no_of_unit" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="no_of_unit" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Number of Attendees: </div>
-                                    <div id="no_of_attendees" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="no_of_attendees" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Knowledge of Participants: </div>
-                                    <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="knowledge_of_participants" class="col-span-4 text-lg font-semibold"></div>
                                 </div>
                             </div>
                         </div>
@@ -165,8 +165,8 @@
     {{-- VIEW EVENT MODAL END --}}
 
     <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-        <div class="bg-white shadow-xl rounded-lg p-3 h-full">
-            <div class="overflow-hidden rounded-lg p-4">
+        <div class="h-full p-3 bg-white rounded-lg shadow-xl">
+            <div class="p-4 overflow-hidden rounded-lg">
                 {{-- CONTROLS --}}
                     <div class="mb-3">
                         <div class="flex flex-row-reverse items-center justify-between">
@@ -180,14 +180,14 @@
                                         </div>
                                         <input type="search" id="search" name="search" class="block z-10 w-full px-4 py-2.5 pl-10 text-sm text-gray-500 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="SEARCH" value="{{ $search }}" autocomplete="off">
                                         <button id="clearButton" type="button" class="absolute right-20 bottom-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 group-hover:text-gray-900 mr-1 text-gray-500" fill="currentColor" viewBox="0 -960 960 960"><path d="M249-193.434 193.434-249l231-231-231-231L249-766.566l231 231 231-231L766.566-711l-231 231 231 231L711-193.434l-231-231-231 231Z"/></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 -960 960 960"><path d="M249-193.434 193.434-249l231-231-231-231L249-766.566l231 231 231-231L766.566-711l-231 231 231 231L711-193.434l-231-231-231 231Z"/></svg>
                                         </button>
                                         <button id="searchSubmit" onclick="$('#loading').toggleClass('hidden');" type="submit" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
                                     </div>
                                 </form>
                             </div>
                             <div class="w-32 md:mb-0">
-                                <a href="{{ route('customer.request.index') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
+                                <a href="{{ route('customer.request.index') }}" class="flex items-center justify-center py-2 mt-px text-sm font-semibold text-white bg-blue-600 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 focus:outline-none">
                                 BACK</a>
                             </div>
                         </div>
@@ -197,7 +197,7 @@
                 <div>
                     {{-- TABLE --}}
                         <div class="hidden md:block">
-                            <div id="inventoryTable" class="overflow-auto w-full shadow-md sm:rounded-lg">
+                            <div id="inventoryTable" class="w-full overflow-auto shadow-md sm:rounded-lg">
                                 <table class="w-full text-sm text-left text-gray-500">
                                     <thead class="text-xs text-gray-600 uppercase bg-gray-100">
                                         <tr>
@@ -226,9 +226,9 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($requests as $request)
-                                            <tr class="requestRow bg-white border-b cursor-pointer hover:bg-gray-200 even:bg-gray-100">
+                                            <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 {{-- <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-id="{{ $request->id }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm cursor-pointer">Decline</button>
+                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-id="{{ $request->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Decline</button>
                                                 </td> --}}
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                                     <span data-id="{{ $request->id }}">
@@ -275,38 +275,38 @@
                                         <div class="px-3 py-1.5 font-light border border-b border-gray-200">
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Category</div>
-                                                <div class=" font-semibold text-sm">
+                                                <div class="text-sm font-semibold ">
                                                     {{ $request->category }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Brand</div>
-                                                <div class=" font-semibold text-sm">
+                                                <div class="text-sm font-semibold ">
                                                     {{ $request->brand }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Model</div>
-                                                <div class=" font-semibold text-sm">
+                                                <div class="text-sm font-semibold ">
                                                     {{ $request->model }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Type of Unit</div>
-                                                <div class=" font-semibold text-sm">
+                                                <div class="text-sm font-semibold ">
                                                     {{ $request->unit_type }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Date Submitted</div>
-                                                <div class="cfont-semibold text-sm">
+                                                <div class="text-sm cfont-semibold">
                                                     {{ $request->created_at }}
                                                 </div>
                                             </div>
                                             {{-- <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Action</div>
                                                 <div class="">
-                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->id }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Decline</button>
+                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->id }}" class="text-sm font-semibold text-red-600 deleteButton hover:underline">Decline</button>
                                                 </div>
                                             </div> --}}
                                         </div>

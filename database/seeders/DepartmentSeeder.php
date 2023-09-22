@@ -7,13 +7,11 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
-class DepartmentSeeder extends Seeder
-{
+class DepartmentSeeder extends Seeder {
     /**
      * Run the database seeds.
      */
-    public function run(): void
-    {
+    public function run(): void {
         Department::create([
             'name' => 'ADMINISTRATOR',
             'key' => Str::uuid()->toString(),

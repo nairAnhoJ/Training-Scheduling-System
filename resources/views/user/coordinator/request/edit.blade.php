@@ -3,19 +3,19 @@
 @section('content')
 
     <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-        <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full max-h-full overflow-y-auto">
+        <div class="h-full max-h-full py-5 pl-5 pr-8 overflow-y-auto bg-white rounded-lg shadow-xl">
             <form action="{{ route('request.update', ['key' => $key]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-10">
-                    <h1 class="text-gray-600 font-bold text-xl mb-2">COMPANY DETAILS</h1>
+                    <h1 class="mb-2 text-xl font-bold text-gray-600">COMPANY DETAILS</h1>
                     <div class="pl-3">
-                        <div class="flex flex-col relative optionDiv mb-3">
+                        <div class="relative flex flex-col mb-3 optionDiv">
                             <label class="block text-sm font-semibold text-gray-600">Company Name <span class="text-red-500">*</span></label>
                             <input readonly type="text" id="name" name="name" value="{{ $request->name }}" class="inputOption block w-full p-2.5 text-gray-600 border border-gray-300 rounded-lg bg-gray-50 sm:text-sm pointer-events-none" required autocomplete="off">
                             {{-- <div class="listOption hidden absolute top-[62px] w-full rounded-lg border-x border-b border-gray-300 overflow-y-auto max-h-[30vh] text-gray-600 bg-white z-[99]">
                                 <ul>
                                     @foreach ($customers as $customer)
-                                        <li data-id="{{ $customer->id }}" class="p-2 first:border-0 border-t border-gray-300 hover:bg-gray-200 cursor-pointer">{{ $customer->name }}</li>
+                                        <li data-id="{{ $customer->id }}" class="p-2 border-t border-gray-300 cursor-pointer first:border-0 hover:bg-gray-200">{{ $customer->name }}</li>
                                     @endforeach
                                 </ul>
                             </div> --}}
@@ -30,26 +30,27 @@
                             <label for="area" class="block text-sm font-semibold text-gray-600">Area <span class="text-red-500">*</span></label>
                             <select id="area" name="area" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option {{ $request->area == 'CENTRAL' ? 'selected' : '' }} value="CENTRAL">Central</option>
-                                <option {{ $request->area == 'NORTH' ? 'selected' : '' }} value="NORTH">North</option>
-                                <option {{ $request->area == 'SOUTH' ? 'selected' : '' }} value="SOUTH">South</option>
+                                <option {{ $request->area == 'LUZON' ? 'selected' : '' }} value="LUZON">Luzon</option>
+                                <option {{ $request->area == 'VISAYAS' ? 'selected' : '' }} value="VISAYAS">Visayas</option>
+                                <option {{ $request->area == 'MINDANAO' ? 'selected' : '' }} value="MINDANAO">Mindanao</option>
                             </select>
                         </div>
                         {{-- CONTACT PERSON --}}
                             <div class="mb-3">
-                                <h1 class="text-gray-600 font-semibold">CONTACT PERSON/s</h1>
+                                <h1 class="font-semibold text-gray-600">CONTACT PERSON/s</h1>
                                 <div class="pl-5">
                                     <div class="mb-3">
                                         <h1 class="text-gray-600">#1</h1>
-                                        <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
-                                            <div class="mb-3 w-full">
+                                        <div class="flex flex-col w-full pl-5 lg:flex-row gap-x-8">
+                                            <div class="w-full mb-3">
                                                 <label for="cp1_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                 <input type="text" id="cp1_name" name="cp1_name" value="{{ $request->cp1_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp1_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                 <input type="text" id="cp1_number" name="cp1_number" value="{{ $request->cp1_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp1_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                 <input type="text" id="cp1_email" name="cp1_email" value="{{ $request->cp1_email }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
@@ -57,16 +58,16 @@
                                     </div>
                                     <div class="mb-3">
                                         <h1 class="text-gray-600">#2</h1>
-                                        <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
-                                            <div class="mb-3 w-full">
+                                        <div class="flex flex-col w-full pl-5 lg:flex-row gap-x-8">
+                                            <div class="w-full mb-3">
                                                 <label for="cp2_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                 <input type="text" id="cp2_name" name="cp2_name" value="{{ $request->cp2_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp2_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                 <input type="text" id="cp2_number" name="cp2_number" value="{{ $request->cp2_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp2_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                 <input type="text" id="cp2_email" name="cp2_email" value="{{ $request->cp2_email }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
@@ -74,16 +75,16 @@
                                     </div>
                                     <div>
                                         <h1 class="text-gray-600">#3</h1>
-                                        <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
-                                            <div class="mb-3 w-full">
+                                        <div class="flex flex-col w-full pl-5 lg:flex-row gap-x-8">
+                                            <div class="w-full mb-3">
                                                 <label for="cp3_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                 <input type="text" id="cp3_name" name="cp3_name" value="{{ $request->cp3_name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp3_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                 <input type="text" id="cp3_number" name="cp3_number" value="{{ $request->cp3_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp3_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                 <input type="text" id="cp3_email" name="cp3_email" value="{{ $request->cp3_email }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
@@ -97,7 +98,7 @@
                 </div>
 
                 <div>
-                    <h1 class="text-gray-600 font-bold text-xl mb-2">OTHER DETAILS</h1>
+                    <h1 class="mb-2 text-xl font-bold text-gray-600">OTHER DETAILS</h1>
                     <div class="pl-3">
                         <div class="mb-3">
                             <label for="category" class="block text-sm font-medium text-gray-600">Category <span class="text-red-500">*</span></label>
@@ -108,7 +109,7 @@
                         </div>
 
                         {{-- PM --}}
-                            <div class="mb-3 mt-4 flex items-center">
+                            <div class="flex items-center mt-4 mb-3">
                                 <span class="mx-3 text-sm font-semibold text-gray-600">PM</span>
                                 <label class="relative inline-flex items-center cursor-pointer">
                                     <input {{ $request->is_PM != '0' ? 'checked' : '' }} type="checkbox" id="pm" class="sr-only peer">
@@ -118,8 +119,8 @@
 
                             {{-- CONTRACT DETAILS --}}
                                     <div id="contractDetailsContainer1" class="mb-0 h-0 transition-all duration-500 py-0  {{ $request->is_PM != '0' ? 'h-[136px] mb-6 pt-2' : 'overflow-hidden' }}">
-                                        <div id="contractDetailsContainer" class="border border-gray-400 rounded-lg p-5 relative">
-                                            <h1 class="font-bold text-gray-500 tracking-wide absolute top-0 -translate-y-1/2 left-5 bg-white px-2">Contract Details</h1>
+                                        <div id="contractDetailsContainer" class="relative p-5 border border-gray-400 rounded-lg">
+                                            <h1 class="absolute top-0 px-2 font-bold tracking-wide text-gray-500 -translate-y-1/2 bg-white left-5">Contract Details</h1>
                                             <div>
                                                 <label class="block text-sm font-semibold text-gray-900" for="contract_details">Upload file</label>
                                                 <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" aria-describedby="file_input_help" id="contract_details" name="contract_details" type="file" accept="application/pdf">
@@ -139,7 +140,7 @@
                             </select>
                         </div>
 
-                        <div class="mb-3 w-full">
+                        <div class="w-full mb-3">
                             <label for="model" class="block text-sm font-semibold text-gray-600">Model <span class="text-red-500">*</span></label>
                             <input type="text" id="model" name="model" value="{{ $request->model }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                         </div>
@@ -173,7 +174,7 @@
                                 <option {{ $request->billing_type == 'NON-CHARGEABLE' ? 'selected' : '' }} value="NON-CHARGEABLE">Non-Chargeable</option>
                             </select>
                         </div>
-                        <div class="mb-3 w-full">
+                        <div class="w-full mb-3">
                             <label for="no_of_attendees" class="block text-sm font-semibold text-gray-600">Number of Attendees</label>
                             <input type="text" id="no_of_attendees" name="no_of_attendees" value="{{ $request->no_of_attendees }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" value="1" autocomplete="off">
                         </div>
@@ -185,11 +186,11 @@
                                 <option {{ $request->knowledge_of_participants == 'WITHOUT EXPERIENCE' ? 'selected' : '' }} value="WITHOUT EXPERIENCE">Without Experience</option>
                             </select>
                         </div>
-                        <div class="mb-3 w-full">
+                        <div class="w-full mb-3">
                             <label for="venue" class="block text-sm font-semibold text-gray-600">Venue</label>
                             <input type="text" id="venue" name="venue" value="{{ $request->venue }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         </div>
-                        <div class="mb-3 w-full">
+                        <div class="w-full mb-3">
                             <label for="event_date" class="block text-sm font-semibold text-gray-600">Date</label>
                             <div class="relative w-full">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -207,16 +208,16 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3 w-full">
+                        <div class="w-full mb-3">
                             <label for="remarks" class="block text-sm font-semibold text-gray-600">Remarks</label>
                             <input type="text" id="remarks" name="remarks" value="{{ $request->remarks }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         </div>
                     </div>
                 </div>
 
-                <div class="mt-5 flex gap-x-8">
-                    <button class="bg-blue-500 w-1/2 py-2 rounded-lg text-white font-bold tracking-wider hover:scale-105">SAVE</button>
-                    <a href="{{ route('request.index') }}" class="bg-gray-500 w-1/2 py-2 rounded-lg text-white font-bold tracking-wider hover:scale-105 text-center">BACK</a>
+                <div class="flex mt-5 gap-x-8">
+                    <button class="w-1/2 py-2 font-bold tracking-wider text-white bg-blue-500 rounded-lg hover:scale-105">SAVE</button>
+                    <a href="{{ route('request.index') }}" class="w-1/2 py-2 font-bold tracking-wider text-center text-white bg-gray-500 rounded-lg hover:scale-105">BACK</a>
                 </div>
             </form>
         </div>
