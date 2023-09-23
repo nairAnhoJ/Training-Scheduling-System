@@ -48,7 +48,11 @@
             ::-webkit-scrollbar-thumb:hover {
                 background: rgb(95, 95, 110);
             }
-
+            
+            .fc-event-title {
+                color: black;
+                font-weight: 500;
+            }
         </style>
     </head>
     <body>
@@ -413,7 +417,6 @@
 
                 $('.fc-addButton-button').removeClass('fc-button-primary fc fc-button');
                 $('.fc-addButton-button').addClass('bg-blue-500 font-bold h-10 px-10 rounded-lg text-white tracking-wider hover:scale-105');
-                $('.fc-event-title').addClass('text-black font-medium');
 
                 function autoResize() {
                     var textarea = $('#remarks');

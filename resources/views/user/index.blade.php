@@ -618,7 +618,6 @@
 
             $('.fc-addButton-button').removeClass('fc-button-primary fc fc-button');
             $('.fc-addButton-button').addClass('bg-blue-500 font-bold h-10 px-10 rounded-lg text-white tracking-wider hover:scale-105');
-            $('.fc-event-title').addClass('text-black font-medium');
             
             function autoScroll() {
                 var commentList = $('#commentContainer');
