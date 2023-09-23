@@ -54,7 +54,7 @@
     <body>
         @csrf
         {{-- LOADING --}}
-            <div id="loading" class="hidden inset-0 bg-gray-800 bg-opacity-80 fixed flex w-full h-full items-center justify-center duration-300 transition-opacity" style="z-index: 6000">
+            <div id="loading" class="fixed inset-0 flex items-center justify-center hidden w-full h-full transition-opacity duration-300 bg-gray-800 bg-opacity-80" style="z-index: 6000">
                 <div class="flex-col">
                     <div class="w-24 h-24">
                         <svg viewBox="0 0 860.1 876.5">
@@ -63,7 +63,7 @@
                         <path class="animate-spin from-yellow-400" style=" stroke: black; stroke-width: 1; transform-origin: 78.02581095% 16.12093553%; animation-duration: 3.5s; animation-direction: reverse; fill: var(--tw-gradient-from);" d="M 671.717 76.053 C 654.289 76.053 637.926 82.828 625.652 95.128 C 613.378 107.428 606.577 123.766 606.577 141.194 C 606.577 158.62 613.352 174.906 625.652 187.258 C 637.926 199.532 654.343 206.333 671.717 206.333 C 689.145 206.333 705.51 199.559 717.783 187.258 C 730.056 174.959 736.857 158.62 736.857 141.194 C 736.857 123.766 730.083 107.481 717.783 95.128 C 705.51 82.854 689.145 76.053 671.717 76.053 Z M 671.717 195.441 C 641.671 195.441 617.444 171.106 617.444 141.166 C 617.444 111.226 641.671 86.892 671.717 86.892 C 701.763 86.892 725.992 111.253 725.992 141.166 C 725.992 171.08 701.763 195.441 671.717 195.441 Z M 785.473 114.043 L 775.164 114.043 C 766.743 114.043 759.704 106.976 759.704 98.316 C 759.704 93.986 761.537 90.107 764.804 87.184 L 771.446 80.676 C 778.034 74.167 778.034 63.594 771.446 57.005 L 756.33 42.022 C 753.354 39.047 748.945 37.267 744.455 37.267 C 739.965 37.267 735.635 39.021 732.581 42.022 L 726.205 48.397 C 723.15 51.798 718.952 53.631 714.542 53.631 C 705.855 53.631 698.469 46.565 698.469 38.223 L 698.469 27.969 C 698.469 18.803 691.35 10.94 682.185 10.94 L 661.542 10.94 C 652.192 10.94 644.727 18.749 644.727 27.969 L 644.727 38.277 C 644.727 46.618 637.527 53.684 628.867 53.684 C 624.536 53.684 620.578 51.851 617.602 48.663 L 611.014 42.154 C 608.039 39.1 603.629 37.4 599.138 37.4 C 594.65 37.4 590.319 39.153 587.264 42.154 L 572.149 57.084 C 565.639 63.594 565.639 74.247 572.149 80.703 L 578.523 87.079 C 581.924 90.133 583.811 93.986 583.811 98.395 C 583.811 107.082 576.744 114.122 568.349 114.122 L 558.042 114.122 C 548.744 114.043 540.96 121.641 540.96 130.886 L 540.96 141.194 L 540.96 151.501 C 540.96 160.666 548.771 168.318 558.042 168.318 L 568.349 168.318 C 576.77 168.318 583.811 175.383 583.811 184.044 C 583.811 188.375 581.924 192.386 578.523 195.441 L 572.149 201.684 C 565.639 208.193 565.639 218.766 572.149 225.301 L 587.264 240.364 C 590.239 243.419 594.65 245.119 599.138 245.119 C 603.629 245.119 607.96 243.365 611.014 240.364 L 617.602 233.855 C 620.446 230.668 624.456 228.834 628.787 228.834 C 637.473 228.834 644.647 235.901 644.647 244.242 L 644.647 254.55 C 644.647 263.715 652.112 271.579 661.41 271.579 L 682.025 271.579 C 691.244 271.579 698.921 263.768 698.921 254.55 L 698.921 244.242 C 698.921 235.901 706.04 228.834 714.728 228.834 C 719.059 228.834 723.07 230.721 726.205 234.068 L 732.581 240.443 C 735.635 243.419 739.965 245.198 744.455 245.198 C 748.945 245.198 753.275 243.445 756.33 240.443 L 771.446 225.38 C 777.955 218.872 777.955 208.22 771.446 201.71 L 764.804 195.202 C 761.537 192.279 759.704 188.135 759.704 183.884 C 759.704 175.198 766.77 167.865 775.164 167.865 L 785.473 167.865 C 794.692 167.865 801.28 160.878 801.28 151.66 L 801.28 141.22 L 801.28 130.913 C 801.28 121.641 794.692 114.043 785.473 114.043 Z M 790.573 141.166 L 790.573 151.421 C 790.573 154.264 789.006 156.787 785.632 156.787 L 775.324 156.787 C 768.337 156.787 761.696 159.763 756.676 164.917 C 751.734 170.018 748.997 176.712 748.997 183.779 C 748.997 191.111 751.973 197.885 757.472 202.905 L 763.928 209.282 C 766.159 211.593 766.159 215.392 763.928 217.624 L 748.812 232.687 C 747.722 233.695 746.155 234.307 744.535 234.307 C 742.914 234.307 741.267 233.695 740.257 232.687 L 734.068 226.523 C 728.835 221.024 721.98 217.969 714.728 217.969 C 707.66 217.969 701.152 220.679 696.078 225.566 C 690.924 230.587 688.215 237.176 688.215 244.215 L 688.215 254.523 C 688.215 257.845 685.292 260.687 682.185 260.687 L 661.542 260.687 C 658.434 260.687 655.646 257.845 655.646 254.523 L 655.646 244.215 C 655.646 237.229 652.855 230.587 647.701 225.566 C 642.6 220.679 635.959 217.969 628.973 217.969 C 621.774 217.969 614.866 221.024 609.898 226.39 L 603.602 232.687 C 602.513 233.695 600.946 234.307 599.325 234.307 C 597.704 234.307 596.057 233.775 595.18 232.819 L 595.101 232.739 L 595.021 232.66 L 579.905 217.597 C 577.674 215.366 577.674 211.62 579.905 209.308 L 586.068 203.199 C 591.62 198.044 594.676 191.19 594.676 183.858 C 594.676 176.792 591.966 170.363 586.998 165.262 C 581.977 160.109 575.336 157.452 568.349 157.452 L 557.962 157.452 C 554.562 157.452 551.718 154.529 551.718 151.474 L 551.718 141.087 L 551.718 130.779 C 551.718 127.725 554.562 124.802 557.962 124.802 L 568.269 124.802 C 575.256 124.802 581.898 122.145 586.918 116.992 C 591.86 111.892 594.597 105.329 594.597 98.342 C 594.597 91.011 591.541 84.156 585.989 79.082 L 579.746 72.918 C 578.258 71.431 578.046 69.73 578.046 68.774 C 578.046 67.897 578.258 66.117 579.746 64.63 L 594.808 49.646 C 595.898 48.637 597.465 48.026 599.085 48.026 C 600.706 48.026 602.354 48.557 603.231 49.513 L 603.31 49.593 L 603.389 49.673 L 609.766 56.049 C 614.787 61.469 621.56 64.47 628.84 64.47 C 635.906 64.47 642.468 61.76 647.568 56.873 C 652.722 51.851 655.565 45.263 655.565 38.223 L 655.565 27.915 C 655.565 24.594 658.275 21.753 661.33 21.753 L 682.025 21.753 C 685.079 21.753 687.444 24.594 687.444 27.915 L 687.444 38.223 C 687.444 45.21 690.42 51.851 695.574 56.873 C 700.674 61.76 707.369 64.47 714.436 64.47 C 721.768 64.47 728.675 61.415 733.829 55.915 L 739.991 49.753 C 741.08 48.742 742.648 48.133 744.268 48.133 C 745.889 48.133 747.536 48.742 748.546 49.699 L 763.662 64.683 C 764.751 65.772 765.415 67.26 765.415 68.827 C 765.415 70.394 764.804 71.882 763.715 72.971 L 757.26 79.348 C 751.839 84.369 748.786 91.143 748.786 98.475 C 748.786 105.541 751.494 111.971 756.463 117.071 C 761.484 122.225 768.126 124.882 775.112 124.882 L 785.419 124.882 C 789.085 124.882 790.441 128.282 790.52 130.992 L 790.573 141.166 Z"/>
                         </svg>
                     </div>
-                    <div class="mt-3 text-gray-800 font-mono text-sm sm:text-xs text-center">Loading...</div>
+                    <div class="mt-3 font-mono text-sm text-center text-gray-800 sm:text-xs">Loading...</div>
                 </div>
             </div>
         {{-- LOADING --}}
@@ -74,12 +74,12 @@
             
             <!-- Main modal -->
             <div id="viewCustomModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-                <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+                <div class="relative w-full max-w-3xl overflow-x-hidden overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-xl">
                     <!-- Modal content -->
-                    <div class="relative shadow text-gray-700">
+                    <div class="relative text-gray-700 shadow">
                         <!-- Modal header -->
                         <div class="flex items-center justify-between p-4 border-b rounded-t">
-                            <h3 id="cusName" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
+                            <h3 id="cusName" class="flex items-center text-xl font-semibold tracking-wide text-gray-900"></h3>
                             <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewCustomModal">
                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                 <span class="sr-only">Close modal</span>
@@ -89,10 +89,10 @@
                         <div class="p-6">
                             <div class="grid grid-cols-6 gap-y-3">
                                 <div class="col-span-2">Date: </div>
-                                <div id="cusDate" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="cusDate" class="col-span-4 text-lg font-semibold"></div>
     
                                 <div class="col-span-2">Trainer: </div>
-                                <div id="cusTrainer" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="cusTrainer" class="col-span-4 text-lg font-semibold"></div>
                             </div>
                         </div>
                         <!-- Modal footer -->
@@ -112,12 +112,12 @@
             
             <!-- Main modal -->
             <div id="viewEventModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <div class="relative w-full max-w-3xl h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
+                <div class="relative w-full h-full max-w-3xl overflow-x-hidden overflow-y-auto bg-white rounded-lg">
                     <!-- Modal content -->
-                    <div class="relative shadow text-gray-700">
+                    <div class="relative text-gray-700 shadow">
                         <!-- Modal header -->
-                        <div class="flex items-center justify-between p-4 border-b rounded-t bg-blue-500">
-                            <h3 id="name" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
+                        <div class="flex items-center justify-between p-4 bg-blue-500 border-b rounded-t">
+                            <h3 id="name" class="flex items-center text-xl font-semibold tracking-wide text-gray-900"></h3>
                             <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewEventModal">
                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                 <span class="sr-only">Close modal</span>
@@ -128,87 +128,87 @@
                         <div class="">
                             <div class="grid grid-cols-6">
                                 <div class="col-span-2">Status: </div>
-                                <div id="status" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="status" class="col-span-4 text-lg font-semibold"></div>
                                 
                                 <div class="col-span-2">Date: </div>
-                                <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="event_date" class="col-span-4 text-lg font-semibold"></div>
 
                                 <div class="col-span-2">Venue: </div>
-                                <div id="venue" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="venue" class="col-span-4 text-lg font-semibold"></div>
 
                                 <div class="col-span-2">Trainer: </div>
-                                <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="trainer" class="col-span-4 text-lg font-semibold"></div>
 
                                 <div class="col-span-2">Training Number: </div>
-                                <div id="trainingNumber" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="trainingNumber" class="col-span-4 text-lg font-semibold"></div>
                             </div>
 
                             <div class="mt-5">
                                 <div class="flex items-center">
-                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                    <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">CUSTOMER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                 </div>
                                 <div class="grid grid-cols-6">
                                     <div class="col-span-2">Address: </div>
-                                    <div id="address" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="address" class="col-span-4 text-lg font-semibold"></div>
 
-                                    <h3 class="font-semibold col-span-6">Contact Person/s:</h3>
-                                    <div id="cp1_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 col-span-2">Name: </div>
-                                        <div id="cp1_name" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp1_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp1_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <h3 class="col-span-6 font-semibold">Contact Person/s:</h3>
+                                    <div id="cp1_div" class="grid grid-cols-6 col-span-6">
+                                        <div class="col-span-2 ml-10">Name: </div>
+                                        <div id="cp1_name" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div id="cp1_number" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">E-mail: </div>
+                                        <div id="cp1_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
 
-                                    <div id="cp2_div" class="col-span-5 grid grid-cols-5">
-                                        <div class="ml-10 mt-5">Name: </div>
-                                        <div id="cp2_name" class="col-span-4 font-semibold text-lg mt-5"></div>
+                                    <div id="cp2_div" class="grid grid-cols-5 col-span-5">
+                                        <div class="mt-5 ml-10">Name: </div>
+                                        <div id="cp2_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
                                         <div class="ml-10">Date: </div>
-                                        <div id="cp2_number" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="cp2_number" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="ml-10">E-mail: </div>
-                                        <div id="cp2_email" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="cp2_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
 
-                                    <div id="cp3_div" class="col-span-5 grid grid-cols-5">
-                                        <div class="ml-10 mt-5">Name: </div>
-                                        <div id="cp3_name" class="col-span-4 font-semibold text-lg mt-5"></div>
+                                    <div id="cp3_div" class="grid grid-cols-5 col-span-5">
+                                        <div class="mt-5 ml-10">Name: </div>
+                                        <div id="cp3_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
                                         <div class="ml-10">Date: </div>
-                                        <div id="cp3_number" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="cp3_number" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="ml-10">E-mail: </div>
-                                        <div id="cp3_email" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="cp3_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-5">
                                 <div class="flex items-center">
-                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                    <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">OTHER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                 </div>
                                 <div class="grid grid-cols-6">
                                     <div class="col-span-2">Area: </div>
-                                    <div id="area" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="area" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Category: </div>
-                                    <div id="category" class="col-span-4 font-semibold text-lg"></div>
-                                    <div id="con_details_div" class="col-span-6 grid grid-cols-6">
+                                    <div id="category" class="col-span-4 text-lg font-semibold"></div>
+                                    <div id="con_details_div" class="grid grid-cols-6 col-span-6">
                                         <div class="col-span-2">Contract Details: </div>
-                                        <a href="#" id="contract_details" target="_blank" class="col-span-4 font-semibold text-lg text-white bg-blue-500 rounded-lg w-40 tracking-wide text-center hover:scale-105">VIEW</a>
+                                        <a href="#" id="contract_details" target="_blank" class="w-40 col-span-4 text-lg font-semibold tracking-wide text-center text-white bg-blue-500 rounded-lg hover:scale-105">VIEW</a>
                                     </div>
                                     <div class="col-span-2">Brand: </div>
-                                    <div id="brand" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="brand" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Model: </div>
-                                    <div id="model" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="model" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Type of Unit: </div>
-                                    <div id="unit_type" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="unit_type" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Billing Type: </div>
-                                    <div id="billing_type" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="billing_type" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Number of Attendees: </div>
-                                    <div id="no_of_attendees" class="col-span-4 font-semibold text-lg">13</div>
+                                    <div id="no_of_attendees" class="col-span-4 text-lg font-semibold">13</div>
                                     <div class="col-span-2">Knowledge of Participants: </div>
-                                    <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="knowledge_of_participants" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Notes: </div>
                                     <div class="col-span-4 font-semibold">
-                                        <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
+                                        <textarea id="remarks" class="w-full p-0 text-lg border-0 cursor-default resize-none ring-0 focus:ring-0" readonly></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -229,21 +229,21 @@
             <nav class="w-screen bg-red-400 h-14">
                 <div class="flex justify-between h-full">
                     <div class="w-72 h-full p-2.5">
-                        <a href="{{ route('trainings.index') }}" onclick="$('#loading').toggleClass('hidden');" class="bg-white text-red-500 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex items-center justify-center">
+                        <a href="{{ route('trainings.index') }}" onclick="$('#loading').toggleClass('hidden');" class="flex items-center justify-center w-full h-full font-black tracking-wider text-red-500 bg-white shadow-lg rounded-xl hover:scale-105">
                             <span class="h-full leading-[39px] ml-1">SCHEDULED TRAININGS</span>
                         </a>
                     </div>
                     <div class="w-36 h-full p-2.5">
-                        <a href="{{ route('login') }}" onclick="$('#loading').toggleClass('hidden');" class="bg-white text-red-500 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
+                        <a href="{{ route('login') }}" onclick="$('#loading').toggleClass('hidden');" class="flex items-center justify-center w-full h-full font-black tracking-wider text-red-500 bg-white shadow-lg rounded-xl hover:scale-105">
                             <span>LOGIN</span>
                         </a>
                     </div>
                 </div>
             </nav>
             <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-                <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full overflow-y-scroll">
+                <div class="h-full py-5 pl-5 pr-8 overflow-y-scroll bg-white rounded-lg shadow-xl">
                     {{-- Legends --}}
-                    <div class="w-full flex gap-x-5">
+                    <div class="flex w-full gap-x-5">
                         <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
                             <span class="flex w-3 h-3 bg-[#FE2C55] rounded-full mr-1.5 flex-shrink-0"></span>
                             ALL
@@ -413,6 +413,7 @@
 
                 $('.fc-addButton-button').removeClass('fc-button-primary fc fc-button');
                 $('.fc-addButton-button').addClass('bg-blue-500 font-bold h-10 px-10 rounded-lg text-white tracking-wider hover:scale-105');
+                $('.fc-event-title').addClass('text-black font-medium');
 
                 function autoResize() {
                     var textarea = $('#remarks');

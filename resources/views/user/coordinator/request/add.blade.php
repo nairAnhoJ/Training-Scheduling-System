@@ -184,6 +184,8 @@
                             <label for="knowledge_of_participants" class="block text-sm font-semibold text-gray-600">Knowledge of Attendees</label>
                             <select id="knowledge_of_participants" name="knowledge_of_participants" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value=""></option>
+                                <option value="WITH EXPERIENCE">With Experience</option>
+                                <option value="WITHOUT EXPERIENCE">Without Experience</option>
                             </select>
                         </div>
                         <div class="w-full mb-3">

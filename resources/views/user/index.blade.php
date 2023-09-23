@@ -22,14 +22,14 @@
         <button data-modal-target="addEventModal" data-modal-toggle="addEventModal" id="addEventButton" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button"></button>
         
         <!-- Main modal -->
-        <div id="addEventModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+        <div id="addEventModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full max-h-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0">
+            <div class="relative w-full max-w-3xl overflow-x-hidden overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-xl">
                 <!-- Modal content -->
-                <form action="{{ route('event.add') }}" method="POST" class="relative shadow text-gray-700">
+                <form action="{{ route('event.add') }}" method="POST" class="relative text-gray-700 shadow">
                     @csrf
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">ADD EVENT</h3>
+                        <h3 class="flex items-center text-xl font-semibold tracking-wide text-gray-900">ADD EVENT</h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="addEventModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -73,12 +73,12 @@
     {{-- COMPLETE MODAL --}}
         <!-- Main modal -->
         <div id="completeModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-xl bg-white border-2 border-gray-300 shadow-2xl rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full max-w-xl overflow-x-hidden overflow-y-auto bg-white border-2 border-gray-300 rounded-lg shadow-2xl">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">MARK AS COMPLETED</h3>
+                        <h3 class="flex items-center text-xl font-semibold tracking-wide text-gray-900">MARK AS COMPLETED</h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="completeModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -101,12 +101,12 @@
     {{-- EXTEND MODAL --}}
         <!-- Main modal -->
         <div id="extendModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-xl bg-white border-2 border-gray-300 shadow-2xl rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full max-w-xl overflow-x-hidden overflow-y-auto bg-white border-2 border-gray-300 rounded-lg shadow-2xl">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">EXTEND TRAINING</h3>
+                        <h3 class="flex items-center text-xl font-semibold tracking-wide text-gray-900">EXTEND TRAINING</h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="extendModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -129,12 +129,12 @@
     {{-- CANCEL MODAL --}}
         <!-- Main modal -->
         <div id="confirmCancelModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-xl bg-white border-2 border-gray-300 shadow-2xl rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full max-w-xl overflow-x-hidden overflow-y-auto bg-white border-2 border-gray-300 rounded-lg shadow-2xl">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">CANCEL TRAINING</h3>
+                        <h3 class="flex items-center text-xl font-semibold tracking-wide text-gray-900">CANCEL TRAINING</h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmCancelModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -160,12 +160,12 @@
         
         <!-- Main modal -->
         <div id="viewCustomModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-3xl bg-white border border-gray-300 shadow-xl rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full max-w-3xl overflow-x-hidden overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-xl">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 id="cusName" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
+                        <h3 id="cusName" class="flex items-center text-xl font-semibold tracking-wide text-gray-900"></h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewCustomModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -175,10 +175,10 @@
                     <div class="p-6">
                         <div class="grid grid-cols-6 gap-y-3">
                             <div class="col-span-2">Date: </div>
-                            <div id="cusDate" class="col-span-4 font-semibold text-lg"></div>
+                            <div id="cusDate" class="col-span-4 text-lg font-semibold"></div>
 
                             <div class="col-span-2">Trainer: </div>
-                            <div id="cusTrainer" class="col-span-4 font-semibold text-lg"></div>
+                            <div id="cusTrainer" class="col-span-4 text-lg font-semibold"></div>
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -199,12 +199,12 @@
         
         <!-- Main modal -->
         <div id="viewEventModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full h-full overflow-x-hidden overflow-y-auto bg-white rounded-lg">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 border-b rounded-t bg-blue-500">
-                        <h3 id="name" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
+                    <div class="flex items-center justify-between p-4 bg-blue-500 border-b rounded-t">
+                        <h3 id="name" class="flex items-center text-xl font-semibold tracking-wide text-gray-900"></h3>
                         <button type="button" class="closeViewEventModalButton text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewEventModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -216,87 +216,87 @@
                             <div class="col-span-2 border-r pr-6 overflow-y-auto overflow-x-hidden h-[calc(100vh-268px)]">
                                 <div class="grid grid-cols-6">
                                     <div class="col-span-2">Status: </div>
-                                    <div id="status" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="status" class="col-span-4 text-lg font-semibold"></div>
     
                                     <div class="col-span-2">Date: </div>
-                                    <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="event_date" class="col-span-4 text-lg font-semibold"></div>
     
                                     <div class="col-span-2">Venue: </div>
-                                    <div id="venue" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="venue" class="col-span-4 text-lg font-semibold"></div>
     
                                     <div class="col-span-2">Trainer: </div>
-                                    <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="trainer" class="col-span-4 text-lg font-semibold"></div>
     
                                     <div class="col-span-2">Training Number: </div>
-                                    <div id="trainingNumber" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="trainingNumber" class="col-span-4 text-lg font-semibold"></div>
                                 </div>
     
                                 <div class="mt-5">
                                     <div class="flex items-center">
-                                        <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                        <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">CUSTOMER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                     </div>
                                     <div class="grid grid-cols-6">
                                         <div class="col-span-2">Address: </div>
-                                        <div id="address" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="address" class="col-span-4 text-lg font-semibold"></div>
     
-                                        <h3 class="font-semibold col-span-6">Contact Person/s:</h3>
-                                        <div id="cp1_div" class="col-span-6 grid grid-cols-6">
-                                            <div class="ml-10 col-span-2">Name: </div>
-                                            <div id="cp1_name" class="col-span-4 font-semibold text-lg"></div>
-                                            <div class="ml-10 col-span-2">Date: </div>
-                                            <div id="cp1_number" class="col-span-4 font-semibold text-lg"></div>
-                                            <div class="ml-10 col-span-2">E-mail: </div>
-                                            <div id="cp1_email" class="col-span-4 font-semibold text-lg"></div>
+                                        <h3 class="col-span-6 font-semibold">Contact Person/s:</h3>
+                                        <div id="cp1_div" class="grid grid-cols-6 col-span-6">
+                                            <div class="col-span-2 ml-10">Name: </div>
+                                            <div id="cp1_name" class="col-span-4 text-lg font-semibold"></div>
+                                            <div class="col-span-2 ml-10">Date: </div>
+                                            <div id="cp1_number" class="col-span-4 text-lg font-semibold"></div>
+                                            <div class="col-span-2 ml-10">E-mail: </div>
+                                            <div id="cp1_email" class="col-span-4 text-lg font-semibold"></div>
                                         </div>
     
-                                        <div id="cp2_div" class="col-span-6 grid grid-cols-6">
-                                            <div class="ml-10 mt-5 col-span-2">Name: </div>
-                                            <div id="cp2_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                            <div class="ml-10 col-span-2">Date: </div>
-                                            <div id="cp2_number" class="col-span-4 font-semibold text-lg"></div>
-                                            <div class="ml-10 col-span-2">E-mail: </div>
-                                            <div id="cp2_email" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="cp2_div" class="grid grid-cols-6 col-span-6">
+                                            <div class="col-span-2 mt-5 ml-10">Name: </div>
+                                            <div id="cp2_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
+                                            <div class="col-span-2 ml-10">Date: </div>
+                                            <div id="cp2_number" class="col-span-4 text-lg font-semibold"></div>
+                                            <div class="col-span-2 ml-10">E-mail: </div>
+                                            <div id="cp2_email" class="col-span-4 text-lg font-semibold"></div>
                                         </div>
     
-                                        <div id="cp3_div" class="col-span-6 grid grid-cols-6">
-                                            <div class="ml-10 mt-5 col-span-2">Name: </div>
-                                            <div id="cp3_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                            <div class="ml-10 col-span-2">Date: </div>
-                                            <div id="cp3_number" class="col-span-4 font-semibold text-lg"></div>
-                                            <div class="ml-10 col-span-2">E-mail: </div>
-                                            <div id="cp3_email" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="cp3_div" class="grid grid-cols-6 col-span-6">
+                                            <div class="col-span-2 mt-5 ml-10">Name: </div>
+                                            <div id="cp3_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
+                                            <div class="col-span-2 ml-10">Date: </div>
+                                            <div id="cp3_number" class="col-span-4 text-lg font-semibold"></div>
+                                            <div class="col-span-2 ml-10">E-mail: </div>
+                                            <div id="cp3_email" class="col-span-4 text-lg font-semibold"></div>
                                         </div>
                                     </div>
                                 </div>
     
                                 <div class="mt-5">
                                     <div class="flex items-center">
-                                        <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                        <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">OTHER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                     </div>
                                     <div class="grid grid-cols-6">
                                         <div class="col-span-2">Area: </div>
-                                        <div id="area" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="area" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="col-span-2">Category: </div>
-                                        <div id="category" class="col-span-4 font-semibold text-lg"></div>
-                                        <div id="con_details_div" class="col-span-6 grid grid-cols-6">
+                                        <div id="category" class="col-span-4 text-lg font-semibold"></div>
+                                        <div id="con_details_div" class="grid grid-cols-6 col-span-6">
                                             <div class="col-span-2">Contract Details: </div>
-                                            <a href="#" id="contract_details" target="_blank" class="col-span-4 font-semibold text-lg text-white bg-blue-500 rounded-lg w-40 tracking-wide text-center hover:scale-105">VIEW</a>
+                                            <a href="#" id="contract_details" target="_blank" class="w-40 col-span-4 text-lg font-semibold tracking-wide text-center text-white bg-blue-500 rounded-lg hover:scale-105">VIEW</a>
                                         </div>
                                         <div class="col-span-2">Brand: </div>
-                                        <div id="brand" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="brand" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="col-span-2">Model: </div>
-                                        <div id="model" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="model" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="col-span-2">Type of Unit: </div>
-                                        <div id="unit_type" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="unit_type" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="col-span-2">Billing Type: </div>
-                                        <div id="billing_type" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="billing_type" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="col-span-2">Number of Attendees: </div>
-                                        <div id="no_of_attendees" class="col-span-4 font-semibold text-lg">13</div>
+                                        <div id="no_of_attendees" class="col-span-4 text-lg font-semibold">13</div>
                                         <div class="col-span-2">Knowledge of Participants: </div>
-                                        <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg"></div>
+                                        <div id="knowledge_of_participants" class="col-span-4 text-lg font-semibold"></div>
                                         {{-- <div class="col-span-2">Notes: </div>
                                         <div class="col-span-4 font-semibold">
-                                            <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
+                                            <textarea id="remarks" class="w-full p-0 text-lg border-0 cursor-default resize-none ring-0 focus:ring-0" readonly></textarea>
                                         </div> --}}
                                     </div>
                                 </div>
@@ -310,7 +310,7 @@
                                         <div>   
                                             <label for="commentInput" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
                                             <div class="relative">
-                                                <input type="text" id="commentInput" name="commentInput" class="block h-14 w-full pl-4 pr-14 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Write a comment..." required>
+                                                <input type="text" id="commentInput" name="commentInput" class="block w-full pl-4 text-sm text-gray-900 border border-gray-300 rounded-full h-14 pr-14 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Write a comment..." required>
                                                 <button type="button" id="commentSubmit" class="text-white absolute right-2.5 bottom-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-sm px-2 py-2 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor"><path d="M120-160v-640l760 320-760 320Zm60-93 544-227-544-230v168l242 62-242 60v167Zm0 0v-457 457Z"/></svg></button>
                                             </div>
                                         </div>
@@ -332,14 +332,14 @@
     {{-- VIEW EVENT MODAL END --}}
 
     <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-        <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full overflow-y-scroll">
+        <div class="h-full py-5 pl-5 pr-8 overflow-y-scroll bg-white rounded-lg shadow-xl">
             <div class="">
-                <div class="grid grid-cols-1 lg:grid-cols-3 w-full gap-x-5">
+                <div class="grid w-full grid-cols-1 lg:grid-cols-3 gap-x-5">
 
                     <div class="shadow-[0_0px_5px_1px_rgb(0,0,0,0.15)] rounded-lg overflow-hidden mb-5">
                         <div class="flex items-center w-full h-full">
                             <div class="h-24">
-                                <div class="bg-emerald-500 h-full w-24 flex items-center justify-center">
+                                <div class="flex items-center justify-center w-24 h-full bg-emerald-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M433-228 295-365l42-42 96 94 184-184 42 43-226 226ZM180-80q-24 0-42-18t-18-42v-620q0-24 18-42t42-18h65v-60h65v60h340v-60h65v60h65q24 0 42 18t18 42v620q0 24-18 42t-42 18H180Zm0-60h600v-430H180v430Zm0-490h600v-130H180v130Zm0 0v-130 130Z"/></svg>
                                 </div>
                             </div>
@@ -351,7 +351,7 @@
                                     </div>
                                     <div class="flex items-center">
                                         <a href="{{ route('trainings.index') }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-500 hover:text-gray-600 transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M686-450H160v-60h526L438-758l42-42 320 320-320 320-42-42 248-248Z"/></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-500 transition duration-75 hover:text-gray-600 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M686-450H160v-60h526L438-758l42-42 320 320-320 320-42-42 248-248Z"/></svg>
                                         </a>
                                     </div>
                                 </div>
@@ -362,7 +362,7 @@
                     <div class="shadow-[0_0px_5px_1px_rgb(0,0,0,0.15)] rounded-lg overflow-hidden mb-5">
                         <div class="flex items-center w-full h-full">
                             <div class="h-24">
-                                <div class="bg-amber-500 h-full w-24 flex items-center justify-center">
+                                <div class="flex items-center justify-center w-24 h-full bg-amber-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="m800-134 28-28-75-75v-112h-40v128l87 87Zm-620 14q-24.75 0-42.375-17.625T120-180v-600q0-24.75 17.625-42.375T180-840h600q24.75 0 42.375 17.625T840-780v329q-14-8-29.5-13t-30.5-8v-308H180v600h309q4 16 9.023 31.172Q503.045-133.655 510-120H180Zm0-107v47-600 308-4 249Zm100-53h211q4-16 9-31t13-29H280v60Zm0-170h344q14-7 27-11.5t29-8.5v-40H280v60Zm0-170h400v-60H280v60ZM732.5-41Q655-41 600-96.5T545-228q0-78.435 54.99-133.717Q654.98-417 733-417q77 0 132.5 55.283Q921-306.435 921-228q0 76-55.5 131.5T732.5-41Z"/></svg>
                                 </div>
                             </div>
@@ -375,7 +375,7 @@
                                     </div>
                                     <div class="flex items-center">
                                         <a href="{{ route('request.index') }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-500 hover:text-gray-600 transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M686-450H160v-60h526L438-758l42-42 320 320-320 320-42-42 248-248Z"/></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-500 transition duration-75 hover:text-gray-600 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M686-450H160v-60h526L438-758l42-42 320 320-320 320-42-42 248-248Z"/></svg>
                                         </a>
                                     </div>
                                 </div>
@@ -386,7 +386,7 @@
                     <div class="shadow-[0_0px_5px_1px_rgb(0,0,0,0.15)] rounded-lg overflow-hidden mb-5">
                         <div class="flex items-center">
                             <div class="h-24">
-                                <div class="bg-red-500 h-full w-24 flex items-center justify-center">
+                                <div class="flex items-center justify-center w-24 h-full bg-red-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path d="M349-250h262q12.75 0 21.375-8.675 8.625-8.676 8.625-21.5 0-12.825-8.625-21.325T611-310H349q-12.75 0-21.375 8.675-8.625 8.676-8.625 21.5 0 12.825 8.625 21.325T349-250Zm0-170h262q12.75 0 21.375-8.675 8.625-8.676 8.625-21.5 0-12.825-8.625-21.325T611-480H349q-12.75 0-21.375 8.675-8.625 8.676-8.625 21.5 0 12.825 8.625 21.325T349-420ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h336q12.444 0 23.722 5T599-862l183 183q8 8 13 19.278 5 11.278 5 23.722v496q0 24-18 42t-42 18H220Zm331-584v-156H220v680h520v-494H581q-12.75 0-21.375-8.625T551-664ZM220-820v186-186 680-680Z"/></svg>
                                 </div>
                             </div>
@@ -399,7 +399,7 @@
                                     </div>
                                     <div class="flex items-center">
                                         <a href="{{ route('customer.request.index') }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-500 hover:text-gray-600 transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M686-450H160v-60h526L438-758l42-42 320 320-320 320-42-42 248-248Z"/></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-500 transition duration-75 hover:text-gray-600 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M686-450H160v-60h526L438-758l42-42 320 320-320 320-42-42 248-248Z"/></svg>
                                         </a>
                                     </div>
                                 </div>
@@ -410,7 +410,7 @@
                 </div>
             </div>
             {{-- Legends --}}
-            <div class="w-full flex gap-x-5">
+            <div class="flex w-full gap-x-5">
                 <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
                     <span class="flex w-3 h-3 bg-[#FE2C55] rounded-full mr-1.5 flex-shrink-0"></span>
                     ALL
@@ -618,6 +618,7 @@
 
             $('.fc-addButton-button').removeClass('fc-button-primary fc fc-button');
             $('.fc-addButton-button').addClass('bg-blue-500 font-bold h-10 px-10 rounded-lg text-white tracking-wider hover:scale-105');
+            $('.fc-event-title').addClass('text-black font-medium');
             
             function autoScroll() {
                 var commentList = $('#commentContainer');
