@@ -55,7 +55,6 @@ class TrainingController extends Controller {
     }
 
     public function update(Request $request, $key) {
-        dd('test');
         $name = strtoupper($request->name);
         $address = strtoupper($request->address);
         $area = $request->area;
