@@ -3,11 +3,11 @@
 @section('content')
 
     <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-        <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full max-h-full overflow-y-auto">
+        <div class="h-full max-h-full py-5 pl-5 pr-8 overflow-y-auto bg-white rounded-lg shadow-xl">
             <form action="{{ route('customer.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-5">
-                    <h1 class="text-gray-600 font-bold text-xl mb-2">COMPANY DETAILS</h1>
+                    <h1 class="mb-2 text-xl font-bold text-gray-600">COMPANY DETAILS</h1>
                     <div class="pl-3">
                         <div class="mb-3">
                             <label for="name" class="block text-sm font-semibold text-gray-600">Name <span class="text-red-500">*</span></label>
@@ -23,26 +23,28 @@
                             <label for="area" class="block text-sm font-semibold text-gray-600">Area <span class="text-red-500">*</span></label>
                             <select id="area" name="area" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value="CENTRAL">Central</option>
+                                <option value="SOUTH LUZON">South Luzon</option>
+                                <option value="NORTH LUZON">North Luzon</option>
                                 <option value="NORTH">North</option>
                                 <option value="SOUTH">South</option>
                             </select>
                         </div>
                         {{-- CONTACT PERSON --}}
                             <div class="mb-3">
-                                <h1 class="text-gray-600 font-semibold">CONTACT PERSON/s</h1>
+                                <h1 class="font-semibold text-gray-600">CONTACT PERSON/s</h1>
                                 <div class="pl-5">
                                     <div class="mb-3">
                                         <h1 class="text-gray-600">#1</h1>
-                                        <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
-                                            <div class="mb-3 w-full">
+                                        <div class="flex flex-col w-full pl-5 lg:flex-row gap-x-8">
+                                            <div class="w-full mb-3">
                                                 <label for="cp1_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                 <input type="text" id="cp1_name" name="cp1_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp1_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                 <input type="text" id="cp1_number" name="cp1_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp1_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                 <input type="text" id="cp1_email" name="cp1_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
@@ -50,16 +52,16 @@
                                     </div>
                                     <div class="mb-3">
                                         <h1 class="text-gray-600">#2</h1>
-                                        <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
-                                            <div class="mb-3 w-full">
+                                        <div class="flex flex-col w-full pl-5 lg:flex-row gap-x-8">
+                                            <div class="w-full mb-3">
                                                 <label for="cp2_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                 <input type="text" id="cp2_name" name="cp2_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp2_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                 <input type="text" id="cp2_number" name="cp2_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp2_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                 <input type="text" id="cp2_email" name="cp2_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
@@ -67,16 +69,16 @@
                                     </div>
                                     <div>
                                         <h1 class="text-gray-600">#3</h1>
-                                        <div class="pl-5 flex flex-col lg:flex-row gap-x-8 w-full">
-                                            <div class="mb-3 w-full">
+                                        <div class="flex flex-col w-full pl-5 lg:flex-row gap-x-8">
+                                            <div class="w-full mb-3">
                                                 <label for="cp3_name" class="block text-sm font-semibold text-gray-600">Name</label>
                                                 <input type="text" id="cp3_name" name="cp3_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp3_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
                                                 <input type="text" id="cp3_number" name="cp3_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
-                                            <div class="mb-3 w-full">
+                                            <div class="w-full mb-3">
                                                 <label for="cp3_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
                                                 <input type="text" id="cp3_email" name="cp3_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                             </div>
@@ -89,8 +91,8 @@
                 </div>
 
                 <div class="flex gap-x-8">
-                    <button class="bg-blue-500 w-1/2 py-2 rounded-lg text-white font-bold tracking-wider hover:scale-105">SAVE</button>
-                    <a href="{{ route('customer.index') }}" class="bg-gray-500 w-1/2 py-2 rounded-lg text-white font-bold tracking-wider hover:scale-105 text-center">BACK</a>
+                    <button class="w-1/2 py-2 font-bold tracking-wider text-white bg-blue-500 rounded-lg hover:scale-105">SAVE</button>
+                    <a href="{{ route('customer.index') }}" class="w-1/2 py-2 font-bold tracking-wider text-center text-white bg-gray-500 rounded-lg hover:scale-105">BACK</a>
                 </div>
             </form>
         </div>

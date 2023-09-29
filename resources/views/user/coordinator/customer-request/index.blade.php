@@ -67,7 +67,8 @@
                                         <label for="inputArea" class="block text-sm font-semibold text-gray-600">Area <span class="text-red-500">*</span></label>
                                         <select id="inputArea" name="area" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                             <option value="CENTRAL">Central</option>
-                                            <option value="LUZON">Luzon</option>
+                                            <option value="SOUTH LUZON">South Luzon</option>
+                                            <option value="NORTH LUZON">North Luzon</option>
                                             <option value="VISAYAS">Visayas</option>
                                             <option value="MINDANAO">Mindanao</option>
                                         </select>
