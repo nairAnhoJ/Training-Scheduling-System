@@ -406,6 +406,7 @@
                                     $('#cusDate').html(result.date);
                                     $('#cusTrainer').html(result.trainer);
                                     
+                                    $('#loading').toggleClass('hidden');
                                     $('#viewCustomEventButton').click();
                                 }
                             })
