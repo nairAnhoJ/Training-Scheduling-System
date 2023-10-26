@@ -106,6 +106,8 @@
                             <select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option {{ $request->category == 'PURCHASED' ? 'selected' : '' }} value="PURCHASED">Purchased</option>
                                 <option {{ $request->category == 'RENTAL' ? 'selected' : '' }} value="RENTAL">Rental</option>
+                                <option {{ $request->category == 'CONTRACTED' ? 'selected' : '' }} value="CONTACTED">Contracted</option>
+                                <option {{ $request->category == 'NON-CONTACTED' ? 'selected' : '' }} value="NON-CONTACTED">Non-Contracted</option>
                             </select>
                         </div>
 
