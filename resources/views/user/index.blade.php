@@ -243,7 +243,7 @@
                                         <div id="cp1_div" class="grid grid-cols-6 col-span-6">
                                             <div class="col-span-2 ml-10">Name: </div>
                                             <div id="cp1_name" class="col-span-4 text-lg font-semibold"></div>
-                                            <div class="col-span-2 ml-10">Date: </div>
+                                            <div class="col-span-2 ml-10">Phone Number: </div>
                                             <div id="cp1_number" class="col-span-4 text-lg font-semibold"></div>
                                             <div class="col-span-2 ml-10">E-mail: </div>
                                             <div id="cp1_email" class="col-span-4 text-lg font-semibold"></div>
@@ -252,7 +252,7 @@
                                         <div id="cp2_div" class="grid grid-cols-6 col-span-6">
                                             <div class="col-span-2 mt-5 ml-10">Name: </div>
                                             <div id="cp2_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
-                                            <div class="col-span-2 ml-10">Date: </div>
+                                            <div class="col-span-2 ml-10">Phone Number: </div>
                                             <div id="cp2_number" class="col-span-4 text-lg font-semibold"></div>
                                             <div class="col-span-2 ml-10">E-mail: </div>
                                             <div id="cp2_email" class="col-span-4 text-lg font-semibold"></div>
@@ -261,7 +261,7 @@
                                         <div id="cp3_div" class="grid grid-cols-6 col-span-6">
                                             <div class="col-span-2 mt-5 ml-10">Name: </div>
                                             <div id="cp3_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
-                                            <div class="col-span-2 ml-10">Date: </div>
+                                            <div class="col-span-2 ml-10">Phone Number: </div>
                                             <div id="cp3_number" class="col-span-4 text-lg font-semibold"></div>
                                             <div class="col-span-2 ml-10">E-mail: </div>
                                             <div id="cp3_email" class="col-span-4 text-lg font-semibold"></div>
@@ -274,11 +274,13 @@
                                         <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">OTHER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                     </div>
                                     <div class="grid grid-cols-6">
+                                        <div class="col-span-2">Type: </div>
+                                        <div id="type" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="col-span-2">Area: </div>
                                         <div id="area" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="col-span-2">Category: </div>
                                         <div id="category" class="col-span-4 text-lg font-semibold"></div>
-                                        <div id="con_details_div" class="grid grid-cols-6 col-span-6">
+                                        <div id="con_detai333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333ls_div" class="grid grid-cols-6 col-span-6">
                                             <div class="col-span-2">Contract Details: </div>
                                             <a href="#" id="contract_details" target="_blank" class="w-40 col-span-4 text-lg font-semibold tracking-wide text-center text-white bg-blue-500 rounded-lg hover:scale-105">VIEW</a>
                                         </div>
@@ -302,7 +304,7 @@
                                 </div>
                             </div>
                             <div class="pl-6">
-                                <h1 class="text-2xl font-bold">Comments</h1>
+                                <h1 class="text-2xl font-bold">Comments/Updates</h1>
                                 <div id="commentContainer" class="h-[calc(100vh-358px)] overflow-x-hidden overflow-y-auto pr-2">
                                 </div>
                                 <div class="h-[40px] pr-2 mt-2">
@@ -496,6 +498,10 @@
                                     $('#completeButton').addClass('hidden');
                                     $('#extendButton').addClass('hidden');
                                     $('#cancelButton').addClass('hidden');
+                                }else if(result.status == 'PENDING'){
+                                    $('#completeButton').addClass('hidden');
+                                    $('#extendButton').addClass('hidden');
+                                    $('#cancelButton').addClass('hidden');
                                 }
 
                                 var nnndate = new Date(result.end_date);
@@ -556,12 +562,13 @@
                                         $('#contract_details').addClass('pointer-events-none opacity-50');
                                     }else{
                                         $('#contract_details').removeClass('pointer-events-none opacity-50');
-                                        $('#contract_details').attr('href', `/request/view/contract-details/${result.key}`);
+                                        $('#contract_details').attr('href', `/requests/view/contract-details/${result.key}`);
                                     }
                                 }else{
                                     $('#con_details_div').addClass('hidden');
                                 }
 
+                                $('#type').html(result.type);
                                 $('#brand').html(result.brand);
                                 $('#model').html(result.model);
                                 $('#unit_type').html(result.unit_type);

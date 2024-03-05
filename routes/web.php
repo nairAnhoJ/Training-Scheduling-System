@@ -128,6 +128,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/requests/edit/{key}', [RequestController::class, 'edit'])->name('request.edit');
     Route::get('/requests/delete/{key}', [RequestController::class, 'delete'])->name('request.delete');
     Route::post('/requests/update/{key}', [RequestController::class, 'update'])->name('request.update');
+    Route::get('/requests/view/contract-details/{key}', [TrainingController::class, 'contractDetails']);
 
     // REQUEST FROM CUSTOMERS
     Route::get('/request-from-customers', [CustomerRequestController::class, 'index'])->name('customer.request.index');

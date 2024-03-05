@@ -103,6 +103,20 @@
                     <h1 class="mb-2 text-xl font-bold text-gray-600">OTHER DETAILS</h1>
                     <div class="pl-3">
                         <div class="mb-3">
+                            <label for="adress" class="block text-sm font-semibold text-gray-600">Type <span class="text-red-500">*</span></label>
+                            <div class="flex gap-x-5">
+                                <div class="flex items-center">
+                                    <input checked id="planned_type" type="radio" value="PLANNED" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-400 focus:ring-blue-500 focus:ring-2">
+                                    <label for="planned_type" class="text-sm font-medium text-gray-500 ms-2">PLANNED</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="urgent_type" type="radio" value="URGENT" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-400 focus:ring-blue-500 focus:ring-2">
+                                    <label for="urgent_type" class="text-sm font-medium text-gray-500 ms-2">URGENT</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
                             <label for="category" class="block text-sm font-medium text-gray-600">Category <span class="text-red-500">*</span></label>
                             <select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                 <option value="PURCHASED">Purchased</option>
@@ -196,7 +210,25 @@
                             <input type="text" id="venue" name="venue" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         </div>
                         <div class="w-full mb-3">
-                            <label for="event_date" class="block text-sm font-semibold text-gray-600">Date</label>
+                            <label for="plan_start_date" class="block text-sm font-semibold text-gray-600">Start Planned Date</label>
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                  <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                </div>
+                                <input datepicker type="text" id="plan_start_date" name="plan_start_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Select date" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="w-full mb-3">
+                            <label for="plan_end_date" class="block text-sm font-semibold text-gray-600">End Planned Date</label>
+                            <div class="relative w-full">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                  <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                </div>
+                                <input datepicker type="text" id="plan_end_date" name="plan_end_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Select date" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="w-full mb-3">
+                            <label for="event_date" class="block text-sm font-semibold text-gray-600">Actual Date</label>
                             <div class="relative w-full">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                   <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>

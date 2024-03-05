@@ -26,4 +26,9 @@ class Comment extends Model
     ];
     
     protected $table = 'tss_comments';
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'commenter_id', 'key');
+    }
 }

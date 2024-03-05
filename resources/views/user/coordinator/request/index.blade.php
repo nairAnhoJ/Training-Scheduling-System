@@ -97,6 +97,12 @@
                                 <div class="col-span-2">Request Number: </div>
                                 <div id="req_number" class="col-span-4 text-lg font-semibold"></div>
 
+                                <div class="col-span-2">Start Date: </div>
+                                <div id="plan_start_date" class="col-span-4 text-lg font-semibold"></div>
+
+                                <div class="col-span-2">Date: </div>
+                                <div id="plan_end_date" class="col-span-4 text-lg font-semibold"></div>
+
                                 <div class="col-span-2">Date: </div>
                                 <div id="event_date" class="col-span-4 text-lg font-semibold"></div>
 
@@ -119,7 +125,7 @@
                                     <div id="cp1_div" class="grid grid-cols-6 col-span-6">
                                         <div class="col-span-2 ml-10">Name: </div>
                                         <div id="cp1_name" class="col-span-4 text-lg font-semibold"></div>
-                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div class="col-span-2 ml-10">Phone Number: </div>
                                         <div id="cp1_number" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="col-span-2 ml-10">E-mail: </div>
                                         <div id="cp1_email" class="col-span-4 text-lg font-semibold"></div>
@@ -128,7 +134,7 @@
                                     <div id="cp2_div" class="grid grid-cols-6 col-span-6">
                                         <div class="col-span-2 mt-5 ml-10">Name: </div>
                                         <div id="cp2_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
-                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div class="col-span-2 ml-10">Phone Number: </div>
                                         <div id="cp2_number" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="col-span-2 ml-10">E-mail: </div>
                                         <div id="cp2_email" class="col-span-4 text-lg font-semibold"></div>
@@ -137,7 +143,7 @@
                                     <div id="cp3_div" class="grid grid-cols-6 col-span-6">
                                         <div class="col-span-2 mt-5 ml-10">Name: </div>
                                         <div id="cp3_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
-                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div class="col-span-2 ml-10">Phone Number: </div>
                                         <div id="cp3_number" class="col-span-4 text-lg font-semibold"></div>
                                         <div class="col-span-2 ml-10">E-mail: </div>
                                         <div id="cp3_email" class="col-span-4 text-lg font-semibold"></div>
@@ -150,24 +156,26 @@
                                     <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">OTHER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                 </div>
                                 <div class="grid grid-cols-6">
+                                    <div class="col-span-2">Type: </div>
+                                    <div id="type" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Area: </div>
-                                    <div id="area" class="col-span-4 text-lg font-semibold">NORTH</div>
+                                    <div id="area" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Category: </div>
-                                    <div id="category" class="col-span-4 text-lg font-semibold">CHARGEABLE</div>
+                                    <div id="category" class="col-span-4 text-lg font-semibold"></div>
                                     <div id="con_details_div" class="grid grid-cols-6 col-span-6">
                                         <div class="col-span-2">Contract Details: </div>
                                         <a href="#" id="contract_details" target="_blank" class="w-40 col-span-4 text-lg font-semibold tracking-wide text-center text-white bg-blue-500 rounded-lg hover:scale-105">VIEW</a>
                                     </div>
                                     <div class="col-span-2">Brand: </div>
-                                    <div id="brand" class="col-span-4 text-lg font-semibold">CHARGEABLE</div>
+                                    <div id="brand" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Model: </div>
-                                    <div id="model" class="col-span-4 text-lg font-semibold">CHARGEABLE</div>
+                                    <div id="model" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Type of Unit: </div>
-                                    <div id="unit_type" class="col-span-4 text-lg font-semibold">RENTAL UNIT</div>
+                                    <div id="unit_type" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Billing Type: </div>
-                                    <div id="billing_type" class="col-span-4 text-lg font-semibold">CHARGEABLE</div>
+                                    <div id="billing_type" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Number of Attendees: </div>
-                                    <div id="no_of_attendees" class="col-span-4 text-lg font-semibold">13</div>
+                                    <div id="no_of_attendees" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Knowledge of Participants: </div>
                                     <div id="knowledge_of_participants" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Notes: </div>
@@ -383,7 +391,7 @@
             });
 
             $('.requestRow').click(function(){
-                $('#loading').toggleClass('hidden');
+                $('#loading').removeClass('hidden');
                 key = $(this).find('span').data('key');
                 var _token = $('input[name="_token"]').val();
 
@@ -451,6 +459,7 @@
                             $('#con_details_div').addClass('hidden');
                         }
 
+                        $('#type').html(result.type);
                         $('#brand').html(result.brand);
                         $('#model').html(result.model);
                         $('#unit_type').html(result.unit_type);
@@ -463,7 +472,7 @@
 
                         $('#logsDiv').html(result.logRes);
                         
-                        $('#loading').toggleClass('hidden');
+                        $('#loading').addClass('hidden');
                         $('#viewRequestButton').click();
                         autoResize();
                     }

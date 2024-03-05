@@ -25,35 +25,51 @@ class DashboardController extends Controller
 
         $trainers = User::where('role', 2)->where('is_active', 1)->get();
 
-        $events = ModelsRequest::select('tss_requests.id', 'customers.name', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.key', 'tss_users.color', DB::raw('IFNULL(COUNT(tss_comments.id), 0) as commentCount'))
-            ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
-            ->join('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
-            ->leftJoin('tss_comments', function ($join) {
-                $join->on('tss_requests.key', '=', 'tss_comments.req_id')
-                    ->where('tss_comments.is_read', 0)
-                    ->where('tss_comments.user_id', Auth::user()->key);
+        $events = ModelsRequest::with('customer', 'trainerName', 'comments')
+            ->withCount(['comments' => function ($query) {
+                $query->where('is_read', 0)->where('user_id', Auth::user()->key);
+            }])
+            ->where(function ($query) {
+                $query->where('plan_start_date', '!=', null)
+                      ->orWhereIn('status', ['SCHEDULED', 'COMPLETED']);
             })
-            ->where('is_approved', 1)
-            ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
-            ->groupBy('tss_requests.id', 'customers.name', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.key', 'tss_users.color')
-            ->get();
+            ->where('trainer', '!=', null)
+            ->paginate(10);
+
+        // dd($events);
 
         $eventArray = [];
         foreach ($events as $event) {
             $newArray = [];
-        
-            $newArray = [
-                'id' => $event->key,
-                'title' => $event->name,
-                'start' => date('Y-m-d', strtotime($event->training_date)),
-                'end' => date('Y-m-d', strtotime($event->end_date.'+1 day')),
-                'color' => $event->color,
-                'notificationCount' => $event->commentCount,
-                'extendedProps' => [
-                    'isTraining' => true
-                ]
-            ];
-        
+
+            if($event->is_approved == 1){
+                $newArray = [
+                    'id' => $event->key,
+                    'title' => '🟢'.$event->customer->name,
+                    'start' => date('Y-m-d', strtotime($event->training_date)),
+                    'end' => date('Y-m-d', strtotime($event->end_date.'+1 day')),
+                    'color' => $event->color,
+                    'notificationCount' => $event->comments_count,
+                    'extendedProps' => [
+                        'isTraining' => true
+                    ]
+                ];
+            }else{
+                if($event->plan_start_date != null){
+                    $newArray = [
+                        'id' => $event->key,
+                        'title' => '🟠'.$event->customer->name,
+                        'start' => date('Y-m-d', strtotime($event->plan_start_date)),
+                        'end' => date('Y-m-d', strtotime($event->plan_end_date.'+1 day')),
+                        'color' => $event->color,
+                        'notificationCount' => $event->comments_count,
+                        'extendedProps' => [
+                            'isTraining' => true
+                        ]
+                    ];
+                }
+            }
+
             $eventArray[] = $newArray;
         }
 
@@ -95,21 +111,20 @@ class DashboardController extends Controller
         
         $com = '';
 
-        $comments = Comment::select('tss_comments.key', DB::raw('MAX(tss_comments.content) as content'), DB::raw('MAX(tss_comments.created_at) as created_at'), DB::raw('MAX(tss_users.first_name) as ufname'), DB::raw('MAX(tss_users.last_name) as ulname'))
-            ->join('tss_users', 'tss_comments.commenter_id', '=', 'tss_users.key')
-            ->where('tss_comments.req_id', $request->id)
-            ->groupBy('key')
-            ->get();
+        // $comments = Comment::select('tss_comments.key', DB::raw('MAX(tss_comments.content) as content'), DB::raw('MAX(tss_comments.created_at) as created_at'), DB::raw('MAX(tss_users.first_name) as ufname'), DB::raw('MAX(tss_users.last_name) as ulname'))
+        //     ->join('tss_users', 'tss_comments.commenter_id', '=', 'tss_users.key')
+        //     ->where('tss_comments.req_id', $request->id)
+        //     ->groupBy('key')
+        //     ->get();
+
+        $comments = Comment::with('user')->where('req_id', $request->id)->where('user_id', Auth::user()->key)->get();
 
         foreach ($comments as $comment) {
-            $dateTimeObj = new DateTime($comment->created_at);
-            $date = $dateTimeObj->format('F j, Y');
-            $time = $dateTimeObj->format('h:i A');
             $com .= '
-                <div class="my-2 border border-gray-400 shadow p-2 rounded-lg">
+                <div class="p-2 my-2 border border-gray-400 rounded-lg shadow">
                     <div class="flex flex-col leading-4">
-                        <h1 class="font-semibold">'.$comment->ufname.' '.$comment->ulname.'</h1>
-                        <p class="text-sm mb-2">'.$date.' at '.$time.'</p>
+                        <h1 class="font-semibold">'.$comment->user->first_name.' '.$comment->user->last_name.'</h1>
+                        <p class="mb-2 text-xs">'.date('F j, Y h:i A', strtotime($comment->created_at)).'</p>
                         <p>'.$comment->content.'</p>
                     </div>
                 </div>
@@ -146,6 +161,7 @@ class DashboardController extends Controller
             'cp3_number' => $thisRequest->cp3_number,
             'cp3_email' => $thisRequest->cp3_email,
 
+            'type' => $thisRequest->type,
             'category' => $thisRequest->category,
             'is_PM' => $thisRequest->is_PM,
             'unit_type' => $thisRequest->unit_type,

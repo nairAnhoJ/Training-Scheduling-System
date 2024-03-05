@@ -13,34 +13,37 @@ return new class extends Migration
     {
         Schema::create('tss_requests', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('number'); // Request Number ,,, Training Number  ======== ym-(user_id)-000000(id)
+            $table->string('number', 20); // Request Number ,,, Training Number  ======== ym-(user_id)-000000(id)
             $table->unsignedInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->string('category'); // PU / RU / PM
+            $table->string('category', 20); // PU / RU / PM
             $table->string('unit_type');
-            $table->string('brand');
-            $table->string('model');
-            $table->string('no_of_unit')->nullable();
-            $table->string('billing_type')->nullable(); // Chargeable / Non-Chargeable
+            $table->string('brand', 20);
+            $table->string('model', 30);
+            $table->string('no_of_unit', 5)->nullable();
+            $table->string('billing_type', 20)->nullable(); // Chargeable / Non-Chargeable
+            $table->string('type', 10); // URGENT / PLANNED
 
             // if category is PM 
-            $table->string('is_PM');
-            $table->string('contract_details')->nullable();
+            $table->boolean('is_PM');
+            $table->string('contract_details', 100)->nullable();
 
             // Additional Information
-            $table->string('no_of_attendees')->nullable();
+            $table->string('no_of_attendees', 5)->nullable();
             $table->string('venue')->nullable(); 
-            $table->string('training_date')->nullable();
-            $table->string('end_date')->nullable();
-            $table->string('knowledge_of_participants')->nullable();
-            $table->string('trainer')->nullable();
-            $table->string('remarks')->nullable();
+            $table->string('plan_start_date', 15)->nullable();
+            $table->string('plan_end_date', 15)->nullable();
+            $table->string('training_date', 15)->nullable();
+            $table->string('end_date', 15)->nullable();
+            $table->string('knowledge_of_participants', 20)->nullable();
+            $table->string('trainer', 3)->nullable();
+            $table->text('remarks')->nullable();
 
-            $table->string('is_approved')->default(0);
-            $table->string('is_deleted')->default(0);
-            $table->string('status')->default('PENDING');
+            $table->boolean('is_approved')->default(0);
+            $table->boolean('is_deleted')->default(0);
+            $table->string('status', 20)->default('PENDING');
 
-            $table->string('key');
+            $table->string('key', 50);
             $table->timestamps();
         });
     }

@@ -103,6 +103,7 @@ class RequestController extends Controller {
         $cp3_number = $request->cp3_number;
         $cp3_email = $request->cp3_email;
 
+        $type = $request->type;
         $category = $request->category;
         $pm = $request->pm;
         $contract_details = $request->contract_details;
@@ -114,6 +115,8 @@ class RequestController extends Controller {
         $no_of_attendees = $request->no_of_attendees;
         $knowledge_of_participants = $request->knowledge_of_participants;
         $venue = strtoupper($request->venue);
+        $plan_start_date = $request->plan_start_date;
+        $plan_end_date = $request->plan_end_date;
         $event_date = $request->event_date;
         $trainer = $request->trainer;
         $remarks = $request->remarks;
@@ -207,11 +210,14 @@ class RequestController extends Controller {
                     'unit_type' => $unit_type,
                     'brand' => $brand,
                     'model' => $model,
+                    'type' => $type,
                     'no_of_unit' => $no_of_unit,
                     'billing_type' => $billing_type,
                     'no_of_attendees' => $no_of_attendees,
                     'knowledge_of_participants' => $knowledge_of_participants,
                     'venue' => $venue,
+                    'plan_start_date' => $plan_start_date,
+                    'plan_end_date' => $plan_end_date,
                     'training_date' => $event_date,
                     'trainer' => $trainer,
                     'remarks' => $remarks,
@@ -228,11 +234,14 @@ class RequestController extends Controller {
                     'unit_type' => $unit_type,
                     'brand' => $brand,
                     'model' => $model,
+                    'type' => $type,
                     'no_of_unit' => $no_of_unit,
                     'billing_type' => $billing_type,
                     'no_of_attendees' => $no_of_attendees,
                     'knowledge_of_participants' => $knowledge_of_participants,
                     'venue' => $venue,
+                    'plan_start_date' => $plan_start_date,
+                    'plan_end_date' => $plan_end_date,
                     'training_date' => $event_date,
                     'trainer' => $trainer,
                     'remarks' => $remarks,
@@ -250,11 +259,14 @@ class RequestController extends Controller {
                 'unit_type' => $unit_type,
                 'brand' => $brand,
                 'model' => $model,
+                'type' => $type,
                 'no_of_unit' => $no_of_unit,
                 'billing_type' => $billing_type,
                 'no_of_attendees' => $no_of_attendees,
                 'knowledge_of_participants' => $knowledge_of_participants,
                 'venue' => $venue,
+                'plan_start_date' => $plan_start_date,
+                'plan_end_date' => $plan_end_date,
                 'training_date' => $event_date,
                 'trainer' => $trainer,
                 'remarks' => $remarks,
@@ -294,6 +306,7 @@ class RequestController extends Controller {
         $cp3_number = $request->cp3_number;
         $cp3_email = $request->cp3_email;
 
+        $type = $request->type;
         $category = $request->category;
         $contract_details = $request->contract_details;
         $brand = $request->brand;
@@ -304,6 +317,8 @@ class RequestController extends Controller {
         $no_of_attendees = $request->no_of_attendees;
         $knowledge_of_participants = $request->knowledge_of_participants;
         $venue = strtoupper($request->venue);
+        $plan_start_date = $request->plan_start_date;
+        $plan_end_date = $request->plan_end_date;
         $event_date = $request->event_date;
         $trainer = $request->trainer;
         $remarks = $request->remarks;
@@ -312,7 +327,7 @@ class RequestController extends Controller {
         $model = Customer::where('name', $name)->firstOrFail();
         $originalData = $model->toArray();
 
-        $data = $request->except('_token', 'category', 'contract_details', 'brand', 'model', 'unit_type', 'no_of_unit', 'billing_type', 'no_of_attendees', 'knowledge_of_participants', 'venue', 'event_date', 'trainer', 'remarks');
+        $data = $request->except('_token', 'type', 'category', 'contract_details', 'brand', 'model', 'unit_type', 'no_of_unit', 'billing_type', 'no_of_attendees', 'knowledge_of_participants', 'venue', 'plan_start_date', 'plan_end_date', 'event_date', 'trainer', 'remarks');
         $data['address'] = $address;
         $data['area'] = $area;
         $data['cp1_name'] = $cp1_name;
@@ -389,6 +404,7 @@ class RequestController extends Controller {
             $originalData = $model->toArray();
 
             $data = $request->except('_token', 'name', 'address', 'area', 'cp1_name', 'cp1_number', 'cp1_email', 'cp2_name', 'cp2_number', 'cp2_email', 'cp3_name', 'cp3_number', 'cp3_email');
+            $data['type'] = $type;
             $data['category'] = $category;
             $data['is_PM'] = 1;
             $data['contract_details'] = $contract_details_path;
@@ -399,6 +415,8 @@ class RequestController extends Controller {
             $data['billing_type'] = $billing_type;
             $data['no_of_attendees'] = $no_of_attendees;
             $data['venue'] = $venue;
+            $data['plan_start_date'] = $plan_start_date;
+            $data['plan_end_date'] = $plan_end_date;
             $data['training_date'] = $event_date;
             $data['knowledge_of_participants'] = $knowledge_of_participants;
             $data['trainer'] = $trainer;
@@ -407,7 +425,7 @@ class RequestController extends Controller {
             $model->update($data);
 
             $changedColumns = array_keys(array_diff_assoc($data, $originalData));
-            $changedColumns = array_diff($changedColumns, ['updated_at', 'event_date', 'is_PM']);
+            $changedColumns = array_diff($changedColumns, ['updated_at', 'is_PM', 'event_date']);
 
             foreach ($changedColumns as $column) {
                 $changed = '';
@@ -471,6 +489,7 @@ class RequestController extends Controller {
             $originalData = $model->toArray();
 
             $data = $request->except('_token', 'name', 'address', 'area', 'cp1_name', 'cp1_number', 'cp1_email', 'cp2_name', 'cp2_number', 'cp2_email', 'cp3_name', 'cp3_number', 'cp3_email');
+            $data['type'] = $type;
             $data['category'] = $category;
             $data['unit_type'] = $unit_type;
             $data['brand'] = $brand;
@@ -479,6 +498,8 @@ class RequestController extends Controller {
             $data['billing_type'] = $billing_type;
             $data['no_of_attendees'] = $no_of_attendees;
             $data['venue'] = $venue;
+            $data['plan_start_date'] = $plan_start_date;
+            $data['plan_end_date'] = $plan_end_date;
             $data['training_date'] = $event_date;
             $data['knowledge_of_participants'] = $knowledge_of_participants;
             $data['trainer'] = $trainer;
@@ -488,7 +509,7 @@ class RequestController extends Controller {
 
             $changedColumns = array_keys(array_diff_assoc($data, $originalData));
             $changedColumns = array_diff($changedColumns, ['updated_at', 'event_date']);
-
+            
             foreach ($changedColumns as $column) {
                 $changed = '';
 
@@ -502,6 +523,10 @@ class RequestController extends Controller {
                     $changed = 'Number of Attendees';
                 } else if ($column == 'no_of_unit') {
                     $changed = 'Number of Unit';
+                } else if ($column == 'plan_start_date') {
+                    $changed = 'Plan Start Date';
+                } else if ($column == 'plan_end_date') {
+                    $changed = 'Plan End Date';
                 } else if ($column == 'training_date') {
                     $changed = 'Training Date';
                 } else {
@@ -624,6 +649,7 @@ class RequestController extends Controller {
             'cp3_number' => $thisRequest->customer->cp3_number,
             'cp3_email' => $thisRequest->customer->cp3_email,
 
+            'type' => $thisRequest->type,
             'category' => $thisRequest->category,
             'is_PM' => $thisRequest->is_PM,
             'unit_type' => $thisRequest->unit_type,
