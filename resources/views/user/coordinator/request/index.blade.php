@@ -97,13 +97,10 @@
                                 <div class="col-span-2">Request Number: </div>
                                 <div id="req_number" class="col-span-4 text-lg font-semibold"></div>
 
-                                <div class="col-span-2">Start Date: </div>
-                                <div id="plan_start_date" class="col-span-4 text-lg font-semibold"></div>
+                                <div class="col-span-2">Planned Date: </div>
+                                <div class="col-span-4 text-lg font-semibold">From <span id="plan_start_date"></span> To <span id="plan_end_date"></span></div>
 
-                                <div class="col-span-2">Date: </div>
-                                <div id="plan_end_date" class="col-span-4 text-lg font-semibold"></div>
-
-                                <div class="col-span-2">Date: </div>
+                                <div class="col-span-2">Actual Date: </div>
                                 <div id="event_date" class="col-span-4 text-lg font-semibold"></div>
 
                                 <div class="col-span-2">Venue: </div>
@@ -405,6 +402,10 @@
                     },
                     success:function(result){
                         $('#req_number').html(result.req_number);
+
+                        $('#plan_start_date').html(result.plan_start_date);
+                        $('#plan_end_date').html(result.plan_end_date);
+
                         $('#event_date').html(result.event_date);
                         $('#venue').html(result.venue);
                         $('#trainer').html(result.trainer);

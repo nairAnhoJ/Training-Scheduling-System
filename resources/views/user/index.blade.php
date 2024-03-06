@@ -203,12 +203,18 @@
                 <!-- Modal content -->
                 <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 bg-blue-500 border-b rounded-t">
+                    <div class="flex items-center justify-between px-4 py-[14px] bg-blue-500 border-b rounded-t">
                         <h3 id="name" class="flex items-center text-xl font-semibold tracking-wide text-gray-900"></h3>
-                        <button type="button" class="closeViewEventModalButton text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewEventModal">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
+                        <div class="flex items-center">
+                            <a href="#" id="trainingAssessmentButton" class="text-gray-800 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="addEventModal">
+                                <span class="pt-1 mr-1">Training Assessment</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 -960 960 960"><script xmlns=""/><path d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h279v60H180v600h600v-279h60v279q0 24-18 42t-42 18H180Zm202-219-42-43 398-398H519v-60h321v321h-60v-218L382-339Z"/><script xmlns=""/></svg>
+                            </a>
+                            <button type="button" class="closeViewEventModalButton text-gray-800 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewEventModal">
+                                <span class="sr-only">Close modal</span>
+                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                        </div>
                     </div>
                     <!-- Modal body -->
                     <div class="p-6 overflow-y-hidden overflow-x-hidden h-[calc(100vh-220px)]">
@@ -412,18 +418,45 @@
                 </div>
             </div>
             {{-- Legends --}}
-            <div class="flex w-full gap-x-5">
-                <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
-                    <span class="flex w-3 h-3 bg-[#FE2C55] rounded-full mr-1.5 flex-shrink-0"></span>
-                    ALL
-                </span>
-                @foreach ($trainers as $trainer)
+                <div class="flex w-full gap-x-5">
                     <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
-                        <span class="flex w-3 h-3 bg-[{{ $trainer->color }}] rounded-full mr-1.5 flex-shrink-0"></span>
-                        {{ $trainer->first_name.' '.$trainer->last_name }}
+                        <span class="flex w-3 h-3 bg-[#FE2C55] rounded-full mr-1.5 flex-shrink-0"></span>
+                        ALL
                     </span>
-                @endforeach
-            </div>
+                    @foreach ($trainers as $trainer)
+                        <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
+                            <span class="flex w-3 h-3 bg-[{{ $trainer->color }}] rounded-full mr-1.5 flex-shrink-0"></span>
+                            {{ $trainer->first_name.' '.$trainer->last_name }}
+                        </span>
+                    @endforeach
+                </div>
+            {{-- Legends --}}
+            {{-- Controls --}}
+                <form method="GET" action="{{ route('dashboard.index') }}" class="flex items-center w-full mt-2 gap-x-3">
+                    <div>
+                        <label for="customer" class="mr-1">Customer: </label>
+                        <select name="customer" id="customer" class="h-8 px-2 rounded-lg max-w-72">
+                            <option value="">All</option>
+                            @foreach ($customers as $customer)
+                                <option {{ ($customerFilter == $customer->id) ? 'selected' : '' }} value="{{ $customer->id }}">{{ $customer->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label for="trainer" class="mr-1">Trainer: </label>
+                        <select name="trainer" id="trainer" class="h-8 px-2 rounded-lg max-w-72">
+                            <option value="">All</option>
+                            @foreach ($trainers as $trainer)
+                                <option {{ ($trainerFilter == $trainer->id) ? 'selected' : '' }} value="{{ $trainer->id }}">{{ $trainer->first_name.' '.$trainer->last_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="flex gap-x-3">
+                        <button type="submit" class="h-8 px-4 tracking-wide text-white bg-blue-500 rounded-lg hover:bg-blue-600 bold">FILTER</button>
+                        <a href="{{ route('dashboard.index') }}" class="flex items-center h-8 px-4 tracking-wide text-white bg-red-500 rounded-lg hover:bg-red-600 bold">CLEAR</a>
+                    </div>
+                </form>
+            {{-- Controls --}}
     
             <div id="calendar" class="mt-3"></div>
         </div>
@@ -508,6 +541,7 @@
                                 var cccdate = new Date();
 
                                 if(nnndate > cccdate){
+                                    $('#trainingAssessmentButton').addClass('hidden');
                                     $('#completeButton').addClass('hidden');
                                     $('#extendButton').addClass('hidden');
                                 }

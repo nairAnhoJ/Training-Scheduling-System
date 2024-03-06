@@ -629,6 +629,8 @@ class RequestController extends Controller {
         $result = array(
             'req_number' => $thisRequest->number,
             'status' => $thisRequest->status,
+            'plan_start_date' => $thisRequest->plan_start_date,
+            'plan_end_date' => $thisRequest->plan_end_date,
             'event_date' => $thisRequest->training_date,
             'venue' => $thisRequest->venue,
             'trainer' => $trainer_name,

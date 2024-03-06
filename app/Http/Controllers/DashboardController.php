@@ -18,12 +18,16 @@ class DashboardController extends Controller
         return view('user.dashboard');
     }
 
-    public function index(){
+    public function index(Request $request){
+        $customerFilter = $request->customer;
+        $trainerFilter = $request->trainer;
 
         $requestCount = ModelsRequest::where('is_approved', 0)->where('is_deleted', 0)->where('status', 'PENDING')->count();
         $trainingCount = ModelsRequest::where('is_approved', 1)->where('is_deleted', 0)->where('status', 'SCHEDULED')->count();
 
         $trainers = User::where('role', 2)->where('is_active', 1)->get();
+
+        $customers = Customer::where('is_deleted', 0)->where('is_active', 1)->orderBy('name', 'asc')->get();
 
         $events = ModelsRequest::with('customer', 'trainerName', 'comments')
             ->withCount(['comments' => function ($query) {
@@ -33,8 +37,14 @@ class DashboardController extends Controller
                 $query->where('plan_start_date', '!=', null)
                       ->orWhereIn('status', ['SCHEDULED', 'COMPLETED']);
             })
+            ->when($customerFilter !== null, function ($query) use ($customerFilter) {
+                return $query->where('customer_id', $customerFilter);
+            })
+            ->when($trainerFilter !== null, function ($query) use ($trainerFilter) {
+                return $query->where('trainer', $trainerFilter);
+            })
             ->where('trainer', '!=', null)
-            ->paginate(10);
+            ->get();
 
         // dd($events);
 
@@ -75,6 +85,9 @@ class DashboardController extends Controller
 
         $events2 = Event::leftJoin('tss_users', 'tss_events.trainer', '=', 'tss_users.id')
             ->select('tss_events.*', DB::raw('IF(tss_events.trainer = 0, "#FE2C55", tss_users.color) as color'))
+            ->when($trainerFilter !== null, function ($query) use ($trainerFilter) {
+                return $query->where('tss_events.trainer', $trainerFilter);
+            })
             ->get();
 
         foreach ($events2 as $event) {
@@ -97,7 +110,7 @@ class DashboardController extends Controller
 
         $role = Auth::user()->role;
 
-        return view('user.index', compact('events', 'eventArray', 'trainers', 'requestCount', 'trainingCount', 'role'));
+        return view('user.index', compact('events', 'eventArray', 'trainers', 'requestCount', 'trainingCount', 'role', 'customers', 'customers', 'customerFilter', 'trainerFilter'));
     }
 
     public function view(Request $request){

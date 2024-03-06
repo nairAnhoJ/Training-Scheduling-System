@@ -25,12 +25,12 @@
     {{-- CANCEL MODAL --}}
         <!-- Main modal -->
         <div id="confirmCancelModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-xl bg-white border-2 border-gray-300 shadow-2xl rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full max-w-xl overflow-x-hidden overflow-y-auto bg-white border-2 border-gray-300 rounded-lg shadow-2xl">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">CANCEL TRAINING</h3>
+                        <h3 class="flex items-center text-xl font-semibold tracking-wide text-gray-900">CANCEL TRAINING</h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="confirmCancelModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -53,13 +53,13 @@
     {{-- RESCHEDULE MODAL --}}
         <!-- Main modal -->
         <div id="rescheduleModal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-[60] hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 max-h-full">
-            <div class="relative w-full max-w-xl bg-white border-2 border-gray-300 shadow-2xl rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full max-w-xl overflow-x-hidden overflow-y-auto bg-white border-2 border-gray-300 rounded-lg shadow-2xl">
                 <!-- Modal content -->
-                <form method="POST" action="{{ route('trainings.reschedule') }}" class="relative shadow text-gray-700">
+                <form method="POST" action="{{ route('trainings.reschedule') }}" class="relative text-gray-700 shadow">
                     @csrf
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl tracking-wide font-semibold text-gray-900 flex items-center">RESCHEDULE TRAINING</h3>
+                        <h3 class="flex items-center text-xl font-semibold tracking-wide text-gray-900">RESCHEDULE TRAINING</h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="rescheduleModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -68,7 +68,7 @@
                     <!-- Modal body -->
                     <div class="p-6">
                         <input type="hidden" id="reschedKey" name="key">
-                        <div class="mb-3 w-full">
+                        <div class="w-full mb-3">
                             <label for="rescheduleDate" class="block text-sm font-semibold text-gray-600">Date</label>
                             <div class="relative w-full">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -94,12 +94,12 @@
         
         <!-- Main modal -->
         <div id="viewRequestModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 pt-8 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-full h-full bg-white rounded-lg overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full h-full max-w-full overflow-x-hidden overflow-y-auto bg-white rounded-lg">
                 <!-- Modal content -->
-                <div class="relative shadow text-gray-700">
+                <div class="relative text-gray-700 shadow">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t">
-                        <h3 id="name" class="text-xl tracking-wide font-semibold text-gray-900 flex items-center"></h3>
+                        <h3 id="name" class="flex items-center text-xl font-semibold tracking-wide text-gray-900"></h3>
                         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewRequestModal">
                             <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                             <span class="sr-only">Close modal</span>
@@ -110,96 +110,96 @@
                         <div class="col-span-3 border-r p-4 overflow-y-auto overflow-x-hidden h-[calc(100vh-268px)]">
                             <div class="grid grid-cols-6">
                                 <div class="col-span-2">Request Number: </div>
-                                <div id="req_number" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="req_number" class="col-span-4 text-lg font-semibold"></div>
 
                                 <div class="col-span-2">Date: </div>
-                                <div id="event_date" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="event_date" class="col-span-4 text-lg font-semibold"></div>
 
                                 <div class="col-span-2">Venue: </div>
-                                <div id="venue" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="venue" class="col-span-4 text-lg font-semibold"></div>
 
                                 <div class="col-span-2">Trainer: </div>
-                                <div id="trainer" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="trainer" class="col-span-4 text-lg font-semibold"></div>
 
                                 <div class="col-span-2">Status: </div>
-                                <div id="status" class="col-span-4 font-semibold text-lg"></div>
+                                <div id="status" class="col-span-4 text-lg font-semibold"></div>
                             </div>
 
                             <div class="mt-5">
                                 <div class="flex items-center">
-                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">CUSTOMER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                    <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">CUSTOMER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                 </div>
                                 <div class="grid grid-cols-6">
                                     <div class="col-span-2">Address: </div>
-                                    <div id="address" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="address" class="col-span-4 text-lg font-semibold"></div>
 
-                                    <h3 class="font-semibold col-span-6">Contact Person/s:</h3>
-                                    <div id="cp1_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 col-span-2">Name: </div>
-                                        <div id="cp1_name" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp1_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp1_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <h3 class="col-span-6 font-semibold">Contact Person/s:</h3>
+                                    <div id="cp1_div" class="grid grid-cols-6 col-span-6">
+                                        <div class="col-span-2 ml-10">Name: </div>
+                                        <div id="cp1_name" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div id="cp1_number" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">E-mail: </div>
+                                        <div id="cp1_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
 
-                                    <div id="cp2_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 mt-5 col-span-2">Name: </div>
-                                        <div id="cp2_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp2_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp2_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="cp2_div" class="grid grid-cols-6 col-span-6">
+                                        <div class="col-span-2 mt-5 ml-10">Name: </div>
+                                        <div id="cp2_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div id="cp2_number" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">E-mail: </div>
+                                        <div id="cp2_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
 
-                                    <div id="cp3_div" class="col-span-6 grid grid-cols-6">
-                                        <div class="ml-10 mt-5 col-span-2">Name: </div>
-                                        <div id="cp3_name" class="col-span-4 font-semibold text-lg mt-5"></div>
-                                        <div class="ml-10 col-span-2">Date: </div>
-                                        <div id="cp3_number" class="col-span-4 font-semibold text-lg"></div>
-                                        <div class="ml-10 col-span-2">E-mail: </div>
-                                        <div id="cp3_email" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="cp3_div" class="grid grid-cols-6 col-span-6">
+                                        <div class="col-span-2 mt-5 ml-10">Name: </div>
+                                        <div id="cp3_name" class="col-span-4 mt-5 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">Date: </div>
+                                        <div id="cp3_number" class="col-span-4 text-lg font-semibold"></div>
+                                        <div class="col-span-2 ml-10">E-mail: </div>
+                                        <div id="cp3_email" class="col-span-4 text-lg font-semibold"></div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-5">
                                 <div class="flex items-center">
-                                    <h1 class="text-xl mr-3 whitespace-nowrap text-gray-700 font-bold tracking-wider">OTHER DETAILS</h1><hr class="w-full whitespace-nowrap border-gray-500">
+                                    <h1 class="mr-3 text-xl font-bold tracking-wider text-gray-700 whitespace-nowrap">OTHER DETAILS</h1><hr class="w-full border-gray-500 whitespace-nowrap">
                                 </div>
                                 <div class="grid grid-cols-6">
                                     <div class="col-span-2">Area: </div>
-                                    <div id="area" class="col-span-4 font-semibold text-lg">NORTH</div>
+                                    <div id="area" class="col-span-4 text-lg font-semibold">NORTH</div>
                                     <div class="col-span-2">Category: </div>
-                                    <div id="category" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
-                                    <div id="con_details_div" class="col-span-6 grid grid-cols-6">
+                                    <div id="category" class="col-span-4 text-lg font-semibold">CHARGEABLE</div>
+                                    <div id="con_details_div" class="grid grid-cols-6 col-span-6">
                                         <div class="col-span-2">Contract Details: </div>
-                                        <a href="#" id="contract_details" target="_blank" class="col-span-4 font-semibold text-lg text-white bg-blue-500 rounded-lg w-40 tracking-wide text-center hover:scale-105">VIEW</a>
+                                        <a href="#" id="contract_details" target="_blank" class="w-40 col-span-4 text-lg font-semibold tracking-wide text-center text-white bg-blue-500 rounded-lg hover:scale-105">VIEW</a>
                                     </div>
                                     <div class="col-span-2">Brand: </div>
-                                    <div id="brand" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
+                                    <div id="brand" class="col-span-4 text-lg font-semibold">CHARGEABLE</div>
                                     <div class="col-span-2">Model: </div>
-                                    <div id="model" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
+                                    <div id="model" class="col-span-4 text-lg font-semibold">CHARGEABLE</div>
                                     <div class="col-span-2">Type of Unit: </div>
-                                    <div id="unit_type" class="col-span-4 font-semibold text-lg">RENTAL UNIT</div>
+                                    <div id="unit_type" class="col-span-4 text-lg font-semibold">RENTAL UNIT</div>
                                     <div class="col-span-2">Billing Type: </div>
-                                    <div id="billing_type" class="col-span-4 font-semibold text-lg">CHARGEABLE</div>
+                                    <div id="billing_type" class="col-span-4 text-lg font-semibold">CHARGEABLE</div>
                                     <div class="col-span-2">Number of Attendees: </div>
-                                    <div id="no_of_attendees" class="col-span-4 font-semibold text-lg">13</div>
+                                    <div id="no_of_attendees" class="col-span-4 text-lg font-semibold">13</div>
                                     <div class="col-span-2">Knowledge of Participants: </div>
-                                    <div id="knowledge_of_participants" class="col-span-4 font-semibold text-lg"></div>
+                                    <div id="knowledge_of_participants" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Notes: </div>
                                     <div class="col-span-4 font-semibold">
-                                        <textarea id="remarks" class="w-full border-0 ring-0 focus:ring-0 p-0 text-lg resize-none cursor-default" readonly></textarea>
+                                        <textarea id="remarks" class="w-full p-0 text-lg border-0 cursor-default resize-none ring-0 focus:ring-0" readonly></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="px-4 col-span-2 h-full overflow-x-hidden overflow-y-auto">
+                        <div class="h-full col-span-2 px-4 overflow-x-hidden overflow-y-auto">
                             <div class="relative">
-                                <div class="sticky top-0 bg-white py-2">
+                                <div class="sticky top-0 py-2 bg-white">
                                     <div class="flex items-center mb-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="h-6 w-6"><path d="M477-120q-149 0-253-105.5T120-481h60q0 125 86 213t211 88q127 0 215-89t88-216q0-124-89-209.5T477-780q-68 0-127.5 31T246-667h105v60H142v-208h60v106q52-61 123.5-96T477-840q75 0 141 28t115.5 76.5Q783-687 811.5-622T840-482q0 75-28.5 141t-78 115Q684-177 618-148.5T477-120Zm128-197L451-469v-214h60v189l137 134-43 43Z"/></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6"><path d="M477-120q-149 0-253-105.5T120-481h60q0 125 86 213t211 88q127 0 215-89t88-216q0-124-89-209.5T477-780q-68 0-127.5 31T246-667h105v60H142v-208h60v106q52-61 123.5-96T477-840q75 0 141 28t115.5 76.5Q783-687 811.5-622T840-482q0 75-28.5 141t-78 115Q684-177 618-148.5T477-120Zm128-197L451-469v-214h60v189l137 134-43 43Z"/></svg>
                                         <h3 class="ml-1">History Logs</h3>
                                     </div>
                                     <hr>
@@ -226,13 +226,13 @@
         <nav class="w-screen bg-red-500 h-14">
             <div class="flex justify-between h-full">
                 <div class="w-32 h-full p-2.5">
-                    <a href="{{ url('') }}" onclick="$('#loading').toggleClass('hidden');" class="bg-white text-red-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex items-center pl-4">
+                    <a href="{{ url('') }}" onclick="$('#loading').toggleClass('hidden');" class="flex items-center w-full h-full pl-4 font-black tracking-wider text-red-600 bg-white shadow-lg rounded-xl hover:scale-105">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-4 h-4"><path xmlns="http://www.w3.org/2000/svg" d="M810,220L360,-230l450-450v900Z" fill="currentColor" transform="translate(137-250)"/></svg>
                         <span class="h-full leading-[39px] ml-1">BACK</span>
                     </a>
                 </div>
                 <div class="w-36 h-full p-2.5">
-                    <a href="{{ route('login') }}" onclick="$('#loading').toggleClass('hidden');" class="bg-white text-red-600 w-full h-full rounded-xl hover:scale-105 shadow-lg font-black tracking-wider flex justify-center items-center">
+                    <a href="{{ route('login') }}" onclick="$('#loading').toggleClass('hidden');" class="flex items-center justify-center w-full h-full font-black tracking-wider text-red-600 bg-white shadow-lg rounded-xl hover:scale-105">
                         <span>LOGIN</span>
                     </a>
                 </div>
@@ -240,19 +240,19 @@
         </nav>
     @endif
 
-    <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-        <div class="bg-white shadow-xl rounded-lg p-3 h-full">
-            <div class="overflow-hidden rounded-lg p-4">
+    <div class="w-full p-5 bg-gray-200">
+        <div class="h-full p-3 bg-white rounded-lg shadow-xl">
+            <div class="p-4 overflow-hidden rounded-lg">
                 {{-- CONTROLS --}}
                     @csrf
                     <div class="mb-3">
                         <div class="flex flex-row-reverse">
                             {{-- <div class="w-24 mb-3 md:mb-0">
-                                <a href="{{ route('request.add') }}" class="flex justify-center items-center text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm py-2 focus:outline-none mt-px">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 mr-1" fill="currentColor" viewBox="0 -960 960 960"><path d="M440.391-190.391v-250h-250v-79.218h250v-250h79.218v250h250v79.218h-250v250h-79.218Z"/></svg>
+                                <a href="{{ route('request.add') }}" class="flex items-center justify-center py-2 mt-px text-sm font-semibold text-white bg-blue-600 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 transition duration-75" fill="currentColor" viewBox="0 -960 960 960"><path d="M440.391-190.391v-250h-250v-79.218h250v-250h79.218v250h250v79.218h-250v250h-79.218Z"/></svg>
                                     <span>ADD</span></a>
                             </div> --}}
-                            <div class="justify-self-end w-full xl:w-2/5">
+                            <div class="w-full justify-self-end xl:w-2/5">
                                 <form method="POST" action="{{ route('trainings.search') }}" id="searchForm" class="w-full">
                                     @csrf
                                     <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
@@ -262,7 +262,7 @@
                                         </div>
                                         <input type="search" id="search" name="search" class="block z-10 w-full px-4 py-2.5 pl-10 text-sm text-gray-500 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="SEARCH" value="{{ $search }}" autocomplete="off">
                                         <button id="clearButton" type="button" class="absolute right-20 bottom-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 transition duration-75 group-hover:text-gray-900 mr-1 text-gray-500" fill="currentColor" viewBox="0 -960 960 960"><path d="M249-193.434 193.434-249l231-231-231-231L249-766.566l231 231 231-231L766.566-711l-231 231 231 231L711-193.434l-231-231-231 231Z"/></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 -960 960 960"><path d="M249-193.434 193.434-249l231-231-231-231L249-766.566l231 231 231-231L766.566-711l-231 231 231 231L711-193.434l-231-231-231 231Z"/></svg>
                                         </button>
                                         <button id="searchSubmit" type="submit" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
                                     </div>
@@ -275,7 +275,7 @@
                 <div>
                     {{-- TABLE --}}
                         <div class="hidden md:block">
-                            <div id="inventoryTable" class="overflow-auto w-full shadow-md sm:rounded-lg">
+                            <div id="inventoryTable" class="w-full overflow-auto shadow-md sm:rounded-lg">
                                 <table class="w-full text-sm text-left text-gray-500">
                                     <thead class="text-xs text-gray-600 uppercase bg-gray-100">
                                         <tr>
@@ -315,11 +315,11 @@
                                                     $sColor = 'text-red-600';
                                                 }
                                             @endphp
-                                            <tr class="requestRow bg-white border-b cursor-pointer hover:bg-gray-200 even:bg-gray-100">
+                                            <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 @if (Auth::check())
                                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                                         @if ($request->status == 'SCHEDULED')
-                                                            <a href="{{ url('/trainings/edit/'.$request->key) }}" class="editButton text-blue-600 hover:underline font-semibold text-sm">Edit</a>
+                                                            <a href="{{ url('/trainings/edit/'.$request->key) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a>
                                                         @endif
                                                     </td>
                                                 @endif
@@ -377,19 +377,19 @@
                                         <div class="px-3 py-1.5 font-light border border-b border-gray-200">
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Date</div>
-                                                <div class=" font-semibold text-sm">
+                                                <div class="text-sm font-semibold ">
                                                     {{ date('F j, Y', strtotime($request->training_date)) }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Area</div>
-                                                <div class=" font-semibold text-sm">
+                                                <div class="text-sm font-semibold ">
                                                     {{ $request->area }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5">Trainer</div>
-                                                <div class="font-semibold text-sm">
+                                                <div class="text-sm font-semibold">
                                                     {{ $request->first_name.' '.$request->last_name }}
                                                 </div>
                                             </div>
@@ -403,10 +403,10 @@
                                                 <div class="text-xs leading-5">Action</div>
                                                 <div class="">
                                                     @if ($request->status == 'SCHEDULED')
-                                                        <a href="{{ url('/trainings/edit/'.$request->key) }}" class="text-blue-600 hover:underline font-semibold text-sm">Edit</a>
+                                                        <a href="{{ url('/trainings/edit/'.$request->key) }}" class="text-sm font-semibold text-blue-600 hover:underline">Edit</a>
                                                     @endif
                                                      {{-- | 
-                                                     <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="deleteButton text-red-600 hover:underline font-semibold text-sm">Delete</button> --}}
+                                                     <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="text-sm font-semibold text-red-600 deleteButton hover:underline">Delete</button> --}}
                                                 </div>
                                             </div>
                                         </div>
