@@ -206,7 +206,7 @@
         </div>
     {{-- VIEW EVENT MODAL END --}}
 
-    <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
+    <div class="w-full p-5 bg-gray-200">
         <div class="h-full p-3 bg-white rounded-lg shadow-xl">
             <div class="p-4 overflow-hidden rounded-lg">
                 {{-- CONTROLS --}}

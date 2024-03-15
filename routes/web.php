@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendeesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
@@ -13,10 +14,13 @@ use App\Http\Controllers\LogsController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WrittenExamController;
+use App\Models\Attendees;
 use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Request;
 use App\Models\User;
+use App\Models\WrittenExam;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -150,6 +154,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/trainings/delete/{key}', [TrainingController::class, 'delete'])->name('trainings.delete');
     Route::post('/trainings/update/{key}', [TrainingController::class, 'update'])->name('trainings.update');
     Route::get('/training/cancel/{key}', [TrainingController::class, 'cancel'])->name('dashboard.cancel');
+
+    // TRAINING ASSESSMENT
+    Route::get('/training-assessment', [AttendeesController::class, 'index'])->name('attendees');
+    
+    Route::get('/written-exam-questions', [WrittenExamController::class, 'index'])->name('questions.index');
+    Route::get('/written-exam-questions/add', [WrittenExamController::class, 'add'])->name('questions.add');
 
     // CUSTOMER
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');

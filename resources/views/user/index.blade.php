@@ -206,10 +206,13 @@
                     <div class="flex items-center justify-between px-4 py-[14px] bg-blue-500 border-b rounded-t">
                         <h3 id="name" class="flex items-center text-xl font-semibold tracking-wide text-gray-900"></h3>
                         <div class="flex items-center">
-                            <a href="#" id="trainingAssessmentButton" class="text-gray-800 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="addEventModal">
-                                <span class="pt-1 mr-1">Training Assessment</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 -960 960 960"><script xmlns=""/><path d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h279v60H180v600h600v-279h60v279q0 24-18 42t-42 18H180Zm202-219-42-43 398-398H519v-60h321v321h-60v-218L382-339Z"/><script xmlns=""/></svg>
-                            </a>
+                            <form action="{{ route('attendees') }}" method="GET">
+                                <input type="hidden" name="key" id="taKey">
+                                <button class="text-gray-800 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="addEventModal">
+                                    <span class="pt-1 mr-1 font-semibold">Training Assessment</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 -960 960 960"><script xmlns=""/><path d="M180-120q-24 0-42-18t-18-42v-600q0-24 18-42t42-18h279v60H180v600h600v-279h60v279q0 24-18 42t-42 18H180Zm202-219-42-43 398-398H519v-60h321v321h-60v-218L382-339Z"/><script xmlns=""/></svg>
+                                </button>
+                            </form>
                             <button type="button" class="closeViewEventModalButton text-gray-800 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="viewEventModal">
                                 <span class="sr-only">Close modal</span>
                                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -501,7 +504,6 @@
                     id = calEvent.event.id;
                     var isTraining = calEvent.event.extendedProps.isTraining;
                     var _token = $('input[name="_token"]').val();
-                    console.log(calEvent.event.extendedProps.notificationCount);
 
                     if(isTraining){
                         $.ajax({
@@ -513,6 +515,7 @@
                                 _token: _token
                             },
                             success:function(result){
+                                $('#taKey').val(result.key);
                                 $('#status').html(result.status);
 
                                 $('#status').removeClass('text-orange-500');
@@ -642,7 +645,6 @@
                 },
                 events: eventArray,
                 eventDidMount: function(calEvent) {
-                    console.log(calEvent.event);
                     $('.fc-event-title-container').css('padding-right', '13px');
                     // var eventTitleElement = calEvent.el.querySelector('.fc-title');
                     // eventTitleElement.addClass()
@@ -680,6 +682,10 @@
 
             $('#confirmCancelButton').click(function(){
                 window.location.href = `/schedule-board/cancel/${id}`;
+            });
+
+            $('#trainingAssessmentButton').click(function(){
+                window.location.href = `/training-assessment/${key}`;
             });
 
             $('input').keypress(function(event) {

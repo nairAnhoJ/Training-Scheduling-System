@@ -121,7 +121,6 @@ class DashboardController extends Controller
             ->where('tss_requests.key', $id)
             ->first();
 
-        
         $com = '';
 
         // $comments = Comment::select('tss_comments.key', DB::raw('MAX(tss_comments.content) as content'), DB::raw('MAX(tss_comments.created_at) as created_at'), DB::raw('MAX(tss_users.first_name) as ufname'), DB::raw('MAX(tss_users.last_name) as ulname'))
