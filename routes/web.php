@@ -160,6 +160,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/written-exam-questions', [WrittenExamController::class, 'index'])->name('questions.index');
     Route::get('/written-exam-questions/add', [WrittenExamController::class, 'add'])->name('questions.add');
+    Route::post('/written-exam-questions/store', [WrittenExamController::class, 'store'])->name('questions.store');
 
     // CUSTOMER
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');

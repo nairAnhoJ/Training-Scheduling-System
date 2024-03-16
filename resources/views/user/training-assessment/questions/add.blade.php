@@ -20,10 +20,11 @@
     <div class="w-full p-5 bg-gray-200">
         <div class="min-h-[calc(100vh-96px)] p-3 bg-white rounded-lg shadow-xl">
             <div class="p-4 overflow-hidden rounded-lg">
-                <form action="">
+                <form action="{{ route('questions.store') }}" method="POST">
+                    @csrf
                     <h2 class="mb-2 text-lg font-bold">ADD QUESTION</h2>
                     <div class="mb-3">
-                        <label for="type" class="block text-sm font-semibold text-gray-600">Type</label>
+                        <label for="type" class="block text-sm font-semibold text-gray-600">Type <span class="text-red-500">*</span></label>
                         <select id="type" name="type" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                             <option hidden value=""></option>
                             <option value="MultipleChoice">Multiple Choice</option>
@@ -31,15 +32,20 @@
                             <option value="TrueOrFalse">True or False</option>
                             <option value="Enumeration">Enumeration</option>
                         </select>
+                        @error('type')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="w-full mb-3">
-                        <label for="question" class="block text-sm font-semibold text-gray-600">Question</label>
+                        <label for="question" class="block text-sm font-semibold text-gray-600">Question <span class="text-red-500">*</span></label>
                         <textarea name="question" id="question" rows="3" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5"></textarea>
-                        {{-- <input type="text" id="question" name="question" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off"> --}}
+                        @error('question')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
-                    <div class="w-full mb-3">
+                    <div id="optionsMainDiv" class="hidden w-full mb-3">
                         <div class="flex justify-between mb-2">
-                            <label class="block text-sm font-semibold text-gray-600">Options</label>
+                            <label class="block text-sm font-semibold text-gray-600">Options <span class="text-red-500">*</span></label>
                             <button type="button" id="addOption" class="text-blue-500 hover:text-blue-600">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 -960 960 960" class="w-5 h-5">
                                     <script xmlns=""/>
@@ -49,19 +55,25 @@
                             </button>
                         </div>
                         <div id="optionDiv">
-                            <div class="flex items-center w-full mb-2 gap-x-1">
-                                <label for="option1" class="block text-sm font-semibold text-gray-600">A.</label>
+                            <div class="flex items-center w-full gap-x-1">
+                                <label for="option1" class="block w-4 text-sm font-semibold text-gray-600">A.</label>
                                 <input type="text" id="option1" name="option1" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                             </div>
                         </div>
                     </div>
                     <div class="w-full mb-3">
-                        <label for="answer" class="block text-sm font-semibold text-gray-600">Answer</label>
+                        <label for="answer" class="block text-sm font-semibold text-gray-600">Answer <span class="text-red-500">*</span></label>
                         <input type="text" id="answer" name="answer" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        @error('answer')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="w-full mb-3">
-                        <label for="points" class="block text-sm font-semibold text-gray-600">Points</label>
+                        <label for="points" class="block text-sm font-semibold text-gray-600">Points <span class="text-red-500">*</span></label>
                         <input type="text" id="points" value="1" name="points" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        @error('points')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="flex flex-col gap-2 mt-5 gap-x-8">
                         <button type="submit" class="w-full py-2 font-bold tracking-wider text-white bg-blue-500 rounded-lg md:w-1/2 hover:scale-[101%]">SAVE</button>
@@ -77,14 +89,25 @@
             var x = 2;
             var a = 64;
             $('#addOption').click(function(){
-                var letter = String.fromCharCode(x+a);
-                $('#optionDiv').append(`
-                    <div class="flex items-center w-full mb-2 gap-x-1">
-                        <label for="option${x}" class="block text-sm font-semibold text-gray-600">${letter}.</label>
-                        <input type="text" id="option${x}" name="option${x}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
-                    </div>
-                `);
-                x++;
+                if(x <= 10){
+                    var letter = String.fromCharCode(x+a);
+                    $('#optionDiv').append(`
+                        <div class="flex items-center w-full mt-2 gap-x-1">
+                            <label for="option${x}" class="block w-4 text-sm font-semibold text-gray-600">${letter}.</label>
+                            <input type="text" id="option${x}" name="option${x}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        </div>
+                    `);
+                    x++;
+                }
+            });
+
+            $('#type').on('change', function(){
+                var type = $(this).val();
+                if(type === 'MultipleChoice'){
+                    $('#optionsMainDiv').removeClass('hidden')
+                }else{
+                    $('#optionsMainDiv').addClass('hidden')
+                }
             });
         });
     </script>

@@ -3,19 +3,19 @@
 @section('content')
 
     <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-        <div class="bg-white shadow-xl rounded-lg py-5 pl-5 pr-8 h-full max-h-full overflow-y-auto">
+        <div class="h-full max-h-full py-5 pl-5 pr-8 overflow-y-auto bg-white rounded-lg shadow-xl">
             <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div>
-                    <div class="mb-3 w-full">
+                    <div class="w-full mb-3">
                         <label for="first_name" class="block text-sm font-semibold text-gray-600">First Name <span class="text-red-500">*</span></label>
                         <input type="text" id="first_name" name="first_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                     </div>
-                    <div class="mb-3 w-full">
+                    <div class="w-full mb-3">
                         <label for="last_name" class="block text-sm font-semibold text-gray-600">Last Name <span class="text-red-500">*</span></label>
                         <input type="text" id="last_name" name="last_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                     </div>
-                    <div class="mb-3 w-full">
+                    <div class="w-full mb-3">
                         <label for="id_number" class="block text-sm font-semibold text-gray-600">ID Number <span class="text-red-500">*</span></label>
                         <input type="text" id="id_number" name="id_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                     </div>
@@ -29,7 +29,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-3 w-full">
+                    <div class="w-full mb-3">
                         <label for="email" class="block text-sm font-semibold text-gray-600">E-mail <span class="text-red-500">*</span></label>
                         <input type="text" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                     </div>
@@ -45,16 +45,16 @@
                     </div>
                 </div>
 
-                <div id="colorDiv" class="mb-3 w-full opacity-50">
+                <div id="colorDiv" class="w-full mb-3 opacity-50">
                     <label for="color" class="block text-sm font-semibold text-gray-600">Color <span class="text-red-500">*</span></label>
                     <input disabled type="color" id="color" name="color" id="favcolor" name="favcolor" value="#3B82F6" class="w-80 h-9">
                 </div>
 
 
 
-                <div class="mt-5 flex gap-x-8">
-                    <button class="bg-blue-500 w-1/2 py-2 rounded-lg text-white font-bold tracking-wider hover:scale-105">SAVE</button>
-                    <a href="{{ route('users.index') }}" class="bg-gray-500 w-1/2 py-2 rounded-lg text-white font-bold tracking-wider hover:scale-105 text-center">BACK</a>
+                <div class="flex mt-5 gap-x-8">
+                    <button class="w-1/2 py-2 font-bold tracking-wider text-white bg-blue-500 rounded-lg hover:scale-105">SAVE</button>
+                    <a href="{{ route('users.index') }}" class="w-1/2 py-2 font-bold tracking-wider text-center text-white bg-gray-500 rounded-lg hover:scale-105">BACK</a>
                 </div>
             </form>
         </div>

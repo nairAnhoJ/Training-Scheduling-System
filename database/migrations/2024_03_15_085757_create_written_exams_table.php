@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('type', 20); // MultipleChoice , ShortAnswer , TrueOrFalse , Enumeration
             $table->text('question');
             $table->string('answer', 200);
-            $table->text('options');
+            $table->text('options')->nullable();
             $table->integer('points');
             $table->timestamps();
         });
