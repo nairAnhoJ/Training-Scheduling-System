@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'EXAM QUESTIONS')
+@section('title', 'WRITTEN EXAM')
 @section('content')
 
     @if(session('success'))
@@ -15,6 +15,42 @@
             </button>
         </div>
     @endif
+    
+    {{-- HISTORY MODAL --}}
+        <div id="deleteModal" class="hidden absolute top-0 left-0 w-screen h-screen bg-gray-900 z-[109] !bg-opacity-50 overflow-hidden flex items-center justify-center p-5">
+            <div class="w-5/6 bg-white rounded-lg">
+                <!-- Modal content -->
+                <form action="{{ route('exam.delete') }}" method="POST" class="relative h-full bg-white rounded-lg shadow">
+                    @csrf
+                    <input type="hidden" name="key" class="modalKey">
+                    <!-- Modal header -->
+                    <div class="flex items-start justify-between p-4 border-b rounded-t">
+                        <h3 class="text-xl font-semibold text-gray-900">
+                            Delete
+                        </h3>
+                        <button type="button" id="closeDeleteModal" class="inline-flex items-center justify-center w-8 h-8 ml-auto text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="!m-0 overflow-scroll sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="flex items-start justify-center px-10 py-4 overflow-x-hidden overflow-y-auto">
+                        <div class="w-full text-sm">
+                            <p>Are you sure you want to permanently delete this exam?</p>
+                            <p class="mt-3 italic">Note: Deleting this will also delete the questions in this exam?</p>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
+                        <button type="submit" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-red-200 text-sm font-bold md:w-24 w-1/2 py-2.5 focus:z-10">YES</button>
+                        <button type="button" id="closeDeleteModal" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-bold md:w-24 w-1/2 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {{-- HISTORY MODAL// --}}
 
 
     <div class="w-full p-5 bg-gray-200">
@@ -25,7 +61,7 @@
                     <div class="mb-3">
                         <div class="md:grid md:grid-cols-2">
                             <div class="w-24 mb-3 md:mb-0">
-                                <a href="{{ route('questions.add') }}" class="flex items-center justify-center py-2 mt-px text-sm font-semibold text-white bg-blue-600 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 focus:outline-none">
+                                <a href="{{ route('exam.add') }}" class="flex items-center justify-center py-2 mt-px text-sm font-semibold text-white bg-blue-600 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 transition duration-75" fill="currentColor" viewBox="0 -960 960 960"><path d="M440.391-190.391v-250h-250v-79.218h250v-250h79.218v250h250v79.218h-250v250h-79.218Z"/></svg>
                                     <span>ADD</span></a>
                             </div>
@@ -60,33 +96,21 @@
                                                 Action
                                             </th>
                                             <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                                                Question
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Type
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Point/s
+                                                Name
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($questions as $question)
+                                        @foreach ($exams as $exam)
                                             <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/requests/edit/'.$question->id) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $question->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Decline</button>
+                                                    <a href="{{ url('/requests/edit/'.$exam->id) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | <button type="button" data-key="{{ $exam->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Decline</button>
                                                 </td>
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                    <span data-key="{{ $question->key }}">
-                                                        {{ $question->question }}
+                                                    <span data-key="{{ $exam->key }}">
+                                                        {{ $exam->name }}
                                                     </span>
                                                 </th>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $question->type }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $question->points }}
-                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -101,32 +125,21 @@
                                 @php
                                     $x = 1;
                                 @endphp
-                                @foreach ($questions as $question)
+                                @foreach ($exams as $exam)
                                     <h2 id="accordion-collapse-heading-{{$x}}">
                                         <button type="button" class="flex items-center justify-between w-full px-3 py-1.5 text-sm font-semibold text-left text-gray-600 border  border-gray-200 {{ $x == 1 ? 'rounded-t-xl border-b-0' : 'border-b' }} hover:bg-gray-100 focus:bg-gray-200 focus:text-gray-700" data-accordion-target="#accordion-collapse-body-{{$x}}" aria-expanded="false" aria-controls="accordion-collapse-body-{{$x}}">
-                                            <span>{{ $question->question }}</span>
+                                            <span>{{ $exam->name }}</span>
                                             <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                         </button>
                                     </h2>
                                     <div id="accordion-collapse-body-{{$x}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$x}}">
                                         <div class="px-3 py-1.5 font-light border border-b border-gray-200">
-                                            <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Type</div>
-                                                <div class="text-sm font-semibold ">
-                                                    {{ $question->type }}
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Points</div>
-                                                <div class="text-sm font-semibold ">
-                                                    {{ $question->points }}
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Action</div>
-                                                <div class="">
-                                                    <a href="{{ url('/requests/edit/'.$question->id) }}" class="text-sm font-semibold text-blue-600 hover:underline">Edit</a> | 
-                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $question->id }}" class="text-sm font-semibold text-red-600 deleteButton hover:underline">Delete</button>
+                                            <div class="grid grid-cols-3">
+                                                <div class="flex items-center text-xs leading-5"><span>Action</span></div>
+                                                <div class="col-span-2 ">
+                                                    <a href="{{ url('/written-exam-questions?key='.$exam->key) }}" class="text-sm font-semibold text-blue-600 hover:underline">View</a> | 
+                                                    <a href="{{ url('/written-exam-questions/edit?exam='.$exam->key) }}" class="text-sm font-semibold text-blue-600 hover:underline">Edit</a> | 
+                                                    <button type="button" data-key="{{ $exam->key }}" class="text-sm font-semibold text-red-600 deleteButton hover:underline">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,7 +158,12 @@
 
     <script>
         $(document).ready(function(){
-            
+            $('.deleteButton').on('click', function(){
+                var key = $(this).data('key');
+                $('.modalKey').val(key);
+
+                $('#deleteModal').removeClass('hidden');
+            });
         });
     </script>
 @endsection

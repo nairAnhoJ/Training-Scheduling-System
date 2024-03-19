@@ -13,11 +13,8 @@ return new class extends Migration
     {
         Schema::create('tss_written_exams', function (Blueprint $table) {
             $table->id();
-            $table->string('type', 20); // MultipleChoice , ShortAnswer , TrueOrFalse , Enumeration
-            $table->text('question');
-            $table->string('answer', 200);
-            $table->text('options')->nullable();
-            $table->integer('points');
+            $table->string('name');
+            $table->string('key', 50);
             $table->timestamps();
         });
     }

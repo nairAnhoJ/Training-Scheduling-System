@@ -4,34 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\WrittenExam;
+use App\Models\WrittenExamQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class WrittenExamController extends Controller
 {
     public function index(Request $request){
-        $questions = WrittenExam::get();
+        $exams = WrittenExam::get();
 
-        return view('user.training-assessment.questions.index', compact('questions'));
+        return view('user.training-assessment.exam.written.index', compact('exams'));
     }
 
     public function add(){
-        return view('user.training-assessment.questions.add');
+        return view('user.training-assessment.exam.written.add');
     }
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
-            'type' => 'required',
-            'question' => 'required',
-            'answer' => 'required',
-            'points' => 'required',
+            'name' => 'required',
         ]);
 
         $customMessages = [
-            'type.required' => 'Please select an option from the list.',
-            'question.required' => 'Please provide the required information.',
-            'answer.required' => 'Please provide the required information.',
-            'points.required' => 'Please provide the required information.',
+            'name.required' => 'Please provide the required information.',
         ];
 
         $validator->setCustomMessages($customMessages);
@@ -40,34 +36,50 @@ class WrittenExamController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $type = $request->type;
-        $question = $request->question;
-        $answer = $request->answer;
-        $points = $request->points;
-        $firstOption = 0;
+        $name = $request->name;
 
-        $examQuestion = new WrittenExam();
-        $examQuestion->type = $type;
-        $examQuestion->question = $question;
-        $examQuestion->answer = $answer;
-        $examQuestion->points = $points;
-        if($type == 'MultipleChoice'){
-            $options = '';
-            for ($i=1; $i < 11; $i++) {
-                $var = 'option'.$i;
-                if($request->$var != null){
-                    if($firstOption == 1){
-                        $options .= ','.$request->$var;
-                    }else{
-                        $options .= $request->$var;
-                        $firstOption = 1;
-                    }
-                }
-            }
+        $exam = new WrittenExam();
+        $exam->name = $name;
+        $exam->key = Str::uuid()->toString();
+        $exam->save();
+
+        return redirect()->route('exam.index')->with('success', 'New Exam Has Been Added Successfully!');
+    }
+
+    public function edit(Request $request){
+        $exam = WrittenExam::where('key', $request->exam)->first();
+
+        return view('user.training-assessment.exam.written.edit', compact('exam'));
+    }
+
+    public function update(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+
+        $customMessages = [
+            'name.required' => 'Please provide the required information.',
+        ];
+
+        $validator->setCustomMessages($customMessages);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        $examQuestion->options = $options;
-        $examQuestion->save();
 
-        return redirect()->route('questions.index')->with('success', 'Question Has Been Added Successfully!');
+        $name = $request->name;
+
+        $exam = WrittenExam::where('key', $request->key)->first();
+        $exam->name = $name;
+        $exam->save();
+
+        return redirect()->route('exam.index')->with('success', 'Exam Title Has Been Updated Successfully!');
+    }
+
+    public function delete(Request $request){
+        WrittenExam::where('key', $request->key)->delete();
+        WrittenExamQuestion::where('exam_key', $request->key)->delete();
+
+        return redirect()->route('exam.index')->with('success', 'Exam Has Been Deleted Successfully!');
     }
 }

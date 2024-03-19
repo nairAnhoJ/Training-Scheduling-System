@@ -15,12 +15,14 @@ use App\Http\Controllers\RequestController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WrittenExamController;
+use App\Http\Controllers\WrittenExamQuestionController;
 use App\Models\Attendees;
 use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Request;
 use App\Models\User;
 use App\Models\WrittenExam;
+use App\Models\WrittenExamQuestion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -158,9 +160,19 @@ Route::middleware('auth')->group(function () {
     // TRAINING ASSESSMENT
     Route::get('/training-assessment', [AttendeesController::class, 'index'])->name('attendees');
     
-    Route::get('/written-exam-questions', [WrittenExamController::class, 'index'])->name('questions.index');
-    Route::get('/written-exam-questions/add', [WrittenExamController::class, 'add'])->name('questions.add');
-    Route::post('/written-exam-questions/store', [WrittenExamController::class, 'store'])->name('questions.store');
+    Route::get('/written-exam', [WrittenExamController::class, 'index'])->name('exam.index');
+    Route::get('/written-exam/add', [WrittenExamController::class, 'add'])->name('exam.add');
+    Route::post('/written-exam/store', [WrittenExamController::class, 'store'])->name('exam.store');
+    Route::get('/written-exam/edit', [WrittenExamController::class, 'edit'])->name('exam.edit');
+    Route::post('/written-exam/update', [WrittenExamController::class, 'update'])->name('exam.update');
+    Route::post('/written-exam/delete', [WrittenExamController::class, 'delete'])->name('exam.delete');
+    
+    Route::get('/written-exam-questions', [WrittenExamQuestionController::class, 'index'])->name('question.index');
+    Route::get('/written-exam-questions/add', [WrittenExamQuestionController::class, 'add'])->name('question.add');
+    Route::post('/written-exam-questions/store', [WrittenExamQuestionController::class, 'store'])->name('question.store');
+    Route::get('/written-exam-questions/edit', [WrittenExamQuestionController::class, 'edit'])->name('question.edit');
+    Route::post('/written-exam-questions/update', [WrittenExamQuestionController::class, 'update'])->name('question.update');
+    // Route::post('/written-exam-questions/delete', [WrittenExamQuestionController::class, 'delete'])->name('question.delete');
 
     // CUSTOMER
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');

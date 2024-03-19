@@ -85,5 +85,19 @@
         
         @yield('content')
     </div>
+
+    <script>
+        $(document).ready(function(){
+            jQuery(document).on( "input", ".numberOnly", function(){
+                var inputValue = $(this).val();
+                inputValue = inputValue.replace(/[^0-9.]/g, '');
+                var periods = inputValue.split('.');
+                if (periods.length > 2) {
+                    inputValue = periods[0] + '.' + periods.slice(1).join('');
+                }
+                $(this).val(inputValue);
+            });
+        });
+    </script>
 </body>
 </html>

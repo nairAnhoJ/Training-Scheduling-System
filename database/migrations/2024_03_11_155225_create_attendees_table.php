@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->string('training_key', 50);
             $table->string('name', 100);
+            $table->integer('written_exam_key')->nullable();
             $table->integer('written_score')->nullable();
             $table->integer('driving_score')->nullable();
             $table->string('key');

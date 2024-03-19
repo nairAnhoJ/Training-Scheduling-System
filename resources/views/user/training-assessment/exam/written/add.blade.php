@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'EXAM QUESTIONS')
+@section('title', 'WRITTEN EXAM')
 @section('content')
 
     @if(session('success'))
@@ -20,10 +20,10 @@
     <div class="w-full p-5 bg-gray-200">
         <div class="min-h-[calc(100vh-96px)] p-3 bg-white rounded-lg shadow-xl">
             <div class="p-4 overflow-hidden rounded-lg">
-                <form action="{{ route('questions.store') }}" method="POST">
+                <form action="{{ route('exam.store') }}" method="POST" class="max-w-[500px]">
                     @csrf
-                    <h2 class="mb-2 text-lg font-bold">ADD QUESTION</h2>
-                    <div class="mb-3">
+                    <h2 class="mb-2 text-lg font-bold">ADD EXAM</h2>
+                    {{-- <div class="mb-3">
                         <label for="type" class="block text-sm font-semibold text-gray-600">Type <span class="text-red-500">*</span></label>
                         <select id="type" name="type" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                             <option hidden value=""></option>
@@ -35,15 +35,15 @@
                         @error('type')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
-                    </div>
-                    <div class="w-full mb-3">
+                    </div> --}}
+                    {{-- <div class="w-full mb-3">
                         <label for="question" class="block text-sm font-semibold text-gray-600">Question <span class="text-red-500">*</span></label>
                         <textarea name="question" id="question" rows="3" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5"></textarea>
                         @error('question')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
-                    </div>
-                    <div id="optionsMainDiv" class="hidden w-full mb-3">
+                    </div> --}}
+                    {{-- <div id="optionsMainDiv" class="hidden w-full mb-3">
                         <div class="flex justify-between mb-2">
                             <label class="block text-sm font-semibold text-gray-600">Options <span class="text-red-500">*</span></label>
                             <button type="button" id="addOption" class="text-blue-500 hover:text-blue-600">
@@ -60,24 +60,24 @@
                                 <input type="text" id="option1" name="option1" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="w-full mb-3">
-                        <label for="answer" class="block text-sm font-semibold text-gray-600">Answer <span class="text-red-500">*</span></label>
-                        <input type="text" id="answer" name="answer" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
-                        @error('answer')
+                        <label for="name" class="block text-sm font-semibold text-gray-600">Title <span class="text-red-500">*</span></label>
+                        <input type="text" id="name" name="name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        @error('name')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="w-full mb-3">
+                    {{-- <div class="w-full mb-3">
                         <label for="points" class="block text-sm font-semibold text-gray-600">Points <span class="text-red-500">*</span></label>
-                        <input type="text" id="points" value="1" name="points" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        <input type="text" id="points" value="1" name="points" class="bg-gray-50 border numberOnly border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         @error('points')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
-                    </div>
-                    <div class="flex flex-col gap-2 mt-5 gap-x-8">
-                        <button type="submit" class="w-full py-2 font-bold tracking-wider text-white bg-blue-500 rounded-lg md:w-1/2 hover:scale-[101%]">SAVE</button>
-                        <a href="{{ route('questions.index') }}" class="w-full py-2 font-bold tracking-wider text-center text-white bg-gray-500 rounded-lg md:w-1/2 hover:scale-[101%]">BACK</a>
+                    </div> --}}
+                    <div class="flex flex-col gap-2 mt-5 md:flex-row gap-x-8">
+                        <button type="submit" class="w-full py-2 font-bold tracking-wider text-white bg-blue-500 rounded-lg hover:scale-[101%]">SAVE</button>
+                        <a href="{{ route('exam.index') }}" class="w-full py-2 font-bold tracking-wider text-center text-white bg-gray-500 rounded-lg hover:scale-[101%]">BACK</a>
                     </div>
                 </form>
             </div>
@@ -86,29 +86,7 @@
 
     <script>
         $(document).ready(function(){
-            var x = 2;
-            var a = 64;
-            $('#addOption').click(function(){
-                if(x <= 10){
-                    var letter = String.fromCharCode(x+a);
-                    $('#optionDiv').append(`
-                        <div class="flex items-center w-full mt-2 gap-x-1">
-                            <label for="option${x}" class="block w-4 text-sm font-semibold text-gray-600">${letter}.</label>
-                            <input type="text" id="option${x}" name="option${x}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
-                        </div>
-                    `);
-                    x++;
-                }
-            });
-
-            $('#type').on('change', function(){
-                var type = $(this).val();
-                if(type === 'MultipleChoice'){
-                    $('#optionsMainDiv').removeClass('hidden')
-                }else{
-                    $('#optionsMainDiv').addClass('hidden')
-                }
-            });
+            
         });
     </script>
 @endsection
