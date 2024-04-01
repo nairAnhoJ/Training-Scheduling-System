@@ -172,7 +172,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/written-exam-questions/store', [WrittenExamQuestionController::class, 'store'])->name('question.store');
     Route::get('/written-exam-questions/edit', [WrittenExamQuestionController::class, 'edit'])->name('question.edit');
     Route::post('/written-exam-questions/update', [WrittenExamQuestionController::class, 'update'])->name('question.update');
-    // Route::post('/written-exam-questions/delete', [WrittenExamQuestionController::class, 'delete'])->name('question.delete');
+    Route::post('/written-exam-questions/delete', [WrittenExamQuestionController::class, 'delete'])->name('question.delete');
 
     // CUSTOMER
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');

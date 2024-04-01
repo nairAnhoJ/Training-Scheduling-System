@@ -15,6 +15,44 @@
             </button>
         </div>
     @endif
+    
+    {{-- DELETE MODAL --}}
+        <div id="deleteModal" class="hidden absolute top-0 left-0 w-screen h-screen bg-gray-900 z-[109] !bg-opacity-50 overflow-hidden flex items-center justify-center p-5">
+            <div class="w-5/6 bg-white rounded-lg">
+                <!-- Modal content -->
+                <form action="{{ route('question.delete') }}" method="POST" class="relative h-full bg-white rounded-lg shadow">
+                    @csrf
+                    <input type="hidden" name="key" value="{{ $key }}">
+                    <input type="hidden" name="id" class="modalID">
+                    <!-- Modal header -->
+                    <div class="flex items-start justify-between p-4 border-b rounded-t">
+                        <h3 class="text-xl font-semibold text-gray-900">
+                            Delete
+                        </h3>
+                        <button type="button" class="inline-flex items-center justify-center w-8 h-8 ml-auto text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 closeDeleteModal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="!m-0 overflow-scroll sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="flex items-start justify-center px-10 py-4 overflow-x-hidden overflow-y-auto">
+                        <div class="w-full text-sm">
+                            <p>Are you sure you want to permanently delete this exam?</p>
+                            <p class="mt-3 italic">Note: Deleting this will also delete the questions in this exam?</p>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
+                        <button type="submit" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-red-200 text-sm font-bold md:w-24 w-1/2 py-2.5 focus:z-10">YES</button>
+                        <button type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-bold md:w-24 w-1/2 py-2.5 hover:text-gray-900 focus:z-10 closeDeleteModal">CLOSE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {{-- DELETE MODAL// --}}
+
 
 
     <div class="w-full p-5 bg-gray-200">
@@ -79,9 +117,10 @@
                                         @foreach ($questions as $question)
                                             <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/requests/edit/'.$question->id) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $question->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Decline</button>
+                                                    <a href="{{ url('/written-exam-questions/edit?question='.$question->id.'&key='.$key) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | 
+                                                    <button type="button" data-id="{{ $question->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Delete</button>
                                                 </td>
-                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                                <th scope="row" class="px-6 py-4 font-medium text-gray-900">
                                                     <span data-key="{{ $question->key }}">
                                                         {{ $question->question }}
                                                     </span>
@@ -131,7 +170,7 @@
                                                 <div class="text-xs leading-5">Action</div>
                                                 <div class="">
                                                     <a href="{{ url('/written-exam-questions/edit?question='.$question->id.'&key='.$key) }}" class="text-sm font-semibold text-blue-600 hover:underline">Edit</a> | 
-                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $question->id }}" class="text-sm font-semibold text-red-600 deleteButton hover:underline">Delete</button>
+                                                    <button type="button" data-id="{{ $question->id }}" class="text-sm font-semibold text-red-600 deleteButton hover:underline">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,7 +189,16 @@
 
     <script>
         $(document).ready(function(){
-            
+            $('.deleteButton').on('click', function(){
+                var id = $(this).data('id');
+                $('.modalID').val(id);
+
+                $('#deleteModal').removeClass('hidden');
+            });
+
+            $('.closeDeleteModal').on('click', function(){
+                $('#deleteModal').addClass('hidden');
+            });
         });
     </script>
 @endsection

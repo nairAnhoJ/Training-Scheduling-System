@@ -70,8 +70,8 @@ class WrittenExamQuestionController extends Controller
         $examQuestion->exam_key = $key;
         $examQuestion->type = $type;
         $examQuestion->question = $question;
-        $examQuestion->answer = $answer;
-        $examQuestion->points = $points;
+        $examQuestion->answer = strtolower($answer);
+        $examQuestion->points = strtolower($points);
         if($type == 'MultipleChoice'){
             $options = '';
             for ($i=1; $i < 11; $i++) {
@@ -139,7 +139,7 @@ class WrittenExamQuestionController extends Controller
         $examQuestion = WrittenExamQuestion::where('id', $request->qid)->first();
         $examQuestion->type = $type;
         $examQuestion->question = $question;
-        $examQuestion->answer = $answer;
+        $examQuestion->answer = strtolower($answer);
         $examQuestion->points = $points;
         if($type == 'MultipleChoice'){
             $options = '';
@@ -154,10 +154,17 @@ class WrittenExamQuestionController extends Controller
                     }
                 }
             }
-            $examQuestion->options = $options;
+            $examQuestion->options = strtolower($options);
         }
         $examQuestion->save();
 
         return redirect()->route('question.index', ['key' => $key])->with('success', 'Question Has Been Updated Successfully!');
+    }
+
+    public function delete(Request $request){
+        $key = $request->key;
+        WrittenExamQuestion::where('id', $request->id)->delete();
+
+        return redirect()->route('question.index', ['key' => $key])->with('success', 'Question Has Been Deleted Successfully!');
     }
 }

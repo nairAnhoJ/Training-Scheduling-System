@@ -16,7 +16,7 @@
         </div>
     @endif
     
-    {{-- HISTORY MODAL --}}
+    {{-- DELETE MODAL --}}
         <div id="deleteModal" class="hidden absolute top-0 left-0 w-screen h-screen bg-gray-900 z-[109] !bg-opacity-50 overflow-hidden flex items-center justify-center p-5">
             <div class="w-5/6 bg-white rounded-lg">
                 <!-- Modal content -->
@@ -28,7 +28,7 @@
                         <h3 class="text-xl font-semibold text-gray-900">
                             Delete
                         </h3>
-                        <button type="button" id="closeDeleteModal" class="inline-flex items-center justify-center w-8 h-8 ml-auto text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900">
+                        <button type="button" class="inline-flex items-center justify-center w-8 h-8 ml-auto text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 closeDeleteModal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                             </svg>
@@ -45,12 +45,12 @@
                     <!-- Modal footer -->
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                         <button type="submit" class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-red-200 text-sm font-bold md:w-24 w-1/2 py-2.5 focus:z-10">YES</button>
-                        <button type="button" id="closeDeleteModal" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-bold md:w-24 w-1/2 py-2.5 hover:text-gray-900 focus:z-10">CLOSE</button>
+                        <button type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-bold md:w-24 w-1/2 py-2.5 hover:text-gray-900 focus:z-10 closeDeleteModal">CLOSE</button>
                     </div>
                 </form>
             </div>
         </div>
-    {{-- HISTORY MODAL// --}}
+    {{-- DELETE MODAL// --}}
 
 
     <div class="w-full p-5 bg-gray-200">
@@ -93,7 +93,7 @@
                                     <thead class="text-xs text-gray-600 uppercase bg-gray-100">
                                         <tr>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Action
+                                                Actionsdf
                                             </th>
                                             <th scope="col" class="px-6 py-3 whitespace-nowrap">
                                                 Name
@@ -104,7 +104,9 @@
                                         @foreach ($exams as $exam)
                                             <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/requests/edit/'.$exam->id) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | <button type="button" data-key="{{ $exam->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Decline</button>
+                                                    <a href="{{ url('/written-exam-questions?key='.$exam->key) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">View</a> | 
+                                                    <a href="{{ url('/written-exam/edit?exam='.$exam->key) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | 
+                                                    <button type="button" data-key="{{ $exam->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Decline</button>
                                                 </td>
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                                     <span data-key="{{ $exam->key }}">
@@ -138,7 +140,7 @@
                                                 <div class="flex items-center text-xs leading-5"><span>Action</span></div>
                                                 <div class="col-span-2 ">
                                                     <a href="{{ url('/written-exam-questions?key='.$exam->key) }}" class="text-sm font-semibold text-blue-600 hover:underline">View</a> | 
-                                                    <a href="{{ url('/written-exam-questions/edit?exam='.$exam->key) }}" class="text-sm font-semibold text-blue-600 hover:underline">Edit</a> | 
+                                                    <a href="{{ url('/written-exam/edit?exam='.$exam->key) }}" class="text-sm font-semibold text-blue-600 hover:underline">Edit</a> | 
                                                     <button type="button" data-key="{{ $exam->key }}" class="text-sm font-semibold text-red-600 deleteButton hover:underline">Delete</button>
                                                 </div>
                                             </div>
@@ -163,6 +165,10 @@
                 $('.modalKey').val(key);
 
                 $('#deleteModal').removeClass('hidden');
+            });
+
+            $('.closeDeleteModal').on('click', function(){
+                $('#deleteModal').addClass('hidden');
             });
         });
     </script>
