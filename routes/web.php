@@ -158,7 +158,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/training/cancel/{key}', [TrainingController::class, 'cancel'])->name('dashboard.cancel');
 
     // TRAINING ASSESSMENT
-    Route::get('/training-assessment', [AttendeesController::class, 'index'])->name('attendees');
+    Route::get('/training-assessment/attendees', [AttendeesController::class, 'index'])->name('attendees');
+    Route::get('/training-assessment/attendees/add', [AttendeesController::class, 'add'])->name('attendees.add');
+    Route::post('/training-assessment/attendees/store', [AttendeesController::class, 'store'])->name('attendees.store');
     
     Route::get('/written-exam', [WrittenExamController::class, 'index'])->name('exam.index');
     Route::get('/written-exam/add', [WrittenExamController::class, 'add'])->name('exam.add');
