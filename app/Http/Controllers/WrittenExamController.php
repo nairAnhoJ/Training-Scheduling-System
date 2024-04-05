@@ -53,6 +53,7 @@ class WrittenExamController extends Controller
     }
 
     public function update(Request $request){
+        
         $validator = Validator::make($request->all(), [
             'name' => 'required',
         ]);

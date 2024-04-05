@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('position', 100);
             $table->string('type', 50);
             $table->string('knowledge', 20);
-            $table->integer('years_operating', 3);
+            $table->integer('years_operating');
             $table->integer('written_exam_key')->nullable();
             $table->integer('written_score')->nullable();
             $table->integer('driving_score')->nullable();

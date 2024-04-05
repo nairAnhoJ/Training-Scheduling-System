@@ -61,43 +61,44 @@
                                                 Action
                                             </th>
                                             <th scope="col" class="px-6 py-3 whitespace-nowrap">
-                                                Company Name
+                                                Name
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Category
+                                                Position
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Type of Unit Operated
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Knowledge
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Years Operating Forklift/MHE
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($attendees as $attendee)
-                                            {{-- <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
+                                            <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/requests/edit/'.$request->key) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Decline</button>
+                                                    <a href="{{ route('attendees.edit').'?c='.$key.'&key='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $attendee->key }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Decline</button>
                                                 </td>
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                    <span data-key="{{ $request->key }}">
-                                                        {{ $request->name }}
-                                                    </span>
+                                                    {{ $attendee->name }}
                                                 </th>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->category }}
+                                                    {{ $attendee->position }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->unit_type }}
+                                                    {{ $attendee->type }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->billing_type }}
+                                                    {{ $attendee->knowledge }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->area }}
+                                                    {{ $attendee->years_operating }}
                                                 </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $request->first_name.' '.$request->last_name }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ date('F j, Y', strtotime($request->updated_at)) }}
-                                                </td>
-                                            </tr> --}}
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -112,47 +113,48 @@
                                     $x = 1;
                                 @endphp
                                 @foreach ($attendees as $attendee)
-                                    {{-- <h2 id="accordion-collapse-heading-{{$x}}">
+                                    <h2 id="accordion-collapse-heading-{{$x}}">
                                         <button type="button" class="flex items-center justify-between w-full px-3 py-1.5 text-sm font-semibold text-left text-gray-500 border  border-gray-200 {{ $x == 1 ? 'rounded-t-xl border-b-0' : 'border-b' }} hover:bg-gray-100 focus:bg-gray-900" data-accordion-target="#accordion-collapse-body-{{$x}}" aria-expanded="false" aria-controls="accordion-collapse-body-{{$x}}">
-                                            <span>{{ $request->name }}</span>
+                                            <span>{{ $attendee->name }}</span>
                                             <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                         </button>
                                     </h2>
                                     <div id="accordion-collapse-body-{{$x}}" class="hidden" aria-labelledby="accordion-collapse-heading-{{$x}}">
                                         <div class="px-3 py-1.5 font-light border border-b border-gray-200">
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Category</div>
-                                                <div class="text-sm font-semibold ">
-                                                    {{ $request->category }}
+                                                <div class="text-xs leading-5 flex items-center">Position</div>
+                                                <div class="text-xs font-semibold flex items-center">
+                                                    {{ $attendee->position }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Type of Unit</div>
-                                                <div class="text-sm font-semibold ">
-                                                    {{ $request->unit_type }}
+                                                <div class="text-xs leading-5 flex items-center">Type of Unit Operated</div>
+                                                <div class="text-xs font-semibold flex items-center">
+                                                    {{ $attendee->type }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Billing Type</div>
-                                                <div class="text-sm font-semibold">
-                                                    {{ $request->billing_type }}
+                                                <div class="text-xs leading-5 flex items-center">Knowledge</div>
+                                                <div class="text-xs font-semibold flex items-center">
+                                                    {{ $attendee->knowledge }}
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2 content-center">
+                                                <div class="text-xs leading-5 flex items-center">Years Operating Forklift/MHE</div>
+                                                <div class="text-xs font-semibold flex items-center">
+                                                    {{ $attendee->years_operating }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Area</div>
-                                                <div class="text-sm cfont-semibold">
-                                                    {{ $request->area }}
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-2">
-                                                <div class="text-xs leading-5">Action</div>
+                                                <div class="text-xs leading-5 flex items-center">Action</div>
                                                 <div class="">
-                                                    <a href="{{ url('/requests/edit/'.$request->key) }}" class="text-sm font-semibold text-blue-600 hover:underline">Edit</a> | 
-                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $request->key }}" class="text-sm font-semibold text-red-600 deleteButton hover:underline">Delete</button>
+                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 deleteButton hover:underline">Generate QR</button> |
+                                                    <a href="{{ route('attendees.edit').'?c='.$key.'&key='.$attendee->key }}" class="text-sm font-semibold text-blue-600 hover:underline">Edit</a> | 
+                                                    <button type="button" data-modal-target="confirmDeleteModal" data-modal-toggle="confirmDeleteModal" data-key="{{ $attendee->key }}" class="text-sm font-semibold text-red-600 deleteButton hover:underline">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
                                     @php
                                         $x++;
                                     @endphp

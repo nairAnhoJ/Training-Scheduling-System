@@ -7,6 +7,7 @@ use App\Models\Attendees;
 use App\Models\Request as ModelsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AttendeesController extends Controller
 {
@@ -45,7 +46,7 @@ class AttendeesController extends Controller
             'position' => 'required',
             'type' => 'required',
             'knowledge' => 'required',
-            'years_operating' => 'required|integer',
+            'years_operating' => 'required',
         ]);
 
         $customMessages = [
@@ -68,7 +69,16 @@ class AttendeesController extends Controller
         $knowledge = $request->knowledge;
         $years_operating = $request->years_operating;
 
+        $exam = new Attendees();
+        $exam->training_key = $key;
+        $exam->name = $name;
+        $exam->position = $position;
+        $exam->type = $type;
+        $exam->knowledge = $knowledge;
+        $exam->years_operating = $years_operating;
+        $exam->key = Str::uuid()->toString();
+        $exam->save();
 
-        dd($request);
+        return redirect()->route('attendees', ['key' => $key])->with('success', 'New Attendees Has Been Added Successfully!');
     }
 }

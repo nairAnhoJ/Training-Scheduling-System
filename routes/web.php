@@ -161,6 +161,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/training-assessment/attendees', [AttendeesController::class, 'index'])->name('attendees');
     Route::get('/training-assessment/attendees/add', [AttendeesController::class, 'add'])->name('attendees.add');
     Route::post('/training-assessment/attendees/store', [AttendeesController::class, 'store'])->name('attendees.store');
+    Route::get('/training-assessment/attendees/edit', [AttendeesController::class, 'edit'])->name('attendees.edit');
     
     Route::get('/written-exam', [WrittenExamController::class, 'index'])->name('exam.index');
     Route::get('/written-exam/add', [WrittenExamController::class, 'add'])->name('exam.add');
