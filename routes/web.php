@@ -162,6 +162,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/training-assessment/attendees/add', [AttendeesController::class, 'add'])->name('attendees.add');
     Route::post('/training-assessment/attendees/store', [AttendeesController::class, 'store'])->name('attendees.store');
     Route::get('/training-assessment/attendees/edit', [AttendeesController::class, 'edit'])->name('attendees.edit');
+    Route::post('/training-assessment/attendees/update', [AttendeesController::class, 'update'])->name('attendees.update');
+    Route::post('/training-assessment/attendees/delete', [AttendeesController::class, 'delete'])->name('attendees.delete');
+    Route::post('/training-assessment/attendees/generate', [AttendeesController::class, 'generate'])->name('attendees.generate');
     
     Route::get('/written-exam', [WrittenExamController::class, 'index'])->name('exam.index');
     Route::get('/written-exam/add', [WrittenExamController::class, 'add'])->name('exam.add');

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','ATTENDEES - ADD')
+@section('title','ATTENDEES - EDIT')
 @section('content')
 
     @if(session('success'))
@@ -20,19 +20,19 @@
     <div class="w-full p-5 bg-gray-200">
         <div class="min-h-[calc(100vh-96px)] p-3 bg-white rounded-lg shadow-xl">
             <div class="p-4 overflow-hidden rounded-lg">
-                <form method="POST" action="{{ route('attendees.store') . '?key=' . $key }}">
+                <form method="POST" action="{{ route('attendees.update').'?key='.$key.'&a='.$attendee->key }}">
                     @csrf
                     <input type="hidden" name="key" value="{{ $key }}">
                     <div class="w-full mb-3">
                         <label for="name" class="block text-sm font-semibold text-gray-600">Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="name" name="name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        <input type="text" id="name" name="name" value="{{ $attendee->name }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         @error('name')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="w-full mb-3">
                         <label for="position" class="block text-sm font-semibold text-gray-600">Position <span class="text-red-500">*</span></label>
-                        <input type="text" id="position" name="position" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        <input type="text" id="position" name="position" value="{{ $attendee->position }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         @error('position')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
@@ -41,27 +41,27 @@
                         <label for="type" class="block text-sm font-semibold text-gray-600">Type of unit operated <span class="text-red-500">*</span></label>
                         <div class="flex">
                             <div class="flex items-center w-1/2">
-                                <input checked id="CBE" type="radio" value="CBE" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input {{ ($attendee->type == 'CBE') ? 'checked' : '' }} id="CBE" type="radio" value="CBE" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="CBE" class="ms-2 text-sm font-medium text-gray-900">CBE</label>
                             </div>
                             <div class="flex items-center w-1/2">
-                                <input id="CBD" type="radio" value="CBD" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input {{ ($attendee->type == 'CBD') ? 'checked' : '' }} id="CBD" type="radio" value="CBD" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="CBD" class="ms-2 text-sm font-medium text-gray-900">CBD</label>
                             </div>
                         </div>
                         <div class="flex">
                             <div class="flex items-center w-1/2">
-                                <input id="CBG/LPG" type="radio" value="CBG/LPG" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input {{ ($attendee->type == 'CBG/LPG') ? 'checked' : '' }} id="CBG/LPG" type="radio" value="CBG/LPG" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="CBG/LPG" class="ms-2 text-sm font-medium text-gray-900">CBG/LPG</label>
                             </div>
                             <div class="flex items-center w-1/2">
-                                <input id="RT" type="radio" value="RT" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input {{ ($attendee->type == 'RT') ? 'checked' : '' }} id="RT" type="radio" value="RT" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="RT" class="ms-2 text-sm font-medium text-gray-900">RT</label>
                             </div>
                         </div>
                         <div class="flex">
                             <div class="flex items-center w-1/2">
-                                <input id="PPT" type="radio" value="PPT" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input {{ ($attendee->type == 'PPT') ? 'checked' : '' }} id="PPT" type="radio" value="PPT" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="PPT" class="ms-2 text-sm font-medium text-gray-900">PPT</label>
                             </div>
                         </div>
@@ -73,11 +73,11 @@
                         <label for="knowledge" class="block text-sm font-semibold text-gray-600">Knowledge <span class="text-red-500">*</span></label>
                         <div class="flex-col">
                             <div class="flex items-center">
-                                <input checked id="With Experience" type="radio" value="With Experience" name="knowledge" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input {{ ($attendee->knowledge == 'With Experience') ? 'checked' : '' }} id="With Experience" type="radio" value="With Experience" name="knowledge" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="With Experience" class="ms-2 text-sm font-medium text-gray-900">With Experience</label>
                             </div>
                             <div class="flex items-center">
-                                <input id="Without Experience" type="radio" value="Without Experience" name="knowledge" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input {{ ($attendee->knowledge == 'Without Experience') ? 'checked' : '' }} id="Without Experience" type="radio" value="Without Experience" name="knowledge" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="Without Experience" class="ms-2 text-sm font-medium text-gray-900">Without Experience</label>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                                     <path d="M 280 -446 L 680 -446 L 680 -506 L 280 -506 L 280 -446 Z M 480.266 -80 C 425.11 -80 373.277 -90.5 324.766 -111.5 C 276.255 -132.5 233.833 -161.167 197.5 -197.5 C 161.167 -233.833 132.5 -276.28 111.5 -324.841 C 90.5 -373.401 80 -425.287 80 -480.5 C 80 -535.713 90.5 -587.599 111.5 -636.159 C 132.5 -684.72 161.167 -727 197.5 -763 C 233.833 -799 276.28 -827.5 324.841 -848.5 C 373.401 -869.5 425.287 -880 480.5 -880 C 535.713 -880 587.599 -869.5 636.159 -848.5 C 684.72 -827.5 727 -799 763 -763 C 799 -727 827.5 -684.667 848.5 -636 C 869.5 -587.333 880 -535.422 880 -480.266 C 880 -425.11 869.5 -373.277 848.5 -324.766 C 827.5 -276.255 799 -233.895 763 -197.684 C 727 -161.473 684.667 -132.807 636 -111.684 C 587.333 -90.561 535.422 -80 480.266 -80 Z M 480.5 -140 C 574.833 -140 655 -173.167 721 -239.5 C 787 -305.833 820 -386.167 820 -480.5 C 820 -574.833 787.063 -655 721.188 -721 C 655.313 -787 574.917 -820 480 -820 C 386 -820 305.833 -787.063 239.5 -721.188 C 173.167 -655.313 140 -574.917 140 -480 C 140 -386 173.167 -305.833 239.5 -239.5 C 305.833 -173.167 386.167 -140 480.5 -140 Z M 480 -480 Z"/>
                                 </svg>
                             </button>
-                            <input type="number" id="years_operating" name="years_operating" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block text-center px-0 py-2" autocomplete="off" value="0" readonly>
+                            <input type="number" id="years_operating" name="years_operating" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block text-center px-0 py-2" autocomplete="off" value="{{ $attendee->years_operating }}" readonly>
                             <button type="button" id="addYear" class="text-blue-500 flex justify-center items-center hover:scale-105">
                                 <?xml version="1.0" encoding="utf-8"?>
                                 <svg viewBox="80 -880 800 800" xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="currentColor">
