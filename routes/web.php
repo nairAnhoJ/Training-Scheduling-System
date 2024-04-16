@@ -106,6 +106,7 @@ Route::post('/trainings', [TrainingController::class, 'search'])->name('training
 Route::post('/trainings/view', [TrainingController::class, 'view'])->name('trainings.view');
 Route::get('/trainings/view/contract-details/{key}', [TrainingController::class, 'contractDetails']);
 
+Route::get('/training-assessment/written-exam', [AttendeesController::class, 'writtenExam']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

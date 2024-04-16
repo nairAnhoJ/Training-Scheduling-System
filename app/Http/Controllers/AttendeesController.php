@@ -14,7 +14,7 @@ class AttendeesController extends Controller
 {
     public function index(Request $request){
         $key = $request->key;
-        $training = ModelsRequest::with('customer', 'trainerName')->where('key', $key)->first();
+        $training = ModelsRequest::where('key', $key)->first();
         if(!$key || !$training){
             return redirect()->route('dashboard.index');
         }
@@ -36,7 +36,7 @@ class AttendeesController extends Controller
 
     public function store(Request $request){
         $key = $request->key;
-        $training = ModelsRequest::with('customer', 'trainerName')->where('key', $key)->first();
+        $training = ModelsRequest::where('key', $key)->first();
         if(!$key || !$training){
             return redirect()->route('dashboard.index');
         }
@@ -96,7 +96,7 @@ class AttendeesController extends Controller
 
     public function update(Request $request){
         $key = $request->key;
-        $training = ModelsRequest::with('customer', 'trainerName')->where('key', $key)->first();
+        $training = ModelsRequest::where('key', $key)->first();
         if(!$key || !$training){
             return redirect()->route('dashboard.index');
         }
@@ -143,7 +143,7 @@ class AttendeesController extends Controller
 
     public function delete(Request $request){
         $key = $request->key;
-        $training = ModelsRequest::with('customer', 'trainerName')->where('key', $key)->first();
+        $training = ModelsRequest::where('key', $key)->first();
         if(!$key || !$training){
             return redirect()->route('dashboard.index');
         }
@@ -153,6 +153,18 @@ class AttendeesController extends Controller
     }
 
     public function generate(Request $request){
-        echo QrCode::size(200)->generate('http://192.168.20.143:8000/training-assessment/attendees?key='.$request->key.'&a='.$request->akey);
+        echo QrCode::size(250)->generate('http://192.168.20.143:8000/training-assessment/written-exam?key='.$request->key.'&a='.$request->akey);
+    }
+
+    public function writtenExam(Request $request){
+        dd($request);
+        $key = $request->key;
+        $training = ModelsRequest::where('key', $key)->first();
+        if(!$key || !$training){
+            return redirect()->route('dashboard.index');
+        }
+        $akey = $request->a;
+        $attendee = Attendees::where('key', $akey)->first();
+        
     }
 }
