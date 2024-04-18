@@ -171,17 +171,4 @@ class AttendeesController extends Controller
     public function generate(Request $request){
         echo QrCode::size(250)->generate('http://192.168.20.143:8000/training-assessment/written-exam?key='.$request->key.'&a='.$request->akey);
     }
-
-    public function writtenExam(Request $request){
-        // dd($request);
-        $key = $request->key;
-        $training = ModelsRequest::where('key', $key)->first();
-        if(!$key || !$training){
-            return redirect()->route('dashboard.index');
-        }
-        $akey = $request->a;
-        $attendee = Attendees::where('key', $akey)->first();
-
-        return view('user.training-assessment.attendees.exam.index', compact('attendee', 'key'));
-    }
 }

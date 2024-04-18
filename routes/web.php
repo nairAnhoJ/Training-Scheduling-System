@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AttendeesController;
+use App\Http\Controllers\AttendeesWrittenExam;
+use App\Http\Controllers\AttendeesWrittenExamController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
@@ -106,7 +108,8 @@ Route::post('/trainings', [TrainingController::class, 'search'])->name('training
 Route::post('/trainings/view', [TrainingController::class, 'view'])->name('trainings.view');
 Route::get('/trainings/view/contract-details/{key}', [TrainingController::class, 'contractDetails']);
 
-Route::get('/training-assessment/written-exam', [AttendeesController::class, 'writtenExam']);
+Route::get('/training-assessment/written-exam', [AttendeesWrittenExamController::class, 'writtenExam']);
+Route::POST('/training-assessment/written-exam/npQuestion', [AttendeesWrittenExamController::class, 'npQuestion'])->name('npQuestion');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

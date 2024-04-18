@@ -10,4 +10,9 @@ class WrittenExamQuestion extends Model
     use HasFactory;
 
     protected $table = 'tss_written_exam_questions';
+
+    public function exam()
+    {
+        return $this->belongsTo(WrittenExam::class, 'exam_key', 'key');
+    }
 }
