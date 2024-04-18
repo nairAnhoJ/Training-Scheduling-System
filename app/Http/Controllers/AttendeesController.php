@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Attendees;
 use App\Models\Request as ModelsRequest;
+use App\Models\WrittenExam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -21,7 +22,7 @@ class AttendeesController extends Controller
 
         $attendees = Attendees::where('training_key', $key)->get();
 
-        return view('user.training-assessment.index', compact('training', 'attendees', 'key'));
+        return view('user.training-assessment.attendees.index', compact('training', 'attendees', 'key'));
     }
 
     public function add(Request $request){
@@ -31,7 +32,9 @@ class AttendeesController extends Controller
             return redirect()->route('dashboard.index');
         }
 
-        return view('user.training-assessment.add', compact('key'));
+        $wexams = WrittenExam::get();
+
+        return view('user.training-assessment.attendees.add', compact('key', 'wexams'));
     }
 
     public function store(Request $request){
@@ -47,6 +50,8 @@ class AttendeesController extends Controller
             'type' => 'required',
             'knowledge' => 'required',
             'years_operating' => 'required',
+            'written' => 'required',
+            'driving' => 'required',
         ]);
 
         $customMessages = [
@@ -55,6 +60,8 @@ class AttendeesController extends Controller
             'type.required' => 'Please select an option from the list.',
             'knowledge.required' => 'Please select an option from the list.',
             'years_operating.required' => 'Please provide the required information.',
+            'written.required' => 'Please select an option from the list.',
+            'driving.required' => 'Please select an option from the list.',
         ];
 
         $validator->setCustomMessages($customMessages);
@@ -68,6 +75,8 @@ class AttendeesController extends Controller
         $type = $request->type;
         $knowledge = $request->knowledge;
         $years_operating = $request->years_operating;
+        $written_exam = $request->written_exam;
+        $driving_exam = $request->driving_exam;
 
         $attendee = new Attendees();
         $attendee->training_key = $key;
@@ -76,6 +85,8 @@ class AttendeesController extends Controller
         $attendee->type = $type;
         $attendee->knowledge = $knowledge;
         $attendee->years_operating = $years_operating;
+        $attendee->written_exam = $written_exam;
+        $attendee->driving_exam = $driving_exam;
         $attendee->key = Str::uuid()->toString();
         $attendee->save();
 
@@ -90,8 +101,9 @@ class AttendeesController extends Controller
             return redirect()->route('dashboard.index');
         }
         $attendee = Attendees::where('key', $akey)->first();
+        $wexams = WrittenExam::get();
 
-        return view('user.training-assessment.edit', compact('key', 'attendee'));
+        return view('user.training-assessment.attendees.edit', compact('key', 'attendee', 'wexams'));
     }
 
     public function update(Request $request){
@@ -129,6 +141,8 @@ class AttendeesController extends Controller
         $type = $request->type;
         $knowledge = $request->knowledge;
         $years_operating = $request->years_operating;
+        $written_exam = $request->written_exam;
+        $driving_exam = $request->driving_exam;
 
         $attendee = Attendees::where('key', $akey)->first();
         $attendee->name = $name;
@@ -136,6 +150,8 @@ class AttendeesController extends Controller
         $attendee->type = $type;
         $attendee->knowledge = $knowledge;
         $attendee->years_operating = $years_operating;
+        $attendee->written_exam = $written_exam;
+        $attendee->driving_exam = $driving_exam;
         $attendee->save();
 
         return redirect()->route('attendees', ['key' => $key])->with('success', 'Attendee Has Been Updated Successfully!');
@@ -157,7 +173,7 @@ class AttendeesController extends Controller
     }
 
     public function writtenExam(Request $request){
-        dd($request);
+        // dd($request);
         $key = $request->key;
         $training = ModelsRequest::where('key', $key)->first();
         if(!$key || !$training){
@@ -165,6 +181,7 @@ class AttendeesController extends Controller
         }
         $akey = $request->a;
         $attendee = Attendees::where('key', $akey)->first();
-        
+
+        return view('user.training-assessment.attendees.exam.index', compact('attendee', 'key'));
     }
 }

@@ -20,7 +20,10 @@ return new class extends Migration
             $table->string('type', 50);
             $table->string('knowledge', 20);
             $table->integer('years_operating');
+            $table->integer('written_exam');
+            $table->integer('driving_exam');
             $table->integer('written_exam_key')->nullable();
+            $table->integer('driving_exam_key')->nullable();
             $table->integer('written_score')->nullable();
             $table->integer('driving_score')->nullable();
             $table->string('key');
