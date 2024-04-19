@@ -7,6 +7,7 @@
             <div class="h-full p-4 overflow-hidden rounded-lg">
                 <div class="h-full">
                     <input type="hidden" value="0" id="question">
+                    <input type="hidden" value="{{ $exam->id }}" id="exam">
                     @csrf
                     <div id="content" class="h-full">
 
@@ -117,33 +118,45 @@
                         _token: _token
                     },
                     success:function(result){
-                        $('#generatedQR').html(result);
-                        $('#generateModal').removeClass('hidden');
+                        $('#content').html(result);
+
+                        if(q == mq){
+                            $('#nextButton').addClass('hidden');
+                            $('#submitButton').removeClass('hidden');
+                        }else{
+                            $('#backButton').removeClass('hidden');
+                            $('#nsLabel').html('NEXT');
+                        }
                     }
                 });
-
-
-
-
-                if(q == mq){
-                    $('#nextButton').addClass('hidden');
-                    $('#submitButton').removeClass('hidden');
-                }else{
-                    $('#backButton').removeClass('hidden');
-                    $('#nsLabel').html('NEXT');
-                }
             });
 
             $('#backButton').click(function(){
                 q = $('#question').val();
                 $('#question').val(--q);
-                if(q == 0){
-                    $('#backButton').addClass('hidden');
-                    $('#nsLabel').html('START');
-                }else{
-                    $('#nextButton').removeClass('hidden');
-                    $('#submitButton').addClass('hidden');
-                }
+
+                $.ajax({
+                    url:"{{ route('npQuestion') }}",
+                    method:"POST",
+                    data:{
+                        key: key,
+                        akey: akey,
+                        q: q,
+                        answer: answer,
+                        _token: _token
+                    },
+                    success:function(result){
+                        $('#content').html(result);
+
+                        if(q == 0){
+                            $('#backButton').addClass('hidden');
+                            $('#nsLabel').html('START');
+                        }else{
+                            $('#nextButton').removeClass('hidden');
+                            $('#submitButton').addClass('hidden');
+                        }
+                    }
+                });
             });
         });
     </script>
