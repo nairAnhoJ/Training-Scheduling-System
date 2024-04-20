@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendees;
+use App\Models\AttendeesWrittenExamAnswers;
 use App\Models\Request as ModelsRequest;
 use App\Models\WrittenExam;
 use App\Models\WrittenExamQuestion;
@@ -33,14 +34,26 @@ class AttendeesWrittenExamController extends Controller
         $akey = $request->akey;
         $attendee = Attendees::where('key', $akey)->first();
         $exam  = WrittenExam::find($attendee->written_exam);
+        $nob = $request->nob;
         $q = $request->q;
+        $Pquestion = WrittenExamQuestion::where('exam_key', $exam->key)->orderBy('id')->skip(($q-1))->first();
+        if($nob == 'NEXT'){
+            $q++;
+        }else{
+            $q--;
+        }
         $question = WrittenExamQuestion::where('exam_key', $exam->key)->orderBy('id')->skip(($q-1))->first();
         $answer = $request->answer;
         $optionLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'];
         $content = '';
+        $points = 0;
 
         if($q != 0){
             if($question->type == 'MultipleChoice' || $question->type == 'TrueOrFalse'){
+                if($answer == $Pquestion->answer){
+                    $points = 1;
+                }
+
                 if($question->type == 'MultipleChoice'){
                     $options = explode(',', $question->options);
                 }else{
@@ -91,6 +104,25 @@ class AttendeesWrittenExamController extends Controller
                                 </div>
                             ';
             }
+
+            // $awea = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->where('question_id', $question->id)->first();
+            
+            // if($awea == null){
+            //     $nawea = new AttendeesWrittenExamAnswers();
+            //     $nawea->training_key = $key;
+            //     $nawea->attendee_key = $akey;
+            //     $nawea->exam_key = $exam->key;
+            //     $nawea->question_id = $Pquestion->id;
+            //     $nawea->answer = $answer;
+            //     $nawea->points = $points;
+            //     $nawea->save();
+            // }else{
+            //     $awea->question_id = $Pquestion->id;
+            //     $awea->answer = $answer;
+            //     $awea->points = $points;
+            //     $awea->save();
+    
+            // }
         }else{
             $content = '
                             <div id="main" class="h-full grid grid-cols-1 sm:grid-cols-1 grid-rows-3 text-center">

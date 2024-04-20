@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="w-full p-5 bg-gray-200">
-        <div class="h-[calc(100vh-108px)] p-3 bg-white rounded-lg shadow-xl">
+        <div class="h-[calc(100vh-164px)] p-3 bg-white rounded-lg shadow-xl">
             <div class="h-full p-4 overflow-hidden rounded-lg">
                 <div class="h-full">
                     <input type="hidden" value="0" id="question">
@@ -105,7 +105,6 @@
 
             $('#nextButton').click(function(){
                 q = $('#question').val();
-                $('#question').val(++q);
 
                 $.ajax({
                     url:"{{ route('npQuestion') }}",
@@ -115,10 +114,12 @@
                         akey: akey,
                         q: q,
                         answer: answer,
+                        nob: 'NEXT',
                         _token: _token
                     },
                     success:function(result){
                         $('#content').html(result);
+                        $('#question').val(++q);
 
                         if(q == mq){
                             $('#nextButton').addClass('hidden');
@@ -133,7 +134,6 @@
 
             $('#backButton').click(function(){
                 q = $('#question').val();
-                $('#question').val(--q);
 
                 $.ajax({
                     url:"{{ route('npQuestion') }}",
@@ -143,10 +143,12 @@
                         akey: akey,
                         q: q,
                         answer: answer,
+                        nob: 'BACK',
                         _token: _token
                     },
                     success:function(result){
                         $('#content').html(result);
+                        $('#question').val(--q);
 
                         if(q == 0){
                             $('#backButton').addClass('hidden');
