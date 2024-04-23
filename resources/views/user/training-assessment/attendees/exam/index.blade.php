@@ -105,6 +105,7 @@
 
             $('#nextButton').click(function(){
                 q = $('#question').val();
+                answer = $('input[name="answer"]:checked').val();
 
                 $.ajax({
                     url:"{{ route('npQuestion') }}",
@@ -134,6 +135,7 @@
 
             $('#backButton').click(function(){
                 q = $('#question').val();
+                answer = $('input[name="answer"]:checked').val();
 
                 $.ajax({
                     url:"{{ route('npQuestion') }}",

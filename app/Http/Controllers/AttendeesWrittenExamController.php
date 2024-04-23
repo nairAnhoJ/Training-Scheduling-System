@@ -48,10 +48,20 @@ class AttendeesWrittenExamController extends Controller
         $content = '';
         $points = 0;
 
+        $awea = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->where('question_id', $question->id)->first();
+
+        if($awea != null){
+            $pAnswer = $awea->answer;
+        }else{
+            $pAnswer = null;
+        }
+
+        dd($Pquestion);
+
         if($q != 0){
             if($question->type == 'MultipleChoice' || $question->type == 'TrueOrFalse'){
                 if($answer == $Pquestion->answer){
-                    $points = 1;
+                    $points = $Pquestion->points;
                 }
 
                 if($question->type == 'MultipleChoice'){
@@ -64,7 +74,7 @@ class AttendeesWrittenExamController extends Controller
                 foreach($options as $index => $option){
                     $theOptions .= '
                         <div class="flex items-center">
-                            <input id="option'.$index.'" type="radio" value="'.$optionLetters[$index].'" name="answer" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                            <input '.(($pAnswer == $optionLetters[$index]) ? 'checked' : '').' id="option'.$index.'" type="radio" value="'.$optionLetters[$index].'" name="answer" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                             <label for="option'.$index.'" class="ms-2 text-lg font-medium text-gray-900">'.$option.'</label>
                         </div>
                     ';
@@ -79,18 +89,18 @@ class AttendeesWrittenExamController extends Controller
                                 </div>
                             ';
             }else if($question->type == 'ShortAnswer' || $question->type == 'Enumeration'){
-                if($question->type == 'ShortAnswer'){
-                    $points = 1;
-                }else{
+                // if($question->type == 'ShortAnswer'){
+                //     $points = 1;
+                // }else{
                     $points = $question->points;
-                }
+                // }
     
                 $theAnswers = '';
 
                 for ($i=0; $i < $points; $i++) {
                     $theAnswers .= '
                         <div class="w-full">
-                            <input type="text" id="answer'.$i.'" name="answer'.$i.'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                            <input type="text" id="answer'.$i.'" name="answer'.$i.'" value="'.$pAnswer.'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         </div>
                     ';
                 }
@@ -104,25 +114,6 @@ class AttendeesWrittenExamController extends Controller
                                 </div>
                             ';
             }
-
-            // $awea = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->where('question_id', $question->id)->first();
-            
-            // if($awea == null){
-            //     $nawea = new AttendeesWrittenExamAnswers();
-            //     $nawea->training_key = $key;
-            //     $nawea->attendee_key = $akey;
-            //     $nawea->exam_key = $exam->key;
-            //     $nawea->question_id = $Pquestion->id;
-            //     $nawea->answer = $answer;
-            //     $nawea->points = $points;
-            //     $nawea->save();
-            // }else{
-            //     $awea->question_id = $Pquestion->id;
-            //     $awea->answer = $answer;
-            //     $awea->points = $points;
-            //     $awea->save();
-    
-            // }
         }else{
             $content = '
                             <div id="main" class="h-full grid grid-cols-1 sm:grid-cols-1 grid-rows-3 text-center">
@@ -137,6 +128,25 @@ class AttendeesWrittenExamController extends Controller
                                 </div>
                             </div>
                         ';
+        }
+
+        if($nob == 'BACK' || ($q > 1 && $nob == 'NEXT')){
+            if($answer != null){
+                if($awea == null){
+                    $nawea = new AttendeesWrittenExamAnswers();
+                    $nawea->training_key = $key;
+                    $nawea->attendee_key = $akey;
+                    $nawea->exam_key = $exam->key;
+                    $nawea->question_id = $Pquestion->id;
+                    $nawea->answer = $answer;
+                    $nawea->points = $points;
+                    $nawea->save();
+                }else{
+                    $awea->answer = $answer;
+                    $awea->points = $points;
+                    $awea->save();
+                }
+            }
         }
 
         echo $content;
