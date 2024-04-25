@@ -18,7 +18,7 @@ class WrittenExamQuestionController extends Controller
             return redirect()->route('exam.index');
         }
 
-        $questions = WrittenExamQuestion::where('exam_key', $key)->get();
+        $questions = WrittenExamQuestion::where('exam_key', $key)->where('is_deleted', 0)->get();
 
         return view('user.training-assessment.exam.written.questions.index', compact('questions', 'key'));
     }
@@ -62,7 +62,7 @@ class WrittenExamQuestionController extends Controller
 
         $type = $request->type;
         $question = $request->question;
-        $answer = strtolower($request->answer);
+        $answer = $request->answer;
         $points = $request->points;
         $firstOption = 0;
 
@@ -71,21 +71,21 @@ class WrittenExamQuestionController extends Controller
         $examQuestion->type = $type;
         $examQuestion->question = $question;
         $examQuestion->answer = strtolower($answer);
-        $examQuestion->points = strtolower($points);
+        $examQuestion->points = $points;
         if($type == 'MultipleChoice'){
             $options = '';
             for ($i=1; $i < 11; $i++) {
                 $var = 'option'.$i;
                 if($request->$var != null){
                     if($firstOption == 1){
-                        $options .= ','.$request->$var;
+                        $options .= ';'.$request->$var;
                     }else{
                         $options .= $request->$var;
                         $firstOption = 1;
                     }
                 }
             }
-            $examQuestion->options = $options;
+            $examQuestion->options = strtolower($options);
         }
         $examQuestion->save();
 
@@ -139,7 +139,7 @@ class WrittenExamQuestionController extends Controller
         $examQuestion = WrittenExamQuestion::where('id', $request->qid)->first();
         $examQuestion->type = $type;
         $examQuestion->question = $question;
-        $examQuestion->answer = strtolower($answer);
+        $examQuestion->answer = $answer;
         $examQuestion->points = $points;
         if($type == 'MultipleChoice'){
             $options = '';
@@ -147,7 +147,7 @@ class WrittenExamQuestionController extends Controller
                 $var = 'option'.$i;
                 if($request->$var != null){
                     if($firstOption == 1){
-                        $options .= ','.$request->$var;
+                        $options .= ';'.$request->$var;
                     }else{
                         $options .= $request->$var;
                         $firstOption = 1;
@@ -163,7 +163,11 @@ class WrittenExamQuestionController extends Controller
 
     public function delete(Request $request){
         $key = $request->key;
-        WrittenExamQuestion::where('id', $request->id)->delete();
+
+        $weq = WrittenExamQuestion::where('id', $request->id)->first();
+        $weq->is_deleted = 1;
+        $weq->save();
+        
 
         return redirect()->route('question.index', ['key' => $key])->with('success', 'Question Has Been Deleted Successfully!');
     }

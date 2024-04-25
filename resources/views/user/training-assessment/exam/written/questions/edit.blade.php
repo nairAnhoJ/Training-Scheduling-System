@@ -56,19 +56,19 @@
                         </div>
                         <div id="optionDiv">
                             @php
-                                $choices = explode(',', $question->options);
+                                $choices = explode(';', $question->options);
                             @endphp
                             @foreach ($choices as $index => $choice)
                                 <div class="flex items-center w-full gap-x-1 {{ ($index > 0) ? 'mt-2' : '' }}">
-                                    <label for="option{{ $index+1 }}" class="block w-4 text-sm font-semibold text-gray-600">{{ chr(65+$index) }}.</label>
-                                    <input type="text" id="option{{ $index+1 }}" name="option{{ $index+1 }}" value="{{ $choice }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    <label for="option{{ $index+1 }}" class="block w-4 text-sm font-semibold text-gray-600">⬤</label>
+                                    <input type="text" id="option{{ $index+1 }}" name="option{{ $index+1 }}" value="{{ ucfirst($choice) }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                 </div>
                             @endforeach
                         </div>
                     </div>
                     <div class="w-full mb-3">
                         <label for="answer" class="block text-sm font-semibold text-gray-600">Answer <span class="text-red-500">*</span></label>
-                        <input type="text" id="answer" name="answer" value="{{ $question->answer }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        <input type="text" id="answer" name="answer" value="{{ ucfirst($question->answer) }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         @error('answer')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
@@ -98,7 +98,7 @@
                     var letter = String.fromCharCode(x+a);
                     $('#optionDiv').append(`
                         <div class="flex items-center w-full mt-2 gap-x-1">
-                            <label for="option${x}" class="block w-4 text-sm font-semibold text-gray-600">${letter}.</label>
+                            <label for="option${x}" class="block w-4 text-sm font-semibold text-gray-600">⬤</label>
                             <input type="text" id="option${x}" name="option${x}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         </div>
                     `);

@@ -27,10 +27,10 @@
                         <label for="type" class="block text-sm font-semibold text-gray-600">Type <span class="text-red-500">*</span></label>
                         <select id="type" name="type" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                             <option hidden value=""></option>
-                            <option value="MultipleChoice">Multiple Choice</option>
-                            <option value="ShortAnswer">Short Answer</option>
-                            <option value="TrueOrFalse">True or False</option>
-                            <option value="Enumeration">Enumeration</option>
+                            <option {{ (old('type') == 'MultipleChoice') ? 'selected' : '' }} value="MultipleChoice">Multiple Choice</option>
+                            <option {{ (old('type') == 'ShortAnswer') ? 'selected' : '' }} value="ShortAnswer">Short Answer</option>
+                            <option {{ (old('type') == 'TrueOrFalse') ? 'selected' : '' }} value="TrueOrFalse">True or False</option>
+                            <option {{ (old('type') == 'Enumeration') ? 'selected' : '' }} value="Enumeration">Enumeration</option>
                         </select>
                         @error('type')
                             <span class="text-xs text-red-500">{{ $message }}</span>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="w-full mb-3">
                         <label for="question" class="block text-sm font-semibold text-gray-600">Question <span class="text-red-500">*</span></label>
-                        <textarea name="question" id="question" rows="3" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5"></textarea>
+                        <textarea name="question" id="question" rows="3" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5">{{ old('question') }}</textarea>
                         @error('question')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
@@ -56,21 +56,21 @@
                         </div>
                         <div id="optionDiv">
                             <div class="flex items-center w-full gap-x-1">
-                                <label for="option1" class="block w-4 text-sm font-semibold text-gray-600">A.</label>
+                                <label for="option1" class="block w-4 text-sm font-semibold text-gray-600">⬤</label>
                                 <input type="text" id="option1" name="option1" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                             </div>
                         </div>
                     </div>
                     <div class="w-full mb-3">
                         <label for="answer" class="block text-sm font-semibold text-gray-600">Answer <span class="text-red-500">*</span></label>
-                        <input type="text" id="answer" name="answer" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        <input type="text" id="answer" name="answer" value="{{ old('answer') }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         @error('answer')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="w-full mb-3">
                         <label for="points" class="block text-sm font-semibold text-gray-600">Points <span class="text-red-500">*</span></label>
-                        <input type="text" id="points" value="1" name="points" class="bg-gray-50 border numberOnly border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        <input type="text" id="points" value="{{ (old('points') != '') ? old('points') :  1 }}" name="points" value="{{ old('points') }}" class="bg-gray-50 border numberOnly border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         @error('points')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
@@ -93,7 +93,7 @@
                     var letter = String.fromCharCode(x+a);
                     $('#optionDiv').append(`
                         <div class="flex items-center w-full mt-2 gap-x-1">
-                            <label for="option${x}" class="block w-4 text-sm font-semibold text-gray-600">${letter}.</label>
+                            <label for="option${x}" class="block w-4 text-sm font-semibold text-gray-600">⬤</label>
                             <input type="text" id="option${x}" name="option${x}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         </div>
                     `);

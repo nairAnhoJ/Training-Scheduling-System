@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('answer', 200);
             $table->text('options')->nullable();
             $table->integer('points');
+            $table->boolean('is_deleted')->default(0);
             $table->timestamps();
         });
     }

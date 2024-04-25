@@ -108,8 +108,9 @@ Route::post('/trainings', [TrainingController::class, 'search'])->name('training
 Route::post('/trainings/view', [TrainingController::class, 'view'])->name('trainings.view');
 Route::get('/trainings/view/contract-details/{key}', [TrainingController::class, 'contractDetails']);
 
-Route::get('/training-assessment/written-exam', [AttendeesWrittenExamController::class, 'writtenExam']);
+Route::get('/training-assessment/written-exam', [AttendeesWrittenExamController::class, 'writtenExam'])->name('writtenExam');
 Route::POST('/training-assessment/written-exam/npQuestion', [AttendeesWrittenExamController::class, 'npQuestion'])->name('npQuestion');
+Route::POST('/training-assessment/written-exam/sQuestion', [AttendeesWrittenExamController::class, 'sQuestion'])->name('sQuestion');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
