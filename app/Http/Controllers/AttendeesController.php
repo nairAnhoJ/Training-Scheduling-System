@@ -50,8 +50,8 @@ class AttendeesController extends Controller
             'type' => 'required',
             'knowledge' => 'required',
             'years_operating' => 'required',
-            'written' => 'required',
-            'driving' => 'required',
+            'written_exam' => 'required',
+            // 'driving' => 'required',
         ]);
 
         $customMessages = [
@@ -60,8 +60,8 @@ class AttendeesController extends Controller
             'type.required' => 'Please select an option from the list.',
             'knowledge.required' => 'Please select an option from the list.',
             'years_operating.required' => 'Please provide the required information.',
-            'written.required' => 'Please select an option from the list.',
-            'driving.required' => 'Please select an option from the list.',
+            'written_exam.required' => 'Please select an option from the list.',
+            // 'driving.required' => 'Please select an option from the list.',
         ];
 
         $validator->setCustomMessages($customMessages);
@@ -76,7 +76,8 @@ class AttendeesController extends Controller
         $knowledge = $request->knowledge;
         $years_operating = $request->years_operating;
         $written_exam = $request->written_exam;
-        $driving_exam = $request->driving_exam;
+        // $driving_exam = $request->driving_exam;
+
 
         $attendee = new Attendees();
         $attendee->training_key = $key;
@@ -86,7 +87,7 @@ class AttendeesController extends Controller
         $attendee->knowledge = $knowledge;
         $attendee->years_operating = $years_operating;
         $attendee->written_exam = $written_exam;
-        $attendee->driving_exam = $driving_exam;
+        // $attendee->driving_exam = $driving_exam;
         $attendee->key = Str::uuid()->toString();
         $attendee->save();
 

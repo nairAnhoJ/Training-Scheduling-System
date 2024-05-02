@@ -20,8 +20,12 @@ class AttendeesWrittenExamController extends Controller
         $akey = $request->a;
         $attendee = Attendees::where('key', $akey)->first();
         $exam  = WrittenExam::find($attendee->written_exam);
+        $total = 0;
+        foreach($exam->questions as $eq){
+            $total = $total + $eq->points;
+        }
 
-        return view('user.training-assessment.attendees.exam.index', compact('attendee', 'key', 'akey', 'exam'));
+        return view('user.training-assessment.attendees.exam.index', compact('attendee', 'key', 'akey', 'exam', 'total'));
     }
 
     public function npQuestion(Request $request){
@@ -58,18 +62,31 @@ class AttendeesWrittenExamController extends Controller
 
         $awea = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->where('question_id', $question->id)->first();
 
+
         if($awea != null){
             $nAnswer = $awea->answer;
         }else{
             $nAnswer = null;
         }
 
-        if($Pquestion != null && strtolower($answer) == strtolower($Pquestion->answer)){
-            $points = $Pquestion->points;
+        if($Pquestion != null){
+            if($Pquestion->type == 'MultipleChoice' || $Pquestion->type == 'TrueOrFalse' || $Pquestion->type == 'ShortAnswer'){
+                if(strtolower($answer) == strtolower($Pquestion->answer)){
+                    $points = $Pquestion->points;
+                }
+            }else{
+                $answers = explode(';', $Pquestion->answer);
+                $nanswers = array_map('strtolower', $answers);
+                $nanswer = array_map('strtolower', $answer);
+                $common = array_intersect($nanswers, $nanswer);
+                $points = count($common);
+                $answer = implode(";", $answer);
+            }
         }
 
         if($nob != 'SUBMIT'){
             if($q != 0){
+
                 if($question->type == 'MultipleChoice' || $question->type == 'TrueOrFalse'){
     
                     if($question->type == 'MultipleChoice'){
@@ -82,46 +99,67 @@ class AttendeesWrittenExamController extends Controller
                     $theOptions = '';
                     foreach($options as $index => $option){
                         $theOptions .= '
-                            <div class="flex items-center">
-                                <input '.(($nAnswer == $option) ? 'checked' : '').' id="option'.$index.'" type="radio" value="'.$option.'" name="answer" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                                <label for="option'.$index.'" class="ms-2 text-lg font-medium text-gray-900">'.ucfirst($option).'</label>
+                            <div class="flex items-center border rounded-full justify-between pl-1 pr-2 py-2 border-neutral-400">
+                                <label for="option'.$index.'" class="ms-2 text-base font-medium text-gray-900">'.ucfirst($option).'</label>
+                                <input '.(($nAnswer == $option) ? 'checked' : '').' id="option'.$index.'" type="radio" value="'.$option.'" name="answer" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                             </div>
                         ';
                     }
         
                     $content = '
                                     <div class="h-full">
-                                        <p class="text-xl font-bold mb-10">'.$q.'. '.$question->question.'</p>
-                                        <div class="flex flex-col gap-y-2">
+                                        <input type="hidden" value="multiplechoice" id="qtype">
+                                        <p class="text-xl font-bold mb-10">'.$question->question.'</p>
+                                        <div class="flex flex-col gap-y-3">
                                             '.$theOptions.'
                                         </div>
                                     </div>
                                 ';
                 }else if($question->type == 'ShortAnswer' || $question->type == 'Enumeration'){
-                    // if($question->type == 'ShortAnswer'){
-                    //     $points = 1;
-                    // }else{
-                        $points = $question->points;
-                    // }
+                    $nPoints = $question->points;
         
                     $theAnswers = '';
     
-                    for ($i=0; $i < $points; $i++) {
+                    if($question->type == 'ShortAnswer'){
                         $theAnswers .= '
-                            <div class="w-full">
-                                <input type="text" id="answer'.$i.'" name="answer'.$i.'" value="'.$nAnswer.'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                            <div class="w-full flex items-center gap-x-2">
+                                <input type="text" id="answer" name="answer" value="'.$nAnswer.'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                             </div>
                         ';
+                    }else{
+                        $oAnswer = explode(';', $nAnswer);
+                        for ($i=0; $i < $question->points; $i++) {
+                            $theAnswers .= '
+                                <div class="w-full flex items-center gap-x-2">
+                                    <p class="w-7">'.($i+1).'. </p>
+                                    <input type="text" id="answer'.$i.'" name="answer[]" value="'.$oAnswer[$i].'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                </div>
+                            ';
+                        }
                     }
-        
-                    $content = '
-                                    <div class="h-full">
-                                        <p class="text-xl font-bold mb-10">'.$q.'. '.$question->question.'</p>
-                                        <div class="flex flex-col gap-y-3">
-                                            '.$theAnswers.'
+
+                    if($question->type == 'ShortAnswer'){
+                        $content = '
+                                        <div class="h-full">
+                                            <input type="hidden" value="shortanswer" id="qtype">
+                                            <p class="text-lg font-bold mb-10">'.$question->question.'</p>
+                                            <div class="flex flex-col gap-y-3">
+                                                '.$theAnswers.'
+                                            </div>
                                         </div>
-                                    </div>
-                                ';
+                                    ';
+                    }else{
+                        $content = '
+                                        <div class="h-full">
+                                        <input type="hidden" value="enumeration" id="qtype">
+                                        <p class="text-base mb-2 font-bold">Enumeration</p>
+                                            <p class="text-lg font-bold mb-10">'.$question->question.' ('.$nPoints.' points)</p>
+                                            <div class="flex flex-col gap-y-3">
+                                                '.$theAnswers.'
+                                            </div>
+                                        </div>
+                                    ';
+                    }
                 }
             }else{
                 $content = '
@@ -174,7 +212,7 @@ class AttendeesWrittenExamController extends Controller
                 $Pawea->save();
             }
 
-            $examResult = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->where('points', '1')->count();
+            $examResult = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->sum('points');
             $attendee->written_score = $examResult;
             $attendee->save();
 
@@ -196,38 +234,4 @@ class AttendeesWrittenExamController extends Controller
 
         echo $content;
     }
-
-    // public function sQuestion(Request $request){
-    //     $key = $request->key;
-    //     $training = ModelsRequest::where('key', $key)->first();
-    //     if(!$key || !$training){
-    //         return redirect()->route('dashboard.index');
-    //     }
-    //     dd($request);
-        
-    //     $content = '';
-    //     $akey = $request->akey;
-    //     $attendee = Attendees::where('key', $akey)->first();
-    //     $exam  = WrittenExam::find($attendee->written_exam);
-    //     $Pquestion = WrittenExamQuestion::where('exam_key', $exam->key)->orderBy('id')->skip(($q-1))->first();
-        
-    //     if($Pquestion != null && strtolower($answer) == strtolower($Pquestion->answer)){
-    //         $points = $Pquestion->points;
-    //     }
-
-    //     if($Pawea == null){
-    //         $nawea = new AttendeesWrittenExamAnswers();
-    //         $nawea->training_key = $key;
-    //         $nawea->attendee_key = $akey;
-    //         $nawea->exam_key = $exam->key;
-    //         $nawea->question_id = $Pquestion->id;
-    //         $nawea->answer = $answer;
-    //         $nawea->points = $points;
-    //         $nawea->save();
-    //     }else{
-    //         $Pawea->answer = $answer;
-    //         $Pawea->points = $points;
-    //         $Pawea->save();
-    //     }
-    // }
 }

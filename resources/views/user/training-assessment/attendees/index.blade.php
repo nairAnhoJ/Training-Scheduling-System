@@ -146,6 +146,12 @@
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Years Operating Forklift/MHE
                                             </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Written Exam Score
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Driving Exam Score
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -169,6 +175,20 @@
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ $attendee->years_operating }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    @if ($attendee->written_score != null)
+                                                        {{ $attendee->written_score }}
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    @if ($attendee->driving_score != null)
+                                                        {{ $attendee->driving_score }}
+                                                    @else
+                                                        N/A
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach

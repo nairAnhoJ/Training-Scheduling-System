@@ -39,119 +39,165 @@
     {{-- SUBMIT MODAL// --}}
 
     <div class="w-full p-5 bg-gray-200">
-        <div class="h-[calc(100vh-164px)] p-3 bg-white rounded-lg shadow-xl">
-            <div class="h-full p-4 overflow-hidden rounded-lg">
-                <div class="h-full">
+        <div class="h-[calc(100vh-96px)] bg-white rounded-lg shadow-xl">
+            <div class="h-full rounded-lg">
+                <div class="h-full flex flex-col">
                     <input type="hidden" value="0" id="question">
                     <input type="hidden" value="{{ $exam->id }}" id="exam">
                     @csrf
-                    <div id="content" class="h-full">
+                    
+                    {{-- HEADER --}}
+                        <div id="progressBar" class="hidden w-full bg-white pt-5 flex items-center flex-col px-5">
+                            <p class="mb-3"><span id="curQ"></span> of {{ $exam->questions->count() }}</p>
+                            <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4">
+                                <div id="currentPBar" class="bg-blue-600 h-1.5 rounded-full" style="width: {{ (1 / $exam->questions->count()) * 100 }}%"></div>
+                            </div>
+                        </div>
+                    {{-- HEADER --}}
+                    
+                    {{-- CONTENT --}}
+                        <div id="content" class="h-[calc(100%-88px)] relative overflow-y-auto {{ ($attendee->written_score != null) ? '' : 'px-5' }}">
 
-                        {{-- MULTIPLE CHOICE / TRUE or FALSE --}}
-                            {{-- <div class="hidden h-full">
-                                <p class="text-xl font-bold mb-10">1. It is used to buckle up before starting the unit, which prevents accidents if the forklift gets tip over or side roll during operation.</p>
-                                <div class="flex flex-col gap-y-2">
-                                    <div class="flex items-center">
-                                        <input checked id="option1" type="radio" value="a" name="answer" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                                        <label for="option1" class="ms-2 text-lg font-medium text-gray-900">Safety Shoes</label>
+                            {{-- MULTIPLE CHOICE / TRUE or FALSE --}}
+                                {{-- <div class="hidden h-full">
+                                    <p class="text-xl font-bold mb-10">1. It is used to buckle up before starting the unit, which prevents accidents if the forklift gets tip over or side roll during operation.</p>
+                                    <div class="flex flex-col gap-y-2">
+                                        <div class="flex items-center">
+                                            <input checked id="option1" type="radio" value="a" name="answer" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                            <label for="option1" class="ms-2 text-lg font-medium text-gray-900">Safety Shoes</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input id="option2" type="radio" value="b" name="answer" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                            <label for="option2" class="ms-2 text-lg font-medium text-gray-900">Safety Helmet</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input id="option3" type="radio" value="c" name="answer" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                            <label for="option3" class="ms-2 text-lg font-medium text-gray-900">Safety Belt</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <input id="option4" type="radio" value="d" name="answer" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                            <label for="option4" class="ms-2 text-lg font-medium text-gray-900">Safety Googles</label>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center">
-                                        <input id="option2" type="radio" value="b" name="answer" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                                        <label for="option2" class="ms-2 text-lg font-medium text-gray-900">Safety Helmet</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input id="option3" type="radio" value="c" name="answer" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                                        <label for="option3" class="ms-2 text-lg font-medium text-gray-900">Safety Belt</label>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <input id="option4" type="radio" value="d" name="answer" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                                        <label for="option4" class="ms-2 text-lg font-medium text-gray-900">Safety Googles</label>
-                                    </div>
-                                </div>
-                            </div> --}}
-                        {{-- MULTIPLE CHOICE / TRUE or FALSE --}}
+                                </div> --}}
+                            {{-- MULTIPLE CHOICE / TRUE or FALSE --}}
 
-                        {{-- SHORT ANSWER / ENUMERATION --}}
-                            {{-- <div class="hidden h-full">
-                                <p class="text-xl font-bold mb-10">1. It is used to buckle up before starting the unit, which prevents accidents if the forklift gets tip over or side roll during operation.</p>
-                                <div class="flex flex-col gap-y-3">
-                                    <div class="w-full">
-                                        <input type="text" id="answer1" name="answer1" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                            {{-- SHORT ANSWER / ENUMERATION --}}
+                                {{-- <div class="hidden h-full">
+                                    <p class="text-xl font-bold mb-10">1. It is used to buckle up before starting the unit, which prevents accidents if the forklift gets tip over or side roll during operation.</p>
+                                    <div class="flex flex-col gap-y-3">
+                                        <div class="w-full">
+                                            <input type="text" id="answer1" name="answer1" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                        </div>
+                                        <div class="w-full">
+                                            <input type="text" id="answer2" name="answer2" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                        </div>
                                     </div>
-                                    <div class="w-full">
-                                        <input type="text" id="answer2" name="answer2" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
-                                    </div>
-                                </div>
-                            </div> --}}
-                        {{-- SHORT ANSWER / ENUMERATION --}}
+                                </div> --}}
+                            {{-- SHORT ANSWER / ENUMERATION --}}
 
 
-                        {{-- RESULT / MAIN --}}
+                            {{-- RESULT / MAIN --}}
+                                @if ($attendee->written_score != null)
+                                    <div class="h-full flex items-center flex-col justify-between">
+                                        <div class="w-full">
+                                            @php
+                                                $rate = ($attendee->written_score / $total)
+                                            @endphp
+                                            @if ($rate >= 0.5)
+                                                <div class="bg-emerald-500 w-full text-center py-2 text-white flex items-center justify-center h-12">
+                                                    <p class="text-emerald-500 bg-white rounded-full aspect-square w-7 h-7 mr-2 flex items-center justify-center">✓</p>
+                                                    Exam Passed
+                                                </div>
+                                            @else
+                                                <div class="bg-red-500 w-full text-center py-2 text-white flex items-center justify-center h-12">
+                                                    <p class="text-red-500 bg-white rounded-full aspect-square w-7 h-7 mr-2 flex items-center justify-center">✗</p>
+                                                    Exam Failed
+                                                </div>
+                                            @endif
+                                            <div class="font-bold text-4xl tracking-wider text-center mt-5">{{ $exam->name }}</div>
+                                        </div>
+
+                                        <div class="font-bold text-6xl bg-white border-[15px] border-neutral-800 aspect-square rounded-full w-full text-neutral-800 relative max-w-[275px]">
+                                            <p class="absolute top-1/2 left-1/2 -translate-x-full -translate-y-full pr-2">{{ $attendee->written_score }}</p>
+                                            <p class=" text-9xl absolute top-1/2 font-medium left-1/2 -translate-x-1/2 -translate-y-1/2">/</p>
+                                            <p class="absolute top-1/2 left-1/2 pl-2">{{ $total }}</p>
+                                        </div>
+
+                                        <div class="font-bold text-2xl tracking-wider text-center mb-5">{{ $attendee->name }}</div>
+                                    </div>
+                                @else
+                                    <div id="main" class=" h-full grid grid-cols-1 sm:grid-cols-1 grid-rows-3 text-center">
+                                        <div class="self-center">
+                                            <p class="font-bold tracking-wide uppercase text-2xl">{{ $exam->name }}</p>
+                                        </div>
+                                        <div class="self-end">
+                                            <p class="font-bold tracking-wide text-xl">{{ $attendee->name }}</p>
+                                        </div>
+                                        <div class="self-end">
+                                            <p class="text-sm">Click "START" to start the exam.</p>
+                                        </div>
+                                    </div>
+                                @endif
+                            {{-- RESULT / MAIN --}}
+
+
+                            {{-- RESULT SUMMARY --}}
+                                @if ($attendee->written_score != null)
+                                    <div class="hidden h-full flex items-center flex-col justify-between">
+                                        <div class="font-bold text-4xl tracking-wider text-center mt-5">{{ $exam->name }}</div>
+
+                                        <div class="font-bold text-6xl bg-neutral-800 aspect-square rounded-full w-full text-white relative max-w-[275px]">
+                                            <p class="absolute top-1/2 left-1/2 -translate-x-full -translate-y-full pr-2">{{ $attendee->written_score }}</p>
+                                            <p class=" text-9xl absolute top-1/2 font-medium left-1/2 -translate-x-1/2 -translate-y-1/2">/</p>
+                                            <p class="absolute top-1/2 left-1/2 pl-2">{{ $exam->questions->count() }}</p>
+                                        </div>
+
+                                        <div class="font-bold text-2xl tracking-wider text-center mb-5">{{ $attendee->name }}</div>
+                                    </div>
+                                @endif
+                            {{-- RESULT SUMMARY --}}
+                        </div>
+                    {{-- CONTENT --}}
+                        
+                    {{-- CONTROLS --}}
+                        <div class="w-full mt-5 flex flex-row-reverse gap-x-4 px-5 pb-5">
                             @if ($attendee->written_score != null)
-                                <div class="h-full flex items-center flex-col justify-between">
-                                    <div class="font-bold text-4xl tracking-wider text-center mt-5">{{ $exam->name }}</div>
-
-                                    <div class="font-bold text-6xl bg-neutral-800 aspect-square rounded-full w-full text-white relative max-w-[275px]">
-                                        <p class="absolute top-1/2 left-1/2 -translate-x-full -translate-y-full pr-2">{{ $attendee->written_score }}</p>
-                                        <p class=" text-9xl absolute top-1/2 font-medium left-1/2 -translate-x-1/2 -translate-y-1/2">/</p>
-                                        <p class="absolute top-1/2 left-1/2 pl-2">{{ $exam->questions->count() }}</p>
-                                    </div>
-
-                                    <div class="font-bold text-2xl tracking-wider text-center mb-5">{{ $attendee->name }}</div>
-                                </div>
+                                <button id="resultSummaryButton" class="h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
+                                    <div class="w-6"></div>
+                                    <div>RESULTS SUMMARY</div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
+                                        <path d="m304-58-80-81 343-343-343-343 80-81 424 424L304-58Z"/>
+                                    </svg>
+                                </button>
                             @else
-                                <div id="main" class=" h-full grid grid-cols-1 sm:grid-cols-1 grid-rows-3 text-center">
-                                    <div class="self-center">
-                                        <p class="font-bold tracking-wide uppercase text-2xl">{{ $exam->name }}</p>
-                                    </div>
-                                    <div class="self-end">
-                                        <p class="font-bold tracking-wide text-xl">{{ $attendee->name }}</p>
-                                    </div>
-                                    <div class="self-end">
-                                        <p class="text-sm">Click "START" to start the exam.</p>
-                                    </div>
-                                </div>
+                                <button id="submitButton" class="hidden h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
+                                    <div class="w-6"></div>
+                                    <div>SUBMIT</div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
+                                        <path d="m304-58-80-81 343-343-343-343 80-81 424 424L304-58Z"/>
+                                    </svg>
+                                </button>
+                                <button id="nextButton" class="h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
+                                    <div class="w-6"></div>
+                                    <div id="nsLabel">START</div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
+                                        <path d="m304-58-80-81 343-343-343-343 80-81 424 424L304-58Z"/>
+                                    </svg>
+                                </button>
+                                <button id="backButton" class="hidden h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
+                                        <path d="M424-56 0-480l424-424 80 81-343 343 343 343-80 81Z"/>
+                                    </svg>
+                                    <div>BACK</div>
+                                    <div class="w-6"></div>
+                                </button>
                             @endif
-                        {{-- RESULT / MAIN --}}
-                    </div>
+                        </div>
+                    {{-- CONTROLS --}}
                 </div>
             </div>
         </div>
-        {{-- CONTROLS --}}
-            <div class="w-full mt-5 flex flex-row-reverse gap-x-4">
-                @if ($attendee->written_score != null)
-                    <button id="resultSummaryButton" class="h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
-                        <div class="w-6"></div>
-                        <div>RESULTS SUMMARY</div>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
-                            <path d="m304-58-80-81 343-343-343-343 80-81 424 424L304-58Z"/>
-                        </svg>
-                    </button>
-                @else
-                    <button id="submitButton" class="hidden h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
-                        <div class="w-6"></div>
-                        <div>SUBMIT</div>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
-                            <path d="m304-58-80-81 343-343-343-343 80-81 424 424L304-58Z"/>
-                        </svg>
-                    </button>
-                    <button id="nextButton" class="h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
-                        <div class="w-6"></div>
-                        <div id="nsLabel">START</div>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
-                            <path d="m304-58-80-81 343-343-343-343 80-81 424 424L304-58Z"/>
-                        </svg>
-                    </button>
-                    <button id="backButton" class="hidden h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
-                            <path d="M424-56 0-480l424-424 80 81-343 343 343 343-80 81Z"/>
-                        </svg>
-                        <div>BACK</div>
-                        <div class="w-6"></div>
-                    </button>
-                @endif
-            </div>
-        {{-- CONTROLS --}}
     </div>
 
     <script>
@@ -167,7 +213,15 @@
             $('#nextButton').click(function(){
                 $('#loading').removeClass('hidden');
                 q = $('#question').val();
-                answer = $('input[name="answer"]:checked').val();
+                qtype = jQuery('#qtype').val();
+
+                if(qtype == 'multiplechoice'){
+                    answer = $('input[name="answer"]:checked').val();
+                }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
+                    answer = $('input[name="answer[]"]').map(function() {
+                        return $(this).val();
+                    }).get();
+                }
 
                 $.ajax({
                     url:"{{ route('npQuestion') }}",
@@ -191,6 +245,13 @@
                             $('#backButton').removeClass('hidden');
                             $('#nsLabel').html('NEXT');
                         }
+                        if(q > 0){
+                            $('#progressBar').removeClass('hidden');
+                            var curPB = ((q/mq)*100)+'%';
+                            $('#currentPBar').css('width', curPB);
+                            $('#curQ').html(q);
+                        }
+
                         $('#loading').addClass('hidden');
                     }
                 });
@@ -199,7 +260,15 @@
             $('#backButton').click(function(){
                 $('#loading').removeClass('hidden');
                 q = $('#question').val();
-                answer = $('input[name="answer"]:checked').val();
+                qtype = jQuery('#qtype').val();
+
+                if(qtype == 'multiplechoice'){
+                    answer = $('input[name="answer"]:checked').val();
+                }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
+                    answer = $('input[name="answer[]"]').map(function() {
+                        return $(this).val();
+                    }).get();
+                }
 
                 $.ajax({
                     url:"{{ route('npQuestion') }}",
@@ -227,6 +296,7 @@
                     }
                 });
             });
+
             $('#submitButton').on('click', function(){
                 $('#submitModal').removeClass('hidden');
             });
@@ -238,7 +308,15 @@
             $('#ConfirmSubmitButton').click(function(){
                 $('#loading').removeClass('hidden');
                 q = $('#question').val();
-                answer = $('input[name="answer"]:checked').val();
+                qtype = jQuery('#qtype').val();
+
+                if(qtype == 'multiplechoice'){
+                    answer = $('input[name="answer"]:checked').val();
+                }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
+                    answer = $('input[name="answer[]"]').map(function() {
+                        return $(this).val();
+                    }).get();
+                }
 
                 $.ajax({
                     url:"{{ route('npQuestion') }}",
