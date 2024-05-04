@@ -42,6 +42,12 @@ class AttendeesWrittenExamController extends Controller
         $q = $request->q;
         $Pquestion = null;
 
+        if($attendee->written_exam_start == null){
+            $attendee->written_exam_start = date('Y-m-d H:i:s');
+            $attendee->save();
+        }
+
+        $Pawea = null;
         if($q != "0"){
             $Pquestion = WrittenExamQuestion::where('exam_key', $exam->key)->orderBy('id')->skip(($q-1))->first();
             $Pawea = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->where('question_id', $Pquestion->id)->first();
@@ -99,9 +105,9 @@ class AttendeesWrittenExamController extends Controller
                     $theOptions = '';
                     foreach($options as $index => $option){
                         $theOptions .= '
-                            <div class="flex items-center border rounded-full justify-between pl-1 pr-2 py-2 border-neutral-400">
-                                <label for="option'.$index.'" class="ms-2 text-base font-medium text-gray-900">'.ucfirst($option).'</label>
-                                <input '.(($nAnswer == $option) ? 'checked' : '').' id="option'.$index.'" type="radio" value="'.$option.'" name="answer" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                            <div class="flex items-center rounded-xl justify-between pl-1 pr-2 py-3 '.(($nAnswer == $option) ? 'border-2 border-blue-400' : 'border border-neutral-100').' shadow optionDiv">
+                                <label for="option'.$index.'" class="ms-2 text-sm font-medium text-gray-900">'.ucfirst($option).'</label>
+                                <input '.(($nAnswer == $option) ? 'checked' : '').' id="option'.$index.'" type="radio" value="'.$option.'" name="answer" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 inputRadio">
                             </div>
                         ';
                     }
@@ -109,7 +115,7 @@ class AttendeesWrittenExamController extends Controller
                     $content = '
                                     <div class="h-full">
                                         <input type="hidden" value="multiplechoice" id="qtype">
-                                        <p class="text-xl font-bold mb-10">'.$question->question.'</p>
+                                        <p class="text-lg font-bold mb-10">'.$question->question.'</p>
                                         <div class="flex flex-col gap-y-3">
                                             '.$theOptions.'
                                         </div>
@@ -196,20 +202,21 @@ class AttendeesWrittenExamController extends Controller
                 }
             }
         }else{
-
-            if($Pawea == null){
-                $nawea = new AttendeesWrittenExamAnswers();
-                $nawea->training_key = $key;
-                $nawea->attendee_key = $akey;
-                $nawea->exam_key = $exam->key;
-                $nawea->question_id = $Pquestion->id;
-                $nawea->answer = $answer;
-                $nawea->points = $points;
-                $nawea->save();
-            }else{
-                $Pawea->answer = $answer;
-                $Pawea->points = $points;
-                $Pawea->save();
+            if($q > 0){
+                if($Pawea == null){
+                    $nawea = new AttendeesWrittenExamAnswers();
+                    $nawea->training_key = $key;
+                    $nawea->attendee_key = $akey;
+                    $nawea->exam_key = $exam->key;
+                    $nawea->question_id = $Pquestion->id;
+                    $nawea->answer = $answer;
+                    $nawea->points = $points;
+                    $nawea->save();
+                }else{
+                    $Pawea->answer = $answer;
+                    $Pawea->points = $points;
+                    $Pawea->save();
+                }
             }
 
             $examResult = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->sum('points');

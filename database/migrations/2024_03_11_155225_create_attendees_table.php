@@ -22,8 +22,8 @@ return new class extends Migration
             $table->integer('years_operating');
             $table->integer('written_exam');
             $table->integer('driving_exam');
-            $table->integer('written_exam_key')->nullable();
-            $table->integer('driving_exam_key')->nullable();
+            $table->dateTime('written_exam_start');
+            $table->dateTime('written_exam_end');
             $table->integer('written_score')->nullable();
             $table->integer('driving_score')->nullable();
             $table->string('key');

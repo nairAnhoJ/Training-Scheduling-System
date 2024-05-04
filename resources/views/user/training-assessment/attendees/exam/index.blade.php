@@ -39,16 +39,20 @@
     {{-- SUBMIT MODAL// --}}
 
     <div class="w-full p-5 bg-gray-200">
-        <div class="h-[calc(100vh-96px)] bg-white rounded-lg shadow-xl">
-            <div class="h-full rounded-lg">
+        <div class="h-[calc(100vh-96px)] bg-white rounded-xl shadow-xl">
+            <div class="h-full rounded-xl">
                 <div class="h-full flex flex-col">
                     <input type="hidden" value="0" id="question">
                     <input type="hidden" value="{{ $exam->id }}" id="exam">
                     @csrf
                     
                     {{-- HEADER --}}
-                        <div id="progressBar" class="hidden w-full bg-white pt-5 flex items-center flex-col px-5">
-                            <p class="mb-3"><span id="curQ"></span> of {{ $exam->questions->count() }}</p>
+                        <div id="progressBar" class="hidden w-full pt-5 flex items-center flex-col px-5">
+                            <div class="flex justify-between w-full items-center mb-2">
+                                <div class="w-14"></div>
+                                <p class=""><span id="curQ"></span> of {{ $exam->questions->count() }}</p>
+                                <div id="timeRemaining" class="w-14 text-right"></div>
+                            </div>
                             <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4">
                                 <div id="currentPBar" class="bg-blue-600 h-1.5 rounded-full" style="width: {{ (1 / $exam->questions->count()) * 100 }}%"></div>
                             </div>
@@ -105,12 +109,12 @@
                                                 $rate = ($attendee->written_score / $total)
                                             @endphp
                                             @if ($rate >= 0.5)
-                                                <div class="bg-emerald-500 w-full text-center py-2 text-white flex items-center justify-center h-12">
+                                                <div class="bg-emerald-500 w-full text-center rounded-t-lg py-2 text-white flex items-center justify-center h-12">
                                                     <p class="text-emerald-500 bg-white rounded-full aspect-square w-7 h-7 mr-2 flex items-center justify-center">✓</p>
                                                     Exam Passed
                                                 </div>
                                             @else
-                                                <div class="bg-red-500 w-full text-center py-2 text-white flex items-center justify-center h-12">
+                                                <div class="bg-red-500 w-full text-center rounded-t-lg py-2 text-white flex items-center justify-center h-12">
                                                     <p class="text-red-500 bg-white rounded-full aspect-square w-7 h-7 mr-2 flex items-center justify-center">✗</p>
                                                     Exam Failed
                                                 </div>
@@ -163,7 +167,7 @@
                     {{-- CONTROLS --}}
                         <div class="w-full mt-5 flex flex-row-reverse gap-x-4 px-5 pb-5">
                             @if ($attendee->written_score != null)
-                                <button id="resultSummaryButton" class="h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
+                                <button id="resultSummaryButton" class="h-12 w-full border rounded-xl bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
                                     <div class="w-6"></div>
                                     <div>RESULTS SUMMARY</div>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
@@ -171,21 +175,21 @@
                                     </svg>
                                 </button>
                             @else
-                                <button id="submitButton" class="hidden h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
+                                <button id="submitButton" class="hidden h-12 w-full border rounded-xl bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
                                     <div class="w-6"></div>
                                     <div>SUBMIT</div>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
                                         <path d="m304-58-80-81 343-343-343-343 80-81 424 424L304-58Z"/>
                                     </svg>
                                 </button>
-                                <button id="nextButton" class="h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
+                                <button id="nextButton" class="h-12 w-full border rounded-xl bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
                                     <div class="w-6"></div>
                                     <div id="nsLabel">START</div>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
                                         <path d="m304-58-80-81 343-343-343-343 80-81 424 424L304-58Z"/>
                                     </svg>
                                 </button>
-                                <button id="backButton" class="hidden h-12 w-full border rounded-full bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
+                                <button id="backButton" class="hidden h-12 w-full border rounded-xl bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
                                         <path d="M424-56 0-480l424-424 80 81-343 343 343 343-80 81Z"/>
                                     </svg>
@@ -207,6 +211,11 @@
             var mq = {{ $exam->questions->count() }};
             var key = "{{ $key }}";
             var akey = "{{ $akey }}";
+            var start = new Date("{{ $attendee->written_exam_start }}");
+            var end = new Date("{{ $attendee->written_exam_start }}");
+            end.setMinutes(end.getMinutes() + 30);
+            var timeRemaining;
+            var score = "{{ $attendee->written_score }}";
             var answer = null;
             var qtype = null;
 
@@ -251,6 +260,11 @@
                             $('#currentPBar').css('width', curPB);
                             $('#curQ').html(q);
                         }
+                        
+                        if(end == null || end == '' || end == 'Invalid Date'){
+                            end = new Date();
+                        }
+                        end.setMinutes(end.getMinutes() + 30);
 
                         $('#loading').addClass('hidden');
                     }
@@ -291,6 +305,12 @@
                         }else{
                             $('#nextButton').removeClass('hidden');
                             $('#submitButton').addClass('hidden');
+                        }
+                        if(q > 0){
+                            $('#progressBar').removeClass('hidden');
+                            var curPB = ((q/mq)*100)+'%';
+                            $('#currentPBar').css('width', curPB);
+                            $('#curQ').html(q);
                         }
                         $('#loading').addClass('hidden');
                     }
@@ -334,6 +354,71 @@
                     }
                 });
             });
+
+            jQuery(document).on("change", ".inputRadio", function() {
+                optionChanged();
+            });
+
+            jQuery(document).on("click", ".optionDiv", function() {
+                $(this).children('input').prop('checked', true);
+                optionChanged();
+            });
+
+            function optionChanged(){
+                $('input[name="answer"]').parent().removeClass('border-2 border-blue-400 border border-neutral-100');
+                $('input[name="answer"]').parent().addClass('border border-neutral-100');
+                $('input[name="answer"]:checked').parent().removeClass('border border-neutral-100');
+                $('input[name="answer"]:checked').parent().addClass('border-2 border-blue-400');
+            }
+
+            function updateTime() {
+                var now = new Date();
+                var diff = end - now;
+
+                var seconds = Math.floor(diff / 1000);
+                var minutes = Math.floor(seconds / 60);
+                var hours = Math.floor(minutes / 60);
+
+                hours = hours % 24;
+                minutes = minutes % 60;
+                seconds = seconds % 60;
+
+                if(minutes <= 9){
+                    minutes = '0'+minutes;
+                }
+                if(seconds <= 9){
+                    seconds = '0'+seconds;
+                }
+
+                if(score == null || score == ''){
+                    if(diff <= 0){
+                        $('#ConfirmSubmitButton').click();
+                    }else if(diff < 300000 && diff > 180000){
+                        $("#timeRemaining").addClass('text-lg font-semibold');
+                        $("#timeRemaining").text(minutes + ":" + seconds);
+                    }else if(diff < 180000 && diff > 60000){
+                        $("#timeRemaining").addClass('text-amber-700 text-xl font-semibold');
+                        $("#timeRemaining").text(minutes + ":" + seconds);
+                    }else if(diff < 60000){
+                        $("#timeRemaining").addClass('text-red-700 text-2xl font-semibold');
+                        $("#timeRemaining").text(minutes + ":" + seconds);
+                    }else{
+                        $("#timeRemaining").text(minutes + ":" + seconds);
+                    }
+                }
+
+            }setInterval(updateTime, 1000);
+
+
+
+
+
+
+
+
+
+
+
         });
     </script>
 @endsection
