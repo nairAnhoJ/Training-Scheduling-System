@@ -237,6 +237,26 @@
                                                     {{ $attendee->years_operating }}
                                                 </div>
                                             </div>
+                                            <div class="grid grid-cols-2 content-center">
+                                                <div class="text-xs leading-5 flex items-center">Written Exam Score</div>
+                                                <div class="text-xs font-semibold flex items-center">
+                                                    @if ($attendee->written_score != null)
+                                                        {{ $attendee->written_score }}
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2 content-center">
+                                                <div class="text-xs leading-5 flex items-center">Driving Exam Score</div>
+                                                <div class="text-xs font-semibold flex items-center">
+                                                    @if ($attendee->driving_score != null)
+                                                        {{ $attendee->driving_score }}
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                </div>
+                                            </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5 flex items-center">Action</div>
                                                 <div class="">

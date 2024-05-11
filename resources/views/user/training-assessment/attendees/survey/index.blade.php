@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','WRITTEN EXAM')
+@section('title','SURVEY')
 @section('content')
     
     {{-- SUBMIT MODAL --}}
@@ -39,16 +39,15 @@
     {{-- SUBMIT MODAL// --}}
 
     <div class="w-full p-5 bg-gray-200">
-        <div class="h-[calc(100vh-96px)] bg-white rounded-xl shadow-xl">
+        <div class="bg-white rounded-xl shadow-xl">
             <div class="h-full rounded-xl">
-                <div class="h-full flex flex-col">
-                    
-                    <input type="hidden" value="0" id="question">
-                    <input type="hidden" value="{{ $exam->id }}" id="exam">
+                <form action="{{ route('attendeeSurveySubmit') }}" method="POST" class="flex flex-col p-5">
                     @csrf
+                    <input type="hidden" value="{{ $key }}" name="key">
+                    <input type="hidden" value="{{ $akey }}" name="akey">
                     
                     {{-- HEADER --}}
-                        <div id="progressBar" class="hidden w-full pt-5 flex items-center flex-col px-5">
+                        {{-- <div id="progressBar" class="hidden w-full pt-5 flex items-center flex-col px-5">
                             <div class="flex justify-between w-full items-center mb-2">
                                 <div class="w-14"></div>
                                 <p class=""><span id="curQ"></span> of {{ $exam->questions->count() }}</p>
@@ -57,11 +56,42 @@
                             <div class="w-full bg-gray-200 rounded-full h-1.5 mb-4">
                                 <div id="currentPBar" class="bg-blue-600 h-1.5 rounded-full" style="width: {{ (1 / $exam->questions->count()) * 100 }}%"></div>
                             </div>
-                        </div>
+                        </div> --}}
                     {{-- HEADER --}}
                     
                     {{-- CONTENT --}}
-                        <div id="content" class="h-[calc(100%-88px)] relative overflow-y-auto {{ ($attendee->written_score != null) ? '' : 'px-5' }}">
+                        <div id="content" class="">
+                            <div class="w-full">
+                                @foreach ($questions as $index => $question)
+                                    @if ($question->type == 'MultipleChoice')
+                                        <div class="mb-3">
+                                            <p class="text-lg font-medium mb-1">{{ ($index+1) .'. '. $question->question }}</p>
+                                            <div class="flex flex-col gap-y-[2px]">
+                                                @php
+                                                    $options = explode(';', $question->options);
+                                                    // shuffle($options);
+                                                @endphp
+                                                @foreach ($options as $optionIndex => $option)
+                                                    <div class="flex items-center">
+                                                        <input id="option{{$index.$optionIndex}}" type="radio" value="{{$option}}" name="answer{{$index}}" class="text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                                        <label for="option{{$index.$optionIndex}}" class="ms-2 text-sm text-gray-900">{{ucfirst($option)}}</label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    @elseif ($question->type == 'ShortAnswer')
+                                        <div class="mb-3">
+                                            <p class="text-lg font-medium mb-1">{{ ($index+1) .'. '. $question->question }}</p>
+                                            <div class="flex flex-col gap-y-3">
+                                                <div class="w-full">
+                                                    <textarea id="answer{{$index}}" name="answer{{$index}}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5 h-[120px] resize-none" autocomplete="off"></textarea>
+                                                    {{-- <input type="text" id="answer{{$index}}" name="answer{{$index}}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off"> --}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
 
                             {{-- MULTIPLE CHOICE / TRUE or FALSE --}}
                                 {{-- <div class="hidden h-full">
@@ -102,7 +132,7 @@
                             {{-- SHORT ANSWER / ENUMERATION --}}
 
                             {{-- RESULT / MAIN --}}
-                                @if ($attendee->written_score != null)
+                                {{-- @if ($attendee->written_score != null)
                                     <div class="h-full flex items-center flex-col justify-between">
                                         <div class="w-full">
                                             @php
@@ -142,24 +172,31 @@
                                             <p class="text-sm">Click "START" to start the exam.</p>
                                         </div>
                                     </div>
-                                @endif
+                                @endif --}}
                             {{-- RESULT / MAIN --}}
 
                         </div>
                     {{-- CONTENT --}}
                         
                     {{-- CONTROLS --}}
-                        <div id="controlDiv" class="w-full mt-5 flex flex-row-reverse gap-x-4 px-5 pb-5">
-                            @if ($attendee->written_score != null)
-                                {{-- <button id="resultSummaryButton" class="h-12 w-full border rounded-xl bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
+                        <div id="controlDiv" class="w-full mt-5">
+                            <button id="submitButton" class="h-12 w-full border rounded-xl bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
+                                <div class="w-6"></div>
+                                <div>SUBMIT</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
+                                    <path d="m304-58-80-81 343-343-343-343 80-81 424 424L304-58Z"/>
+                                </svg>
+                            </button>
+                            {{-- @if ($attendee->written_score != null)
+                                <button id="resultSummaryButton" class="h-12 w-full border rounded-xl bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
                                     <div class="w-6"></div>
                                     <div>RESULTS SUMMARY</div>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
                                         <path d="m304-58-80-81 343-343-343-343 80-81 424 424L304-58Z"/>
                                     </svg>
-                                </button> --}}
+                                </button>
                             @else
-                                <button id="submitButton" class="hidden h-12 w-full border rounded-xl bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
+                                <button id="submitButton" class="h-12 w-full border rounded-xl bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
                                     <div class="w-6"></div>
                                     <div>SUBMIT</div>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
@@ -180,11 +217,11 @@
                                     <div>BACK</div>
                                     <div class="w-6"></div>
                                 </button>
-                            @endif
+                            @endif --}}
                         </div>
                     {{-- CONTROLS --}}
 
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -193,7 +230,6 @@
         $(document).ready(function(){
             var q = 0;
             var _token = $('input[name="_token"]').val();
-            var mq = {{ $exam->questions->count() }};
             var key = "{{ $key }}";
             var akey = "{{ $akey }}";
             var start = new Date("{{ $attendee->written_exam_start }}");
@@ -204,219 +240,219 @@
             var answer = null;
             var qtype = null;
 
-            $('#nextButton').click(function(){
-                $('#loading').removeClass('hidden');
-                q = $('#question').val();
-                qtype = jQuery('#qtype').val();
+            // $('#nextButton').click(function(){
+            //     $('#loading').removeClass('hidden');
+            //     q = $('#question').val();
+            //     qtype = jQuery('#qtype').val();
 
-                if(qtype == 'multiplechoice'){
-                    answer = $('input[name="answer"]:checked').val();
-                }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
-                    answer = $('input[name="answer[]"]').map(function() {
-                        return $(this).val();
-                    }).get();
-                }
+            //     if(qtype == 'multiplechoice'){
+            //         answer = $('input[name="answer"]:checked').val();
+            //     }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
+            //         answer = $('input[name="answer[]"]').map(function() {
+            //             return $(this).val();
+            //         }).get();
+            //     }
 
-                $.ajax({
-                    url:"{{ route('npQuestion') }}",
-                    method:"POST",
-                    data:{
-                        key: key,
-                        akey: akey,
-                        q: q,
-                        answer: answer,
-                        nob: 'NEXT',
-                        _token: _token
-                    },
-                    success:function(result){
-                        $('#content').html(result);
-                        $('#question').val(++q);
+            //     $.ajax({
+            //         url:"{{ route('npQuestion') }}",
+            //         method:"POST",
+            //         data:{
+            //             key: key,
+            //             akey: akey,
+            //             q: q,
+            //             answer: answer,
+            //             nob: 'NEXT',
+            //             _token: _token
+            //         },
+            //         success:function(result){
+            //             $('#content').html(result);
+            //             $('#question').val(++q);
 
-                        if(q == mq){
-                            $('#nextButton').addClass('hidden');
-                            $('#submitButton').removeClass('hidden');
-                        }else{
-                            $('#backButton').removeClass('hidden');
-                            $('#nsLabel').html('NEXT');
-                        }
-                        if(q > 0){
-                            $('#progressBar').removeClass('hidden');
-                            var curPB = ((q/mq)*100)+'%';
-                            $('#currentPBar').css('width', curPB);
-                            $('#curQ').html(q);
-                        }
+            //             if(q == mq){
+            //                 $('#nextButton').addClass('hidden');
+            //                 $('#submitButton').removeClass('hidden');
+            //             }else{
+            //                 $('#backButton').removeClass('hidden');
+            //                 $('#nsLabel').html('NEXT');
+            //             }
+            //             if(q > 0){
+            //                 $('#progressBar').removeClass('hidden');
+            //                 var curPB = ((q/mq)*100)+'%';
+            //                 $('#currentPBar').css('width', curPB);
+            //                 $('#curQ').html(q);
+            //             }
                         
-                        if(end == null || end == '' || end == 'Invalid Date'){
-                            end = new Date();
-                        }
-                        end.setMinutes(end.getMinutes() + 30);
+            //             if(end == null || end == '' || end == 'Invalid Date'){
+            //                 end = new Date();
+            //             }
+            //             end.setMinutes(end.getMinutes() + 30);
 
-                        $('#loading').addClass('hidden');
-                    }
-                });
-            });
+            //             $('#loading').addClass('hidden');
+            //         }
+            //     });
+            // });
 
-            $('#backButton').click(function(){
-                $('#loading').removeClass('hidden');
-                q = $('#question').val();
-                qtype = jQuery('#qtype').val();
+            // $('#backButton').click(function(){
+            //     $('#loading').removeClass('hidden');
+            //     q = $('#question').val();
+            //     qtype = jQuery('#qtype').val();
 
-                if(qtype == 'multiplechoice'){
-                    answer = $('input[name="answer"]:checked').val();
-                }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
-                    answer = $('input[name="answer[]"]').map(function() {
-                        return $(this).val();
-                    }).get();
-                }
+            //     if(qtype == 'multiplechoice'){
+            //         answer = $('input[name="answer"]:checked').val();
+            //     }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
+            //         answer = $('input[name="answer[]"]').map(function() {
+            //             return $(this).val();
+            //         }).get();
+            //     }
 
-                $.ajax({
-                    url:"{{ route('npQuestion') }}",
-                    method:"POST",
-                    data:{
-                        key: key,
-                        akey: akey,
-                        q: q,
-                        answer: answer,
-                        nob: 'BACK',
-                        _token: _token
-                    },
-                    success:function(result){
-                        $('#content').html(result);
-                        $('#question').val(--q);
+            //     $.ajax({
+            //         url:"{{ route('npQuestion') }}",
+            //         method:"POST",
+            //         data:{
+            //             key: key,
+            //             akey: akey,
+            //             q: q,
+            //             answer: answer,
+            //             nob: 'BACK',
+            //             _token: _token
+            //         },
+            //         success:function(result){
+            //             $('#content').html(result);
+            //             $('#question').val(--q);
 
-                        if(q == 0){
-                            $('#backButton').addClass('hidden');
-                            $('#nsLabel').html('START');
-                        }else{
-                            $('#nextButton').removeClass('hidden');
-                            $('#submitButton').addClass('hidden');
-                        }
-                        if(q > 0){
-                            $('#progressBar').removeClass('hidden');
-                            var curPB = ((q/mq)*100)+'%';
-                            $('#currentPBar').css('width', curPB);
-                            $('#curQ').html(q);
-                        }
-                        $('#loading').addClass('hidden');
-                    }
-                });
-            });
+            //             if(q == 0){
+            //                 $('#backButton').addClass('hidden');
+            //                 $('#nsLabel').html('START');
+            //             }else{
+            //                 $('#nextButton').removeClass('hidden');
+            //                 $('#submitButton').addClass('hidden');
+            //             }
+            //             if(q > 0){
+            //                 $('#progressBar').removeClass('hidden');
+            //                 var curPB = ((q/mq)*100)+'%';
+            //                 $('#currentPBar').css('width', curPB);
+            //                 $('#curQ').html(q);
+            //             }
+            //             $('#loading').addClass('hidden');
+            //         }
+            //     });
+            // });
 
-            $('#submitButton').on('click', function(){
-                $('#submitModal').removeClass('hidden');
-            });
+            // $('#submitButton').on('click', function(){
+            //     $('#submitModal').removeClass('hidden');
+            // });
 
-            $('.closeSubmitModal').on('click', function(){
-                $('#submitModal').addClass('hidden');
-            });
+            // $('.closeSubmitModal').on('click', function(){
+            //     $('#submitModal').addClass('hidden');
+            // });
 
-            $('#ConfirmSubmitButton').click(function(){
-                $('#loading').removeClass('hidden');
-                q = $('#question').val();
-                qtype = jQuery('#qtype').val();
+            // $('#ConfirmSubmitButton').click(function(){
+            //     $('#loading').removeClass('hidden');
+            //     q = $('#question').val();
+            //     qtype = jQuery('#qtype').val();
 
-                if(qtype == 'multiplechoice'){
-                    answer = $('input[name="answer"]:checked').val();
-                }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
-                    answer = $('input[name="answer[]"]').map(function() {
-                        return $(this).val();
-                    }).get();
-                }
+            //     if(qtype == 'multiplechoice'){
+            //         answer = $('input[name="answer"]:checked').val();
+            //     }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
+            //         answer = $('input[name="answer[]"]').map(function() {
+            //             return $(this).val();
+            //         }).get();
+            //     }
 
-                $.ajax({
-                    url:"{{ route('npQuestion') }}",
-                    method:"POST",
-                    data:{
-                        key: key,
-                        akey: akey,
-                        q: q,
-                        nob: 'SUBMIT',
-                        answer: answer,
-                        _token: _token
-                    },
-                    success:function(result){
-                        location.reload(true);
-                    }
-                });
-            });
+            //     $.ajax({
+            //         url:"{{ route('npQuestion') }}",
+            //         method:"POST",
+            //         data:{
+            //             key: key,
+            //             akey: akey,
+            //             q: q,
+            //             nob: 'SUBMIT',
+            //             answer: answer,
+            //             _token: _token
+            //         },
+            //         success:function(result){
+            //             location.reload(true);
+            //         }
+            //     });
+            // });
 
-            $('#resultSummaryButton').click(function(){
-                $('#loading').removeClass('hidden');
+            // $('#resultSummaryButton').click(function(){
+            //     $('#loading').removeClass('hidden');
 
-                $.ajax({
-                    url:"{{ route('resultSummary') }}",
-                    method:"POST",
-                    data:{
-                        key: key,
-                        akey: akey,
-                        _token: _token
-                    },
-                    success:function(result){
-                        $('#content').html(result);
-                        $('#loading').addClass('hidden');
-                        $('#controlDiv').addClass('hidden');
-                        $('#content').removeClass('h-[calc(100%-88px)]');
-                    }
-                });
-            });
+            //     $.ajax({
+            //         url:"{{ route('resultSummary') }}",
+            //         method:"POST",
+            //         data:{
+            //             key: key,
+            //             akey: akey,
+            //             _token: _token
+            //         },
+            //         success:function(result){
+            //             $('#content').html(result);
+            //             $('#loading').addClass('hidden');
+            //             $('#controlDiv').addClass('hidden');
+            //             $('#content').removeClass('h-[calc(100%-88px)]');
+            //         }
+            //     });
+            // });
 
-            jQuery(document).on("click", "#backResultButton", function() {
-                location.reload(true);
-            });
+            // jQuery(document).on("click", "#backResultButton", function() {
+            //     location.reload(true);
+            // });
 
-            jQuery(document).on("change", ".inputRadio", function() {
-                optionChanged();
-            });
+            // jQuery(document).on("change", ".inputRadio", function() {
+            //     optionChanged();
+            // });
 
-            jQuery(document).on("click", ".optionDiv", function() {
-                $(this).children('input').prop('checked', true);
-                optionChanged();
-            });
+            // jQuery(document).on("click", ".optionDiv", function() {
+            //     $(this).children('input').prop('checked', true);
+            //     optionChanged();
+            // });
 
-            function optionChanged(){
-                $('input[name="answer"]').parent().removeClass('border-2 border-blue-400 border border-neutral-100');
-                $('input[name="answer"]').parent().addClass('border border-neutral-100');
-                $('input[name="answer"]:checked').parent().removeClass('border border-neutral-100');
-                $('input[name="answer"]:checked').parent().addClass('border-2 border-blue-400');
-            }
+            // function optionChanged(){
+            //     $('input[name="answer"]').parent().removeClass('border-2 border-blue-400 border border-neutral-100');
+            //     $('input[name="answer"]').parent().addClass('border border-neutral-100');
+            //     $('input[name="answer"]:checked').parent().removeClass('border border-neutral-100');
+            //     $('input[name="answer"]:checked').parent().addClass('border-2 border-blue-400');
+            // }
 
-            function updateTime() {
-                var now = new Date();
-                var diff = end - now;
+            // function updateTime() {
+            //     var now = new Date();
+            //     var diff = end - now;
 
-                var seconds = Math.floor(diff / 1000);
-                var minutes = Math.floor(seconds / 60);
-                var hours = Math.floor(minutes / 60);
+            //     var seconds = Math.floor(diff / 1000);
+            //     var minutes = Math.floor(seconds / 60);
+            //     var hours = Math.floor(minutes / 60);
 
-                hours = hours % 24;
-                minutes = minutes % 60;
-                seconds = seconds % 60;
+            //     hours = hours % 24;
+            //     minutes = minutes % 60;
+            //     seconds = seconds % 60;
 
-                if(minutes <= 9){
-                    minutes = '0'+minutes;
-                }
-                if(seconds <= 9){
-                    seconds = '0'+seconds;
-                }
+            //     if(minutes <= 9){
+            //         minutes = '0'+minutes;
+            //     }
+            //     if(seconds <= 9){
+            //         seconds = '0'+seconds;
+            //     }
 
-                if(score == null || score == ''){
-                    if(diff <= 0){
-                        $('#ConfirmSubmitButton').click();
-                    }else if(diff < 300000 && diff > 180000){
-                        $("#timeRemaining").addClass('text-lg font-semibold');
-                        $("#timeRemaining").text(minutes + ":" + seconds);
-                    }else if(diff < 180000 && diff > 60000){
-                        $("#timeRemaining").addClass('text-amber-700 text-xl font-semibold');
-                        $("#timeRemaining").text(minutes + ":" + seconds);
-                    }else if(diff < 60000){
-                        $("#timeRemaining").addClass('text-red-700 text-2xl font-semibold');
-                        $("#timeRemaining").text(minutes + ":" + seconds);
-                    }else{
-                        $("#timeRemaining").text(minutes + ":" + seconds);
-                    }
-                }
+            //     if(score == null || score == ''){
+            //         if(diff <= 0){
+            //             $('#ConfirmSubmitButton').click();
+            //         }else if(diff < 300000 && diff > 180000){
+            //             $("#timeRemaining").addClass('text-lg font-semibold');
+            //             $("#timeRemaining").text(minutes + ":" + seconds);
+            //         }else if(diff < 180000 && diff > 60000){
+            //             $("#timeRemaining").addClass('text-amber-700 text-xl font-semibold');
+            //             $("#timeRemaining").text(minutes + ":" + seconds);
+            //         }else if(diff < 60000){
+            //             $("#timeRemaining").addClass('text-red-700 text-2xl font-semibold');
+            //             $("#timeRemaining").text(minutes + ":" + seconds);
+            //         }else{
+            //             $("#timeRemaining").text(minutes + ":" + seconds);
+            //         }
+            //     }
 
-            }setInterval(updateTime, 1000);
+            // }setInterval(updateTime, 1000);
         });
     </script>
 @endsection

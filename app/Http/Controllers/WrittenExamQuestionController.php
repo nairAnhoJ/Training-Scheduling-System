@@ -167,7 +167,6 @@ class WrittenExamQuestionController extends Controller
         $weq = WrittenExamQuestion::where('id', $request->id)->first();
         $weq->is_deleted = 1;
         $weq->save();
-        
 
         return redirect()->route('question.index', ['key' => $key])->with('success', 'Question Has Been Deleted Successfully!');
     }

@@ -81,7 +81,7 @@
             @if(Auth()->user()->first_time_login != '1')
                 @include('layouts.navigation')
             @endif
-        @elseif((Str::contains(url()->current(), url('/training-assessment/written-exam'))))
+        @elseif((Str::contains(url()->current(), url('/training-assessment/written-exam'))) || (Str::contains(url()->current(), url('/training-assessment/survey'))))
             @include('layouts.navigation')
         @endif
         

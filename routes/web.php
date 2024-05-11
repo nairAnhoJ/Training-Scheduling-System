@@ -14,6 +14,7 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\SurveyQuestionController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WrittenExamController;
@@ -111,6 +112,10 @@ Route::get('/trainings/view/contract-details/{key}', [TrainingController::class,
 Route::get('/training-assessment/written-exam', [AttendeesWrittenExamController::class, 'writtenExam'])->name('writtenExam');
 Route::POST('/training-assessment/written-exam/npQuestion', [AttendeesWrittenExamController::class, 'npQuestion'])->name('npQuestion');
 Route::POST('/training-assessment/written-exam/sQuestion', [AttendeesWrittenExamController::class, 'sQuestion'])->name('sQuestion');
+Route::POST('/training-assessment/written-exam/result-summary', [AttendeesWrittenExamController::class, 'resultSummary'])->name('resultSummary');
+
+Route::get('/training-assessment/survey', [AttendeesWrittenExamController::class, 'attendeeSurvey'])->name('attendeeSurvey');
+Route::post('/training-assessment/survey-submit', [AttendeesWrittenExamController::class, 'attendeeSurveySubmit'])->name('attendeeSurveySubmit');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -184,6 +189,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/written-exam-questions/edit', [WrittenExamQuestionController::class, 'edit'])->name('question.edit');
     Route::post('/written-exam-questions/update', [WrittenExamQuestionController::class, 'update'])->name('question.update');
     Route::post('/written-exam-questions/delete', [WrittenExamQuestionController::class, 'delete'])->name('question.delete');
+    
+    Route::get('/survey-questions', [SurveyQuestionController::class, 'index'])->name('survey.index');
+    Route::get('/survey-questions/add', [SurveyQuestionController::class, 'add'])->name('survey.add');
+    Route::post('/survey-questions/store', [SurveyQuestionController::class, 'store'])->name('survey.store');
+    Route::get('/survey-questions/edit', [SurveyQuestionController::class, 'edit'])->name('survey.edit');
+    Route::post('/survey-questions/update', [SurveyQuestionController::class, 'update'])->name('survey.update');
+    Route::post('/survey-questions/delete', [SurveyQuestionController::class, 'delete'])->name('survey.delete');
 
     // CUSTOMER
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer.index');
