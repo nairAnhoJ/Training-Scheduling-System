@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class SurveyQuestionController extends Controller
 {
     public function index(Request $request){
-        $questions = SurveyQuestion::where('is_deleted', 0)->get();
+        $questions = SurveyQuestion::where('is_deleted', 0)->orderBy('position', 'asc')->get();
 
         return view('user.training-assessment.survey.index', compact('questions'));
     }
@@ -112,9 +112,39 @@ class SurveyQuestionController extends Controller
         return redirect()->route('survey.index')->with('success', 'New Question Has Been Updated Successfully!');
     }
 
+    public function up(Request $request){
+        $question = SurveyQuestion::where('id', $request->id)->orderBy('position', 'asc')->first();
+        $newPosition = $question->position - 1;
+        $pquestion = SurveyQuestion::where('position', $newPosition)->orderBy('position', 'asc')->first();
+        $question->position = $newPosition;
+        $question->save();
+
+        $npquestion = $pquestion->position + 1;
+        $pquestion->position = $npquestion;
+        $pquestion->save();
+
+        return redirect()->route('survey.index');
+    }
+
+    public function down(Request $request){
+        $question = SurveyQuestion::where('id', $request->id)->orderBy('position', 'asc')->first();
+        $newPosition = $question->position + 1;
+        $pquestion = SurveyQuestion::where('position', $newPosition)->orderBy('position', 'asc')->first();
+        $question->position = $newPosition;
+        $question->save();
+
+        $npquestion = $pquestion->position - 1;
+        $pquestion->position = $npquestion;
+        $pquestion->save();
+
+        return redirect()->route('survey.index');
+    }
+
     public function delete(Request $request){
         $weq = SurveyQuestion::where('id', $request->id)->first();
+        SurveyQuestion::where('position', '>', $weq->position)->decrement('position');
         $weq->is_deleted = 1;
+        $weq->position = 0;
         $weq->save();
 
         return redirect()->route('survey.index')->with('success', 'Question Has Been Deleted Successfully!');

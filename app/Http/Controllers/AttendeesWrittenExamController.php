@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendees;
+use App\Models\AttendeesSurveyAnswers;
 use App\Models\AttendeesWrittenExamAnswers;
 use App\Models\Request as ModelsRequest;
 use App\Models\SurveyQuestion;
@@ -134,14 +135,25 @@ class AttendeesWrittenExamController extends Controller
                             </div>
                         ';
                     }else{
-                        $oAnswer = explode(';', $nAnswer);
-                        for ($i=0; $i < $question->points; $i++) {
-                            $theAnswers .= '
-                                <div class="w-full flex items-center gap-x-2">
-                                    <p class="w-7">'.($i+1).'. </p>
-                                    <input type="text" id="answer'.$i.'" name="answer[]" value="'.$oAnswer[$i].'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
-                                </div>
-                            ';
+                        if($nAnswer != null){
+                            $oAnswer = explode(';', $nAnswer);
+                            for ($i=0; $i < $question->points; $i++) {
+                                $theAnswers .= '
+                                    <div class="w-full flex items-center gap-x-2">
+                                        <p class="w-7">'.($i+1).'. </p>
+                                        <input type="text" id="answer'.$i.'" name="answer[]" value="'.$oAnswer[$i].'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    </div>
+                                ';
+                            }
+                        }else{
+                            for ($i=0; $i < $question->points; $i++) {
+                                $theAnswers .= '
+                                    <div class="w-full flex items-center gap-x-2">
+                                        <p class="w-7">'.($i+1).'. </p>
+                                        <input type="text" id="answer'.$i.'" name="answer[]" value="" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    </div>
+                                ';
+                            }
                         }
                     }
 
@@ -366,12 +378,34 @@ class AttendeesWrittenExamController extends Controller
         }
         $akey = $request->a;
         $attendee = Attendees::where('key', $akey)->first();
-        $questions = SurveyQuestion::where('is_deleted', 0)->orderBy('id')->get();
+        $questions = SurveyQuestion::where('is_deleted', 0)->orderBy('position', 'asc')->get();
+        $is_submitted = AttendeesSurveyAnswers::where('training_key', $key)->where('attendee_key', $akey)->count();
 
-        return view('user.training-assessment.attendees.survey.index', compact('attendee', 'key', 'akey', 'questions',));
+        return view('user.training-assessment.attendees.survey.index', compact('attendee', 'key', 'akey', 'questions', 'is_submitted'));
     }
 
     public function attendeeSurveySubmit(Request $request){
-        dd($request);
+        $key = $request->key;
+        $training = ModelsRequest::where('key', $key)->first();
+        if(!$key || !$training){
+            return redirect()->route('dashboard.index');
+        }
+        $akey = $request->a;
+        $questionCount = SurveyQuestion::count();
+        for ($i=0; $i < $questionCount; $i++) { 
+            $answerVar = 'answer'.$i;
+            $question = SurveyQuestion::where('position', ($i+1))->orderBy('position', 'asc')->first();
+
+            if($request->$answerVar != null){
+                $surveyAnswer = new AttendeesSurveyAnswers();
+                $surveyAnswer->training_key = $key;
+                $surveyAnswer->attendee_key = $akey;
+                $surveyAnswer->question_id = $question->id;
+                $surveyAnswer->answer = $request->$answerVar;
+                $surveyAnswer->save();
+            }
+        }
+
+        return redirect()->route('attendeeSurvey', ['key' => $key, 'a' => $akey]);
     }
 }

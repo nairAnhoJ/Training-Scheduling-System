@@ -93,18 +93,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($questions as $question)
-                                            <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
+                                        @foreach ($questions as $index => $question)
+                                            <tr class="bg-white border-b requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap flex items-center gap-x-1">
                                                     <a href="{{ url('/survey-questions/edit?id='.$question->id) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | 
                                                     <button type="button" data-id="{{ $question->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Delete</button> | 
-                                                    <a href="{{ url('/survey-questions/edit?id='.$question->id) }}" class="text-sm font-semibold text-blue-600 editButton border-b border-transparent hover:border-blue-600 flex items-center pt-[1px] pl-[5px]">
+                                                    <a href="{{ url('/survey-questions/up?id='.$question->id) }}" class="{{ ($index == 0) ? 'pointer-events-none text-neutral-600' : 'text-blue-600' }} text-sm font-semibold editButton border-b border-transparent hover:border-blue-600 flex items-center pt-[1px] pl-[5px]">
                                                         Up 
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 -960 960 960" fill="currentColor">
                                                             <path d="M434.5-151.87v-481.98L215.76-415.11 151.87-480 480-808.13 808.13-480l-63.89 64.89L525.5-633.85v481.98h-91Z"/>
                                                         </svg>
                                                     </a> | 
-                                                    <a href="{{ url('/survey-questions/edit?id='.$question->id) }}" class="text-sm font-semibold text-blue-600 editButton border-b border-transparent hover:border-blue-600 flex items-center pt-[1px] pl-[5px]">
+                                                    <a href="{{ url('/survey-questions/down?id='.$question->id) }}" class="{{ (($index+1) == $questions->count()) ? 'pointer-events-none text-neutral-600' : 'text-blue-600' }} text-sm font-semibold text-blue-600 editButton border-b border-transparent hover:border-blue-600 flex items-center pt-[1px] pl-[5px]">
                                                         Down 
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 -960 960 960" fill="currentColor">
                                                             <path xmlns="http://www.w3.org/2000/svg" d="M434.5-808.13v481.98L215.76-544.89 151.87-480 480-151.87 808.13-480l-63.89-64.89L525.5-326.15v-481.98h-91Z"/>

@@ -248,8 +248,8 @@
                         
                         if(end == null || end == '' || end == 'Invalid Date'){
                             end = new Date();
+                            end.setMinutes(end.getMinutes() + 30);
                         }
-                        end.setMinutes(end.getMinutes() + 30);
 
                         $('#loading').addClass('hidden');
                     }

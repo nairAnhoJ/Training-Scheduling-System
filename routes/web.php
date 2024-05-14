@@ -195,6 +195,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/survey-questions/store', [SurveyQuestionController::class, 'store'])->name('survey.store');
     Route::get('/survey-questions/edit', [SurveyQuestionController::class, 'edit'])->name('survey.edit');
     Route::post('/survey-questions/update', [SurveyQuestionController::class, 'update'])->name('survey.update');
+    Route::get('/survey-questions/up', [SurveyQuestionController::class, 'up'])->name('survey.up');
+    Route::get('/survey-questions/down', [SurveyQuestionController::class, 'down'])->name('survey.down');
     Route::post('/survey-questions/delete', [SurveyQuestionController::class, 'delete'])->name('survey.delete');
 
     // CUSTOMER
