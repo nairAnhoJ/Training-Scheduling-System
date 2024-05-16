@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class WrittenExamController extends Controller
 {
     public function index(Request $request){
-        $exams = WrittenExam::get();
+        $exams = WrittenExam::where('is_deleted', 0)->get();
 
         return view('user.training-assessment.exam.written.index', compact('exams'));
     }
@@ -78,7 +78,9 @@ class WrittenExamController extends Controller
     }
 
     public function delete(Request $request){
-        WrittenExam::where('key', $request->key)->delete();
+        $writtenExam = WrittenExam::where('key', $request->key)->first();
+        $writtenExam->is_deleted = 1;
+        $writtenExam->save();
         WrittenExamQuestion::where('exam_key', $request->key)->delete();
 
         return redirect()->route('exam.index')->with('success', 'Exam Has Been Deleted Successfully!');

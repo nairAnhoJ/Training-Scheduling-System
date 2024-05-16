@@ -57,7 +57,47 @@
             color: black;
             font-weight: 500;
         }
-
+        .bg-gray-900{
+            opacity: 50% !important;
+        }
+        .resizer{
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 5px;
+            background-color: black;
+            z-index: 99;
+        }
+        .resizer.nw{
+            top: -1px;
+            left: -1px;
+            cursor: nw-resize;
+        }
+        .resizer.ne{
+            top: -1px;
+            right: -1px;
+            cursor: nw-resize;
+        }
+        .resizer.sw{
+            bottom: -1px;
+            left: -1px;
+            cursor: nw-resize;
+        }
+        .resizer.se{
+            bottom: -1px;
+            right: -1px;
+            cursor: nw-resize;
+        }
+        @media (orientation: portrait) {
+        .responsive-height {
+            width: 100%;
+        }
+        }
+        @media (orientation: landscape) {
+        .responsive-height {
+            height: 100%;
+        }
+        }
     </style>
 </head>
 <body>

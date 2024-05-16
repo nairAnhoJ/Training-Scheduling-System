@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'WRITTEN EXAM')
+@section('title', 'DRIVING EXAM')
 @section('content')
 
     @if(session('success'))
@@ -18,9 +18,9 @@
     
     {{-- DELETE MODAL --}}
         <div id="deleteModal" class="hidden absolute top-0 left-0 w-screen h-screen bg-gray-900 z-[109] !bg-opacity-50 overflow-hidden flex items-center justify-center p-5">
-            <div class="w-5/6 bg-white rounded-lg">
+            <div class="w-5/6 max-w-lg bg-white rounded-lg">
                 <!-- Modal content -->
-                <form action="{{ route('exam.delete') }}" method="POST" class="relative h-full bg-white rounded-lg shadow">
+                <form action="{{ route('driving.delete') }}" method="POST" class="relative h-full bg-white rounded-lg shadow">
                     @csrf
                     <input type="hidden" name="key" class="modalKey">
                     <!-- Modal header -->
@@ -39,7 +39,7 @@
                     <div class="flex items-start justify-center px-10 py-4 overflow-x-hidden overflow-y-auto">
                         <div class="w-full text-sm">
                             <p>Are you sure you want to permanently delete this exam?</p>
-                            <p class="mt-3 italic">Note: Deleting this will also delete the questions in this exam?</p>
+                            <p class="mt-3 italic">Note: Deleting this will also delete the course layout?</p>
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -61,26 +61,11 @@
                     <div class="mb-3">
                         <div class="md:grid md:grid-cols-2">
                             <div class="w-24 mb-3 md:mb-0">
-                                <a href="{{ route('exam.add') }}" class="flex items-center justify-center py-2 mt-px text-sm font-semibold text-white bg-blue-600 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 focus:outline-none">
+                                <a href="{{ route('driving.add') }}" class="flex items-center justify-center py-2 mt-px text-sm font-semibold text-white bg-blue-600 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 transition duration-75" fill="currentColor" viewBox="0 -960 960 960"><path d="M440.391-190.391v-250h-250v-79.218h250v-250h79.218v250h250v79.218h-250v250h-79.218Z"/></svg>
-                                    <span>ADD</span></a>
+                                    <span>ADD</span>
+                                </a>
                             </div>
-                            {{-- <div class="w-full justify-self-end xl:w-4/5">
-                                <form method="POST" action="{{ route('request.search') }}" id="searchForm" class="w-full">
-                                    @csrf
-                                    <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                            <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                                        </div>
-                                        <input type="search" id="search" name="search" class="block z-10 w-full px-4 py-2.5 pl-10 text-sm text-gray-500 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="SEARCH" value="{{ $search }}" autocomplete="off">
-                                        <button id="clearButton" type="button" class="absolute right-20 bottom-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 -960 960 960"><path d="M249-193.434 193.434-249l231-231-231-231L249-766.566l231 231 231-231L766.566-711l-231 231 231 231L711-193.434l-231-231-231 231Z"/></svg>
-                                        </button>
-                                        <button id="searchSubmit" type="submit" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
-                                    </div>
-                                </form>
-                            </div> --}}
                         </div>
                     </div>
                 {{-- CONTROLS END --}}
@@ -98,21 +83,25 @@
                                             <th scope="col" class="px-6 py-3 whitespace-nowrap">
                                                 Name
                                             </th>
+                                            <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                                                Duration
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($exams as $exam)
                                             <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    <a href="{{ url('/written-exam-questions?key='.$exam->key) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">View</a> | 
-                                                    <a href="{{ url('/written-exam/edit?exam='.$exam->key) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | 
+                                                    <a href="{{ url('/driving-exam-layout?key='.$exam->key) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">View</a> | 
+                                                    <a href="{{ url('/driving-exam/edit?exam='.$exam->key) }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | 
                                                     <button type="button" data-key="{{ $exam->key }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Delete</button>
                                                 </td>
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                    <span data-key="{{ $exam->key }}">
-                                                        {{ $exam->name }}
-                                                    </span>
+                                                    {{ $exam->name }}
                                                 </th>
+                                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                                    {{ $exam->duration }}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
