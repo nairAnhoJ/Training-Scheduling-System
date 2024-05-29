@@ -186,6 +186,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/training-assessment/attendees/generate', [AttendeesController::class, 'generate'])->name('attendees.generate');
         
         Route::get('/training-assessment/attendees/driving-exam', [AttendeesController::class, 'drivingExam'])->name('driving.exam');
+        Route::POST('/training-assessment/attendees/driving-exam-submit', [AttendeesController::class, 'drivingExamSubmit'])->name('driving.exam.submit');
     // TRAINING ASSESSMENT
     
     // WRITTEN EXAM

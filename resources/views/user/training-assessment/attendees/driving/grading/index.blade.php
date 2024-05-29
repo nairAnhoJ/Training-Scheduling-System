@@ -41,16 +41,18 @@
     <div class="w-full p-5 bg-gray-200">
         <div class="h-[calc(100vh-96px)] bg-white rounded-xl shadow-xl">
             <div class="h-full rounded-xl">
-                <div class="h-full flex flex-col">
+                <form action="{{ route('driving.exam.submit').'?key='.$key.'&a='.$attendee->key }}" method="POST" class="h-full flex flex-col">
                     @csrf
                     {{-- CONTENT --}}
-                        <div id="content" class="h-full w-full{{ ($attendee->driving_exam != null) ? '' : '' }}">
+                        <div id="content" class="h-full w-full {{ ($attendee->driving_exam != null) ? '' : '' }}">
                             <div class="h-full w-full flex flex-col">
                                 <div class="w-full h-2/5 p-5 border-b flex items-center justify-center">
                                     <img src="{{ asset("storage/".$dexams->layout) }}" alt="{{ $dexams->name.'_layout' }}" class="h-full w-auto">
                                 </div>
                                 <div class="w-full h-3/5 overflow-y-scroll p-5">
+                                    <h1 class="font-bold">{{ $attendee->name }}</h1>
                                     <h1 class="font-bold">Safety Awareness(30pts.)</h1>
+
                                     {{-- SA --}}
                                         <div class="mt-1">
                                             <p class="pl-2 font-semibold text-sm">• Seatbelt</p>
@@ -136,44 +138,37 @@
                                             </div>
                                         </div>
                                     {{-- DO --}}
+                                    
+                                    {{-- CONTROLS --}}
+                                        <div id="controlDiv" class="w-full mt-5">
+                                            <input id="confirmSubmit" type="submit" class="hidden">
+                                            <button id="submitButton" type="button" class="h-12 w-full border rounded-xl bg-blue-500 text-white font-bold tracking-wider px-4 flex items-center justify-center">
+                                                <div>SUBMIT</div>
+                                            </button>
+                                            <a href="" id="backButton" class="h-12 mt-2 w-full border rounded-xl bg-neutral-100 border-neutral-800 text-neutral-800 font-bold tracking-wider px-4 flex items-center justify-center">
+                                                <div>BACK</div>
+                                            </a>
+                                        </div>
+                                    {{-- CONTROLS --}}
                                 </div>
                             </div>
                         </div>
                     {{-- CONTENT --}}
-                        
-                    {{-- CONTROLS --}}
-                        {{-- <div id="controlDiv" class="w-full mt-5 flex flex-row-reverse gap-x-4 px-5 pb-5">
-                            <button id="nextButton" class="h-12 w-full border rounded-xl bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
-                                <div class="w-6"></div>
-                                <div id="nsLabel">START</div>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
-                                    <path d="m304-58-80-81 343-343-343-343 80-81 424 424L304-58Z"/>
-                                </svg>
-                            </button>
-                            <button id="backButton" class="hidden h-12 w-full border rounded-xl bg-blue-500 text-white font-black tracking-wider px-4 flex items-center justify-between">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" class="w-6 h-6" fill="currentColor">
-                                    <path d="M424-56 0-480l424-424 80 81-343 343 343 343-80 81Z"/>
-                                </svg>
-                                <div>BACK</div>
-                                <div class="w-6"></div>
-                            </button>
-                        </div> --}}
-                    {{-- CONTROLS --}}
 
-                </div>
+                </form>
             </div>
         </div>
     </div>
 
     <script>
         $(document).ready(function(){
-            // $('#submitButton').on('click', function(){
-            //     $('#submitModal').removeClass('hidden');
-            // });
+            $('#submitButton').on('click', function(){
+                $('#submitModal').removeClass('hidden');
+            });
 
-            // $('.closeSubmitModal').on('click', function(){
-            //     $('#submitModal').addClass('hidden');
-            // });
+            $('.closeSubmitModal').on('click', function(){
+                $('#submitModal').addClass('hidden');
+            });
         });
     </script>
 @endsection
