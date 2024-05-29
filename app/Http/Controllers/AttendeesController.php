@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendees;
+use App\Models\DrivingExam;
 use App\Models\Request as ModelsRequest;
 use App\Models\WrittenExam;
 use Illuminate\Http\Request;
@@ -33,8 +34,9 @@ class AttendeesController extends Controller
         }
 
         $wexams = WrittenExam::get();
+        $dexams = DrivingExam::get();
 
-        return view('user.training-assessment.attendees.add', compact('key', 'wexams'));
+        return view('user.training-assessment.attendees.add', compact('key', 'wexams', 'dexams'));
     }
 
     public function store(Request $request){
@@ -51,7 +53,7 @@ class AttendeesController extends Controller
             'knowledge' => 'required',
             'years_operating' => 'required',
             'written_exam' => 'required',
-            // 'driving' => 'required',
+            'driving_exam' => 'required',
         ]);
 
         $customMessages = [
@@ -61,7 +63,7 @@ class AttendeesController extends Controller
             'knowledge.required' => 'Please select an option from the list.',
             'years_operating.required' => 'Please provide the required information.',
             'written_exam.required' => 'Please select an option from the list.',
-            // 'driving.required' => 'Please select an option from the list.',
+            'driving_exam.required' => 'Please select an option from the list.',
         ];
 
         $validator->setCustomMessages($customMessages);
@@ -76,7 +78,7 @@ class AttendeesController extends Controller
         $knowledge = $request->knowledge;
         $years_operating = $request->years_operating;
         $written_exam = $request->written_exam;
-        // $driving_exam = $request->driving_exam;
+        $driving_exam = $request->driving_exam;
 
 
         $attendee = new Attendees();
@@ -87,7 +89,7 @@ class AttendeesController extends Controller
         $attendee->knowledge = $knowledge;
         $attendee->years_operating = $years_operating;
         $attendee->written_exam = $written_exam;
-        // $attendee->driving_exam = $driving_exam;
+        $attendee->driving_exam = $driving_exam;
         $attendee->key = Str::uuid()->toString();
         $attendee->save();
 
@@ -103,8 +105,9 @@ class AttendeesController extends Controller
         }
         $attendee = Attendees::where('key', $akey)->first();
         $wexams = WrittenExam::get();
+        $dexams = DrivingExam::get();
 
-        return view('user.training-assessment.attendees.edit', compact('key', 'attendee', 'wexams'));
+        return view('user.training-assessment.attendees.edit', compact('key', 'attendee', 'wexams', 'dexams'));
     }
 
     public function update(Request $request){
@@ -120,6 +123,8 @@ class AttendeesController extends Controller
             'type' => 'required',
             'knowledge' => 'required',
             'years_operating' => 'required',
+            'written_exam' => 'required',
+            'driving_exam' => 'required',
         ]);
 
         $customMessages = [
@@ -128,6 +133,8 @@ class AttendeesController extends Controller
             'type.required' => 'Please select an option from the list.',
             'knowledge.required' => 'Please select an option from the list.',
             'years_operating.required' => 'Please provide the required information.',
+            'written_exam.required' => 'Please select an option from the list.',
+            'driving_exam.required' => 'Please select an option from the list.',
         ];
 
         $validator->setCustomMessages($customMessages);
@@ -171,5 +178,18 @@ class AttendeesController extends Controller
 
     public function generate(Request $request){
         echo QrCode::size(250)->generate('http://192.168.20.143:8000/training-assessment/written-exam?key='.$request->key.'&a='.$request->akey);
+    }
+
+    public function drivingExam(Request $request){
+        $key = $request->key;
+        $akey = $request->a;
+        $training = ModelsRequest::with('customer', 'trainerName')->where('key', $key)->first();
+        if(!$key || !$training){
+            return redirect()->route('dashboard.index');
+        }
+        $attendee = Attendees::where('key', $akey)->first();
+        $dexams = DrivingExam::where('id', $attendee->driving_exam)->first();
+
+        return view('user.training-assessment.attendees.driving.grading.index', compact('key', 'attendee', 'dexams'));
     }
 }

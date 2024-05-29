@@ -116,6 +116,8 @@ Route::POST('/training-assessment/written-exam/npQuestion', [AttendeesWrittenExa
 Route::POST('/training-assessment/written-exam/sQuestion', [AttendeesWrittenExamController::class, 'sQuestion'])->name('sQuestion');
 Route::POST('/training-assessment/written-exam/result-summary', [AttendeesWrittenExamController::class, 'resultSummary'])->name('resultSummary');
 
+Route::get('/training-assessment/driving-exam', [AttendeesWrittenExamController::class, 'drivingExam'])->name('drivingExam');
+
 Route::get('/training-assessment/survey', [AttendeesWrittenExamController::class, 'attendeeSurvey'])->name('attendeeSurvey');
 Route::post('/training-assessment/survey-submit', [AttendeesWrittenExamController::class, 'attendeeSurveySubmit'])->name('attendeeSurveySubmit');
 
@@ -182,6 +184,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/training-assessment/attendees/update', [AttendeesController::class, 'update'])->name('attendees.update');
         Route::post('/training-assessment/attendees/delete', [AttendeesController::class, 'delete'])->name('attendees.delete');
         Route::post('/training-assessment/attendees/generate', [AttendeesController::class, 'generate'])->name('attendees.generate');
+        
+        Route::get('/training-assessment/attendees/driving-exam', [AttendeesController::class, 'drivingExam'])->name('driving.exam');
     // TRAINING ASSESSMENT
     
     // WRITTEN EXAM
@@ -211,12 +215,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/driving-exam/delete', [DrivingExamController::class, 'delete'])->name('driving.delete');
     
         // DRIVING EXAM LAYOUT
-            Route::get('/driving-exam-layout', [DrivingExamLayoutController::class, 'index'])->name('driving.layout.index');
-            Route::get('/driving-exam-layout/add', [DrivingExamLayoutController::class, 'add'])->name('driving.layout.add');
-            Route::post('/driving-exam-layout/store', [DrivingExamLayoutController::class, 'store'])->name('driving.layout.store');
-            Route::get('/driving-exam-layout/edit', [DrivingExamLayoutController::class, 'edit'])->name('driving.layout.edit');
-            Route::post('/driving-exam-layout/update', [DrivingExamLayoutController::class, 'update'])->name('driving.layout.update');
-            Route::get('/driving-exam-layout/delete', [DrivingExamLayoutController::class, 'delete'])->name('driving.layout.delete');
+            // Route::get('/driving-exam-layout', [DrivingExamLayoutController::class, 'index'])->name('driving.layout.index');
+            // Route::get('/driving-exam-layout/add', [DrivingExamLayoutController::class, 'add'])->name('driving.layout.add');
+            // Route::post('/driving-exam-layout/store', [DrivingExamLayoutController::class, 'store'])->name('driving.layout.store');
+            // Route::get('/driving-exam-layout/edit', [DrivingExamLayoutController::class, 'edit'])->name('driving.layout.edit');
+            // Route::post('/driving-exam-layout/update', [DrivingExamLayoutController::class, 'update'])->name('driving.layout.update');
+            // Route::get('/driving-exam-layout/delete', [DrivingExamLayoutController::class, 'delete'])->name('driving.layout.delete');
         // DRIVING EXAM LAYOUT
     // DRIVING EXAM
     

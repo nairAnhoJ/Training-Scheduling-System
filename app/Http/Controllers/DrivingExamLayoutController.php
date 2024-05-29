@@ -27,12 +27,13 @@ class DrivingExamLayoutController extends Controller
             return redirect()->route('driving.index');
         }
 
-        $name = $request->name;
-        $color = $request->color;
-
         $request->validate([
             'color' => 'required',
         ]);
+
+        $name = $request->name;
+        $color = $request->color;
+
 
         $newArea = new DrivingExamLayout();
         $newArea->driving_exam_key = $key;

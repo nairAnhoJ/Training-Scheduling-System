@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('tss_attendees_written_exam_answers', function (Blueprint $table) {
             $table->id();
+
             $table->string('training_key', 50);
             $table->string('attendee_key', 50);
+            
             $table->string('exam_key', 50);
             $table->string('question_id', 50);
             $table->string('answer');

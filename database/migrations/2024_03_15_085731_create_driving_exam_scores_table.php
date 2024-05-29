@@ -11,21 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tss_driving_exam_scores', function (Blueprint $table) {
+        Schema::create('tss_attendees_driving_exam_scores', function (Blueprint $table) {
             $table->id();
 
-            $table->string('attendee_key', 50);
             $table->string('training_key', 50);
+            $table->string('attendee_key', 50);
+            $table->string('exam_key', 50);
 
-            $table->integer('driving_level')->nullable();
-            $table->integer('driving_seatbelt')->nullable();
-            $table->integer('driving_3ptcontact')->nullable();
-            $table->integer('driving_horns')->nullable();
-            $table->integer('driving_skid')->nullable();
-            $table->integer('driving_controls')->nullable();
-            $table->integer('driving_handling')->nullable();
-            $table->integer('driving_time')->nullable();
-            $table->integer('driving_behavior')->nullable();
+            $table->integer('seatbelt')->nullable();
+            $table->integer('3ptcontact')->nullable();
+            $table->integer('horns')->nullable();
+            $table->integer('skid')->nullable();
+
+            $table->integer('controls')->nullable();
+            $table->integer('handling')->nullable();
+            $table->integer('time')->nullable();
+            $table->integer('behavior')->nullable();
 
             $table->timestamps();
         });
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tss_driving_exam_scores');
+        Schema::dropIfExists('tss_attendees_driving_exam_scores');
     }
 };

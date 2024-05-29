@@ -16,11 +16,10 @@
         </div>
     @endif
 
-
     <div class="w-full p-5 bg-gray-200">
         <div class="min-h-[calc(100vh-96px)] p-3 bg-white rounded-lg shadow-xl">
             <div class="p-4 overflow-hidden rounded-lg">
-                <form action="{{ route('driving.store') }}" method="POST" class="max-w-[500px]">
+                <form action="{{ route('driving.store') }}" method="POST" enctype="multipart/form-data" class="max-w-[500px]">
                     @csrf
                     <h2 class="mb-2 text-lg font-bold">ADD DRIVING EXAM</h2>
                     <div class="w-full mb-3">
@@ -34,6 +33,13 @@
                         <label for="duration" class="block text-sm font-semibold text-gray-600">Duration (minutes) <span class="text-red-500">*</span></label>
                         <input type="text" id="duration" name="duration" class="numberOnly bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         @error('duration')
+                            <span class="text-xs text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="w-full mb-3">
+                        <label for="layout" class="block text-sm font-semibold text-gray-600">Course Layout <span class="text-red-500">*</span></label>
+                        <input type="file" id="layout" name="layout" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full px-2.5" autocomplete="off">
+                        @error('layout')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>

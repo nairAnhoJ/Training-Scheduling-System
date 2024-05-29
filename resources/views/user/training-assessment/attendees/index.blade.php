@@ -159,7 +159,9 @@
                                             <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     <button type="button" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 generateButton hover:underline">Generate QR</button> |
-                                                    <a href="{{ route('attendees.edit').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | <button type="button" data-id="{{ $attendee->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Delete</button>
+                                                    <a href="{{ route('driving.exam').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Driving Exam</a> | 
+                                                    <a href="{{ route('attendees.edit').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | 
+                                                    <button type="button" data-id="{{ $attendee->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Delete</button>
                                                 </td>
                                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                                     {{ $attendee->name }}

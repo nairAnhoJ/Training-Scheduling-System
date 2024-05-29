@@ -122,8 +122,9 @@
                         <label for="driving_exam" class="block text-sm font-semibold text-gray-600">Driving Exam <span class="text-red-500">*</span></label>
                         <select id="driving_exam" name="driving_exam" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                             <option hidden value=""></option>
-                            <option value="MultipleChoice">Multiple Choice</option>
-                            <option value="ShortAnswer">Short Answer</option>
+                            @foreach ($dexams as $dexam)
+                                <option value="{{ $dexam->id }}">{{ $dexam->name }}</option>
+                            @endforeach
                         </select>
                         @error('driving_exam')
                             <span class="text-xs text-red-500">{{ $message }}</span>

@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('tss_driving_exams', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name', 100);
             $table->string('key', 50);
             $table->boolean('is_deleted')->default(0);
             $table->integer('duration');
+            $table->string('layout');
             $table->timestamps();
         });
     }

@@ -42,9 +42,15 @@ class DrivingExamController extends Controller
         $name = $request->name;
         $duration = $request->duration;
 
+        $filename = $name . '_' . date('md_Y_his') . '.' . $request->file('layout')->getClientOriginalExtension();
+        $path = "driving_exam/layouts/";
+        $layout_path = $path . $filename;
+        $request->file('layout')->move(public_path('storage/' . $path), $filename);
+
         $exam = new DrivingExam();
         $exam->name = $name;
         $exam->duration = $duration;
+        $exam->layout = $layout_path;
         $exam->key = Str::uuid()->toString();
         $exam->save();
 
@@ -80,9 +86,19 @@ class DrivingExamController extends Controller
         $name = $request->name;
         $duration = $request->duration;
 
+
         $exam = DrivingExam::where('key', $request->key)->first();
         $exam->name = $name;
         $exam->duration = $duration;
+
+        if($request->file('layout') != null){
+            $filename = $name . '_' . date('md_Y_his') . '.' . $request->file('layout')->getClientOriginalExtension();
+            $path = "driving_exam/layouts/";
+            $layout_path = $path . $filename;
+            $request->file('layout')->move(public_path('storage/' . $path), $filename);
+            $exam->layout = $layout_path;
+        }
+
         $exam->save();
 
         return redirect()->route('driving.index')->with('success', 'Driving Exam Has Been Updated Successfully!');
