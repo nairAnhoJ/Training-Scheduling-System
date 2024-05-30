@@ -22,10 +22,13 @@
                     <!-- Modal body -->
                     <div class="flex items-start justify-center px-10 py-4 overflow-x-hidden overflow-y-auto">
                         <div class="w-full text-sm">
-                            <p class="text-lg">Are you sure you want to submit the exam?</p>
+
+
+
+                            {{-- <p class="text-lg">Are you sure you want to submit the exam?</p>
                             <p class="mt-5 italic text-sm">Note:</p>
                             <p class="italic text-sm">Once you submit your exam, you cannot make any further changes or undo your submission.</p>
-                            <p class="mt-1 italic text-sm">Please review your answers carefully before submitting.</p>
+                            <p class="mt-1 italic text-sm">Please review the scores carefully before submitting.</p> --}}
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -43,16 +46,109 @@
             <div class="h-full rounded-xl">
                 <form action="{{ route('driving.exam.submit').'?key='.$key.'&a='.$attendee->key }}" method="POST" class="h-full flex flex-col">
                     @csrf
+
                     {{-- CONTENT --}}
                         <div id="content" class="h-full w-full {{ ($attendee->driving_exam != null) ? '' : '' }}">
                             <div class="h-full w-full flex flex-col">
-                                <div class="w-full h-2/5 p-5 border-b flex items-center justify-center">
+                                <div class="w-full h-2/5 p-5 border-b flex rounded-t-xl items-center justify-center shadow shadow-neutral-300">
                                     <img src="{{ asset("storage/".$dexams->layout) }}" alt="{{ $dexams->name.'_layout' }}" class="h-full w-auto">
                                 </div>
                                 <div class="w-full h-3/5 overflow-y-scroll p-5">
-                                    <h1 class="font-bold">{{ $attendee->name }}</h1>
-                                    <h1 class="font-bold">Safety Awareness(30pts.)</h1>
+                                    <h1 class="font-bold"><span class="font-normal">Name: </span>{{ $attendee->name }}</h1>
 
+                                    
+                                    <h1 class="font-bold mt-5">Penalty Points Chart</h1>
+                                    {{-- PPC --}}
+                                        <div class="w-full border border-neutral-600 text-sm mb-5">
+                                            <div class="flex items-center w-full border-b border-neutral-600">
+                                                <p class="font-bold w-1/2 pl-1 border-r border-neutral-600 pt-1">Maneuvering</p>
+                                                <p class="text-center w-1/2 pt-1">Deduction pts.</p>
+                                            </div>
+                                            <div class="flex w-full items-center border-b border-neutral-600">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Low Impact</p>
+                                                <p class="text-center w-1/2 pt-1">1</p>
+                                            </div>
+                                            <div class="flex w-full items-center border-b border-neutral-600">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Medium</p>
+                                                <p class="text-center w-1/2 pt-1">3</p>
+                                            </div>
+                                            <div class="flex w-full items-center border-b border-neutral-600">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • High Impact</p>
+                                                <p class="text-center w-1/2 pt-1">5</p>
+                                            </div>
+                                            <div class="flex w-full items-center">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Direction</p>
+                                                <p class="text-center w-1/2 pt-1">1</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="w-full border border-neutral-600 text-sm mb-5">
+                                            <div class="flex items-center w-full border-b border-neutral-600">
+                                                <p class="font-bold w-1/2 pl-1 border-r border-neutral-600 pt-1">Handling</p>
+                                                <p class="text-center w-1/2 pt-1">Deduction pts.</p>
+                                            </div>
+                                            <div class="flex w-full items-center border-b border-neutral-600">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Misalign</p>
+                                                <p class="text-center w-1/2 pt-1">1</p>
+                                            </div>
+                                            <div class="flex w-full items-center border-b border-neutral-600">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Load Level</p>
+                                                <p class="text-center w-1/2 pt-1">1</p>
+                                            </div>
+                                            <div class="flex w-full items-center border-b border-neutral-600">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Hitting Barrier</p>
+                                                <p class="text-center w-1/2 pt-1">1</p>
+                                            </div>
+                                            <div class="flex w-full items-center">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Fork Condition</p>
+                                                <p class="text-center w-1/2 pt-1">1</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="w-full border border-neutral-600 text-sm mb-5">
+                                            <div class="flex items-center w-full border-b border-neutral-600">
+                                                <p class="font-bold w-1/2 pl-1 border-r border-neutral-600 pt-1">Behavior</p>
+                                                <p class="text-center w-1/2 pt-1">Deduction pts.</p>
+                                            </div>
+                                            <div class="flex w-full items-center border-b border-neutral-600">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Sudden Brake</p>
+                                                <p class="text-center w-1/2 pt-1">1</p>
+                                            </div>
+                                            <div class="flex w-full items-center border-b border-neutral-600">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Walk Around</p>
+                                                <p class="text-center w-1/2 pt-1">1</p>
+                                            </div>
+                                            <div class="flex w-full items-center border-b border-neutral-600">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Body Parts Out</p>
+                                                <p class="text-center w-1/2 pt-1">1</p>
+                                            </div>
+                                            <div class="flex w-full items-center border-b border-neutral-600">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Accel Pedal</p>
+                                                <p class="text-center w-1/2 pt-1">1</p>
+                                            </div>
+                                            <div class="flex w-full items-center">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Inching Pedal</p>
+                                                <p class="text-center w-1/2 pt-1">1</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="w-full border border-neutral-600 text-sm mb-5">
+                                            <div class="flex items-center w-full border-b border-neutral-600">
+                                                <p class="font-bold w-1/2 pl-1 border-r border-neutral-600 pt-1">Behavior</p>
+                                                <p class="text-center w-1/2 pt-1">Deduction pts.</p>
+                                            </div>
+                                            <div class="flex w-full items-center">
+                                                <p class="w-1/2 pl-1 border-r border-neutral-600 pt-1"> • Time Overrun</p>
+                                                <p class="text-center w-1/2 pt-1">10</p>
+                                            </div>
+                                        </div>
+                                    {{-- PPC --}}
+
+                                    <hr class="w-full px-5">
+
+                                    <h1 class="font-bold mt-7">ACTUAL</h1>
+
+                                    <h1 class="font-bold mt-3">Safety Awareness(30pts.)</h1>
                                     {{-- SA --}}
                                         <div class="mt-1">
                                             <p class="pl-2 font-semibold text-sm">• Seatbelt</p>
@@ -95,7 +191,8 @@
                                             </div>
                                         </div>
                                     {{-- SA --}}
-                                    <h1 class="font-bold mt-5">Driving Operation(70pts.)</h1>
+
+                                    <h1 class="font-bold mt-3">Driving Operation(70pts.)</h1>
                                     {{-- DO --}}
                                         <div class="mt-1">
                                             <p class="pl-2 font-semibold text-sm">• Maneuvering</p>
@@ -145,7 +242,7 @@
                                             <button id="submitButton" type="button" class="h-12 w-full border rounded-xl bg-blue-500 text-white font-bold tracking-wider px-4 flex items-center justify-center">
                                                 <div>SUBMIT</div>
                                             </button>
-                                            <a href="" id="backButton" class="h-12 mt-2 w-full border rounded-xl bg-neutral-100 border-neutral-800 text-neutral-800 font-bold tracking-wider px-4 flex items-center justify-center">
+                                            <a href="{{ url('/training-assessment/attendees').'?key='.$key }}" id="backButton" class="h-12 mt-2 w-full border rounded-xl bg-neutral-100 border-neutral-800 text-neutral-800 font-bold tracking-wider px-4 flex items-center justify-center">
                                                 <div>BACK</div>
                                             </a>
                                         </div>
