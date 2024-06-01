@@ -156,7 +156,7 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input name="seatbelt" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -166,7 +166,7 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">5</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input name="3ptcontact" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -176,7 +176,7 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input name="horns" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -186,7 +186,7 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">5</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input name="skid" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -200,7 +200,7 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">30</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input name="controls" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -210,7 +210,7 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">20</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input name="handling" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -220,7 +220,7 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input name="time" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -230,7 +230,7 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input name="behavior" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
                                                 </div>
                                             </div>
                                         </div>
