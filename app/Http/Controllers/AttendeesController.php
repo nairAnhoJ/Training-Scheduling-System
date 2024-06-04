@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Attendees;
 use App\Models\DrivingExam;
+use App\Models\DrivingExamScore;
 use App\Models\Request as ModelsRequest;
 use App\Models\WrittenExam;
 use Illuminate\Http\Request;
@@ -190,6 +191,81 @@ class AttendeesController extends Controller
         $attendee = Attendees::where('key', $akey)->first();
         $dexams = DrivingExam::where('id', $attendee->driving_exam)->first();
 
-        return view('user.training-assessment.attendees.driving.grading.index', compact('key', 'attendee', 'dexams'));
+        $driving_score = DrivingExamScore::where('training_key', $key)->where('attendee_key', $akey)->where('exam_key', $dexams->key)->first();
+
+        return view('user.training-assessment.attendees.driving.grading.index', compact('key', 'attendee', 'dexams', 'driving_score'));
+    }
+
+    public function drivingExamSubmit(Request $request){
+        $key = $request->key;
+        $akey = $request->a;
+        $training = ModelsRequest::with('customer', 'trainerName')->where('key', $key)->first();
+        if(!$key || !$training){
+            return redirect()->route('dashboard.index');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'seatbelt' => 'required',
+            'contact' => 'required',
+            'horns' => 'required',
+            'skid' => 'required',
+            'controls' => 'required',
+            'handling' => 'required',
+            'behavior' => 'required',
+            'time' => 'required',
+        ]);
+
+        $customMessages = [
+            'seatbelt.required' => 'Please provide the required information.',
+            'contact.required' => 'Please provide the required information.',
+            'horns.required' => 'Please provide the required information.',
+            'skid.required' => 'Please provide the required information.',
+            'controls.required' => 'Please provide the required information.',
+            'handling.required' => 'Please provide the required information.',
+            'behavior.required' => 'Please provide the required information.',
+            'time.required' => 'Please provide the required information.',
+        ];
+
+        $validator->setCustomMessages($customMessages);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $attendee = Attendees::where('key', $akey)->first();
+        $dexams = DrivingExam::where('id', $attendee->driving_exam)->first();
+
+        $seatbelt = $request->seatbelt;
+        $contact = $request->contact;
+        $horns = $request->horns;
+        $skid = $request->skid;
+
+        $controls = $request->controls;
+        $handling = $request->handling;
+        $behavior = $request->behavior;
+        $time = $request->time;
+
+        $score = new DrivingExamScore();
+        $score->training_key = $key;
+        $score->attendee_key = $akey;
+        $score->exam_key = $dexams->key;
+    
+        $score->seatbelt = $seatbelt;
+        $score->contact = $contact;
+        $score->horns = $horns;
+        $score->skid = $skid;
+        $score->controls = $controls;
+        $score->handling = $handling;
+        $score->behavior = $behavior;
+        $score->time = $time;
+        $score->save();
+
+        $total = $seatbelt + $contact + $horns + $skid + $controls + $handling + $behavior + $time;
+
+        $attendee->driving_score = $total;
+        $attendee->save();
+
+        return redirect()->route('driving.exam', ['key' => $key, 'a' => $akey])->with('success', 'Exam Score Has Been Submitted Successfully!');
+        // return view('user.training-assessment.attendees.driving.grading.index', compact('key', 'attendee', 'dexams'));
     }
 }

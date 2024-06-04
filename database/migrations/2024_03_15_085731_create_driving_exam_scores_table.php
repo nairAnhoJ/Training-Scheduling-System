@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('exam_key', 50);
 
             $table->integer('seatbelt')->nullable();
-            $table->integer('3ptcontact')->nullable();
+            $table->integer('contact')->nullable();
             $table->integer('horns')->nullable();
             $table->integer('skid')->nullable();
 

@@ -19,18 +19,20 @@
                             <span class="!m-0 overflow-scroll sr-only">Close modal</span>
                         </button>
                     </div>
+
                     <!-- Modal body -->
                     <div class="flex items-start justify-center px-10 py-4 overflow-x-hidden overflow-y-auto">
                         <div class="w-full text-sm">
 
+                            <p class="text-lg">Are you sure you want to submit the exam?</p>
 
-
-                            {{-- <p class="text-lg">Are you sure you want to submit the exam?</p>
                             <p class="mt-5 italic text-sm">Note:</p>
-                            <p class="italic text-sm">Once you submit your exam, you cannot make any further changes or undo your submission.</p>
-                            <p class="mt-1 italic text-sm">Please review the scores carefully before submitting.</p> --}}
+                            <p class="italic text-sm">Once you submit this, you cannot make any further changes or undo your submission.</p>
+                            <p class="mt-1 italic text-sm">Please review the scores carefully before submitting.</p>
+
                         </div>
                     </div>
+
                     <!-- Modal footer -->
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
                         <button id="ConfirmSubmitButton" type="submit" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-blue-200 text-sm font-bold md:w-24 w-1/2 py-2.5 focus:z-10">YES</button>
@@ -44,7 +46,7 @@
     <div class="w-full p-5 bg-gray-200">
         <div class="h-[calc(100vh-96px)] bg-white rounded-xl shadow-xl">
             <div class="h-full rounded-xl">
-                <form action="{{ route('driving.exam.submit').'?key='.$key.'&a='.$attendee->key }}" method="POST" class="h-full flex flex-col">
+                <form id="drivingExamSubmit" action="{{ route('driving.exam.submit').'?key='.$key.'&a='.$attendee->key }}" method="POST" class="h-full flex flex-col">
                     @csrf
 
                     {{-- CONTENT --}}
@@ -56,8 +58,7 @@
                                 <div class="w-full h-3/5 overflow-y-scroll p-5">
                                     <h1 class="font-bold"><span class="font-normal">Name: </span>{{ $attendee->name }}</h1>
 
-                                    
-                                    <h1 class="font-bold mt-5">Penalty Points Chart</h1>
+                                    <h1 class="font-bold mt-5 mb-1">Penalty Points Chart</h1>
                                     {{-- PPC --}}
                                         <div class="w-full border border-neutral-600 text-sm mb-5">
                                             <div class="flex items-center w-full border-b border-neutral-600">
@@ -134,7 +135,7 @@
 
                                         <div class="w-full border border-neutral-600 text-sm mb-5">
                                             <div class="flex items-center w-full border-b border-neutral-600">
-                                                <p class="font-bold w-1/2 pl-1 border-r border-neutral-600 pt-1">Behavior</p>
+                                                <p class="font-bold w-1/2 pl-1 border-r border-neutral-600 pt-1">Time</p>
                                                 <p class="text-center w-1/2 pt-1">Deduction pts.</p>
                                             </div>
                                             <div class="flex w-full items-center">
@@ -144,7 +145,7 @@
                                         </div>
                                     {{-- PPC --}}
 
-                                    <hr class="w-full px-5">
+                                    <hr class="w-full px-5 mt-8 border-neutral-400">
 
                                     <h1 class="font-bold mt-7">ACTUAL</h1>
 
@@ -156,9 +157,15 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input name="seatbelt" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input 
+                                                    {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
+                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->seatbelt : old('seatbelt') }}"
+                                                    name="seatbelt" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
+                                            @error('seatbelt')
+                                                <span class="text-xs text-red-500 mx-2">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="mt-1">
                                             <p class="pl-2 font-semibold text-sm">• 3pt Contact</p>
@@ -166,9 +173,15 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">5</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input name="3ptcontact" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input 
+                                                    {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
+                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->contact : old('contact') }}"
+                                                    name="contact" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
+                                            @error('contact')
+                                                <span class="text-xs text-red-500 mx-2">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="mt-1">
                                             <p class="pl-2 font-semibold text-sm">• Horns</p>
@@ -176,9 +189,15 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input name="horns" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input
+                                                    {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
+                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->horns : old('horns') }}"
+                                                    name="horns" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
+                                            @error('horns')
+                                                <span class="text-xs text-red-500 mx-2">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="mt-1">
                                             <p class="pl-2 font-semibold text-sm">• Skid</p>
@@ -186,9 +205,15 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">5</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input name="skid" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input
+                                                    {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
+                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->skid : old('skid') }}"
+                                                    name="skid" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
+                                            @error('skid')
+                                                <span class="text-xs text-red-500 mx-2">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     {{-- SA --}}
 
@@ -200,9 +225,15 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">30</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input name="controls" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input
+                                                    {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
+                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->controls : old('controls') }}"
+                                                    name="controls" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
+                                            @error('controls')
+                                                <span class="text-xs text-red-500 mx-2">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="mt-1">
                                             <p class="pl-2 font-semibold text-sm">• Handling</p>
@@ -210,19 +241,15 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">20</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input name="handling" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input
+                                                    {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
+                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->handling : old('handling') }}"
+                                                    name="handling" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="mt-1">
-                                            <p class="pl-2 font-semibold text-sm">• Time</p>
-                                            <div class="w-full mx-2 text-sm flex border border-neutral-600">
-                                                <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
-                                                <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
-                                                    <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input name="time" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
-                                                </div>
-                                            </div>
+                                            @error('handling')
+                                                <span class="text-xs text-red-500 mx-2">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                         <div class="mt-1">
                                             <p class="pl-2 font-semibold text-sm">• Behavior</p>
@@ -230,18 +257,41 @@
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
                                                     <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
-                                                    <input name="behavior" class="text-sm p-0 border-0 w-full py-1 pl-[50px]" type="text">
+                                                    <input
+                                                    {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
+                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->behavior : old('behavior') }}"
+                                                    name="behavior" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
+                                            @error('behavior')
+                                                <span class="text-xs text-red-500 mx-2">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="mt-1">
+                                            <p class="pl-2 font-semibold text-sm">• Time</p>
+                                            <div class="w-full mx-2 text-sm flex border border-neutral-600">
+                                                <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
+                                                <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
+                                                    <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
+                                                    <input
+                                                    {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
+                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->time : old('time') }}"
+                                                    name="time" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            @error('time')
+                                                <span class="text-xs text-red-500 mx-2">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     {{-- DO --}}
                                     
                                     {{-- CONTROLS --}}
                                         <div id="controlDiv" class="w-full mt-5">
-                                            <input id="confirmSubmit" type="submit" class="hidden">
-                                            <button id="submitButton" type="button" class="h-12 w-full border rounded-xl bg-blue-500 text-white font-bold tracking-wider px-4 flex items-center justify-center">
-                                                <div>SUBMIT</div>
-                                            </button>
+                                            @if($attendee->driving_score == null)
+                                                <button id="submitButton" type="button" class="h-12 w-full border rounded-xl bg-blue-500 text-white font-bold tracking-wider px-4 flex items-center justify-center">
+                                                    <div>SUBMIT</div>
+                                                </button>
+                                            @endif
                                             <a href="{{ url('/training-assessment/attendees').'?key='.$key }}" id="backButton" class="h-12 mt-2 w-full border rounded-xl bg-neutral-100 border-neutral-800 text-neutral-800 font-bold tracking-wider px-4 flex items-center justify-center">
                                                 <div>BACK</div>
                                             </a>
@@ -265,6 +315,10 @@
 
             $('.closeSubmitModal').on('click', function(){
                 $('#submitModal').addClass('hidden');
+            });
+
+            $('#ConfirmSubmitButton').on('click', function(){
+                $('#drivingExamSubmit').submit();
             });
         });
     </script>

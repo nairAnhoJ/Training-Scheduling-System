@@ -263,6 +263,7 @@
                                                 <div class="text-xs leading-5 flex items-center">Action</div>
                                                 <div class="">
                                                     <button type="button" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 generateButton hover:underline">Generate QR</button> |
+                                                    <a href="{{ route('driving.exam').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Driving Exam</a> |
                                                     <a href="{{ route('attendees.edit').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 hover:underline">Edit</a> | 
                                                     <button type="button" data-id="{{ $attendee->id }}" class="text-sm font-semibold text-red-600 deleteButton hover:underline">Delete</button>
                                                 </div>
