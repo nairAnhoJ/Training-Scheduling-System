@@ -25,6 +25,8 @@
     <script src="{{asset('assets/js/flowbite.js')}}"></script>
     <script src="{{asset('assets/js/datepicker.js')}}"></script>
     <script src="{{asset('assets/js/fullcalendar.js')}}"></script>
+    {{-- <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> --}}
+    <script type="module" src="{{asset('assets/js/charts.js')}}"></script>
 
     <!-- Styles -->
     <style>
@@ -96,7 +98,7 @@
             @if(Auth()->user()->first_time_login != '1')
                 @include('layouts.navigation')
             @endif
-        @elseif((Str::contains(url()->current(), url('/training-assessment/written-exam'))) || (Str::contains(url()->current(), url('/training-assessment/survey'))))
+        @elseif((Str::contains(url()->current(), url('/training-assessment/written-exam'))) || (Str::contains(url()->current(), url('/training-assessment/survey'))) || (Str::contains(url()->current(), url('/training-assessment/driving-exam'))) || (Str::contains(url()->current(), url('/training-assessment/overall-result'))))
             @include('layouts.navigation')
         @endif
         

@@ -8,6 +8,7 @@ use App\Models\DrivingExam;
 use App\Models\DrivingExamScore;
 use App\Models\Request as ModelsRequest;
 use App\Models\WrittenExam;
+use App\Models\WrittenExamQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -266,6 +267,20 @@ class AttendeesController extends Controller
         $attendee->save();
 
         return redirect()->route('driving.exam', ['key' => $key, 'a' => $akey])->with('success', 'Exam Score Has Been Submitted Successfully!');
-        // return view('user.training-assessment.attendees.driving.grading.index', compact('key', 'attendee', 'dexams'));
+    }
+
+    public function overallResult(Request $request){
+        $key = $request->key;
+        $akey = $request->a;
+        $training = ModelsRequest::with('customer', 'trainerName')->where('key', $key)->first();
+        if(!$key || !$training){
+            return redirect()->route('dashboard.index');
+        }
+
+        $attendee = Attendees::where('key', $akey)->first();
+        $exam_key = WrittenExam::where('id', $attendee->written_exam)->first()->key;
+        $exam_total = WrittenExamQuestion::where('exam_key', $exam_key)->where('is_deleted', 0)->sum('points');
+
+        return view('user.training-assessment.attendees.overall-result.index', compact('key', 'akey', 'attendee', 'exam_total'));
     }
 }

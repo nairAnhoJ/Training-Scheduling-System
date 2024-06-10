@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttendeesController;
+use App\Http\Controllers\AttendeesDrivingExamController;
 use App\Http\Controllers\AttendeesWrittenExam;
 use App\Http\Controllers\AttendeesWrittenExamController;
 use App\Http\Controllers\AuthController;
@@ -116,7 +117,9 @@ Route::POST('/training-assessment/written-exam/npQuestion', [AttendeesWrittenExa
 Route::POST('/training-assessment/written-exam/sQuestion', [AttendeesWrittenExamController::class, 'sQuestion'])->name('sQuestion');
 Route::POST('/training-assessment/written-exam/result-summary', [AttendeesWrittenExamController::class, 'resultSummary'])->name('resultSummary');
 
-Route::get('/training-assessment/driving-exam', [AttendeesWrittenExamController::class, 'drivingExam'])->name('drivingExam');
+Route::get('/training-assessment/driving-exam', [AttendeesDrivingExamController::class, 'drivingExam'])->name('drivingExam');
+
+Route::get('/training-assessment/overall-result', [AttendeesController::class, 'overallResult'])->name('overallResult');
 
 Route::get('/training-assessment/survey', [AttendeesWrittenExamController::class, 'attendeeSurvey'])->name('attendeeSurvey');
 Route::post('/training-assessment/survey-submit', [AttendeesWrittenExamController::class, 'attendeeSurveySubmit'])->name('attendeeSurveySubmit');
