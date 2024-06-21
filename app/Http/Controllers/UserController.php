@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -49,6 +50,11 @@ class UserController extends Controller
             }
         }
 
+        $filename = $id_number . '.' . $request->file('signature')->getClientOriginalExtension();
+        $path = "users/signatures/";
+        $signature_path = $path . $filename;
+        $request->file('signature')->move(public_path('storage/' . $path), $filename);
+
         User::insert([
                 'id_number' => $id_number,
                 'first_name' => $first_name,
@@ -57,6 +63,7 @@ class UserController extends Controller
                 'email' => $email,
                 'role' => $role,
                 'color' => $color,
+                'signature' => $signature_path,
                 'key' => $key,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -84,6 +91,19 @@ class UserController extends Controller
             $color = '0';
         }
 
+        $user = User::where('key', $key)->first();
+        $filePath = public_path($user->signature);
+        if (File::exists($filePath)) {
+            File::delete($filePath);
+        }
+
+        if($role == 2 || $role == 3){
+            $filename = $id_number . '.' . $request->file('signature')->getClientOriginalExtension();
+            $path = "users/signatures/";
+            $signature_path = $path . $filename;
+            $request->file('signature')->move(public_path('storage/' . $path), $filename);
+        }
+
         User::where('key', $key)
             ->update([
                 'id_number' => $id_number,
@@ -93,6 +113,7 @@ class UserController extends Controller
                 'email' => $email,
                 'role' => $role,
                 'color' => $color,
+                'signature' => $signature_path,
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
 

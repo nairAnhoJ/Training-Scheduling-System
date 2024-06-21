@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('training_key', 50);
             $table->string('name', 100);
             $table->string('position', 100);
+            $table->string('brand', 20);
             $table->string('type', 50);
             $table->string('knowledge', 20);
             $table->integer('years_operating');

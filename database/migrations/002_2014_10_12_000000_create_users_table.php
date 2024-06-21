@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string('last_name');
             $table->unsignedInteger('dept_id');
             $table->string('email');
-            $table->string('role'); // 0 - ADMIN, 1 - TRAINING COORDINATOR, 2 - TRAINER, 2 - VIEWING ONLY
+            $table->string('role'); // 0 - ADMIN, 1 - TRAINING COORDINATOR, 2 - TRAINER, 3 - TRAINER HEAD
             $table->string('password')->default(Hash::make('password2023'));
             $table->string('color')->default('0');
+            $table->string('signature')->nullable();
             $table->string('first_time_login')->default('1');
             $table->string('is_deleted')->default('0');
             $table->string('is_active')->default('1');

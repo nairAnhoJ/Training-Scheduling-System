@@ -51,6 +51,7 @@ class AttendeesController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'position' => 'required',
+            'brand' => 'required',
             'type' => 'required',
             'knowledge' => 'required',
             'years_operating' => 'required',
@@ -61,6 +62,7 @@ class AttendeesController extends Controller
         $customMessages = [
             'name.required' => 'Please provide the required information.',
             'position.required' => 'Please provide the required information.',
+            'brand.required' => 'Please select an option from the list.',
             'type.required' => 'Please select an option from the list.',
             'knowledge.required' => 'Please select an option from the list.',
             'years_operating.required' => 'Please provide the required information.',
@@ -76,6 +78,7 @@ class AttendeesController extends Controller
 
         $name = $request->name;
         $position = $request->position;
+        $brand = $request->brand;
         $type = $request->type;
         $knowledge = $request->knowledge;
         $years_operating = $request->years_operating;
@@ -87,6 +90,7 @@ class AttendeesController extends Controller
         $attendee->training_key = $key;
         $attendee->name = $name;
         $attendee->position = $position;
+        $attendee->brand = $brand;
         $attendee->type = $type;
         $attendee->knowledge = $knowledge;
         $attendee->years_operating = $years_operating;
@@ -122,6 +126,7 @@ class AttendeesController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'position' => 'required',
+            'brand' => 'required',
             'type' => 'required',
             'knowledge' => 'required',
             'years_operating' => 'required',
@@ -132,6 +137,7 @@ class AttendeesController extends Controller
         $customMessages = [
             'name.required' => 'Please provide the required information.',
             'position.required' => 'Please provide the required information.',
+            'brand.required' => 'Please select an option from the list.',
             'type.required' => 'Please select an option from the list.',
             'knowledge.required' => 'Please select an option from the list.',
             'years_operating.required' => 'Please provide the required information.',
@@ -148,6 +154,7 @@ class AttendeesController extends Controller
         $akey = $request->a;
         $name = $request->name;
         $position = $request->position;
+        $brand = $request->brand;
         $type = $request->type;
         $knowledge = $request->knowledge;
         $years_operating = $request->years_operating;
@@ -157,6 +164,7 @@ class AttendeesController extends Controller
         $attendee = Attendees::where('key', $akey)->first();
         $attendee->name = $name;
         $attendee->position = $position;
+        $attendee->brand = $brand;
         $attendee->type = $type;
         $attendee->knowledge = $knowledge;
         $attendee->years_operating = $years_operating;

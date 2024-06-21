@@ -25,44 +25,63 @@
                     <input type="hidden" name="key" value="{{ $key }}">
                     <div class="w-full mb-3">
                         <label for="name" class="block text-sm font-semibold text-gray-600">Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="name" name="name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        <input type="text" id="name" name="name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full max-w-96 p-2.5" autocomplete="off">
                         @error('name')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="w-full mb-3">
                         <label for="position" class="block text-sm font-semibold text-gray-600">Position <span class="text-red-500">*</span></label>
-                        <input type="text" id="position" name="position" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                        <input type="text" id="position" name="position" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full max-w-96 p-2.5" autocomplete="off">
                         @error('position')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="w-full mb-3">
+                    <div class="w-full mb-3 max-w-96">
+                        <label for="type" class="block text-sm font-semibold text-gray-600">Brand <span class="text-red-500">*</span></label>
+                        <div class="flex items-center w-1/2">
+                            <input checked id="Toyota" type="radio" value="Counter Balance Electric" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                            <label for="Toyota" class="ms-2 text-sm font-medium text-gray-900">Toyota</label>
+                        </div>
+                        <div class="flex items-center w-1/2">
+                            <input id="BT" type="radio" value="Counter Balance Gas" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                            <label for="BT" class="ms-2 text-sm font-medium text-gray-900">BT</label>
+                        </div>
+                        <div class="flex items-center w-1/2">
+                            <input id="Raymond" type="radio" value="Counter Balance Gas" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                            <label for="Raymond" class="ms-2 text-sm font-medium text-gray-900">Raymond</label>
+                        </div>
+                    </div>
+                    <div class="w-full mb-3 max-w-96">
                         <label for="type" class="block text-sm font-semibold text-gray-600">Type of unit operated <span class="text-red-500">*</span></label>
                         <div class="flex">
                             <div class="flex items-center w-1/2">
-                                <input checked id="CBE" type="radio" value="CBE" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input checked id="CBE" type="radio" value="Counter Balance Electric" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="CBE" class="ms-2 text-sm font-medium text-gray-900">CBE</label>
                             </div>
                             <div class="flex items-center w-1/2">
-                                <input id="CBD" type="radio" value="CBD" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input id="CBG" type="radio" value="Counter Balance Gas" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <label for="CBG" class="ms-2 text-sm font-medium text-gray-900">CBG</label>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex items-center w-1/2">
+                                <input id="CBLPG" type="radio" value="Counter Balance  Liquefied Petroleum Gas" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <label for="CBLPG" class="ms-2 text-sm font-medium text-gray-900">CB/LPG</label>
+                            </div>
+                            <div class="flex items-center w-1/2">
+                                <input id="PPT" type="radio" value="Power Pallet Truck" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <label for="PPT" class="ms-2 text-sm font-medium text-gray-900">PPT</label>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex items-center w-1/2">
+                                <input id="CBD" type="radio" value="Counter Balance Diesel" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="CBD" class="ms-2 text-sm font-medium text-gray-900">CBD</label>
                             </div>
-                        </div>
-                        <div class="flex">
                             <div class="flex items-center w-1/2">
-                                <input id="CBG/LPG" type="radio" value="CBG/LPG" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                                <label for="CBG/LPG" class="ms-2 text-sm font-medium text-gray-900">CBG/LPG</label>
-                            </div>
-                            <div class="flex items-center w-1/2">
-                                <input id="RT" type="radio" value="RT" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input id="RT" type="radio" value="Reach Truck" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="RT" class="ms-2 text-sm font-medium text-gray-900">RT</label>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="flex items-center w-1/2">
-                                <input id="PPT" type="radio" value="PPT" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                                <label for="PPT" class="ms-2 text-sm font-medium text-gray-900">PPT</label>
                             </div>
                         </div>
                         @error('type')
@@ -108,7 +127,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="written_exam" class="block text-sm font-semibold text-gray-600">Written Exam <span class="text-red-500">*</span></label>
-                        <select id="written_exam" name="written_exam" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <select id="written_exam" name="written_exam" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-96 p-2.5">
                             <option hidden value=""></option>
                             @foreach ($wexams as $wexam)
                                 <option value="{{ $wexam->id }}">{{ $wexam->name }}</option>
@@ -120,7 +139,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="driving_exam" class="block text-sm font-semibold text-gray-600">Driving Exam <span class="text-red-500">*</span></label>
-                        <select id="driving_exam" name="driving_exam" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <select id="driving_exam" name="driving_exam" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-96 p-2.5">
                             <option hidden value=""></option>
                             @foreach ($dexams as $dexam)
                                 <option value="{{ $dexam->id }}">{{ $dexam->name }}</option>
@@ -130,7 +149,7 @@
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="flex flex-col gap-2 mt-5 md:flex-row gap-x-8">
+                    <div class="flex flex-col gap-2 mt-5 md:flex-row gap-x-5 w-full max-w-96">
                         <button type="submit" class="w-full py-2 font-bold tracking-wider text-white bg-blue-500 rounded-lg hover:scale-[101%]">SAVE</button>
                         <a href="{{ route('attendees') . '?key=' . $key }}" class="w-full py-2 font-bold tracking-wider text-center text-white bg-gray-500 rounded-lg hover:scale-[101%]">BACK</a>
                     </div>

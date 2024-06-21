@@ -57,7 +57,7 @@
                 <form action="{{ route('attendees.delete') }}" method="POST" class="relative h-full bg-white rounded-lg shadow">
                     @csrf
                     <input type="hidden" name="key" value="{{ $key }}">
-                    {{-- <input type="hidden" name="id" class="modalID"> --}}
+                    <input type="hidden" name="id" class="modalID">
                     <!-- Modal header -->
                     <div class="flex items-start justify-between p-4 border-b rounded-t">
                         <h3 class="text-xl font-semibold text-gray-900">

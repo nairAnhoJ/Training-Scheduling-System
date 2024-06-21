@@ -147,12 +147,14 @@
                      <span class="ml-3">Driving Exam Result</span>
                   </a>
                </li>
-               <li>
-                  <a href="{{ route('overallResult') . '?key=' . $key . '&a=' . $akey }}" class="nav flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-300 hover:text-gray-700 border-gray-300 {{ (Str::contains(url()->current(), url('/schedule-board'))) ? 'scale-105 bg-gray-300 border border-gray-300 shadow' : '' }}">
-                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 -960 960 960"><path d="M319-248h322v-71H319v71Zm0-170h322v-71H319v71ZM229-55q-39.05 0-66.52-27.47Q135-109.95 135-149v-662q0-39.46 27.48-67.23Q189.95-906 229-906h363l234 234v523q0 39.05-27.77 66.53Q770.46-55 731-55H229Zm313-570v-186H229v662h502v-476H542ZM229-811v186-186 662-662Z"/></svg>
-                     <span class="ml-3">Overall Result</span>
-                  </a>
-               </li>
+               @if ($attendee->written_score != null && $attendee->driving_score != null)
+                  <li>
+                     <a href="{{ route('overallResult') . '?key=' . $key . '&a=' . $akey }}" class="nav flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-300 hover:text-gray-700 border-gray-300 {{ (Str::contains(url()->current(), url('/schedule-board'))) ? 'scale-105 bg-gray-300 border border-gray-300 shadow' : '' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 -960 960 960"><path d="M319-248h322v-71H319v71Zm0-170h322v-71H319v71ZM229-55q-39.05 0-66.52-27.47Q135-109.95 135-149v-662q0-39.46 27.48-67.23Q189.95-906 229-906h363l234 234v523q0 39.05-27.77 66.53Q770.46-55 731-55H229Zm313-570v-186H229v662h502v-476H542ZM229-811v186-186 662-662Z"/></svg>
+                        <span class="ml-3">Overall Result</span>
+                     </a>
+                  </li>
+               @endif
                <li>
                   <a href="{{ route('attendeeSurvey') . '?key=' . $key . '&a=' . $akey }}" class="nav flex items-center p-2 text-gray-600 rounded-lg hover:bg-gray-300 hover:text-gray-700 border-gray-300 {{ (Str::contains(url()->current(), url('/schedule-board'))) ? 'scale-105 bg-gray-300 border border-gray-300 shadow' : '' }}">
                      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 -960 960 960"><path d="M319-248h322v-71H319v71Zm0-170h322v-71H319v71ZM229-55q-39.05 0-66.52-27.47Q135-109.95 135-149v-662q0-39.46 27.48-67.23Q189.95-906 229-906h363l234 234v523q0 39.05-27.77 66.53Q770.46-55 731-55H229Zm313-570v-186H229v662h502v-476H542ZM229-811v186-186 662-662Z"/></svg>
