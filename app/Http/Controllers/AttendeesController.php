@@ -291,4 +291,19 @@ class AttendeesController extends Controller
 
         return view('user.training-assessment.attendees.overall-result.index', compact('key', 'akey', 'attendee', 'exam_total'));
     }
+
+    public function print(Request $request){
+        $key = $request->key;
+        $akey = $request->a;
+        $training = ModelsRequest::with('customer', 'trainerName')->where('key', $key)->first();
+        if(!$key || !$training){
+            return redirect()->route('dashboard.index');
+        }
+
+        $attendee = Attendees::where('key', $akey)->first();
+        $exam_key = WrittenExam::where('id', $attendee->written_exam)->first()->key;
+        $exam_total = WrittenExamQuestion::where('exam_key', $exam_key)->where('is_deleted', 0)->sum('points');
+
+        return view('user.training-assessment.attendees.print-certificate', compact('key', 'akey', 'training', 'attendee', 'exam_total'));
+    }
 }

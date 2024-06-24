@@ -38,17 +38,17 @@
                         @enderror
                     </div>
                     <div class="w-full mb-3 max-w-96">
-                        <label for="type" class="block text-sm font-semibold text-gray-600">Brand <span class="text-red-500">*</span></label>
+                        <label for="brand" class="block text-sm font-semibold text-gray-600">Brand <span class="text-red-500">*</span></label>
                         <div class="flex items-center w-1/2">
-                            <input checked id="Toyota" type="radio" value="Counter Balance Electric" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                            <input checked id="Toyota" type="radio" value="Toyota" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                             <label for="Toyota" class="ms-2 text-sm font-medium text-gray-900">Toyota</label>
                         </div>
                         <div class="flex items-center w-1/2">
-                            <input id="BT" type="radio" value="Counter Balance Gas" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                            <input id="BT" type="radio" value="BT" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                             <label for="BT" class="ms-2 text-sm font-medium text-gray-900">BT</label>
                         </div>
                         <div class="flex items-center w-1/2">
-                            <input id="Raymond" type="radio" value="Counter Balance Gas" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                            <input id="Raymond" type="radio" value="Raymond" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                             <label for="Raymond" class="ms-2 text-sm font-medium text-gray-900">Raymond</label>
                         </div>
                     </div>

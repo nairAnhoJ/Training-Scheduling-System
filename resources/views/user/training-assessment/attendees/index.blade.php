@@ -138,6 +138,9 @@
                                                 Position
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Brand
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Type of Unit Operated
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
@@ -158,6 +161,9 @@
                                         @foreach ($attendees as $attendee)
                                             <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    @if ($attendee->written_score != null && $attendee->driving_score != null)
+                                                        <a href="{{ route('print').'?key='.$key.'&a='.$attendee->key }}" target="_blank" class="text-sm font-semibold text-blue-600 editButton hover:underline">Print Certificate</a> | 
+                                                    @endif
                                                     <button type="button" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 generateButton hover:underline">Generate QR</button> |
                                                     <a href="{{ route('driving.exam').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Driving Exam</a> | 
                                                     <a href="{{ route('attendees.edit').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | 
@@ -168,6 +174,9 @@
                                                 </th>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ $attendee->position }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    {{ ucfirst($attendee->brand) }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ $attendee->type }}
@@ -219,6 +228,12 @@
                                                 <div class="text-xs leading-5 flex items-center">Position</div>
                                                 <div class="text-xs font-semibold flex items-center">
                                                     {{ $attendee->position }}
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2">
+                                                <div class="text-xs leading-5 flex items-center">Brand</div>
+                                                <div class="text-xs font-semibold flex items-center">
+                                                    {{ ucfirst($attendee->brand) }}
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">

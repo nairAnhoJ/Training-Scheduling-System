@@ -121,6 +121,8 @@ Route::get('/training-assessment/driving-exam', [AttendeesDrivingExamController:
 
 Route::get('/training-assessment/overall-result', [AttendeesController::class, 'overallResult'])->name('overallResult');
 
+Route::get('/training-assessment/print-certificate', [AttendeesController::class, 'print'])->name('print');
+
 Route::get('/training-assessment/survey', [AttendeesWrittenExamController::class, 'attendeeSurvey'])->name('attendeeSurvey');
 Route::post('/training-assessment/survey-submit', [AttendeesWrittenExamController::class, 'attendeeSurveySubmit'])->name('attendeeSurveySubmit');
 

@@ -27,6 +27,8 @@ return new class extends Migration
             $table->dateTime('written_exam_end');
             $table->integer('written_score')->nullable();
             $table->integer('driving_score')->nullable();
+            $table->integer('control_number')->nullable();
+            $table->integer('given_date')->nullable();
             $table->string('key');
 
             $table->timestamps();

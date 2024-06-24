@@ -37,32 +37,52 @@
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
+                    <div class="w-full mb-3 max-w-96">
+                        <label for="brand" class="block text-sm font-semibold text-gray-600">Brand <span class="text-red-500">*</span></label>
+                        <div class="flex items-center w-1/2">
+                            <input {{ ($attendee->brand == 'Toyota') ? 'checked' : '' }} id="Toyota" type="radio" value="Toyota" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                            <label for="Toyota" class="ms-2 text-sm font-medium text-gray-900">Toyota</label>
+                        </div>
+                        <div class="flex items-center w-1/2">
+                            <input {{ ($attendee->brand == 'BT') ? 'checked' : '' }} id="BT" type="radio" value="BT" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                            <label for="BT" class="ms-2 text-sm font-medium text-gray-900">BT</label>
+                        </div>
+                        <div class="flex items-center w-1/2">
+                            <input {{ ($attendee->brand == 'Raymond') ? 'checked' : '' }} id="Raymond" type="radio" value="Raymond" name="brand" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                            <label for="Raymond" class="ms-2 text-sm font-medium text-gray-900">Raymond</label>
+                        </div>
+                    </div>
                     <div class="w-full mb-3">
                         <label for="type" class="block text-sm font-semibold text-gray-600">Type of unit operated <span class="text-red-500">*</span></label>
+
                         <div class="flex">
                             <div class="flex items-center w-1/2">
-                                <input {{ ($attendee->type == 'CBE') ? 'checked' : '' }} id="CBE" type="radio" value="CBE" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input {{ ($attendee->type == 'Counter Balance Electric') ? 'checked' : '' }} id="CBE" type="radio" value="Counter Balance Electric" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="CBE" class="ms-2 text-sm font-medium text-gray-900">CBE</label>
                             </div>
                             <div class="flex items-center w-1/2">
-                                <input {{ ($attendee->type == 'CBD') ? 'checked' : '' }} id="CBD" type="radio" value="CBD" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input {{ ($attendee->type == 'Counter Balance Gas') ? 'checked' : '' }} id="CBG" type="radio" value="Counter Balance Gas" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <label for="CBG" class="ms-2 text-sm font-medium text-gray-900">CBG</label>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex items-center w-1/2">
+                                <input {{ ($attendee->type == 'Counter Balance  Liquefied Petroleum Gas') ? 'checked' : '' }} id="CBLPG" type="radio" value="Counter Balance  Liquefied Petroleum Gas" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <label for="CBLPG" class="ms-2 text-sm font-medium text-gray-900">CB/LPG</label>
+                            </div>
+                            <div class="flex items-center w-1/2">
+                                <input {{ ($attendee->type == 'Power Pallet Truck') ? 'checked' : '' }} id="PPT" type="radio" value="Power Pallet Truck" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <label for="PPT" class="ms-2 text-sm font-medium text-gray-900">PPT</label>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex items-center w-1/2">
+                                <input {{ ($attendee->type == 'Counter Balance Diesel') ? 'checked' : '' }} id="CBD" type="radio" value="Counter Balance Diesel" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="CBD" class="ms-2 text-sm font-medium text-gray-900">CBD</label>
                             </div>
-                        </div>
-                        <div class="flex">
                             <div class="flex items-center w-1/2">
-                                <input {{ ($attendee->type == 'CBG/LPG') ? 'checked' : '' }} id="CBG/LPG" type="radio" value="CBG/LPG" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                                <label for="CBG/LPG" class="ms-2 text-sm font-medium text-gray-900">CBG/LPG</label>
-                            </div>
-                            <div class="flex items-center w-1/2">
-                                <input {{ ($attendee->type == 'RT') ? 'checked' : '' }} id="RT" type="radio" value="RT" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                <input {{ ($attendee->type == 'Reach Truck') ? 'checked' : '' }} id="RT" type="radio" value="Reach Truck" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
                                 <label for="RT" class="ms-2 text-sm font-medium text-gray-900">RT</label>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="flex items-center w-1/2">
-                                <input {{ ($attendee->type == 'PPT') ? 'checked' : '' }} id="PPT" type="radio" value="PPT" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                                <label for="PPT" class="ms-2 text-sm font-medium text-gray-900">PPT</label>
                             </div>
                         </div>
                         @error('type')
