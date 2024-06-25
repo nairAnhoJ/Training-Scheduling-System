@@ -50,6 +50,49 @@
         </div>
     {{-- GENERATE MODAL --}}
     
+    {{-- CTRL# & DATE MODAL --}}
+        <div id="ctrlModal" class="hidden absolute top-0 left-0 w-screen h-screen bg-gray-900 z-[109] !bg-opacity-50 overflow-hidden flex items-center justify-center p-5">
+            <div class="bg-white rounded-lg w-full max-w-lg">
+                <!-- Modal content -->
+                <form action="{{ route('attendees.updateCtrl') }}" method="POST" class="relative h-full bg-white rounded-lg shadow">
+                    @csrf
+                    <input type="hidden" name="ctrlKey" class="ctrlKey">
+                    <input type="hidden" name="ctrlaKey" class="ctrlaKey">
+                    <!-- Modal header -->
+                    <div class="flex items-start justify-between p-4 border-b rounded-t">
+                        <h3 class="text-xl font-semibold text-gray-900">
+                        </h3>
+                        <button type="button" class="inline-flex items-center justify-center w-8 h-8 ml-auto text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 closeCtrlModal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="!m-0 overflow-scroll sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="px-10 py-4 overflow-x-hidden overflow-y-auto">
+                        <p class="ctrlName font-semibold mb-3"></p>
+                        <div class="w-full mb-3">
+                            <label for="ctrl" class="block text-sm font-semibold text-gray-600">Control Number <span class="text-red-500">*</span></label>
+                            <input type="text" id="ctrlNumber" name="ctrl" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" required>
+                        </div>
+                        <div class="w-full mb-3">
+                            <label for="date" class="block text-sm font-semibold text-gray-600">Date <span class="text-red-500">*</span></label>
+                            <input type="date" id="ctrlDate" name="date" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" required>
+                        </div>
+
+                        <p class="italic text-sm">Note: This is a one-time action. After this, you can edit the Control Number and Date on the Edit page.</p>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
+                        <button type="submit" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-red-200 text-sm font-bold md:w-24 w-1/2 py-2.5 focus:z-10">PRINT</button>
+                        <button type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-bold md:w-24 w-1/2 py-2.5 hover:text-gray-900 focus:z-10 closeCtrlModal">CLOSE</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {{-- CTRL# & DATE MODAL --}}
+    
     {{-- DELETE MODAL --}}
         <div id="deleteModal" class="hidden absolute top-0 left-0 w-screen h-screen bg-gray-900 z-[109] !bg-opacity-50 overflow-hidden flex items-center justify-center p-5">
             <div class="bg-white rounded-lg">
@@ -162,7 +205,11 @@
                                             <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     @if ($attendee->written_score != null && $attendee->driving_score != null)
-                                                        <a href="{{ route('print').'?key='.$key.'&a='.$attendee->key }}" target="_blank" class="text-sm font-semibold text-blue-600 editButton hover:underline">Print Certificate</a> | 
+                                                        @if ($attendee->control_number != null && $attendee->date_given != null)
+                                                            <a href="{{ route('print').'?key='.$key.'&a='.$attendee->key }}" target="_blank" class="text-sm font-semibold text-blue-600 editButton hover:underline">Print Certificate</a> | 
+                                                        @else
+                                                            <button type="button" data-name="{{ $attendee->name }}" data-number="{{ $attendee->control_number }}" data-date="{{ $attendee->date_given }}" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 printButton hover:underline">Print Certificate</button> |
+                                                        @endif
                                                     @endif
                                                     <button type="button" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 generateButton hover:underline">Generate QR</button> |
                                                     <a href="{{ route('driving.exam').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Driving Exam</a> | 
@@ -299,6 +346,8 @@
 
     <script>
         $(document).ready(function(){
+            var curDate = '{{ date("Y-m-d") }}';
+
             $('.deleteButton').on('click', function(){
                 var id = $(this).data('id');
                 $('.modalID').val(id);
@@ -332,6 +381,34 @@
 
             $('.closeGenerateModal').on('click', function(){
                 $('#generateModal').addClass('hidden');
+            });
+
+
+
+            $('.printButton').on('click', function(){
+                var key = $(this).data('key');
+                var akey = $(this).data('akey');
+                var name = $(this).data('name');
+                var number = $(this).data('number');
+                var date = $(this).data('date');
+                $('.ctrlKey').val(key);
+                $('.ctrlaKey').val(akey);
+                $('.ctrlName').html(name);
+                if(number != ''){
+                    $('#ctrlNumber').val(number);
+                }
+                if(date != ''){
+                    $('#ctrlDate').val(date);
+                }else{
+                    console.log(curDate);
+                    $('#ctrlDate').val(curDate);
+                }
+
+                $('#ctrlModal').removeClass('hidden');
+            });
+
+            $('.closeCtrlModal').on('click', function(){
+                $('#ctrlModal').addClass('hidden');
             });
         });
     </script>

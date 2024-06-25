@@ -306,4 +306,21 @@ class AttendeesController extends Controller
 
         return view('user.training-assessment.attendees.print-certificate', compact('key', 'akey', 'training', 'attendee', 'exam_total'));
     }
+
+    public function updateCtrl(Request $request){
+        $key = $request->ctrlKey;
+        $training = ModelsRequest::where('key', $key)->first();
+        if(!$key || !$training){
+            return redirect()->route('dashboard.index');
+        }
+        
+        $akey = $request->ctrlaKey;
+        $ctrl = $request->ctrl;
+        $date = $request->date;
+
+        $attendee = Attendees::where('key', $akey)->first();
+        $attendee->control_number = $ctrl;
+        $attendee->date_given = $date;
+        $attendee->save();
+    }
 }

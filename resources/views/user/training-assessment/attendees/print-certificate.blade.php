@@ -34,7 +34,7 @@
 
     <body class="font-sans antialiased w-[1375px] h-[1063px] relative">
         {{-- All Text --}}
-            <h1 class="text-[57px] absolute top-[380px] left-1/4 -translate-x-1/2">{{ $attendee->name }} Malondras</h1>
+            <h1 class="text-[57px] absolute top-[380px] left-1/4 -translate-x-1/2">{{ $attendee->name }}</h1>
             <h2 class="text-lg absolute top-[468px] left-1/4 -translate-x-1/2 uppercase font-serif">{{ $training->customer->name }}</h2>
             <h2 class="absolute top-[668px] left-1/4 -translate-x-1/2 font-serif text-center">has attended the Comprehensive Training on <br> Basic Safety Operators Training <span class="font-bold">{{ $attendee->brand . ' ' . $attendee->type }}</span></h2>
             <h2 class="absolute top-[768px] left-1/4 -translate-x-1/2 font-serif text-center">Given on this </h2>
@@ -47,7 +47,7 @@
                 // var sh = $('#userAgreement').prop('scrollHeight');
                 // $('#userAgreement').height((sh) + 'px');
                 // window.onafterprint = window.close;
-                // window.print();
+                window.print();
             });
         </script>
     </body>

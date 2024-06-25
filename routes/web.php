@@ -187,6 +187,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/training-assessment/attendees/store', [AttendeesController::class, 'store'])->name('attendees.store');
         Route::get('/training-assessment/attendees/edit', [AttendeesController::class, 'edit'])->name('attendees.edit');
         Route::post('/training-assessment/attendees/update', [AttendeesController::class, 'update'])->name('attendees.update');
+        Route::post('/training-assessment/attendees/update-ctrl', [AttendeesController::class, 'updateCtrl'])->name('attendees.updateCtrl');
         Route::post('/training-assessment/attendees/delete', [AttendeesController::class, 'delete'])->name('attendees.delete');
         Route::post('/training-assessment/attendees/generate', [AttendeesController::class, 'generate'])->name('attendees.generate');
         
