@@ -7,7 +7,7 @@ export default {
   ],
   theme: {
     extend: {
-
+      
     },
     darkMode: false,
   },

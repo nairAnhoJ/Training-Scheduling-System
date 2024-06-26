@@ -1,4 +1,12 @@
 .env
 vendor/
 node_modules/
-public/
+public/.htaccess
+public/favicon.ico
+public/index.php
+public/hot
+public/robots.txt
+public/build
+public/storage/driving_exam
+public/storage/files
+public/storage/users

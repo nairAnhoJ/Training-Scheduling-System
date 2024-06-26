@@ -7,6 +7,7 @@ use App\Models\Attendees;
 use App\Models\DrivingExam;
 use App\Models\DrivingExamScore;
 use App\Models\Request as ModelsRequest;
+use App\Models\User;
 use App\Models\WrittenExam;
 use App\Models\WrittenExamQuestion;
 use Illuminate\Http\Request;
@@ -300,11 +301,12 @@ class AttendeesController extends Controller
             return redirect()->route('dashboard.index');
         }
 
+        $trainer_head = User::where('role', 3)->first();
         $attendee = Attendees::where('key', $akey)->first();
         $exam_key = WrittenExam::where('id', $attendee->written_exam)->first()->key;
         $exam_total = WrittenExamQuestion::where('exam_key', $exam_key)->where('is_deleted', 0)->sum('points');
 
-        return view('user.training-assessment.attendees.print-certificate', compact('key', 'akey', 'training', 'attendee', 'exam_total'));
+        return view('user.training-assessment.attendees.print-certificate', compact('key', 'akey', 'training', 'attendee', 'exam_total', 'trainer_head'));
     }
 
     public function updateCtrl(Request $request){
@@ -322,5 +324,7 @@ class AttendeesController extends Controller
         $attendee->control_number = $ctrl;
         $attendee->date_given = $date;
         $attendee->save();
+
+        return redirect()->route('print', ['key'=> $key, 'a'=> $akey]);
     }
 }
