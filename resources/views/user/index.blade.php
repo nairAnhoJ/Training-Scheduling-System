@@ -343,21 +343,21 @@
     {{-- VIEW EVENT MODAL END --}}
 
     <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-        <div class="h-full py-5 pl-5 pr-8 overflow-y-scroll bg-white rounded-lg shadow-xl">
+        <div class="h-full p-5 overflow-y-scroll bg-white rounded-lg shadow-xl">
             <div class="">
                 <div class="grid w-full grid-cols-1 lg:grid-cols-3 gap-x-5">
 
                     <div class="shadow-[0_0px_5px_1px_rgb(0,0,0,0.15)] rounded-lg overflow-hidden mb-5">
                         <div class="flex items-center w-full h-full">
-                            <div class="h-24">
-                                <div class="flex items-center justify-center w-24 h-full bg-emerald-500">
+                            <div class="h-14 lg:h-24">
+                                <div class="flex items-center justify-center w-14 lg:w-24 h-full bg-emerald-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="M433-228 295-365l42-42 96 94 184-184 42 43-226 226ZM180-80q-24 0-42-18t-18-42v-620q0-24 18-42t42-18h65v-60h65v60h340v-60h65v60h65q24 0 42 18t18 42v620q0 24-18 42t-42 18H180Zm0-60h600v-430H180v430Zm0-490h600v-130H180v130Zm0 0v-130 130Z"/></svg>
                                 </div>
                             </div>
                             <div class="w-full px-5">
                                 <div class="flex justify-between w-full">
                                     <div class="flex flex-col justify-center">
-                                        <h1 class="text-3xl font-semibold">{{$trainingCount}}</h1>
+                                        <h1 class="text-xl lg:text-3xl font-semibold">{{$trainingCount}}</h1>
                                         <h1 class="text-sm lg:text-xs 2xl:text-sm">Upcoming Trainings</h1>
                                     </div>
                                     <div class="flex items-center">
@@ -372,8 +372,8 @@
 
                     <div class="shadow-[0_0px_5px_1px_rgb(0,0,0,0.15)] rounded-lg overflow-hidden mb-5">
                         <div class="flex items-center w-full h-full">
-                            <div class="h-24">
-                                <div class="flex items-center justify-center w-24 h-full bg-amber-500">
+                            <div class="h-14 lg:h-24">
+                                <div class="flex items-center justify-center  w-14 lg:w-24 h-full bg-amber-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path xmlns="http://www.w3.org/2000/svg" d="m800-134 28-28-75-75v-112h-40v128l87 87Zm-620 14q-24.75 0-42.375-17.625T120-180v-600q0-24.75 17.625-42.375T180-840h600q24.75 0 42.375 17.625T840-780v329q-14-8-29.5-13t-30.5-8v-308H180v600h309q4 16 9.023 31.172Q503.045-133.655 510-120H180Zm0-107v47-600 308-4 249Zm100-53h211q4-16 9-31t13-29H280v60Zm0-170h344q14-7 27-11.5t29-8.5v-40H280v60Zm0-170h400v-60H280v60ZM732.5-41Q655-41 600-96.5T545-228q0-78.435 54.99-133.717Q654.98-417 733-417q77 0 132.5 55.283Q921-306.435 921-228q0 76-55.5 131.5T732.5-41Z"/></svg>
                                 </div>
                             </div>
@@ -381,7 +381,7 @@
                             <div class="w-full px-5">
                                 <div class="flex justify-between w-full">
                                     <div class="flex flex-col justify-center">
-                                        <h1 class="text-3xl font-semibold">{{$requestCount}}</h1>
+                                        <h1 class="text-xl lg:text-3xl font-semibold">{{$requestCount}}</h1>
                                         <h1 class="text-sm lg:text-xs 2xl:text-sm">Pending Request</h1>
                                     </div>
                                     <div class="flex items-center">
@@ -396,8 +396,8 @@
 
                     <div class="shadow-[0_0px_5px_1px_rgb(0,0,0,0.15)] rounded-lg overflow-hidden mb-5">
                         <div class="flex items-center">
-                            <div class="h-24">
-                                <div class="flex items-center justify-center w-24 h-full bg-red-500">
+                            <div class="h-14 lg:h-24">
+                                <div class="flex items-center justify-center  w-14 lg:w-24 h-full bg-red-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><path d="M349-250h262q12.75 0 21.375-8.675 8.625-8.676 8.625-21.5 0-12.825-8.625-21.325T611-310H349q-12.75 0-21.375 8.675-8.625 8.676-8.625 21.5 0 12.825 8.625 21.325T349-250Zm0-170h262q12.75 0 21.375-8.675 8.625-8.676 8.625-21.5 0-12.825-8.625-21.325T611-480H349q-12.75 0-21.375 8.675-8.625 8.676-8.625 21.5 0 12.825 8.625 21.325T349-420ZM220-80q-24 0-42-18t-18-42v-680q0-24 18-42t42-18h336q12.444 0 23.722 5T599-862l183 183q8 8 13 19.278 5 11.278 5 23.722v496q0 24-18 42t-42 18H220Zm331-584v-156H220v680h520v-494H581q-12.75 0-21.375-8.625T551-664ZM220-820v186-186 680-680Z"/></svg>
                                 </div>
                             </div>
@@ -405,7 +405,7 @@
                             <div class="w-full px-5">
                                 <div class="flex justify-between w-full">
                                     <div class="flex flex-col justify-center">
-                                        <h1 class="text-3xl font-semibold">0</h1>
+                                        <h1 class="text-xl lg:text-3xl font-semibold">0</h1>
                                         <h1 class="text-sm lg:text-xs 2xl:text-sm">Pending Request From Customer</h1>
                                     </div>
                                     <div class="flex items-center">
@@ -421,7 +421,7 @@
                 </div>
             </div>
             {{-- Legends --}}
-                <div class="flex w-full gap-x-5">
+                <div class="flex w-full gap-x-5 whitespace-nowrap flex-col lg:flex-row">
                     <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
                         <span class="flex w-3 h-3 bg-[#FE2C55] rounded-full mr-1.5 flex-shrink-0"></span>
                         ALL
@@ -435,19 +435,19 @@
                 </div>
             {{-- Legends --}}
             {{-- Controls --}}
-                <form method="GET" action="{{ route('dashboard.index') }}" class="flex items-center w-full mt-2 gap-x-3">
+                <form method="GET" action="{{ route('dashboard.index') }}" class="flex items-center sm:items-start w-full mt-2 gap-x-3 flex-col lg:flex-row gap-3">
                     <div>
                         <label for="customer" class="mr-1">Customer: </label>
-                        <select name="customer" id="customer" class="h-8 px-2 rounded-lg max-w-72">
+                        <select name="customer" id="customer" class="h-8 px-2 rounded-lg w-full sm:max-w-72">
                             <option value="">All</option>
                             @foreach ($customers as $customer)
                                 <option {{ ($customerFilter == $customer->id) ? 'selected' : '' }} value="{{ $customer->id }}">{{ $customer->name }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div>
+                    <div class="sm:flex sm:items-center gap-1">
                         <label for="trainer" class="mr-1">Trainer: </label>
-                        <select name="trainer" id="trainer" class="h-8 px-2 rounded-lg max-w-72">
+                        <select name="trainer" id="trainer" class="h-8 px-2 rounded-lg w-full sm:max-w-72">
                             <option value="">All</option>
                             @foreach ($trainers as $trainer)
                                 <option {{ ($trainerFilter == $trainer->id) ? 'selected' : '' }} value="{{ $trainer->id }}">{{ $trainer->first_name.' '.$trainer->last_name }}</option>
@@ -471,6 +471,13 @@
             var role = '{{ $role }}';
             var eventArray = @json($eventArray);
 
+            const isMobile = window.innerWidth <= window.innerHeight;
+                if (isMobile) {
+                    var view = 'dayGridDay';
+                } else {
+                    var view = 'dayGridMonth';
+                }
+
             var headerConfig = {
                 center: 'title',
                 right: 'prev,next today'
@@ -492,7 +499,7 @@
                         }
                     }
                 },
-                initialView: 'dayGridMonth',
+                initialView: view,
                 contentHeight: 'auto',
 
                 eventMouseEnter: function (info) {

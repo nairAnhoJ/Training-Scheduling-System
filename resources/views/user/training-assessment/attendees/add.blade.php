@@ -23,20 +23,75 @@
                 <form method="POST" action="{{ route('attendees.store') . '?key=' . $key }}">
                     @csrf
                     <input type="hidden" name="key" value="{{ $key }}">
-                    <div class="w-full mb-3">
+                    <input type="hidden" name="count" id="inputCount" value="{{ $key }}">
+
+                    <div id="btnAddRow" class="flex flex-row-reverse mb-2">
+                        <button id="" type="button" class="text-blue-500 h-8 hover:scale-105">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-full aspect-square" viewBox="0 -960 960 960" fill="currentColor">
+                                <path xmlns="http://www.w3.org/2000/svg" d="M440-280h80v-160h160v-80H520v-160h-80v160H280v80h160v160Zm40 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div style="grid-template-columns: repeat(20, minmax(0, 1fr));" id="attendees" class="grid border mb-3">
+                        {{-- HEADER --}}
+                            <div class="border text-center">#</div>
+                            <div class="border text-center col-span-4">NAME</div>
+                            <div class="border text-center col-span-4">POSITION</div>
+                            <div class="border text-center col-span-3">LEVEL</div>
+                            <div class="border text-center col-span-3">KNOWLEDGE</div>
+                            <div class="border text-center col-span-3">YEARS OPERATING</div>
+                            <div class="border text-center col-span-2">ACTION</div>
+                        {{-- HEADER --}}
+                        
+                        {{-- ROW --}}
+                            <div class="border text-center h-8 font-bold flex items-center justify-center">
+                                1
+                            </div>
+                            <div class="border text-center h-8 col-span-4">
+                                <input type="text" name="name1" class="border-0 w-full text-sm h-full">
+                            </div>
+                            <div class="border text-center h-8 col-span-4">
+                                <input type="text" name="position1" class="border-0 w-full text-sm h-full">
+                            </div>
+                            <div class="border text-center h-8 col-span-3">
+                                <select name="level1" class="w-full border-0 h-full px-2">
+                                    <option value="1">Level 1</option>
+                                    <option value="2">Level 2</option>
+                                    <option value="3">Level 3</option>
+                                </select>
+                            </div>
+                            <div class="border text-center h-8 col-span-3">
+                                <select name="knowledge1" class="w-full border-0 h-full px-2">
+                                    <option value="With Experience">w/ Exp</option>
+                                    <option value="Without Experience">w/o Exp</option>
+                                </select>
+                            </div>
+                            <div class="border text-center h-8 col-span-3">
+                                <input type="number" name="years_operating1" class="border-0 w-full text-sm h-full text-center" value="0" min="0">
+                            </div>
+                            <div class="border text-center h-8 col-span-2">
+                                <button type="button" class="text-red-500 h-8 hover:scale-105 p-1 disabled:text-gray-400 disabled:pointer-events-none btnDeleteRow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-full aspect-square" viewBox="0 -960 960 960" fill="currentColor">
+                                        <path xmlns="http://www.w3.org/2000/svg" d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        {{-- ROW --}}
+                    </div>
+                    {{-- <div class="w-full mb-3">
                         <label for="name" class="block text-sm font-semibold text-gray-600">Name <span class="text-red-500">*</span></label>
                         <input type="text" id="name" name="name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full max-w-96 p-2.5" autocomplete="off">
                         @error('name')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
-                    </div>
-                    <div class="w-full mb-3">
+                    </div> --}}
+                    {{-- <div class="w-full mb-3">
                         <label for="position" class="block text-sm font-semibold text-gray-600">Position <span class="text-red-500">*</span></label>
                         <input type="text" id="position" name="position" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full max-w-96 p-2.5" autocomplete="off">
                         @error('position')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="w-full mb-3 max-w-96">
                         <label for="brand" class="block text-sm font-semibold text-gray-600">Brand <span class="text-red-500">*</span></label>
                         <div class="flex items-center w-1/2">
@@ -88,7 +143,7 @@
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="w-full mb-3">
+                    {{-- <div class="w-full mb-3">
                         <label for="knowledge" class="block text-sm font-semibold text-gray-600">Knowledge <span class="text-red-500">*</span></label>
                         <div class="flex-col">
                             <div class="flex items-center">
@@ -103,8 +158,8 @@
                         @error('knowledge')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
-                    </div>
-                    <div class="w-full mb-3">
+                    </div> --}}
+                    {{-- <div class="w-full mb-3">
                         <label for="years_operating" class="block text-sm font-semibold text-gray-600">Years Operating Forklifts/MHE <span class="text-red-500">*</span></label>
                         <div class="flex w-full gap-x-2">
                             <button type="button" id="minusYear" class="text-red-500 flex justify-center items-center hover:scale-105">
@@ -124,7 +179,7 @@
                         @error('years_operating')
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="mb-3">
                         <label for="written_exam" class="block text-sm font-semibold text-gray-600">Written Exam <span class="text-red-500">*</span></label>
                         <select id="written_exam" name="written_exam" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-96 p-2.5">
@@ -160,6 +215,7 @@
 
     <script>
         $(document).ready(function(){
+            var count = 2;
             $('#minusYear').on('click', function(){
                 var years_operating = $('#years_operating').val();
                 if(years_operating>0){
@@ -169,6 +225,45 @@
             $('#addYear').on('click', function(){
                 var years_operating = $('#years_operating').val();
                 $('#years_operating').val(Number(years_operating)+1);
+            });
+
+            $('#btnAddRow').click(function(){
+                $('#attendees').append(`
+                    <div class="border text-center h-8 font-bold flex items-center justify-center">
+                        ${count}
+                    </div>
+                    <div class="border text-center h-8 col-span-4">
+                        <input type="text" name="name${count}" class="border-0 w-full text-sm h-full">
+                    </div>
+                    <div class="border text-center h-8 col-span-4">
+                        <input type="text" name="position${count}" class="border-0 w-full text-sm h-full">
+                    </div>
+                    <div class="border text-center h-8 col-span-3">
+                        <select name="level${count}" class="w-full border-0 h-full px-2">
+                            <option value="1">Level 1</option>
+                            <option value="2">Level 2</option>
+                            <option value="3">Level 3</option>
+                        </select>
+                    </div>
+                    <div class="border text-center h-8 col-span-3">
+                        <select name="knowledge${count}" class="w-full border-0 h-full px-2">
+                            <option value="With Experience">w/ Exp</option>
+                            <option value="Without Experience">w/o Exp</option>
+                        </select>
+                    </div>
+                    <div class="border text-center h-8 col-span-3">
+                        <input type="number" name="years_operating${count}" class="border-0 w-full text-sm h-full text-center" value="0" min="0">
+                    </div>
+                    <div class="border text-center h-8 col-span-2">
+                        <button type="button" data-count="${count}" class="text-red-500 h-8 hover:scale-105 p-1 disabled:text-gray-400 disabled:pointer-events-none btnDeleteRow">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-full aspect-square" viewBox="0 -960 960 960" fill="currentColor">
+                                <path xmlns="http://www.w3.org/2000/svg" d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/>
+                            </svg>
+                        </button>
+                    </div>
+                `);
+                $('#inputCount').val(count);
+                count++;
             });
         });
     </script>

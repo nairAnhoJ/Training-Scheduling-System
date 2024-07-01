@@ -181,6 +181,15 @@
                                                 Position
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Written Exam Score
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Driving Exam Score
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                Overall Score Score(%)
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Brand
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
@@ -191,12 +200,6 @@
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Years Operating Forklift/MHE
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Written Exam Score
-                                            </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Driving Exam Score
                                             </th>
                                         </tr>
                                     </thead>
@@ -223,18 +226,6 @@
                                                     {{ $attendee->position }}
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ ucfirst($attendee->brand) }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $attendee->type }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $attendee->knowledge }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    {{ $attendee->years_operating }}
-                                                </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     @if ($attendee->written_score != null)
                                                         {{ $attendee->written_score }}
                                                     @else
@@ -247,6 +238,45 @@
                                                     @else
                                                         N/A
                                                     @endif
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    @if ($attendee->driving_score != null)
+                                                        @php
+                                                            $exam_key = DB::table('tss_written_exams')->where('id', $attendee->written_exam)->first()->key;
+                                                            $exam_total = DB::table('tss_written_exam_questions')->where('exam_key', $exam_key)->where('is_deleted', 0)->sum('points');
+
+                                                            $date = new DateTime($attendee->date_given);
+                                                            $formattedDate = $date->format('jS \o\f F Y');
+                                                
+                                                            $writtenExamScore = $attendee->written_score;
+                                                            $writtenExamTotal = $exam_total;
+                                                            $drivingExamScore = $attendee->driving_score;
+                                                
+                                                            $writtenPercent = 20 * ($writtenExamScore / $writtenExamTotal);
+                                                            $drivingPercent = 80 * ($drivingExamScore / 100);
+                                                            $overallScore = round(($writtenPercent + $drivingPercent), 2);
+                                                
+                                                            $class = 'B';
+                                                            if($overallScore >= 95){
+                                                                $class = 'A';
+                                                            }
+                                                        @endphp
+                                                        {{ $overallScore }}
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    {{ ucfirst($attendee->brand) }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    {{ $attendee->type }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    {{ $attendee->knowledge }}
+                                                </td>
+                                                <td class="px-6 py-4 text-center whitespace-nowrap">
+                                                    {{ $attendee->years_operating }}
                                                 </td>
                                             </tr>
                                         @endforeach

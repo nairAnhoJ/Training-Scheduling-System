@@ -245,15 +245,15 @@ class AttendeesController extends Controller
         $attendee = Attendees::where('key', $akey)->first();
         $dexams = DrivingExam::where('id', $attendee->driving_exam)->first();
 
-        $seatbelt = $request->seatbelt;
-        $contact = $request->contact;
-        $horns = $request->horns;
-        $skid = $request->skid;
+        $seatbelt = 10 - $request->seatbelt;
+        $contact = 5 - $request->contact;
+        $horns = 10 - $request->horns;
+        $skid = 5 - $request->skid;
 
-        $controls = $request->controls;
-        $handling = $request->handling;
-        $behavior = $request->behavior;
-        $time = $request->time;
+        $controls = 30 - $request->controls;
+        $handling = 20 - $request->handling;
+        $behavior = 10 - $request->behavior;
+        $time = 10 - $request->time;
 
         $score = new DrivingExamScore();
         $score->training_key = $key;
@@ -270,7 +270,7 @@ class AttendeesController extends Controller
         $score->time = $time;
         $score->save();
 
-        $total = $seatbelt + $contact + $horns + $skid + $controls + $handling + $behavior + $time;
+        $total = 100 - ($seatbelt + $contact + $horns + $skid + $controls + $handling + $behavior + $time);
 
         $attendee->driving_score = $total;
         $attendee->save();

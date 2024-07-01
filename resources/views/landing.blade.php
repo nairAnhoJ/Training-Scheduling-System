@@ -53,6 +53,50 @@
                 color: black;
                 font-weight: 500;
             }
+            
+            .fc-header-toolbar {
+                white-space: nowrap;
+            }
+            
+            /* .fc-header-toolbar .fc-toolbar-chunk{
+                font-size: 10px;
+            } */
+
+            @media (max-width: 360px) {
+                .fc-header-toolbar .fc-toolbar-chunk {
+                    font-size: 10px;
+                }
+            }
+
+            @media (min-width: 361px) and (max-width: 414px) {
+                .fc-header-toolbar .fc-toolbar-chunk {
+                    font-size: 11px;
+                }
+            }
+
+            @media (min-width: 415px) and (max-width: 768px) {
+                .fc-header-toolbar .fc-toolbar-chunk {
+                    font-size: 12px;
+                }
+            }
+
+            @media (min-width: 769px) and (max-width: 1024px) {
+                .fc-header-toolbar .fc-toolbar-chunk {
+                    font-size: 12px;
+                }
+            }
+
+            @media (min-width: 1025px) and (max-width: 1280px) {
+                .fc-header-toolbar .fc-toolbar-chunk {
+                    font-size: 12px;
+                }
+            }
+
+            @media (min-width: 1281px) {
+                .fc-header-toolbar .fc-toolbar-chunk {
+                    font-size: 13px;
+                }
+            }
         </style>
     </head>
     <body>
@@ -245,9 +289,9 @@
                 </div>
             </nav>
             <div class="p-5 w-full h-[calc(100%-56px)] bg-gray-200">
-                <div class="h-full py-5 pl-5 pr-8 overflow-y-scroll bg-white rounded-lg shadow-xl">
+                <div class="h-full p-5 overflow-y-scroll bg-white rounded-lg shadow-xl">
                     {{-- Legends --}}
-                    <div class="flex w-full gap-x-5">
+                    <div class="flex w-full gap-x-5 whitespace-nowrap flex-col lg:flex-row mb-5">
                         <span class="flex items-center text-sm font-bold text-gray-900 uppercase">
                             <span class="flex w-3 h-3 bg-[#FE2C55] rounded-full mr-1.5 flex-shrink-0"></span>
                             ALL
@@ -269,12 +313,18 @@
             $(document).ready(function(){
                 var id;
                 var eventArray = @json($eventArray);
+
+                const isMobile = window.innerWidth <= window.innerHeight;
+                if (isMobile) {
+                    var view = 'dayGridDay';
+                } else {
+                    var view = 'dayGridMonth';
+                }
   
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     headerToolbar: {
-                        left: '', // addButton
-                        center: 'title',
+                        left: 'title',
                         right: 'prev,next today'
                     },
                     customButtons: {
@@ -287,7 +337,7 @@
                             }
                         }
                     },
-                    initialView: 'dayGridMonth',
+                    initialView: view,
                     contentHeight: 'auto',
 
                     eventMouseEnter: function (info) {

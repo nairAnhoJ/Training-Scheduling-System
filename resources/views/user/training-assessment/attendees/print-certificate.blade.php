@@ -59,7 +59,6 @@
             $date = new DateTime($attendee->date_given);
             $formattedDate = $date->format('jS \o\f F Y');
 
-            
             $writtenExamScore = $attendee->written_score;
             $writtenExamTotal = $exam_total;
             $drivingExamScore = $attendee->driving_score;
@@ -72,7 +71,6 @@
             if($overallScore >= 95){
                 $class = 'A';
             }
-
         @endphp
         {{-- All Text --}}
             <h1 style="font-family: 'Monotype-Corsiva' !important;" class="whitespace-nowrap text-[57px] absolute top-[382px] left-1/4 -translate-x-1/2">{{ $attendee->name }}</h1>

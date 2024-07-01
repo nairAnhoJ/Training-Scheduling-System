@@ -156,11 +156,11 @@
                                             <div class="w-full mx-2 text-sm flex border border-neutral-600">
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
-                                                    <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
+                                                    <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input 
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
                                                     value="{{ ($attendee->driving_score != null) ? $driving_score->seatbelt : old('seatbelt') }}"
-                                                    name="seatbelt" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
+                                                    name="seatbelt" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
                                             @error('seatbelt')
@@ -172,11 +172,11 @@
                                             <div class="w-full mx-2 text-sm flex border border-neutral-600">
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">5</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
-                                                    <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
+                                                    <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input 
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
                                                     value="{{ ($attendee->driving_score != null) ? $driving_score->contact : old('contact') }}"
-                                                    name="contact" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
+                                                    name="contact" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
                                             @error('contact')
@@ -188,11 +188,11 @@
                                             <div class="w-full mx-2 text-sm flex border border-neutral-600">
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
-                                                    <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
+                                                    <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
                                                     value="{{ ($attendee->driving_score != null) ? $driving_score->horns : old('horns') }}"
-                                                    name="horns" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
+                                                    name="horns" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
                                             @error('horns')
@@ -204,11 +204,11 @@
                                             <div class="w-full mx-2 text-sm flex border border-neutral-600">
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">5</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
-                                                    <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
+                                                    <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
                                                     value="{{ ($attendee->driving_score != null) ? $driving_score->skid : old('skid') }}"
-                                                    name="skid" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
+                                                    name="skid" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
                                             @error('skid')
@@ -224,11 +224,11 @@
                                             <div class="w-full mx-2 text-sm flex border border-neutral-600">
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">30</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
-                                                    <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
+                                                    <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
                                                     value="{{ ($attendee->driving_score != null) ? $driving_score->controls : old('controls') }}"
-                                                    name="controls" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
+                                                    name="controls" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
                                             @error('controls')
@@ -240,11 +240,11 @@
                                             <div class="w-full mx-2 text-sm flex border border-neutral-600">
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">20</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
-                                                    <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
+                                                    <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
                                                     value="{{ ($attendee->driving_score != null) ? $driving_score->handling : old('handling') }}"
-                                                    name="handling" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
+                                                    name="handling" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
                                             @error('handling')
@@ -256,11 +256,11 @@
                                             <div class="w-full mx-2 text-sm flex border border-neutral-600">
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
-                                                    <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
+                                                    <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
                                                     value="{{ ($attendee->driving_score != null) ? $driving_score->behavior : old('behavior') }}"
-                                                    name="behavior" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
+                                                    name="behavior" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
                                             @error('behavior')
@@ -272,18 +272,24 @@
                                             <div class="w-full mx-2 text-sm flex border border-neutral-600">
                                                 <p class="w-1/2 border-0 pl-1 pt-1">Max Deduction: <span class="font-semibold">10</span></p>
                                                 <div class="w-1/2 border-l border-neutral-600 gap-x-1 relative">
-                                                    <p class="absolute text-sm pl-1 pt-1 w-12">Score:</p>
+                                                    <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
                                                     value="{{ ($attendee->driving_score != null) ? $driving_score->time : old('time') }}"
-                                                    name="time" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[55px]" type="text" autocomplete="off">
+                                                    name="time" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
                                             @error('time')
                                                 <span class="text-xs text-red-500 mx-2">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                    {{-- DO --}}
+                                    {{-- DO --}}            
+
+                                    @if ($driving_score != null)
+                                        <h1 class="font-bold mt-5">Total Score: <span class="ms-3 text-lg">{{ $attendee->driving_score }}</span> out of 100</h1>
+                                    @else
+                                        <h1 class="font-bold mt-5">Total Score: </h1>
+                                    @endif
                                     
                                     {{-- CONTROLS --}}
                                         <div id="controlDiv" class="w-full mt-5">
