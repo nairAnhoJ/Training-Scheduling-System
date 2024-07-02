@@ -55,6 +55,14 @@ class UserController extends Controller
         $signature_path = $path . $filename;
         $request->file('signature')->move(public_path('storage/' . $path), $filename);
 
+        if($role == 3){
+            User::where('role', 3)
+                ->update([
+                    'role' => 2,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+        }
+
         User::insert([
                 'id_number' => $id_number,
                 'first_name' => $first_name,
@@ -102,6 +110,14 @@ class UserController extends Controller
             $path = "users/signatures/";
             $signature_path = $path . $filename;
             $request->file('signature')->move(public_path('storage/' . $path), $filename);
+        }
+
+        if($role == 3){
+            User::where('role', 3)
+                ->update([
+                    'role' => 2,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
         }
 
         User::where('key', $key)

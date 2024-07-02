@@ -86,7 +86,6 @@ class AttendeesController extends Controller
         $written_exam = $request->written_exam;
         $driving_exam = $request->driving_exam;
 
-
         $attendee = new Attendees();
         $attendee->training_key = $key;
         $attendee->name = $name;
@@ -270,7 +269,7 @@ class AttendeesController extends Controller
         $score->time = $time;
         $score->save();
 
-        $total = 100 - ($seatbelt + $contact + $horns + $skid + $controls + $handling + $behavior + $time);
+        $total = $seatbelt + $contact + $horns + $skid + $controls + $handling + $behavior + $time;
 
         $attendee->driving_score = $total;
         $attendee->save();
@@ -306,6 +305,10 @@ class AttendeesController extends Controller
         $exam_key = WrittenExam::where('id', $attendee->written_exam)->first()->key;
         $exam_total = WrittenExamQuestion::where('exam_key', $exam_key)->where('is_deleted', 0)->sum('points');
 
+        // $imagePath = public_path('storage/'.$trainer_head->signature);
+        // $is = getimagesize($imagePath);
+        // dd($is);
+
         return view('user.training-assessment.attendees.print-certificate', compact('key', 'akey', 'training', 'attendee', 'exam_total', 'trainer_head'));
     }
 
@@ -318,11 +321,11 @@ class AttendeesController extends Controller
         
         $akey = $request->ctrlaKey;
         $ctrl = $request->ctrl;
-        $date = $request->date;
+        // $date = $request->date;
 
         $attendee = Attendees::where('key', $akey)->first();
         $attendee->control_number = $ctrl;
-        $attendee->date_given = $date;
+        // $attendee->date_given = $date;
         $attendee->save();
 
         return redirect()->route('print', ['key'=> $key, 'a'=> $akey]);

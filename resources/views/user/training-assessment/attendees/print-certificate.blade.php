@@ -56,30 +56,74 @@
 
     <body class="antialiased w-[1375px] h-[1063px] relative">
         @php
-            $date = new DateTime($attendee->date_given);
-            $formattedDate = $date->format('jS \o\f F Y');
+            // Overall Score
+                $date = new DateTime($training->end_date);
+                $formattedDate = $date->format('jS \o\f F Y');
+                $date->modify('+1 year');
+                $valid_until = $date->format('Y-m-d');
 
-            $writtenExamScore = $attendee->written_score;
-            $writtenExamTotal = $exam_total;
-            $drivingExamScore = $attendee->driving_score;
+                $writtenExamScore = $attendee->written_score;
+                $writtenExamTotal = $exam_total;
+                $drivingExamScore = $attendee->driving_score;
 
-            $writtenPercent = 20 * ($writtenExamScore / $writtenExamTotal);
-            $drivingPercent = 80 * ($drivingExamScore / 100);
-            $overallScore = round(($writtenPercent + $drivingPercent), 2);
+                $writtenPercent = 20 * ($writtenExamScore / $writtenExamTotal);
+                $drivingPercent = 80 * ($drivingExamScore / 100);
+                $overallScore = round(($writtenPercent + $drivingPercent), 2);
 
-            $class = 'B';
-            if($overallScore >= 95){
-                $class = 'A';
-            }
+                $class = 'B';
+                if($overallScore >= 95){
+                    $class = 'A';
+                }
+            // Overall Score
+
+            // Signature
+                $thImageSize = getimagesize(public_path('storage/'.$trainer_head->signature));
+                $thImageWidth = 100 / ($thImageSize[1]/$thImageSize[0]);
+                $thSizeClass = 'height: 100px;';
+                $thTop = 'top: 690px;';
+                if($thImageWidth > 200){
+                    $thSizeClass = 'width: 200px;';
+                    $thImageHeight = 200 * ($thImageSize[1]/$thImageSize[0]);
+                    $thTopValue = (100 - $thImageHeight) / 2;
+                    $thTop = 'top: ' . (690+$thTopValue) . 'px;';
+                }
+
+                $tImageSize = getimagesize(public_path('storage/'.$training->trainerName->signature));
+                $tImageWidth = 100 / ($tImageSize[1]/$tImageSize[0]);
+                $tSizeClass = 'height: 100px;';
+                $tTop = 'top: 690px;';
+                if($tImageWidth > 200){
+                    $tSizeClass = 'width: 200px;';
+                    $tImageHeight = 200 * ($tImageSize[1]/$tImageSize[0]);
+                    $tTopValue = (100 - $tImageHeight) / 2;
+                    $tTop = 'top: ' . (690+$tTopValue) . 'px;';
+                }
+            // Signature
+
+            // Control Number
+                if ($attendee->brand == 'Toyota') {
+                    $cBrand = 'TYT';
+                }else if($attendee->brand == 'Raymond'){
+                    $cBrand = 'RM';
+                }else{
+                    $cBrand = 'BT';
+                }
+            // Control Number
         @endphp
         {{-- All Text --}}
             <h1 style="font-family: 'Monotype-Corsiva' !important;" class="whitespace-nowrap text-[57px] absolute top-[382px] left-1/4 -translate-x-1/2">{{ $attendee->name }}</h1>
             <h2 style="font-family: 'Perpetua'" class="text-lg absolute top-[466px] left-1/4 -translate-x-1/2 uppercase whitespace-nowrap">{{ $training->customer->name }}</h2>
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[568px] left-1/4 -translate-x-1/2 text-center leading-[26px] whitespace-nowrap">has attended the Comprehensive Training on <br> Basic Safety Operators Training <span class="font-bold">{{ $attendee->brand . ' ' . $attendee->type }}</span></h2>
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[630px] left-1/4 -translate-x-1/2 text-center">Given on this {{ $formattedDate }}</h2>
+
+            <img style="{{ $thSizeClass.$thTop }}" src="{{ asset('storage/'.$trainer_head->signature) }}" class="absolute left-[12.5%] -translate-x-1/2">
+
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[12.5%] -translate-x-1/2">{{ ucwords(strtolower($trainer_head->first_name . ' ' . $trainer_head->last_name)) }}</h2>
+
+            <img style="{{ $tSizeClass.$tTop }}" src="{{ asset('storage/'.$training->trainerName->signature) }}" class="absolute left-[37.5%] -translate-x-1/2">
+
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[37.5%] -translate-x-1/2">{{ ucwords(strtolower($training->trainerName->first_name . ' ' . $training->trainerName->last_name)) }}</h2>
-            <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[52px] left-[85px] uppercase">{{ $attendee->control_number }}</h2>
+            <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[53px] left-[84px] uppercase">{{ 'TMHP-'.$cBrand.$attendee->control_number }}</h2>
 
 
             
@@ -88,20 +132,26 @@
             <h2 style="font-family: 'Perpetua'" class="text-xl whitespace-nowrap absolute top-[568px] left-3/4 -translate-x-1/2 text-center leading-[26px]">has attended the Comprehensive Training on <br> Basic Safety Operators Training <span class="font-bold">{{ $attendee->brand . ' ' . $attendee->type }}</span></h2>
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[630px] left-3/4 -translate-x-1/2 text-center">Given on this {{ $formattedDate }}</h2>
             <h2 style="font-family: 'Perpetua'" class="text-2xl absolute font-bold top-[657px] left-3/4 -translate-x-1/2 uppercase">Class {{$class}} ({{ $overallScore }}) Level {{$attendee->level}}</h2>
+
+            <img style="{{ $thSizeClass.$thTop }}" src="{{ asset('storage/'.$trainer_head->signature) }}" class="absolute left-[62.5%] -translate-x-1/2">
+            
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[62.5%] -translate-x-1/2">{{ ucwords(strtolower($trainer_head->first_name . ' ' . $trainer_head->last_name)) }}</h2>
+            
+            <img style="{{ $tSizeClass.$tTop }}" src="{{ asset('storage/'.$training->trainerName->signature) }}" class="absolute left-[87.5%] -translate-x-1/2">
+            
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[87.5%] -translate-x-1/2">{{ ucwords(strtolower($training->trainerName->first_name . ' ' . $training->trainerName->last_name)) }}</h2>
-            <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[52px] left-[calc(50%+85px)] uppercase">{{ $attendee->control_number }}</h2>
-            <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[52px] right-[60px] uppercase">{{ date('m-d-Y', strtotime($attendee->date_given)) }}</h2>
+            <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[53px] left-[calc(50%+85px)] uppercase">{{ 'TMHP-'.$cBrand.$attendee->control_number }}</h2>
+            <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[53px] right-[64px] uppercase">{{ $valid_until }}</h2>
         {{-- All Text --}}
 
-        <img src="{{ asset("storage/images/system/certificate.png") }}" alt="" class="w-full h-full top-0 left-0">
+        <img src="{{ asset("storage/images/system/Cert Template - Final.png") }}" alt="" class="w-full h-full top-0 left-0">
 
         <script>
             $(document).ready(function(){
                 // var sh = $('#userAgreement').prop('scrollHeight');
                 // $('#userAgreement').height((sh) + 'px');
-                window.onafterprint = window.close;
-                window.print();
+                // window.onafterprint = window.close;
+                // window.print();
             });
         </script>
     </body>

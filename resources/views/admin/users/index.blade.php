@@ -155,7 +155,7 @@
                                                 }else if($user->role == 2){
                                                     $role = 'TRAINER';
                                                 }else if($user->role == 3){
-                                                    $role = 'VIEWING ONLY';
+                                                    $role = 'TRAINER HEAD';
                                                 }
                                             @endphp
                                             <tr class="bg-white border-b hover:bg-gray-200 even:bg-gray-100">

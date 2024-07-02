@@ -76,10 +76,10 @@
                             <label for="ctrl" class="block text-sm font-semibold text-gray-600">Control Number <span class="text-red-500">*</span></label>
                             <input type="text" id="ctrlNumber" name="ctrl" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" required>
                         </div>
-                        <div class="w-full mb-3">
+                        {{-- <div class="w-full mb-3">
                             <label for="date" class="block text-sm font-semibold text-gray-600">Date <span class="text-red-500">*</span></label>
                             <input type="date" id="ctrlDate" name="date" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off" required>
-                        </div>
+                        </div> --}}
 
                         <p class="italic text-sm">Note: This is a one-time action. After this, you can edit the Control Number and Date on the Edit page.</p>
                     </div>
@@ -187,7 +187,7 @@
                                                 Driving Exam Score
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Overall Score Score(%)
+                                                Overall Score(%)
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Brand
@@ -205,10 +205,32 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($attendees as $attendee)
+                                            @php
+                                                $exam_key = DB::table('tss_written_exams')->where('id', $attendee->written_exam)->first()->key;
+                                                $exam_total = DB::table('tss_written_exam_questions')->where('exam_key', $exam_key)->where('is_deleted', 0)->sum('points');
+
+                                                $date = new DateTime($attendee->date_given);
+                                                $formattedDate = $date->format('jS \o\f F Y');
+                                    
+                                                $writtenExamScore = $attendee->written_score;
+                                                $writtenExamTotal = $exam_total;
+                                                $drivingExamScore = $attendee->driving_score;
+                                    
+                                                $writtenPercent = 20 * ($writtenExamScore / $writtenExamTotal);
+                                                $drivingPercent = 80 * ($drivingExamScore / 100);
+                                                $overallScore = round(($writtenPercent + $drivingPercent), 2);
+                                    
+                                                $color = 'text-red-500';
+                                                if($overallScore >= 95){
+                                                    $color = 'text-emerald-500';
+                                                }else if($overallScore >= 85 && $overallScore < 95){
+                                                    $color = 'text-amber-500';
+                                                }
+                                            @endphp
                                             <tr class="bg-white border-b cursor-pointer requestRow hover:bg-gray-200 even:bg-gray-100">
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     @if ($attendee->written_score != null && $attendee->driving_score != null)
-                                                        @if ($attendee->control_number != null && $attendee->date_given != null)
+                                                        @if ($attendee->control_number != null)
                                                             <a href="{{ route('print').'?key='.$key.'&a='.$attendee->key }}" target="_blank" class="text-sm font-semibold text-blue-600 editButton hover:underline">Print Certificate</a> | 
                                                         @else
                                                             <button type="button" data-name="{{ $attendee->name }}" data-number="{{ $attendee->control_number }}" data-date="{{ $attendee->date_given }}" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 printButton hover:underline">Print Certificate</button> |
@@ -227,7 +249,7 @@
                                                 </td>
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     @if ($attendee->written_score != null)
-                                                        {{ $attendee->written_score }}
+                                                        {{ $attendee->written_score . ' out of ' . $writtenExamTotal }}
                                                     @else
                                                         N/A
                                                     @endif
@@ -239,28 +261,8 @@
                                                         N/A
                                                     @endif
                                                 </td>
-                                                <td class="px-6 py-4 text-center whitespace-nowrap">
-                                                    @if ($attendee->driving_score != null)
-                                                        @php
-                                                            $exam_key = DB::table('tss_written_exams')->where('id', $attendee->written_exam)->first()->key;
-                                                            $exam_total = DB::table('tss_written_exam_questions')->where('exam_key', $exam_key)->where('is_deleted', 0)->sum('points');
-
-                                                            $date = new DateTime($attendee->date_given);
-                                                            $formattedDate = $date->format('jS \o\f F Y');
-                                                
-                                                            $writtenExamScore = $attendee->written_score;
-                                                            $writtenExamTotal = $exam_total;
-                                                            $drivingExamScore = $attendee->driving_score;
-                                                
-                                                            $writtenPercent = 20 * ($writtenExamScore / $writtenExamTotal);
-                                                            $drivingPercent = 80 * ($drivingExamScore / 100);
-                                                            $overallScore = round(($writtenPercent + $drivingPercent), 2);
-                                                
-                                                            $class = 'B';
-                                                            if($overallScore >= 95){
-                                                                $class = 'A';
-                                                            }
-                                                        @endphp
+                                                <td class="px-6 py-4 text-base font-bold text-center whitespace-nowrap {{ $color }}">
+                                                    @if ($attendee->driving_score != null && $attendee->written_score != null)
                                                         {{ $overallScore }}
                                                     @else
                                                         N/A
@@ -293,6 +295,28 @@
                                     $x = 1;
                                 @endphp
                                 @foreach ($attendees as $attendee)
+                                    @php
+                                        $exam_key = DB::table('tss_written_exams')->where('id', $attendee->written_exam)->first()->key;
+                                        $exam_total = DB::table('tss_written_exam_questions')->where('exam_key', $exam_key)->where('is_deleted', 0)->sum('points');
+
+                                        $date = new DateTime($attendee->date_given);
+                                        $formattedDate = $date->format('jS \o\f F Y');
+                            
+                                        $writtenExamScore = $attendee->written_score;
+                                        $writtenExamTotal = $exam_total;
+                                        $drivingExamScore = $attendee->driving_score;
+                            
+                                        $writtenPercent = 20 * ($writtenExamScore / $writtenExamTotal);
+                                        $drivingPercent = 80 * ($drivingExamScore / 100);
+                                        $overallScore = round(($writtenPercent + $drivingPercent), 2);
+                            
+                                        $color = 'text-red-500';
+                                        if($overallScore >= 95){
+                                            $color = 'text-emerald-500';
+                                        }else if($overallScore >= 85 && $overallScore < 95){
+                                            $color = 'text-amber-500';
+                                        }
+                                    @endphp
                                     <h2 id="accordion-collapse-heading-{{$x}}">
                                         <button type="button" class="flex items-center justify-between w-full px-3 py-1.5 text-sm font-semibold text-left text-gray-500 border  border-gray-200 {{ $x == 1 ? 'rounded-t-xl border-b-0' : 'border-b' }} hover:bg-gray-100 focus:bg-gray-900" data-accordion-target="#accordion-collapse-body-{{$x}}" aria-expanded="false" aria-controls="accordion-collapse-body-{{$x}}">
                                             <span>{{ $attendee->name }}</span>
@@ -305,6 +329,36 @@
                                                 <div class="text-xs leading-5 flex items-center">Position</div>
                                                 <div class="text-xs font-semibold flex items-center">
                                                     {{ $attendee->position }}
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2 content-center">
+                                                <div class="text-xs leading-5 flex items-center">Written Exam Score</div>
+                                                <div class="text-sm font-semibold flex items-center">
+                                                    @if ($attendee->written_score != null)
+                                                        {{ $attendee->written_score }}
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2 content-center">
+                                                <div class="text-xs leading-5 flex items-center">Driving Exam Score</div>
+                                                <div class="text-sm font-semibold flex items-center">
+                                                    @if ($attendee->driving_score != null)
+                                                        {{ $attendee->driving_score }}
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2 content-center">
+                                                <div class="text-xs leading-5 flex items-center">Overall Score(%)</div>
+                                                <div class="text-base font-bold flex items-center {{ $color }}">
+                                                    @if ($attendee->driving_score != null && $attendee->written_score != null)
+                                                        {{ $overallScore }}
+                                                    @else
+                                                        N/A
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="grid grid-cols-2">
@@ -331,29 +385,16 @@
                                                     {{ $attendee->years_operating }}
                                                 </div>
                                             </div>
-                                            <div class="grid grid-cols-2 content-center">
-                                                <div class="text-xs leading-5 flex items-center">Written Exam Score</div>
-                                                <div class="text-xs font-semibold flex items-center">
-                                                    @if ($attendee->written_score != null)
-                                                        {{ $attendee->written_score }}
-                                                    @else
-                                                        N/A
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="grid grid-cols-2 content-center">
-                                                <div class="text-xs leading-5 flex items-center">Driving Exam Score</div>
-                                                <div class="text-xs font-semibold flex items-center">
-                                                    @if ($attendee->driving_score != null)
-                                                        {{ $attendee->driving_score }}
-                                                    @else
-                                                        N/A
-                                                    @endif
-                                                </div>
-                                            </div>
                                             <div class="grid grid-cols-2">
                                                 <div class="text-xs leading-5 flex items-center">Action</div>
                                                 <div class="">
+                                                    @if ($attendee->written_score != null && $attendee->driving_score != null)
+                                                        {{-- @if ($attendee->control_number != null && $attendee->date_given != null)
+                                                            <a href="{{ route('print').'?key='.$key.'&a='.$attendee->key }}" target="_blank" class="text-sm font-semibold text-blue-600 editButton hover:underline">Print Certificate</a> | 
+                                                        @else --}}
+                                                            <button type="button" data-name="{{ $attendee->name }}" data-number="{{ $attendee->control_number }}" data-date="{{ $attendee->date_given }}" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 printButton hover:underline">Print Certificate</button> |
+                                                        {{-- @endif --}}
+                                                    @endif
                                                     <button type="button" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 generateButton hover:underline">Generate QR</button> |
                                                     <a href="{{ route('driving.exam').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Driving Exam</a> |
                                                     <a href="{{ route('attendees.edit').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 hover:underline">Edit</a> | 
