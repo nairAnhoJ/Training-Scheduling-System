@@ -50,23 +50,15 @@ class AttendeesController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'position' => 'required',
             'brand' => 'required',
             'type' => 'required',
-            'knowledge' => 'required',
-            'years_operating' => 'required',
             'written_exam' => 'required',
             'driving_exam' => 'required',
         ]);
 
         $customMessages = [
-            'name.required' => 'Please provide the required information.',
-            'position.required' => 'Please provide the required information.',
             'brand.required' => 'Please select an option from the list.',
             'type.required' => 'Please select an option from the list.',
-            'knowledge.required' => 'Please select an option from the list.',
-            'years_operating.required' => 'Please provide the required information.',
             'written_exam.required' => 'Please select an option from the list.',
             'driving_exam.required' => 'Please select an option from the list.',
         ];
@@ -77,29 +69,41 @@ class AttendeesController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $name = $request->name;
-        $position = $request->position;
-        $brand = $request->brand;
-        $type = $request->type;
-        $knowledge = $request->knowledge;
-        $years_operating = $request->years_operating;
-        $written_exam = $request->written_exam;
-        $driving_exam = $request->driving_exam;
+        $count = $request->count;
 
-        $attendee = new Attendees();
-        $attendee->training_key = $key;
-        $attendee->name = $name;
-        $attendee->position = $position;
-        $attendee->brand = $brand;
-        $attendee->type = $type;
-        $attendee->knowledge = $knowledge;
-        $attendee->years_operating = $years_operating;
-        $attendee->written_exam = $written_exam;
-        $attendee->driving_exam = $driving_exam;
-        $attendee->key = Str::uuid()->toString();
-        $attendee->save();
+        for ($i=1; $i <= $count; $i++) { 
+            $varName = 'name'.$i;
+            $varPosition = 'position'.$i;
+            $varKnowledge = 'knowledge'.$i;
+            $varYears = 'years_operating'.$i;
+            $varLevel = 'level'.$i;
 
-        return redirect()->route('attendees', ['key' => $key])->with('success', 'New Attendees Has Been Added Successfully!');
+            $name = $request->$varName;
+            $position = $request->$varPosition;
+            $brand = $request->brand;
+            $type = $request->type;
+            $knowledge = $request->$varKnowledge;
+            $years_operating = $request->$varYears;
+            $level = $request->$varLevel;
+            $written_exam = $request->written_exam;
+            $driving_exam = $request->driving_exam;
+    
+            $attendee = new Attendees();
+            $attendee->training_key = $key;
+            $attendee->name = $name;
+            $attendee->position = $position;
+            $attendee->brand = $brand;
+            $attendee->type = $type;
+            $attendee->knowledge = $knowledge;
+            $attendee->years_operating = $years_operating;
+            $attendee->level = $level;
+            $attendee->written_exam = $written_exam;
+            $attendee->driving_exam = $driving_exam;
+            $attendee->key = Str::uuid()->toString();
+            $attendee->save();
+        }
+
+        return redirect()->route('attendees', ['key' => $key])->with('success', 'New Attendee/s Has Been Added Successfully!');
     }
 
     public function edit(Request $request){

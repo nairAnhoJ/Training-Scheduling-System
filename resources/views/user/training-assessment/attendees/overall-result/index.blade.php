@@ -32,6 +32,7 @@
                                         <h1 class="absolute bottom-0 left-1/2 -translate-x-1/2 text-3xl font-bold text-neutral-600"><span id="overallResult" class="text-5xl"></span>%</h1>
                                         {{-- <h1 class="resultOutOf outOf absolute bottom-0 left-1/2 -translate-x-1/2 font-bold text-neutral-600 opacity-0 transition-all duration-1000">out of 100</h1> --}}
                                     </div>
+                                    <div class="PassOrFail">PASSED!</div>
                                 </div>
                             </div>
                         </div>
@@ -46,38 +47,48 @@
             // Written
                 var writtenExamScore = Number({{ $attendee->written_score }});
                 var writtenExamTotal = Number({{ $exam_total }});
+                var writingPercentage = (writtenExamScore / writtenExamTotal);
                 var writtenExamDifference = writtenExamTotal - writtenExamScore;
-                if((writtenExamScore / writtenExamTotal) > 0.85){
-                    var writtenExamColor = '#22C462';
+                if(writingPercentage > 0.949){
+                    var writtenExamColor = '#12B987';
+                }else if((writingPercentage < 0.949) && (writingPercentage > 0.849)){
+                    var writtenExamColor = '#F39E0E';
                 }else{
-                    var writtenExamColor = '#E34B50';
+                    var writtenExamColor = '#E64A4E';
                 }
             // Written
 
             // Driving
                 var drivingExamScore = Number({{ $attendee->driving_score }});
                 var drivingExamTotal = 100;
+                var drivingPercentage = (drivingExamScore / drivingExamTotal);
                 var drivingExamDifference = drivingExamTotal - drivingExamScore;
-                if((drivingExamScore / drivingExamTotal) > 0.85){
-                    var drivingExamColor = '#22C462';
+                if(drivingPercentage > 0.949){
+                    var drivingExamColor = '#12B987';
+                }else if((drivingPercentage < 0.949) && (drivingPercentage > 0.849)){
+                    var drivingExamColor = '#F39E0E';
                 }else{
-                    var drivingExamColor = '#E34B50';
+                    var drivingExamColor = '#E64A4E';
                 }
             // Driving
 
             // Overall Result
                 var writtenPercent = 20 * (writtenExamScore / writtenExamTotal);
                 var drivingPercent = 80 * (drivingExamScore / 100);
-                var overallScore = Math.round(writtenPercent + drivingPercent);
-
                 var overallTotal = 100;
+                var overallScore = Math.round(writtenPercent + drivingPercent);
+                var overallPercentage = (overallScore / overallTotal);
+
                 var overallDifference = overallTotal - overallScore;
-                if((overallScore / overallTotal) > 0.85){
-                    var overallColor = '#22C462';
-                    $('#resultAlert').html('Passed!')
+
+                var PassOrFail = 'Passed!';
+                if(overallPercentage > 0.949){
+                    var overallColor = '#12B987';
+                }else if((overallPercentage < 0.949) && (overallPercentage > 0.849)){
+                    var overallColor = '#F39E0E';
                 }else{
-                    var overallColor = '#E34B50';
-                    $('#resultAlert').html('Failed!')
+                    var overallColor = '#E64A4E';
+                    var PassOrFail = 'Failed!';
                 }
             // Overall Result
 
@@ -123,7 +134,7 @@
                         type: 'doughnut',
                         data: {
                             datasets: [{
-                                backgroundColor: [drivingExamColor, "#CDD3D6"],
+                                backgroundColor: [overallColor, "#CDD3D6"],
                                 data: [drivingExamScore, drivingExamDifference] // Replace with your actual data variables
                             }]
                         },

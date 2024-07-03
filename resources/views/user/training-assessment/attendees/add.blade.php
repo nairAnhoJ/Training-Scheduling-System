@@ -48,10 +48,10 @@
                                 1
                             </div>
                             <div class="border text-center h-8 col-span-4">
-                                <input type="text" name="name1" class="border-0 w-full text-sm h-full">
+                                <input type="text" name="name1" class="border-0 w-full text-sm h-full" autocomplete="off">
                             </div>
                             <div class="border text-center h-8 col-span-4">
-                                <input type="text" name="position1" class="border-0 w-full text-sm h-full">
+                                <input type="text" name="position1" class="border-0 w-full text-sm h-full" autocomplete="off">
                             </div>
                             <div class="border text-center h-8 col-span-3">
                                 <select name="level1" class="w-full border-0 h-full px-2">
@@ -67,7 +67,7 @@
                                 </select>
                             </div>
                             <div class="border text-center h-8 col-span-3">
-                                <input type="number" name="years_operating1" class="border-0 w-full text-sm h-full text-center" value="0" min="0">
+                                <input type="number" name="years_operating1" class="border-0 w-full text-sm h-full text-center" value="0" min="0" autocomplete="off">
                             </div>
                             <div class="border text-center h-8 col-span-2">
                                 <button type="button" class="text-red-500 h-8 hover:scale-105 p-1 disabled:text-gray-400 disabled:pointer-events-none btnDeleteRow">
@@ -233,10 +233,10 @@
                         ${count}
                     </div>
                     <div class="border text-center h-8 col-span-4">
-                        <input type="text" name="name${count}" class="border-0 w-full text-sm h-full">
+                        <input type="text" name="name${count}" class="border-0 w-full text-sm h-full" autocomplete="off">
                     </div>
                     <div class="border text-center h-8 col-span-4">
-                        <input type="text" name="position${count}" class="border-0 w-full text-sm h-full">
+                        <input type="text" name="position${count}" class="border-0 w-full text-sm h-full" autocomplete="off">
                     </div>
                     <div class="border text-center h-8 col-span-3">
                         <select name="level${count}" class="w-full border-0 h-full px-2">
@@ -252,7 +252,7 @@
                         </select>
                     </div>
                     <div class="border text-center h-8 col-span-3">
-                        <input type="number" name="years_operating${count}" class="border-0 w-full text-sm h-full text-center" value="0" min="0">
+                        <input type="number" name="years_operating${count}" class="border-0 w-full text-sm h-full text-center" value="0" min="0" autocomplete="off">
                     </div>
                     <div class="border text-center h-8 col-span-2">
                         <button type="button" data-count="${count}" class="text-red-500 h-8 hover:scale-105 p-1 disabled:text-gray-400 disabled:pointer-events-none btnDeleteRow">

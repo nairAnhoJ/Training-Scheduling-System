@@ -115,43 +115,37 @@
             <h2 style="font-family: 'Perpetua'" class="text-lg absolute top-[466px] left-1/4 -translate-x-1/2 uppercase whitespace-nowrap">{{ $training->customer->name }}</h2>
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[568px] left-1/4 -translate-x-1/2 text-center leading-[26px] whitespace-nowrap">has attended the Comprehensive Training on <br> Basic Safety Operators Training <span class="font-bold">{{ $attendee->brand . ' ' . $attendee->type }}</span></h2>
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[630px] left-1/4 -translate-x-1/2 text-center">Given on this {{ $formattedDate }}</h2>
-
             <img style="{{ $thSizeClass.$thTop }}" src="{{ asset('storage/'.$trainer_head->signature) }}" class="absolute left-[12.5%] -translate-x-1/2">
-
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[12.5%] -translate-x-1/2">{{ ucwords(strtolower($trainer_head->first_name . ' ' . $trainer_head->last_name)) }}</h2>
-
             <img style="{{ $tSizeClass.$tTop }}" src="{{ asset('storage/'.$training->trainerName->signature) }}" class="absolute left-[37.5%] -translate-x-1/2">
-
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[37.5%] -translate-x-1/2">{{ ucwords(strtolower($training->trainerName->first_name . ' ' . $training->trainerName->last_name)) }}</h2>
             <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[53px] left-[84px] uppercase">{{ 'TMHP-'.$cBrand.$attendee->control_number }}</h2>
 
-
-            
-            <h1 style="font-family: 'Monotype-Corsiva' !important;" class="whitespace-nowrap text-[57px] absolute top-[382px] left-3/4 -translate-x-1/2">{{ $attendee->name }}</h1>
-            <h2 style="font-family: 'Perpetua'" class="text-lg whitespace-nowrap absolute top-[466px] left-3/4 -translate-x-1/2 uppercase">{{ $training->customer->name }}</h2>
-            <h2 style="font-family: 'Perpetua'" class="text-xl whitespace-nowrap absolute top-[568px] left-3/4 -translate-x-1/2 text-center leading-[26px]">has attended the Comprehensive Training on <br> Basic Safety Operators Training <span class="font-bold">{{ $attendee->brand . ' ' . $attendee->type }}</span></h2>
-            <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[630px] left-3/4 -translate-x-1/2 text-center">Given on this {{ $formattedDate }}</h2>
-            <h2 style="font-family: 'Perpetua'" class="text-2xl absolute font-bold top-[657px] left-3/4 -translate-x-1/2 uppercase">Class {{$class}} ({{ $overallScore }}) Level {{$attendee->level}}</h2>
-
-            <img style="{{ $thSizeClass.$thTop }}" src="{{ asset('storage/'.$trainer_head->signature) }}" class="absolute left-[62.5%] -translate-x-1/2">
-            
-            <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[62.5%] -translate-x-1/2">{{ ucwords(strtolower($trainer_head->first_name . ' ' . $trainer_head->last_name)) }}</h2>
-            
-            <img style="{{ $tSizeClass.$tTop }}" src="{{ asset('storage/'.$training->trainerName->signature) }}" class="absolute left-[87.5%] -translate-x-1/2">
-            
-            <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[87.5%] -translate-x-1/2">{{ ucwords(strtolower($training->trainerName->first_name . ' ' . $training->trainerName->last_name)) }}</h2>
-            <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[53px] left-[calc(50%+85px)] uppercase">{{ 'TMHP-'.$cBrand.$attendee->control_number }}</h2>
-            <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[53px] right-[64px] uppercase">{{ $valid_until }}</h2>
+            @if ($overallScore >= 85)
+                <h1 style="font-family: 'Monotype-Corsiva' !important;" class="whitespace-nowrap text-[57px] absolute top-[382px] left-3/4 -translate-x-1/2">{{ $attendee->name }}</h1>
+                <h2 style="font-family: 'Perpetua'" class="text-lg whitespace-nowrap absolute top-[466px] left-3/4 -translate-x-1/2 uppercase">{{ $training->customer->name }}</h2>
+                <h2 style="font-family: 'Perpetua'" class="text-xl whitespace-nowrap absolute top-[568px] left-3/4 -translate-x-1/2 text-center leading-[26px]">has attended the Comprehensive Training on <br> Basic Safety Operators Training <span class="font-bold">{{ $attendee->brand . ' ' . $attendee->type }}</span></h2>
+                <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[630px] left-3/4 -translate-x-1/2 text-center">Given on this {{ $formattedDate }}</h2>
+                <h2 style="font-family: 'Perpetua'" class="text-2xl absolute font-bold top-[657px] left-3/4 -translate-x-1/2 uppercase">Class {{$class}} ({{ $overallScore }}%) Level {{$attendee->level}}</h2>
+                <img style="{{ $thSizeClass.$thTop }}" src="{{ asset('storage/'.$trainer_head->signature) }}" class="absolute left-[62.5%] -translate-x-1/2">
+                <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[62.5%] -translate-x-1/2">{{ ucwords(strtolower($trainer_head->first_name . ' ' . $trainer_head->last_name)) }}</h2>
+                <img style="{{ $tSizeClass.$tTop }}" src="{{ asset('storage/'.$training->trainerName->signature) }}" class="absolute left-[87.5%] -translate-x-1/2">
+                <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[87.5%] -translate-x-1/2">{{ ucwords(strtolower($training->trainerName->first_name . ' ' . $training->trainerName->last_name)) }}</h2>
+                <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[53px] left-[calc(50%+85px)] uppercase">{{ 'TMHP-'.$cBrand.$attendee->control_number }}</h2>
+                <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[53px] right-[64px] uppercase">{{ $valid_until }}</h2>
+            @endif
         {{-- All Text --}}
-
-        <img src="{{ asset("storage/images/system/Cert Template - Final.png") }}" alt="" class="w-full h-full top-0 left-0">
+        
+        @if ($overallScore >= 85)
+            <img src="{{ asset("storage/images/system/cert_pass.png") }}" alt="" class="w-full h-full top-0 left-0">
+        @else
+        <img src="{{ asset("storage/images/system/cert_fail.png") }}" alt="" class="w-full h-full top-0 left-0">
+        @endif
 
         <script>
             $(document).ready(function(){
-                // var sh = $('#userAgreement').prop('scrollHeight');
-                // $('#userAgreement').height((sh) + 'px');
-                // window.onafterprint = window.close;
-                // window.print();
+                window.onafterprint = window.close;
+                window.print();
             });
         </script>
     </body>
