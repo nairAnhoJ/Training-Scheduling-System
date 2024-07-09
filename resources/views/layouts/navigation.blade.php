@@ -111,6 +111,9 @@
                         <li>
                            <a href="{{ route('departments.index') }}" class="nav flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/system-management/departments'))) ? 'bg-gray-300 border border-gray-300 shadow' : '' }}">Departments</a>
                         </li>
+                        <li>
+                           <a href="{{ route('settings.index') }}" class="nav flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-300 hover:text-gray-700 {{ (Str::contains(url()->current(), url('/system-management/settings'))) ? 'bg-gray-300 border border-gray-300 shadow' : '' }}">Settings</a>
+                        </li>
                   </ul>
                </li>
             @endif

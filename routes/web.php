@@ -17,6 +17,7 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SurveyQuestionController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
@@ -193,6 +194,8 @@ Route::middleware('auth')->group(function () {
         
         Route::get('/training-assessment/attendees/driving-exam', [AttendeesController::class, 'drivingExam'])->name('driving.exam');
         Route::POST('/training-assessment/attendees/driving-exam-submit', [AttendeesController::class, 'drivingExamSubmit'])->name('driving.exam.submit');
+        
+        Route::POST('/training-assessment/attendees/written-exam-submit', [AttendeesController::class, 'writtenExamSubmit'])->name('written.exam.submit');
     // TRAINING ASSESSMENT
     
     // WRITTEN EXAM
@@ -278,6 +281,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/system-management/departments/update/{key}', [DepartmentController::class, 'update'])->name('departments.update');
         Route::get('/system-management/departments/delete/{key}', [DepartmentController::class, 'delete'])->name('departments.delete');
     // DEPARTMENTS
+
+    // SETTINGS
+        Route::get('/system-management/settings', [SettingController::class, 'index'])->name('settings.index');
+        Route::post('/system-management/settings-save', [SettingController::class, 'save'])->name('settings.save');
+    // SETTINGS
 
     // LOGS
         // CUSTOMERS

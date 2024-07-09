@@ -7,6 +7,7 @@ use App\Models\Attendees;
 use App\Models\DrivingExam;
 use App\Models\DrivingExamScore;
 use App\Models\Request as ModelsRequest;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\WrittenExam;
 use App\Models\WrittenExamQuestion;
@@ -278,7 +279,44 @@ class AttendeesController extends Controller
         $attendee->driving_score = $total;
         $attendee->save();
 
+        if($attendee->written_score != null){
+            $settings = Setting::where('id', 1)->first();
+
+            $attendee->control_number = $settings->control_number;
+            $attendee->save();
+
+            $settings->control_number = $settings->control_number + 1;
+            $settings->save();
+        }
+
         return redirect()->route('driving.exam', ['key' => $key, 'a' => $akey])->with('success', 'Exam Score Has Been Submitted Successfully!');
+    }
+
+    public function writtenExamSubmit(Request $request){
+        $key = $request->ctrlKey;
+        $training = ModelsRequest::where('key', $key)->first();
+        if(!$key || !$training){
+            return redirect()->route('dashboard.index');
+        }
+        
+        $akey = $request->ctrlaKey;
+        $written_score = $request->writtenExamScore;
+
+        $attendee = Attendees::where('key', $akey)->first();
+        $attendee->written_score = $written_score;
+        $attendee->save();
+
+        if($attendee->driving_score != null){
+            $settings = Setting::where('id', 1)->first();
+
+            $attendee->control_number = $settings->control_number;
+            $attendee->save();
+
+            $settings->control_number = $settings->control_number + 1;
+            $settings->save();
+        }
+
+        return redirect()->route('attendees', ['key'=> $key, 'a'=> $akey]);
     }
 
     public function overallResult(Request $request){

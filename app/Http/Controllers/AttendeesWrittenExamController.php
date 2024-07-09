@@ -6,6 +6,7 @@ use App\Models\Attendees;
 use App\Models\AttendeesSurveyAnswers;
 use App\Models\AttendeesWrittenExamAnswers;
 use App\Models\Request as ModelsRequest;
+use App\Models\Setting;
 use App\Models\SurveyQuestion;
 use App\Models\WrittenExam;
 use App\Models\WrittenExamQuestion;
@@ -234,6 +235,15 @@ class AttendeesWrittenExamController extends Controller
 
             $examResult = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->sum('points');
             $attendee->written_score = $examResult;
+
+            if($attendee->driving_score != null){
+                $settings = Setting::where('id', 1)->first();
+    
+                $attendee->control_number = $settings->control_number;
+    
+                $settings->control_number = $settings->control_number + 1;
+                $settings->save();
+            }
             $attendee->save();
 
             $content = '

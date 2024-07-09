@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','WRITTEN EXAM')
+@section('title','DRIVING EXAM')
 @section('content')
     
     {{-- SUBMIT MODAL --}}
@@ -159,7 +159,7 @@
                                                     <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input 
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
-                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->seatbelt : old('seatbelt') }}"
+                                                    value="{{ ($attendee->driving_score != null) ? (10 - $driving_score->seatbelt) : old('seatbelt') }}"
                                                     name="seatbelt" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
@@ -175,7 +175,7 @@
                                                     <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input 
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
-                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->contact : old('contact') }}"
+                                                    value="{{ ($attendee->driving_score != null) ? (5 - $driving_score->contact) : old('contact') }}"
                                                     name="contact" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
@@ -191,7 +191,7 @@
                                                     <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
-                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->horns : old('horns') }}"
+                                                    value="{{ ($attendee->driving_score != null) ? (10 - $driving_score->horns) : old('horns') }}"
                                                     name="horns" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
@@ -207,7 +207,7 @@
                                                     <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
-                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->skid : old('skid') }}"
+                                                    value="{{ ($attendee->driving_score != null) ? (5 - $driving_score->skid) : old('skid') }}"
                                                     name="skid" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
@@ -227,7 +227,7 @@
                                                     <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
-                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->controls : old('controls') }}"
+                                                    value="{{ ($attendee->driving_score != null) ? (30 - $driving_score->controls) : old('controls') }}"
                                                     name="controls" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
@@ -243,7 +243,7 @@
                                                     <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
-                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->handling : old('handling') }}"
+                                                    value="{{ ($attendee->driving_score != null) ? (20 - $driving_score->handling) : old('handling') }}"
                                                     name="handling" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
@@ -259,7 +259,7 @@
                                                     <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
-                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->behavior : old('behavior') }}"
+                                                    value="{{ ($attendee->driving_score != null) ? (10 - $driving_score->behavior) : old('behavior') }}"
                                                     name="behavior" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
@@ -275,7 +275,7 @@
                                                     <p class="absolute text-sm pl-1 pt-1">Deduction:</p>
                                                     <input
                                                     {{ ($attendee->driving_score != null) ? 'disabled' : '' }} 
-                                                    value="{{ ($attendee->driving_score != null) ? $driving_score->time : old('time') }}"
+                                                    value="{{ ($attendee->driving_score != null) ? (10 - $driving_score->time) : old('time') }}"
                                                     name="time" class="numberOnly text-sm p-0 border-0 w-full pt-1 pl-[85px]" type="text" autocomplete="off">
                                                 </div>
                                             </div>
