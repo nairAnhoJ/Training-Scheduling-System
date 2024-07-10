@@ -37,8 +37,9 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="flex items-start justify-center px-10 py-4 overflow-x-hidden overflow-y-auto">
+                    <div class="flex flex-col items-center justify-center px-10 py-4 overflow-x-hidden overflow-y-auto max-w-96">
                         <div id="generatedQR"></div>
+                        <a href="" id="generatedUrl" target="_blank" class="text-center text-sm mt-2 text-blue-500 hover:underline"></a>
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
@@ -283,7 +284,7 @@
                                                         <a href="{{ route('print').'?key='.$key.'&a='.$attendee->key }}" target="_blank" class="text-sm font-semibold text-blue-600 editButton hover:underline">Print Certificate</a> | 
                                                     @endif
 
-                                                    <button type="button" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 generateButton hover:underline">Generate QR</button> |
+                                                    <button type="button" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 generateButton hover:underline loading">Generate QR</button> |
 
                                                     @if ($attendee->written_score == null)
                                                         <button type="button" data-name="{{ $attendee->name }}" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 writtenButton hover:underline">Written Exam</button> |
@@ -506,7 +507,13 @@
                     },
                     success:function(result){
                         $('#generatedQR').html(result);
+                        var ip = "{{ $ip }}";
+                        var port = "{{ $port }}";
+                        var ip_url = `http://${ip}:${port}/training-assessment/written-exam?key=${key}&a=${akey}`;
+                        $('#generatedUrl').html(ip_url);
+                        $('#generatedUrl').prop('href', ip_url);
                         $('#generateModal').removeClass('hidden');
+                        $('#loading').addClass('hidden');
                     }
                 })
             });
@@ -574,3 +581,4 @@
         });
     </script>
 @endsection
+0

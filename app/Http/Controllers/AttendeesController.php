@@ -24,10 +24,12 @@ class AttendeesController extends Controller
         if(!$key || !$training){
             return redirect()->route('dashboard.index');
         }
+        $ip = file_get_contents('https://api.ipify.org');
+        $port = $request->getPort();
 
         $attendees = Attendees::where('training_key', $key)->get();
 
-        return view('user.training-assessment.attendees.index', compact('training', 'attendees', 'key'));
+        return view('user.training-assessment.attendees.index', compact('training', 'attendees', 'key', 'ip', 'port'));
     }
 
     public function add(Request $request){
@@ -192,7 +194,17 @@ class AttendeesController extends Controller
     }
 
     public function generate(Request $request){
-        echo QrCode::size(250)->generate('http://192.168.20.143:8000/training-assessment/written-exam?key='.$request->key.'&a='.$request->akey);
+        $ip = file_get_contents('https://api.ipify.org');
+        $port = $request->getPort();
+        $ip_url = 'http://'.$ip.':'.$port.'/training-assessment/written-exam?key='.$request->key.'&a='.$request->akey;
+        $qr = QrCode::size(250)->generate($ip_url);
+        // $data = [
+        //     'qr' => $qr,
+        //     'ip_url' => $ip_url
+        // ];
+
+        // return response()->json($data);
+        echo $qr;
     }
 
     public function drivingExam(Request $request){
