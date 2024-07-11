@@ -25,6 +25,7 @@ use App\Http\Controllers\WrittenExamController;
 use App\Http\Controllers\WrittenExamQuestionController;
 use App\Models\Attendees;
 use App\Models\Customer;
+use App\Models\CustomerRequest;
 use App\Models\Event;
 use App\Models\Request;
 use App\Models\User;
@@ -49,6 +50,8 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     if (!Auth::user()) {
+        return redirect()->route('login');
+
         $trainers = User::where('role', 2)->where('is_active', 1)->get();
         $events = Request::select('tss_requests.id', 'customers.name', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.key', 'tss_users.color')
             ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
@@ -127,7 +130,17 @@ Route::get('/training-assessment/print-certificate', [AttendeesController::class
 Route::get('/training-assessment/survey', [AttendeesWrittenExamController::class, 'attendeeSurvey'])->name('attendeeSurvey');
 Route::post('/training-assessment/survey-submit', [AttendeesWrittenExamController::class, 'attendeeSurveySubmit'])->name('attendeeSurveySubmit');
 
+
+Route::get('/training-request', [CustomerRequestController::class, 'TrainingRequestFromCustomer'])->name('TrainingRequestFromCustomer');
+
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');

@@ -493,7 +493,7 @@
             });
             
             $('.generateButton').on('click', function(){
-                var key = $(this).data('key');
+                var key = $(this).data('key');gixxer 250 sf
                 var akey = $(this).data('akey');
                 var _token = $('input[name="_token"]').val();
 
@@ -581,4 +581,3 @@
         });
     </script>
 @endsection
-0

@@ -35,7 +35,7 @@ class DashboardController extends Controller
             }])
             ->where(function ($query) {
                 $query->where('plan_start_date', '!=', null)
-                      ->orWhereIn('status', ['SCHEDULED', 'COMPLETED']);
+                      ->orWhereIn('status', ['PENDING', 'SCHEDULED', 'COMPLETED']);
             })
             ->when($customerFilter !== null, function ($query) use ($customerFilter) {
                 return $query->where('customer_id', $customerFilter);
@@ -45,8 +45,6 @@ class DashboardController extends Controller
             })
             ->where('trainer', '!=', null)
             ->get();
-
-        // dd($events);
 
         $eventArray = [];
         foreach ($events as $event) {
@@ -58,10 +56,10 @@ class DashboardController extends Controller
                     'title' => '🟢'.$event->customer->name,
                     'start' => date('Y-m-d', strtotime($event->training_date)),
                     'end' => date('Y-m-d', strtotime($event->end_date.'+1 day')),
-                    'color' => $event->color,
+                    'color' => $event->trainerName->color,
                     'notificationCount' => $event->comments_count,
                     'extendedProps' => [
-                        'isTraining' => true
+                        'isTraining' => true,
                     ]
                 ];
             }else{
@@ -71,10 +69,10 @@ class DashboardController extends Controller
                         'title' => '🟠'.$event->customer->name,
                         'start' => date('Y-m-d', strtotime($event->plan_start_date)),
                         'end' => date('Y-m-d', strtotime($event->plan_end_date.'+1 day')),
-                        'color' => $event->color,
+                        'color' => $event->trainerName->color,
                         'notificationCount' => $event->comments_count,
                         'extendedProps' => [
-                            'isTraining' => true
+                            'isTraining' => true,
                         ]
                     ];
                 }
@@ -101,7 +99,7 @@ class DashboardController extends Controller
                 'color' => $event->color,
                 'notificationCount' => 0,
                 'extendedProps' => [
-                    'isTraining' => false
+                    'isTraining' => false,
                 ]
             ];
         

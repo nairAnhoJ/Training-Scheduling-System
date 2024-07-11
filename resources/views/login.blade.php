@@ -30,7 +30,7 @@
                         </div>
                         <div class="w-full">
                             <button id="loginButton" type="submit" class="w-full py-3 mb-3 font-bold text-white rounded-full shadow-lg bg-sky-800 hover:scale-105">Login</button>
-                            <a href="{{ url('/') }}" onclick="$('#loading').toggleClass('hidden');" type="button" class="w-full py-3 font-bold text-center text-white rounded-full shadow-lg bg-neutral-800 hover:scale-105">Back</a>
+                            {{-- <a href="{{ url('/') }}" onclick="$('#loading').toggleClass('hidden');" type="button" class="w-full py-3 font-bold text-center text-white rounded-full shadow-lg bg-neutral-800 hover:scale-105">Back</a> --}}
                         </div>
                     </form>
                 </div>
