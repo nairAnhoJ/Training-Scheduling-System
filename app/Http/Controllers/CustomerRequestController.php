@@ -11,6 +11,7 @@ use Google\Service\Sheets;
 use Google\Service\Sheets\BatchUpdateSpreadsheetRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class CustomerRequestController extends Controller
@@ -40,43 +41,99 @@ class CustomerRequestController extends Controller
         return view('customer-request');
     }
 
-    // public function TrainingRequestFromCustomer(){
+    public function TrainingRequestFromCustomerSubmit(Request $request){
 
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'address' => 'required',
+            
+            'cp1_name' => 'required',
+            'cp1_number' => 'required',
+            'cp1_email' => 'required',
 
+            'category' => 'required',
+            'brand' => 'required',
+            'model' => 'required',
+            'unit_type' => 'required',
+            'no_of_unit' => 'required',
+            'no_of_attendees' => 'required',
+            'knowledge_of_participants' => 'required',
+        ]);
 
-    //     if ($values != null) {
-    //         foreach($values as $rowIndex => $value){
-    //             $cusReq = new CustomerRequest;
-    //             $cusReq->name = $value[4];
-    //             $cusReq->address = $value[5];
-    
-    //             $cusReq->cp1_name = $value[6];
-    //             $cusReq->cp1_number = $value[7];
-    //             $cusReq->cp1_email = $value[8];
-    
-    //             $cusReq->cp2_name = $value[9];
-    //             $cusReq->cp2_number = $value[10];
-    //             $cusReq->cp2_email = $value[11];
-    
-    //             $cusReq->cp3_name = $value[12];
-    //             $cusReq->cp3_number = $value[13];
-    //             $cusReq->cp3_email = $value[14];
-    
-    //             $cusReq->category = $value[15];
-    //             $cusReq->brand = $value[16];
-    //             $cusReq->model = $value[17];
-    //             $cusReq->unit_type = $value[18];
-    //             $cusReq->no_of_unit = $value[19];
-    //             $cusReq->no_of_attendees = $value[20];
-    //             $cusReq->knowledge_of_participants = $value[21];
-    //             $cusReq->created_at = $value[1];
-    
-    //             $cusReq->save();
-    //         }
-    //     }
+        $customMessages = [
+            'name.required' => 'Please provide the required information.',
+            'address.required' => 'Please provide the required information.',
 
-    //     return redirect()->back();
-    // }
+            'cp1_name.required' => 'Please provide the required information.',
+            'cp1_number.required' => 'Please provide the required information.',
+            'cp1_email.required' => 'Please provide the required information.',
+            
+            'category.required' => 'Please select an option from the list.',
+            'brand.required' => 'Please select an option from the list.',
+            'model.required' => 'Please provide the required information.',
+            'unit_type.required' => 'Please select an option from the list.',
+            'no_of_unit.required' => 'Please provide the required information.',
+            'no_of_attendees.required' => 'Please provide the required information.',
+            'knowledge_of_participants.required' => 'Please select an option from the list.',
+        ];
+
+        $validator->setCustomMessages($customMessages);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $name = $request->name;
+        $address = $request->address;
+        
+        $cp1_name = $request->cp1_name;
+        $cp1_number = $request->cp1_number;
+        $cp1_email = $request->cp1_email;
+        
+        $cp2_name = $request->cp2_name;
+        $cp2_number = $request->cp2_number;
+        $cp2_email = $request->cp2_email;
+        
+        $cp3_name = $request->cp3_name;
+        $cp3_number = $request->cp3_number;
+        $cp3_email = $request->cp3_email;
+        
+        $category = $request->category;
+        $brand = $request->brand;
+        $model = $request->model;
+        $unit_type = $request->unit_type;
+        $no_of_unit = $request->no_of_unit;
+        $no_of_attendees = $request->no_of_attendees;
+        $knowledge_of_participants = $request->knowledge_of_participants;
+
+        $cusReq = new CustomerRequest;
+        $cusReq->name = $name;
+        $cusReq->address = $address;
+
+        $cusReq->cp1_name = $cp1_name;
+        $cusReq->cp1_number = $cp1_number;
+        $cusReq->cp1_email = $cp1_email;
+
+        $cusReq->cp2_name = $cp2_name;
+        $cusReq->cp2_number = $cp2_number;
+        $cusReq->cp2_email = $cp2_email;
+
+        $cusReq->cp3_name = $cp3_name;
+        $cusReq->cp3_number = $cp3_number;
+        $cusReq->cp3_email = $cp3_email;
+
+        $cusReq->category = $category;
+        $cusReq->brand = $brand;
+        $cusReq->model = $model;
+        $cusReq->unit_type = $unit_type;
+        $cusReq->no_of_unit = $no_of_unit;
+        $cusReq->no_of_attendees = $no_of_attendees;
+        $cusReq->knowledge_of_participants = $knowledge_of_participants;
+
+        $cusReq->save();
+
+        return redirect()->back()->with('success', '1');;
+    }
 
     // public function sync(){
     //     $client = new Client();

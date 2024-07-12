@@ -53,13 +53,25 @@
         <!-- Styles -->
     </head>
     <body>
-        <form class="w-screen h-screen overflow-y-auto overflow-x-hidden flex flex-col items-center bg-neutral-200 p-5 gap-y-5">
+
+        <div class="w-screen h-screen flex flex-col items-center justify-center bg-neutral-700 bg-opacity-60 fixed">
+            <div class="w-[300px] md:w-[600px] relative mr-[80px] md:mr-[170px]">
+                <img src="{{ asset('storage/images/system/Forklift-no-bg.png') }}" alt="" class="w-full">
+                <img id="front_wheel" src="{{ asset('storage/images/system/Front_Wheel.png') }}" alt="" class="absolute left-[102.5px] bottom-[2.5px] w-[48.5px] md:left-[205px] md:bottom-[5px] md:w-[97px] animate-spin-counter">
+                <img id="rear_wheel" src="{{ asset('storage/images/system/Rear_Wheel.png') }}" alt="" class="absolute right-[23px] bottom-[2.5px] w-[38px] md:right-[46px] md:bottom-[5px] md:w-[76px] animate-spin-counter">
+            </div>
+
+            <h1 class="font-bold text-2xl text-white tracking-widest">SUBMITTING</h1>
+        </div>
+
+        <form method="POST" action="{{ route('TrainingRequestFromCustomerSubmit') }}" class="w-screen h-screen overflow-y-auto overflow-x-hidden flex flex-col items-center bg-neutral-200 p-5 gap-y-5">
+            @csrf
             {{-- HEADER --}}
                 <header class="w-full xl:px-44 2xl:px-96 flex">
                     <div class="bg-white w-full rounded-lg shadow flex flex-col md:flex-row items-center border-0">
                         <img src="{{ asset('storage/images/system/logo.png') }}" alt="" class="w-1/2 md:w-1/6 my-3 md:mx-3 min-w-[120px]">
                         <div class="w-full h-3 md:w-3 md:h-full border border-red-500 bg-red-500"></div>
-                        <div class="flex flex-col items-center md:items-end w-full text-red-500 p-5">
+                        <div class="flex flex-col items-center md:items-end w-full text-red-500 px-5 py-10">
                             <span class="font-bold text-xl md:text-5xl">HII eSAFETY TRAINING</span>
                             <span class="font-bold text-xl md:text-5xl">REQUEST FORM</span>
                             <div class="text-left md:text-right w-full mt-2">
@@ -144,55 +156,53 @@
                                 <h1 class="text-gray-600 font-bold">#1</h1>
                                 <div class="w-full mb-3">
                                     <label for="cp1_name" class="block text-sm font-semibold text-gray-600">Name <span class="text-red-500">*</span></label>
-                                    <input type="text" id="cp1_name" name="cp1_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    <input type="text" id="cp1_name" name="cp1_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                 </div>
                                 <div class="w-full mb-3">
                                     <label for="cp1_number" class="block text-sm font-semibold text-gray-600">Phone Number <span class="text-red-500">*</span></label>
-                                    <input type="text" id="cp1_number" name="cp1_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    <input type="text" id="cp1_number" name="cp1_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                 </div>
                                 <div class="w-full mb-3">
                                     <label for="cp1_email" class="block text-sm font-semibold text-gray-600">E-mail <span class="text-red-500">*</span></label>
-                                    <input type="text" id="cp1_email" name="cp1_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    <input type="text" id="cp1_email" name="cp1_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                 </div>
                             </div>
-                            <hr class="my-5">
+                            <hr class="my-5 w-full md:w-1/2">
                             <div class="">
                                 <h1 class="text-gray-600 font-bold">#2</h1>
                                 <div class="w-full mb-3">
                                     <label for="cp2_name" class="block text-sm font-semibold text-gray-600">Name</label>
-                                    <input type="text" id="cp2_name" name="cp2_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    <input type="text" id="cp2_name" name="cp2_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                 </div>
                                 <div class="w-full mb-3">
                                     <label for="cp2_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
-                                    <input type="text" id="cp2_number" name="cp2_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    <input type="text" id="cp2_number" name="cp2_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                 </div>
                                 <div class="w-full mb-3">
                                     <label for="cp2_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
-                                    <input type="text" id="cp2_email" name="cp2_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    <input type="text" id="cp2_email" name="cp2_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                 </div>
                             </div>
-                            <hr class="my-5">
+                            <hr class="my-5 w-full md:w-1/2">
                             <div class="">
                                 <h1 class="text-gray-600 font-bold">#3</h1>
                                 <div class="w-full mb-3">
                                     <label for="cp3_name" class="block text-sm font-semibold text-gray-600">Name</label>
-                                    <input type="text" id="cp3_name" name="cp3_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    <input type="text" id="cp3_name" name="cp3_name" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                 </div>
                                 <div class="w-full mb-3">
                                     <label for="cp3_number" class="block text-sm font-semibold text-gray-600">Phone Number</label>
-                                    <input type="text" id="cp3_number" name="cp3_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    <input type="text" id="cp3_number" name="cp3_number" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                 </div>
                                 <div class="w-full mb-3">
                                     <label for="cp3_email" class="block text-sm font-semibold text-gray-600">E-mail</label>
-                                    <input type="text" id="cp3_email" name="cp3_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    <input type="text" id="cp3_email" name="cp3_email" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             {{-- CONTACT PERSON/S --}}
-
-
 
             {{-- OTHER DETAILS --}}
                 <div class="w-full xl:px-44 2xl:px-96 flex">
@@ -203,14 +213,14 @@
                         <div class="p-5">
                             <div class="mb-3">
                                 <label for="category" class="block text-sm font-semibold text-gray-600">What type of transaction? <span class="text-red-500">*</span></label>
-                                <select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-96 pt-2.5 pb-2 px-2">
+                                <select id="category" name="category" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-1/2 max-w-96 pt-2.5 pb-2 px-2">
                                     <option value="PURCHASED">Purchased</option>
                                     <option value="RENTAL">Rental</option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="brand" class="block text-sm font-semibold text-gray-600">Brand <span class="text-red-500">*</span></label>
-                                <select id="brand" name="brand" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-96 pt-2.5 pb-2 px-2">
+                                <select id="brand" name="brand" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-1/2 max-w-96 pt-2.5 pb-2 px-2">
                                     <option value="BT">BT</option>
                                     <option value="TOYOTA">Toyota</option>
                                     <option value="RAYMOND">Raymond</option>
@@ -218,11 +228,11 @@
                             </div>
                             <div class="w-full mb-5">
                                 <label for="model" class="block text-sm font-semibold text-gray-600">Model <span class="text-red-500">*</span></label>
-                                <input type="text" id="model" name="model" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                <input type="text" id="model" name="model" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                             </div>
                             <div class="mb-3">
                                 <label for="unit_type" class="block text-sm font-semibold text-gray-600">Type of unit <span class="text-red-500">*</span></label>
-                                <select id="unit_type" name="unit_type" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-96 pt-2.5 pb-2 px-2">
+                                <select id="unit_type" name="unit_type" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-1/2 max-w-96 pt-2.5 pb-2 px-2">
                                     <option value="VNA (VERY NARROW AISLE)">VNA (Very Narrow Aisle)</option>
                                     <option value="REACH TRUCK">Reach Truck</option>
                                     <option value="COUNTER BALANCE - IC">Counter Balance - IC</option>
@@ -237,15 +247,15 @@
                             </div>
                             <div class="w-full mb-5">
                                 <label for="no_of_unit" class="block text-sm font-semibold text-gray-600">Quantity of Unit/s <span class="text-red-500">*</span></label>
-                                <input type="text" id="no_of_unit" name="no_of_unit" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                <input type="text" id="no_of_unit" name="no_of_unit" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                             </div>
                             <div class="w-full mb-5">
                                 <label for="no_of_attendees" class="block text-sm font-semibold text-gray-600">Number of Attendees <span class="text-red-500">*</span></label>
-                                <input type="text" id="no_of_attendees" name="no_of_attendees" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                <input type="text" id="no_of_attendees" name="no_of_attendees" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                             </div>
                             <div class="mb-3">
                                 <label for="knowledge_of_participants" class="block text-sm font-semibold text-gray-600">Knowledge of Attendees <span class="text-red-500">*</span></label>
-                                <select id="knowledge_of_participants" name="knowledge_of_participants" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-96 pt-2.5 pb-2 px-2">
+                                <select id="knowledge_of_participants" name="knowledge_of_participants" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-1/2 max-w-96 pt-2.5 pb-2 px-2">
                                     <option value="WITH EXPERIENCE">With Experience</option>
                                     <option value="WITHOUT EXPERIENCE">Without Experience</option>
                                 </select>
@@ -255,9 +265,11 @@
                 </div>
             {{-- OTHER DETAILS --}}
 
-            <div class="w-full xl:px-44 2xl:px-96 flex justify-start">
-                <button class="w-36 py-2 font-bold tracking-wider text-white bg-blue-500 rounded-lg hover:scale-105">SUBMIT</button>
-            </div>
+            {{-- SUBMIT BUTTON --}}
+                <div class="w-full xl:px-44 2xl:px-96 flex justify-start">
+                    <button class="w-40 py-3 font-bold tracking-wider text-white bg-red-500 rounded-lg hover:scale-105">SUBMIT</button>
+                </div>
+            {{-- SUBMIT BUTTON --}}
         </form>
 
         <script>

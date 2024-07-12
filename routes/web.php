@@ -132,6 +132,7 @@ Route::post('/training-assessment/survey-submit', [AttendeesWrittenExamControlle
 
 
 Route::get('/training-request', [CustomerRequestController::class, 'TrainingRequestFromCustomer'])->name('TrainingRequestFromCustomer');
+Route::post('/training-request/submit', [CustomerRequestController::class, 'TrainingRequestFromCustomerSubmit'])->name('TrainingRequestFromCustomerSubmit');
 
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
