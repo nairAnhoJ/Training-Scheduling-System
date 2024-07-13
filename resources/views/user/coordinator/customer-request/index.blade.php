@@ -406,11 +406,11 @@
                                         <button id="searchSubmit" onclick="$('#loading').toggleClass('hidden');" type="submit" style="bottom: 5px; right: 5px;" type="submit" class="text-white absolute bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-1.5">Search</button>
                                     </div>
                                 </form>
-                                <span class="mx-3 text-2xl cursor-default">|</span>
+                                {{-- <span class="mx-3 text-2xl cursor-default">|</span>
                                 <a id="sync" href="{{ route('customer.request.sync') }}" class="flex items-center text-sm text-blue-600 hover:scale-105 gap-x-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" class="w-8 h-8"><path xmlns="http://www.w3.org/2000/svg" d="M238-211q-57-53-87.5-122.5T120-480q0-150 105-255t255-105v-80l183 140-183 140v-80q-100 0-170 70t-70 170q0 57 25 107.5t67 88.5l-94 73ZM480-40 297-180l183-140v80q100 0 170-70t70-170q0-57-25-108t-70-88l95-71q58 51 89 120.5T840-480q0 150-105 255T480-120v80Z"/></svg>
                                     Sync
-                                </a>
+                                </a> --}}
                             </div>
                         </div>
                     </div>
@@ -594,26 +594,26 @@
                         var knowledge_of_participants = result.knowledge_of_participants;
 
 
-                        $('#name').html(name.toUpperCase());
-                        $('#appname').val(name.toUpperCase());
-                        $('#address').html(address.toUpperCase());
-                        $('#appaddress').val(address.toUpperCase());
+                        $('#name').html(name);
+                        $('#appname').val(name);
+                        $('#address').html(address);
+                        $('#appaddress').val(address);
 
-                        $('#appcp1_name').val(cp1_name.toUpperCase());
+                        $('#appcp1_name').val(cp1_name);
                         $('#appcp1_number').val(cp1_number);
                         $('#appcp1_email').val(cp1_email);
 
-                        $('#appcp2_name').val(cp2_name.toUpperCase());
+                        $('#appcp2_name').val(cp2_name);
                         $('#appcp2_number').val(cp2_number);
                         $('#appcp2_email').val(cp2_email);
 
-                        $('#appcp3_name').val(cp3_name.toUpperCase());
+                        $('#appcp3_name').val(cp3_name);
                         $('#appcp3_number').val(cp3_number);
                         $('#appcp3_email').val(cp3_email);
 
 
                         if(cp1_name != '' || cp1_number != '' || cp1_email != ''){
-                            $('#cp1_name').html(cp1_name.toUpperCase());
+                            $('#cp1_name').html(cp1_name);
                             $('#cp1_number').html(cp1_number);
                             $('#cp1_email').html(cp1_email);
                             $('#cp1_div').removeClass('hidden');
@@ -622,7 +622,7 @@
                         }
 
                         if(cp2_name != '' || cp2_number != '' || cp2_email != ''){
-                            $('#cp2_name').html(cp2_name.toUpperCase());
+                            $('#cp2_name').html(cp2_name);
                             $('#cp2_number').html(cp2_number);
                             $('#cp2_email').html(cp2_email);
                             $('#cp2_div').removeClass('hidden');
@@ -631,7 +631,7 @@
                         }
 
                         if(cp3_name != '' || cp3_number != '' || cp3_email != ''){
-                            $('#cp3_name').html(cp3_name.toUpperCase());
+                            $('#cp3_name').html(cp3_name);
                             $('#cp3_number').html(cp3_number);
                             $('#cp3_email').html(cp3_email);
                             $('#cp3_div').removeClass('hidden');
@@ -639,22 +639,22 @@
                             $('#cp3_div').addClass('hidden');
                         }
 
-                        $('#category').html(category.toUpperCase());
-                        $('#brand').html(brand.toUpperCase());
-                        $('#model').html(model.toUpperCase());
-                        $('#unit_type').html(unit_type.toUpperCase());
+                        $('#category').html(category);
+                        $('#brand').html(brand);
+                        $('#model').html(model);
+                        $('#unit_type').html(unit_type);
                         $('#no_of_unit').html(no_of_unit);
                         $('#no_of_attendees').html(no_of_attendees);
-                        $('#knowledge_of_participants').html(knowledge_of_participants.toUpperCase());
+                        $('#knowledge_of_participants').html(knowledge_of_participants);
 
                         $('#inputID').val(id);
-                        $('#inputCategory').val(category.toUpperCase());
-                        $('#inputBrand').val(brand.toUpperCase());
-                        $('#inputModel').val(model.toUpperCase());
-                        $('#inputUnitType').val(unit_type.toUpperCase());
+                        $('#inputCategory').val(category);
+                        $('#inputBrand').val(brand);
+                        $('#inputModel').val(model);
+                        $('#inputUnitType').val(unit_type);
                         $('#inputNoUnit').val(no_of_unit);
                         $('#inputNoAttendees').val(no_of_attendees);
-                        $('#inputKnowledge').val(knowledge_of_participants.toUpperCase());
+                        $('#inputKnowledge').val(knowledge_of_participants);
 
                         $('#loading').toggleClass('hidden');
                         $('#viewRequestButton').click();

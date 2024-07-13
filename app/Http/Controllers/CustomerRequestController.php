@@ -44,6 +44,7 @@ class CustomerRequestController extends Controller
     public function TrainingRequestFromCustomerSubmit(Request $request){
 
         $validator = Validator::make($request->all(), [
+            'policy' => 'required',
             'name' => 'required',
             'address' => 'required',
             
@@ -61,6 +62,8 @@ class CustomerRequestController extends Controller
         ]);
 
         $customMessages = [
+            'policy.required' => 'Please review and accept our Privacy Policy before submitting your request.',
+
             'name.required' => 'Please provide the required information.',
             'address.required' => 'Please provide the required information.',
 
@@ -132,7 +135,7 @@ class CustomerRequestController extends Controller
 
         $cusReq->save();
 
-        return redirect()->back()->with('success', '1');;
+        return redirect()->route('TrainingRequestFromCustomer')->with('success', '1');;
     }
 
     // public function sync(){
@@ -216,27 +219,27 @@ class CustomerRequestController extends Controller
         $cr = CustomerRequest::where('id', $request->id)->first();
 
         $result = array(
-            'name' => $cr->name,
-            'address' => $cr->address,
-            'cp1_name' => $cr->cp1_name,
+            'name' => strtoupper($cr->name),
+            'address' => strtoupper($cr->address),
+            'cp1_name' => strtoupper($cr->cp1_name),
             'cp1_number' => $cr->cp1_number,
             'cp1_email' => $cr->cp1_email,
 
-            'cp2_name' => $cr->cp2_name,
+            'cp2_name' => strtoupper($cr->cp2_name),
             'cp2_number' => $cr->cp2_number,
             'cp2_email' => $cr->cp2_email,
 
-            'cp3_name' => $cr->cp3_name,
+            'cp3_name' => strtoupper($cr->cp3_name),
             'cp3_number' => $cr->cp3_number,
             'cp3_email' => $cr->cp3_email,
 
-            'category' => $cr->category,
-            'brand' => $cr->brand,
-            'model' => $cr->model,
-            'unit_type' => $cr->unit_type,
+            'category' => strtoupper($cr->category),
+            'brand' => strtoupper($cr->brand),
+            'model' => strtoupper($cr->model),
+            'unit_type' => strtoupper($cr->unit_type),
             'no_of_unit' => $cr->no_of_unit,
             'no_of_attendees' => $cr->no_of_attendees,
-            'knowledge_of_participants' => $cr->knowledge_of_participants,
+            'knowledge_of_participants' => strtoupper($cr->knowledge_of_participants),
         );
 
         echo json_encode($result);

@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       animation: {
-        'spin-counter': 'spin-counter 1s linear infinite',
+        'spin-counter': 'spin-counter 4s linear infinite',
       },
       keyframes: {
         'spin-counter': {
