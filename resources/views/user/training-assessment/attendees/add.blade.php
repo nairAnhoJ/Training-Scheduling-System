@@ -23,7 +23,7 @@
                 <form method="POST" action="{{ route('attendees.store') . '?key=' . $key }}">
                     @csrf
                     <input type="hidden" name="key" value="{{ $key }}">
-                    <input type="hidden" name="count" id="inputCount" value="{{ $key }}">
+                    <input type="hidden" name="count" id="inputCount" value="1">
 
                     <div id="btnAddRow" class="flex flex-row-reverse mb-2">
                         <button id="" type="button" class="text-blue-500 h-8 hover:scale-105">

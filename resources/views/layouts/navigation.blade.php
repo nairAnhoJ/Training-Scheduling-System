@@ -1,33 +1,35 @@
 
 <nav class="w-screen bg-red-500 shadow-lg h-14">
-    <div class="grid h-full grid-cols-3">
-        <div class="h-full">
+   <div class="grid h-full grid-cols-3">
+      <div class="h-full">
             <div class="flex items-center h-full">
                <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mx-3 text-sm text-red-600 bg-white rounded-lg shadow-xl hover:scale-105"> 
-                   <span class="sr-only">Open sidebar</span>
-                   <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-                   </svg>
-                </button>
-                <h1 id="pageTitle" class="mt-1 text-xl font-bold tracking-wider text-white uppercase whitespace-nowrap">@yield('title')</h1>
+                  <span class="sr-only">Open sidebar</span>
+                  <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                     <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+                  </svg>
+               </button>
+               <h1 id="pageTitle" class="mt-1 text-xl font-bold tracking-wider text-white uppercase whitespace-nowrap">@yield('title')</h1>
             </div>
-        </div>
+      </div>
 
-        <div class="h-full justify-self-center">
-            @if (!Str::contains(url()->current(), url('/schedule-board')))
-               <div class="items-center hidden h-full text-xl font-bold text-white sm:flex">
-                  {{ date('F j, Y') }}
-               </div>
-            @endif
-        </div>
+      <div class="h-full justify-self-center">
+         @if (!Str::contains(url()->current(), url('/schedule-board')))
+            <div class="items-center hidden h-full text-xl font-bold text-white sm:flex">
+               {{ date('F j, Y') }}
+            </div>
+         @endif
+      </div>
 
+      @if (Auth::user())
          <form method="POST" action="{{ route('logout') }}" class="w-36 h-full p-2.5 justify-self-end hidden lg:block">
                @csrf
                <button type="submit" class="flex items-center justify-center w-full h-full font-black tracking-wider text-red-600 bg-white shadow-lg rounded-xl hover:scale-105">
-                  <span>LOGOUT</span>
+                  <span>LOG OUT</span>
                </button>
          </form>
-    </div>
+      @endif
+   </div>
 </nav>
 
 
@@ -168,16 +170,17 @@
          @endif
 
 
-         
-         <li class="block lg:hidden">
-            <form method="POST" action="{{ route('logout') }}" class="w-full">
-               @csrf
-               <button type="submit" class="flex items-center w-full p-2 text-gray-600 border-gray-300 rounded-lg nav hover:bg-gray-300 hover:text-gray-700">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><script xmlns=""/><path xmlns="http://www.w3.org/2000/svg" d="M189-95q-39.05 0-66.525-27.475Q95-149.95 95-189v-582q0-39.463 27.475-67.231Q149.95-866 189-866h296v95H189v582h296v94H189Zm467-174-67-66 97-98H354v-94h330l-97-98 67-66 212 212-210 210Z"/><script xmlns=""/></svg>
-                  <span class="ml-3">Log Out</span>
-               </button>
-            </form>
-         </li>
+         @if (Auth::user())
+            <li class="block lg:hidden">
+               <form method="POST" action="{{ route('logout') }}" class="w-full">
+                  @csrf
+                  <button type="submit" class="flex items-center w-full p-2 text-gray-600 border-gray-300 rounded-lg nav hover:bg-gray-300 hover:text-gray-700">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" viewBox="0 -960 960 960" fill="currentColor"><script xmlns=""/><path xmlns="http://www.w3.org/2000/svg" d="M189-95q-39.05 0-66.525-27.475Q95-149.95 95-189v-582q0-39.463 27.475-67.231Q149.95-866 189-866h296v95H189v582h296v94H189Zm467-174-67-66 97-98H354v-94h330l-97-98 67-66 212 212-210 210Z"/><script xmlns=""/></svg>
+                     <span class="ml-3">Log Out</span>
+                  </button>
+               </form>
+            </li>
+         @endif
       </ul>
    </div>
 

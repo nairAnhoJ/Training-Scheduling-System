@@ -484,7 +484,6 @@
             $('.deleteButton').on('click', function(){
                 var id = $(this).data('id');
                 $('.modalID').val(id);
-
                 $('#deleteModal').removeClass('hidden');
             });
 
@@ -493,7 +492,7 @@
             });
             
             $('.generateButton').on('click', function(){
-                var key = $(this).data('key');gixxer 250 sf
+                var key = $(this).data('key');
                 var akey = $(this).data('akey');
                 var _token = $('input[name="_token"]').val();
 
