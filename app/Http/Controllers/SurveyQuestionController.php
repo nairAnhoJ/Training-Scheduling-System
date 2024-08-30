@@ -35,6 +35,13 @@ class SurveyQuestionController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $surveyQuestionCount = SurveyQuestion::count();
+        if($surveyQuestionCount > 0){
+            $position = $surveyQuestionCount + 1;
+        }else{
+            $position = 1;
+        }
+
         $type = $request->type;
         $question = $request->question;
         $firstOption = 0;
@@ -57,6 +64,8 @@ class SurveyQuestionController extends Controller
             }
             $surveyQuestion->options = strtolower($options);
         }
+        $surveyQuestion->position = $position;
+
         $surveyQuestion->save();
 
         return redirect()->route('survey.index')->with('success', 'New Question Has Been Added Successfully!');

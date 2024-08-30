@@ -103,7 +103,7 @@
                     <h1 class="mb-2 text-xl font-bold text-gray-600">OTHER DETAILS</h1>
                     <div class="pl-3">
                         <div class="mb-3">
-                            <label for="adress" class="block text-sm font-semibold text-gray-600">Type <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-semibold text-gray-600">Type <span class="text-red-500">*</span></label>
                             <div class="flex gap-x-5">
                                 <div class="flex items-center">
                                     <input checked id="planned_type" type="radio" value="PLANNED" name="type" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-400 focus:ring-blue-500 focus:ring-2">
@@ -353,14 +353,14 @@
                 }
             });
 
-            $(document).on('click', '.datepicker-cell', function() {
-                var enteredDate = new Date($('#event_date').val());
-                var currentDate = new Date();
-                if (enteredDate < currentDate) {
-                    var formattedDate = moment(currentDate).format('MM/DD/YYYY');
-                    $('#event_date').val(formattedDate);
-                }
-            });
+            //$(document).on('click', '.datepicker-cell', function() {
+            //    var enteredDate = new Date($('#event_date').val());
+            //    var currentDate = new Date();
+            //    if (enteredDate < currentDate) {
+            //        var formattedDate = moment(currentDate).format('MM/DD/YYYY');
+            //        $('#event_date').val(formattedDate);
+            //    }
+            //});
         });
     </script>
 @endsection

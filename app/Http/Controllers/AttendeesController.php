@@ -354,6 +354,8 @@ class AttendeesController extends Controller
             return redirect()->route('dashboard.index');
         }
 
+        
+
         $trainer_head = User::where('role', 3)->first();
         $attendee = Attendees::where('key', $akey)->first();
         $exam_key = WrittenExam::where('id', $attendee->written_exam)->first()->key;
