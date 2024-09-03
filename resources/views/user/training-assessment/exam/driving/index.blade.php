@@ -25,8 +25,7 @@
                     <input type="hidden" name="key" class="modalKey">
                     <!-- Modal header -->
                     <div class="flex items-start justify-between p-4 border-b rounded-t">
-                        <h3 class="text-xl font-semibold text-gray-900">
-                            Delete
+                        <h3 id="courseTitle" class="text-xl font-semibold text-gray-900">
                         </h3>
                         <button type="button" class="inline-flex items-center justify-center w-8 h-8 ml-auto text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 closeViewModal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -200,7 +199,7 @@
                 var alt = name+'_layout'
                 $('#layoutURL').attr('alt', alt);
                 $('#layoutURL').attr('src', url);
-                // $('#layoutURL').attr(url);
+                $('#courseTitle').html(name);
 
                 $('#viewModal').removeClass('hidden');
             });
