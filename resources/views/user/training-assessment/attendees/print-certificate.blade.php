@@ -106,7 +106,7 @@
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[13.2954%] -translate-x-1/2">{{ ucwords(strtolower($trainer_head->first_name . ' ' . $trainer_head->last_name)) }}</h2>
             <img style="{{ $tSizeClass.$tTop }}" src="{{ asset('storage/'.$training->trainerName->signature) }}" class="absolute left-[36.7045%] -translate-x-1/2">
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[36.7045%] -translate-x-1/2">{{ ucwords(strtolower($training->trainerName->first_name . ' ' . $training->trainerName->last_name)) }}</h2>
-            <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[35px] left-[35px] uppercase">{{ 'Ctrl#: TMHP-'.$cBrand.str_pad($attendee->control_number, 7, '0', STR_PAD_LEFT) }}</h2>
+            <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[30px] left-[35px] uppercase">{{ 'Ctrl#: TMHP-'.$cBrand.str_pad($attendee->control_number, 7, '0', STR_PAD_LEFT) }}</h2>
 
             @if ($overallScore >= 85)
                 <h1 style="font-family: 'Monotype-Corsiva' !important;" class="whitespace-nowrap text-[57px] absolute top-[382px] left-3/4 -translate-x-1/2">{{ $attendee->name }}</h1>
@@ -118,8 +118,8 @@
                 <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[63.2954%] -translate-x-1/2">{{ ucwords(strtolower($trainer_head->first_name . ' ' . $trainer_head->last_name)) }}</h2>
                 <img style="{{ $tSizeClass.$tTop }}" src="{{ asset('storage/'.$training->trainerName->signature) }}" class="absolute left-[86.7045%] -translate-x-1/2">
                 <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[86.7045%] -translate-x-1/2">{{ ucwords(strtolower($training->trainerName->first_name . ' ' . $training->trainerName->last_name)) }}</h2>
-                <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[35px] left-[calc(50%+35px)] uppercase">{{ 'Ctrl#: TMHP-'.$cBrand.str_pad($attendee->control_number, 7, '0', STR_PAD_LEFT) }}</h2>
-                <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[35px] right-[35px] uppercase">Valid Until: {{ $valid_until }}</h2>
+                <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[30px] left-[calc(50%+35px)] uppercase">{{ 'Ctrl#: TMHP-'.$cBrand.str_pad($attendee->control_number, 7, '0', STR_PAD_LEFT) }}</h2>
+                <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[30px] right-[35px] uppercase">Valid Until: {{ $valid_until }}</h2>
             @endif
         {{-- All Text --}}
         
