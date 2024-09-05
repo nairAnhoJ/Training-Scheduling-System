@@ -102,9 +102,9 @@
             <h2 style="font-family: 'Perpetua'" class="text-lg absolute top-[466px] left-1/4 -translate-x-1/2 uppercase whitespace-nowrap">{{ $training->customer->name }}</h2>
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[568px] left-1/4 -translate-x-1/2 text-center leading-[26px] whitespace-nowrap">has attended the Comprehensive Training on <br> Basic Safety Operators Training <span class="font-bold">{{ $attendee->brand . ' ' . $attendee->type }}</span></h2>
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[630px] left-1/4 -translate-x-1/2 text-center">Given on this {{ $formattedDate }}</h2>
-            <img style="{{ $thSizeClass.$thTop }}" src="{{ asset('storage/'.$trainer_head->signature) }}" class="absolute left-[12.5%] -translate-x-1/2">
+            <img style="{{ $thSizeClass.$thTop }}" src="{{ asset('storage/'.$trainer_head->signature) }}" class="absolute left-[12.5%+35px] -translate-x-1/2">
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[12.5%] -translate-x-1/2">{{ ucwords(strtolower($trainer_head->first_name . ' ' . $trainer_head->last_name)) }}</h2>
-            <img style="{{ $tSizeClass.$tTop }}" src="{{ asset('storage/'.$training->trainerName->signature) }}" class="absolute left-[37.5%] -translate-x-1/2">
+            <img style="{{ $tSizeClass.$tTop }}" src="{{ asset('storage/'.$training->trainerName->signature) }}" class="absolute left-[37.5%-35px] -translate-x-1/2">
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[37.5%] -translate-x-1/2">{{ ucwords(strtolower($training->trainerName->first_name . ' ' . $training->trainerName->last_name)) }}</h2>
             <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[53px] left-[84px] uppercase">{{ 'TMHP-'.$cBrand.str_pad($attendee->control_number, 7, '0', STR_PAD_LEFT) }}</h2>
 
@@ -114,9 +114,9 @@
                 <h2 style="font-family: 'Perpetua'" class="text-xl whitespace-nowrap absolute top-[568px] left-3/4 -translate-x-1/2 text-center leading-[26px]">has attended the Comprehensive Training on <br> Basic Safety Operators Training <span class="font-bold">{{ $attendee->brand . ' ' . $attendee->type }}</span></h2>
                 <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[630px] left-3/4 -translate-x-1/2 text-center">Given on this {{ $formattedDate }}</h2>
                 <h2 style="font-family: 'Perpetua'" class="text-2xl absolute font-bold top-[657px] left-3/4 -translate-x-1/2 uppercase">Class {{$class}} ({{ $overallScore }}%) Level {{$attendee->level}}</h2>
-                <img style="{{ $thSizeClass.$thTop }}" src="{{ asset('storage/'.$trainer_head->signature) }}" class="absolute left-[62.5%] -translate-x-1/2">
+                <img style="{{ $thSizeClass.$thTop }}" src="{{ asset('storage/'.$trainer_head->signature) }}" class="absolute left-[62.5%+35px] -translate-x-1/2">
                 <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[62.5%] -translate-x-1/2">{{ ucwords(strtolower($trainer_head->first_name . ' ' . $trainer_head->last_name)) }}</h2>
-                <img style="{{ $tSizeClass.$tTop }}" src="{{ asset('storage/'.$training->trainerName->signature) }}" class="absolute left-[87.5%] -translate-x-1/2">
+                <img style="{{ $tSizeClass.$tTop }}" src="{{ asset('storage/'.$training->trainerName->signature) }}" class="absolute left-[87.5%-35px] -translate-x-1/2">
                 <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[772px] left-[87.5%] -translate-x-1/2">{{ ucwords(strtolower($training->trainerName->first_name . ' ' . $training->trainerName->last_name)) }}</h2>
                 <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[53px] left-[calc(50%+85px)] uppercase">{{ 'TMHP-'.$cBrand.str_pad($attendee->control_number, 7, '0', STR_PAD_LEFT) }}</h2>
                 <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[53px] right-[64px] uppercase">{{ $valid_until }}</h2>
