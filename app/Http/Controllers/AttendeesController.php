@@ -39,8 +39,8 @@ class AttendeesController extends Controller
             return redirect()->route('dashboard.index');
         }
 
-        $wexams = WrittenExam::get();
-        $dexams = DrivingExam::get();
+        $wexams = WrittenExam::where('is_deleted', 0)->get();
+        $dexams = DrivingExam::where('is_deleted', 0)->get();
 
         return view('user.training-assessment.attendees.add', compact('key', 'wexams', 'dexams'));
     }
