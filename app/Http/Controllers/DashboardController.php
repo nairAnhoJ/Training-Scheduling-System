@@ -25,7 +25,7 @@ class DashboardController extends Controller
         $requestCount = ModelsRequest::where('is_approved', 0)->where('is_deleted', 0)->where('status', 'PENDING')->count();
         $trainingCount = ModelsRequest::where('is_approved', 1)->where('is_deleted', 0)->where('status', 'SCHEDULED')->count();
 
-        $trainers = User::where('role', 2)->where('role', 3)->where('is_active', 1)->where('is_deleted', 0)->get();
+        $trainers = User::where('role', [2, 3])->where('is_active', 1)->where('is_deleted', 0)->get();
 
         $customers = Customer::where('is_deleted', 0)->where('is_active', 1)->orderBy('name', 'asc')->get();
 

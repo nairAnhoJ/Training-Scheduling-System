@@ -52,8 +52,8 @@ Route::get('/', function () {
     if (!Auth::user()) {
         return redirect()->route('login');
 
-        $trainers = User::where('role', 2)->where('role', 3)->where('is_active', 1)->where('is_deleted', 0)->get();
-        
+        $trainers = User::where('role', [2, 3])->where('is_active', 1)->where('is_deleted', 0)->get();
+
         $events = Request::select('tss_requests.id', 'customers.name', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.key', 'tss_users.color')
             ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
             ->join('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
