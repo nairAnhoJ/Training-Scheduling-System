@@ -72,7 +72,7 @@ class WrittenExamQuestionController extends Controller
         $examQuestion->question = $question;
         $examQuestion->answer = strtolower($answer);
         $examQuestion->points = $points;
-        if($type == 'MultipleChoice'){
+        if($type == 'MultipleChoice' || $type == 'MultipleSelect'){
             $options = '';
             for ($i=1; $i < 11; $i++) {
                 $var = 'option'.$i;

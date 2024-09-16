@@ -27,12 +27,13 @@ class AttendeesWrittenExamController extends Controller
         foreach($exam->questions as $eq){
             $total = $total + $eq->points;
         }
+        $questionSequence = WrittenExamQuestion::where('exam_key', $exam->key)->pluck('id')->toArray();
+        shuffle($questionSequence);
 
-        return view('user.training-assessment.attendees.exam.index', compact('attendee', 'key', 'akey', 'exam', 'total'));
+        return view('user.training-assessment.attendees.exam.index', compact('attendee', 'key', 'akey', 'exam', 'total', 'questionSequence'));
     }
 
     public function npQuestion(Request $request){
-        // dd($request);
         $key = $request->key;
         $training = ModelsRequest::where('key', $key)->first();
         if(!$key || !$training){
@@ -43,207 +44,69 @@ class AttendeesWrittenExamController extends Controller
         $exam  = WrittenExam::find($attendee->written_exam);
         $nob = $request->nob;
         $q = $request->q;
-        $Pquestion = null;
+        $content = '';
+        if(is_array($request->answer)){
+            $answer = array_map('strtolower', $request->answer);
+        }else{
+            $answer = array_map('strtolower', explode(';', $request->answer));
+        }
+        $questionSequence = $request->questionSequence;
 
         if($attendee->written_exam_start == null){
             $attendee->written_exam_start = date('Y-m-d H:i:s');
             $attendee->save();
         }
 
-        $Pawea = null;
-        if($q != "0"){
-            $Pquestion = WrittenExamQuestion::where('exam_key', $exam->key)->orderBy('id')->skip(($q-1))->first();
-            $Pawea = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->where('question_id', $Pquestion->id)->first();
-        }
+        $previousQuestionID = ($q != -1) ? $questionSequence[$q] : null;
 
-
+        $nextQuestionID = null;
         if($nob == 'NEXT'){
-            $q++;
-        }else{
-            $q--;
+            $nextQuestionID = $questionSequence[$q+1];
+        }else if($nob == 'BACK'){
+            $nextQuestionID = $questionSequence[$q-1];
         }
 
-        $question = WrittenExamQuestion::where('exam_key', $exam->key)->orderBy('id')->skip(($q-1))->first();
-        
-        $answer = $request->answer;
-        $content = '';
-        $points = 0;
+        $previousQuestion = ($previousQuestionID != null) ? WrittenExamQuestion::where('id', $previousQuestionID)->first() : null;
+        $previousAnswer = ($previousQuestionID != null) ? AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->where('question_id', $previousQuestion->id)->first() : null;
 
-        $awea = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->where('question_id', $question->id)->first();
+        $nextQuestion = ($nextQuestionID != null) ? WrittenExamQuestion::where('id', $nextQuestionID)->first() : null;
+        $nextAnswerRow = ($nextQuestionID != null) ? AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->where('question_id', $nextQuestion->id)->first() : null;
 
+        $nextAnswer = ($nextAnswerRow != null) ? array_map('strtolower', explode(';', $nextAnswerRow->answer)) : [];
 
-        if($awea != null){
-            $nAnswer = $awea->answer;
-        }else{
-            $nAnswer = null;
-        }
+        $previousQuestionAnswers = ($previousQuestion != null) ? array_map('strtolower', explode(';', $previousQuestion->answer)) : null;
+        $points = ($previousQuestion != null) ? count(array_intersect($previousQuestionAnswers, $answer)) : 0;
 
-        if($Pquestion != null){
-            if($Pquestion->type == 'MultipleChoice' || $Pquestion->type == 'TrueOrFalse' || $Pquestion->type == 'ShortAnswer'){
-                if(strtolower($answer) == strtolower($Pquestion->answer)){
-                    $points = $Pquestion->points;
-                }
-            }else{
-                $answers = explode(';', $Pquestion->answer);
-                $nanswers = array_map('strtolower', $answers);
-                $nanswer = array_map('strtolower', $answer);
-                $common = array_intersect($nanswers, $nanswer);
-                $points = count($common);
-                $answer = implode(";", $answer);
-            }
-        }
+        if($nob == 'SUBMIT'){
 
-        if($nob != 'SUBMIT'){
-            if($q != 0){
-
-                if($question->type == 'MultipleChoice' || $question->type == 'TrueOrFalse'){
-    
-                    if($question->type == 'MultipleChoice'){
-                        $options = explode(';', $question->options);
-                        shuffle($options);
-                    }else{
-                        $options = ['True', 'False'];
-                    }
-        
-                    $theOptions = '';
-                    foreach($options as $index => $option){
-                        $theOptions .= '
-                            <div class="flex items-center rounded-xl justify-between pl-1 pr-2 py-3 '.(($nAnswer == $option) ? 'border-2 border-blue-400' : 'border border-neutral-100').' shadow optionDiv">
-                                <label for="option'.$index.'" class="ms-2 text-sm font-medium text-gray-900">'.ucfirst($option).'</label>
-                                <input '.(($nAnswer == $option) ? 'checked' : '').' id="option'.$index.'" type="radio" value="'.$option.'" name="answer" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 inputRadio">
-                            </div>
-                        ';
-                    }
-        
-                    $content = '
-                                    <div class="h-full">
-                                        <input type="hidden" value="multiplechoice" id="qtype">
-                                        <p class="text-lg font-bold mb-10">'.$question->question.'</p>
-                                        <div class="flex flex-col gap-y-3">
-                                            '.$theOptions.'
-                                        </div>
-                                    </div>
-                                ';
-                }else if($question->type == 'ShortAnswer' || $question->type == 'Enumeration'){
-                    $nPoints = $question->points;
-        
-                    $theAnswers = '';
-    
-                    if($question->type == 'ShortAnswer'){
-                        $theAnswers .= '
-                            <div class="w-full flex items-center gap-x-2">
-                                <input type="text" id="answer" name="answer" value="'.$nAnswer.'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
-                            </div>
-                        ';
-                    }else{
-                        if($nAnswer != null){
-                            $oAnswer = explode(';', $nAnswer);
-                            for ($i=0; $i < $question->points; $i++) {
-                                $theAnswers .= '
-                                    <div class="w-full flex items-center gap-x-2">
-                                        <p class="w-7">'.($i+1).'. </p>
-                                        <input type="text" id="answer'.$i.'" name="answer[]" value="'.$oAnswer[$i].'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
-                                    </div>
-                                ';
-                            }
-                        }else{
-                            for ($i=0; $i < $question->points; $i++) {
-                                $theAnswers .= '
-                                    <div class="w-full flex items-center gap-x-2">
-                                        <p class="w-7">'.($i+1).'. </p>
-                                        <input type="text" id="answer'.$i.'" name="answer[]" value="" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
-                                    </div>
-                                ';
-                            }
-                        }
-                    }
-
-                    if($question->type == 'ShortAnswer'){
-                        $content = '
-                                        <div class="h-full">
-                                            <input type="hidden" value="shortanswer" id="qtype">
-                                            <p class="text-lg font-bold mb-10">'.$question->question.'</p>
-                                            <div class="flex flex-col gap-y-3">
-                                                '.$theAnswers.'
-                                            </div>
-                                        </div>
-                                    ';
-                    }else{
-                        $content = '
-                                        <div class="h-full">
-                                        <input type="hidden" value="enumeration" id="qtype">
-                                        <p class="text-base mb-2 font-bold">Enumeration</p>
-                                            <p class="text-lg font-bold mb-10">'.$question->question.' ('.$nPoints.' points)</p>
-                                            <div class="flex flex-col gap-y-3">
-                                                '.$theAnswers.'
-                                            </div>
-                                        </div>
-                                    ';
-                    }
-                }
-            }else{
-                $content = '
-                                <div id="main" class="h-full grid grid-cols-1 sm:grid-cols-1 grid-rows-3 text-center">
-                                    <div class="self-center">
-                                        <p class="font-bold tracking-wide uppercase text-2xl">'.$exam->name.'</p>
-                                    </div>
-                                    <div class="self-end">
-                                        <p class="font-bold tracking-wide text-xl">'.$attendee->name.'</p>
-                                    </div>
-                                    <div class="self-end">
-                                        <p class="text-sm">Click "START" to start the exam.</p>
-                                    </div>
-                                </div>
-                            ';
-            }
-
-            if($nob == 'BACK' || (($q > 1) && ($nob == 'NEXT'))){
-                if($answer != null){
-                    if($Pawea == null){
-                        $nawea = new AttendeesWrittenExamAnswers();
-                        $nawea->training_key = $key;
-                        $nawea->attendee_key = $akey;
-                        $nawea->exam_key = $exam->key;
-                        $nawea->question_id = $Pquestion->id;
-                        $nawea->answer = $answer;
-                        $nawea->points = $points;
-                        $nawea->save();
-                    }else{
-                        $Pawea->answer = $answer;
-                        $Pawea->points = $points;
-                        $Pawea->save();
-                    }
-                }
-            }
-        }else{
-            if($q > 0){
-                if($Pawea == null){
-                    $nawea = new AttendeesWrittenExamAnswers();
-                    $nawea->training_key = $key;
-                    $nawea->attendee_key = $akey;
-                    $nawea->exam_key = $exam->key;
-                    $nawea->question_id = $Pquestion->id;
-                    $nawea->answer = $answer;
-                    $nawea->points = $points;
-                    $nawea->save();
+            if($previousQuestion != null){
+                if($previousAnswer == null){
+                    $newAnswer = new AttendeesWrittenExamAnswers();
+                    $newAnswer->training_key = $key;
+                    $newAnswer->attendee_key = $akey;
+                    $newAnswer->exam_key = $exam->key;
+                    $newAnswer->question_id = $previousQuestion->id;
+                    $newAnswer->answer = implode(';', $answer);
+                    $newAnswer->points = $points;
+                    $newAnswer->save();
                 }else{
-                    $Pawea->answer = $answer;
-                    $Pawea->points = $points;
-                    $Pawea->save();
+                    $previousAnswer->answer = implode(';', $answer);
+                    $previousAnswer->points = $points;
+                    $previousAnswer->save();
                 }
             }
+            
 
             $examResult = AttendeesWrittenExamAnswers::where('training_key', $key)->where('attendee_key', $akey)->sum('points');
             $attendee->written_score = $examResult;
 
             if($attendee->driving_score != null){
                 $settings = Setting::where('id', 1)->first();
-    
                 $attendee->control_number = $settings->control_number;
-    
                 $settings->control_number = $settings->control_number + 1;
                 $settings->save();
             }
+
             $attendee->save();
 
             $content = '
@@ -259,8 +122,140 @@ class AttendeesWrittenExamController extends Controller
                                 <div class="font-bold text-2xl tracking-wider text-center mb-5">'.$attendee->name.'</div>
                             </div>
                         ';
-        }
+        }else{
+            if($q == 0 && $nob == 'BACK'){
+                $content = '
+                    <div id="main" class="h-full grid grid-cols-1 sm:grid-cols-1 grid-rows-3 text-center">
+                        <div class="self-center">
+                            <p class="font-bold tracking-wide uppercase text-2xl">'.$exam->name.'</p>
+                        </div>
+                        <div class="self-end">
+                            <p class="font-bold tracking-wide text-xl">'.$attendee->name.'</p>
+                        </div>
+                        <div class="self-end">
+                            <p class="text-sm">Click "START" to start the exam.</p>
+                        </div>
+                    </div>
+                ';
+            }else{
+                if($nextQuestion->type == 'MultipleChoice' || $nextQuestion->type == 'TrueOrFalse'){
+                    $options = ['true', 'false'];
+                    if($nextQuestion->type == 'MultipleChoice'){
+                        $options = explode(';', $nextQuestion->options);
+                        shuffle($options);
+                    }
+        
+                    $theOptions = '';
+                    foreach($options as $index => $option){
+                        $theOptions .= '
+                            <div class="flex items-center rounded-xl justify-between pl-1 pr-2 py-3 '.((in_array($option, $nextAnswer)) ? 'border-2 border-blue-400' : 'border border-neutral-100').' shadow optionDiv hover:cursor-pointer">
+                                <label for="option'.$index.'" class="ms-2 text-sm font-medium text-gray-900">'.ucfirst($option).'</label>
+                                <input '.((in_array($option, $nextAnswer)) ? 'checked' : '').' id="option'.$index.'" type="radio" value="'.$option.'" name="answer" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 inputRadio">
+                            </div>
+                        ';
+                    }
+        
+                    $content = '
+                        <div class="h-full">
+                            <input type="hidden" value="multiplechoice" id="qtype">
+                            <p class="text-lg font-bold mb-10">'.$nextQuestion->question.'</p>
+                            <div class="flex flex-col gap-y-3">
+                                '.$theOptions.'
+                            </div>
+                        </div>
+                    ';
+                }else if($nextQuestion->type == 'MultipleSelect'){
+                    
+                    $options = explode(';', $nextQuestion->options);
+                    shuffle($options);
+        
+                    $theOptions = '';
+                    foreach($options as $index => $option){
+                        $theOptions .= '
+                            <div class="flex items-center rounded-xl justify-between pl-1 pr-2 py-3 '.((in_array($option, $nextAnswer)) ? 'border-2 border-blue-400' : 'border border-neutral-100').' shadow selectOptionDiv hover:cursor-pointer">
+                                <label for="option'.$index.'" class="ms-2 text-sm font-medium text-gray-900">'.ucfirst($option).'</label>
+                                <input '.((in_array($option, $nextAnswer)) ? 'checked' : '').' id="option'.$index.'" type="checkbox" value="'.$option.'" name="answer[]" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 inputRadio">
+                            </div>
+                        ';
+                    }
+        
+                    $content = '
+                        <div class="h-full">
+                            <input type="hidden" value="multipleselect" id="qtype">
+                            <p class="text-lg font-bold mb-10">'.$nextQuestion->question.'</p>
+                            <div class="flex flex-col gap-y-3">
+                                '.$theOptions.'
+                            </div>
+                        </div>
+                    ';
+                }else if($nextQuestion->type == 'ShortAnswer' || $nextQuestion->type == 'Enumeration'){
 
+                    $theAnswers = '';
+                    if($nextQuestion->type == 'ShortAnswer'){
+                        $theAnswers .= '
+                            <div class="w-full flex items-center gap-x-2">
+                                <input type="text" id="answer" name="answer" value="'.$nextAnswer[0].'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                            </div>
+                        ';
+                    }else if($nextQuestion->type == 'Enumeration'){
+                        for ($i=0; $i < $nextQuestion->points; $i++) {
+                            $theAnswers .= '
+                                <div class="w-full flex items-center gap-x-2">
+                                    <p class="w-7">'.($i+1).'. </p>
+                                    <input type="text" id="answer'.$i.'" name="answer[]" value="'.$nextAnswer[$i].'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                </div>
+                            ';
+                        }
+                    }
+                    
+
+                    if($nextQuestion->type == 'ShortAnswer'){
+                        $content = '
+                                        <div class="h-full">
+                                            <input type="hidden" value="shortanswer" id="qtype">
+                                            <p class="text-lg font-bold mb-10">'.$nextQuestion->question.'</p>
+                                            <div class="flex flex-col gap-y-3">
+                                                '.$theAnswers.'
+                                            </div>
+                                        </div>
+                                    ';
+                    }else{
+                        $content = '
+                                        <div class="h-full">
+                                        <input type="hidden" value="enumeration" id="qtype">
+                                        <p class="text-base mb-2 font-bold">Enumeration</p>
+                                            <p class="text-lg font-bold mb-10">'.$nextQuestion->question.' ('.$nextQuestion->points.' points)</p>
+                                            <div class="flex flex-col gap-y-3">
+                                                '.$theAnswers.'
+                                            </div>
+                                        </div>
+                                    ';
+                    }
+                }
+
+
+                if($nob == 'BACK' || (($q != -1) && ($nob == 'NEXT'))){
+                    if($answer != null){
+                        // dd($answer);
+                        if($previousAnswer == null){
+                            $newAnswer = new AttendeesWrittenExamAnswers();
+                            $newAnswer->training_key = $key;
+                            $newAnswer->attendee_key = $akey;
+                            $newAnswer->exam_key = $exam->key;
+                            $newAnswer->question_id = $previousQuestion->id;
+                            $newAnswer->answer = implode(';', $answer);
+                            $newAnswer->points = $points;
+                            $newAnswer->save();
+                        }else{
+                            $previousAnswer->answer = implode(';', $answer);
+                            $previousAnswer->points = $points;
+                            $previousAnswer->save();
+                        }
+                    }
+                }
+            }
+        }
+        
         echo $content;
     }
 

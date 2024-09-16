@@ -43,7 +43,7 @@
             <div class="h-full rounded-xl">
                 <div class="h-full flex flex-col">
                     
-                    <input type="hidden" value="0" id="question">
+                    <input type="hidden" value="-1" id="question">
                     <input type="hidden" value="{{ $exam->id }}" id="exam">
                     @csrf
                     
@@ -191,7 +191,7 @@
 
     <script>
         $(document).ready(function(){
-            var q = 0;
+            var q = -1;
             var _token = $('input[name="_token"]').val();
             var mq = {{ $exam->questions->count() }};
             var key = "{{ $key }}";
@@ -201,8 +201,10 @@
             end.setMinutes(end.getMinutes() + 30);
             var timeRemaining;
             var score = "{{ $attendee->written_score }}";
+            var questionSequence = @json($questionSequence);
             var answer = null;
             var qtype = null;
+            
 
             $('#nextButton').click(function(){
                 $('#loading').removeClass('hidden');
@@ -211,10 +213,17 @@
 
                 if(qtype == 'multiplechoice'){
                     answer = $('input[name="answer"]:checked').val();
-                }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
+                }else if(qtype == 'multipleselect'){
+                    answer = [];
+                    $('input[name="answer[]"]:checked').each(function() {
+                        answer.push($(this).val());
+                    });
+                }else if(qtype == 'enumeration'){
                     answer = $('input[name="answer[]"]').map(function() {
                         return $(this).val();
                     }).get();
+                }else if(qtype == 'shortanswer'){
+                    answer = $('input[name="answer"]').val();
                 }
 
                 $.ajax({
@@ -223,6 +232,7 @@
                     data:{
                         key: key,
                         akey: akey,
+                        questionSequence: questionSequence,
                         q: q,
                         answer: answer,
                         nob: 'NEXT',
@@ -232,18 +242,18 @@
                         $('#content').html(result);
                         $('#question').val(++q);
 
-                        if(q == mq){
+                        if((q+1) == mq){
                             $('#nextButton').addClass('hidden');
                             $('#submitButton').removeClass('hidden');
                         }else{
                             $('#backButton').removeClass('hidden');
                             $('#nsLabel').html('NEXT');
                         }
-                        if(q > 0){
+                        if(q > -1){
                             $('#progressBar').removeClass('hidden');
-                            var curPB = ((q/mq)*100)+'%';
+                            var curPB = (((q+1)/mq)*100)+'%';
                             $('#currentPBar').css('width', curPB);
-                            $('#curQ').html(q);
+                            $('#curQ').html(q+1);
                         }
                         
                         if(end == null || end == '' || end == 'Invalid Date'){
@@ -263,10 +273,17 @@
 
                 if(qtype == 'multiplechoice'){
                     answer = $('input[name="answer"]:checked').val();
-                }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
+                }else if(qtype == 'multipleselect'){
+                    answer = [];
+                    $('input[name="answer[]"]:checked').each(function() {
+                        answer.push($(this).val());
+                    });
+                }else if(qtype == 'enumeration'){
                     answer = $('input[name="answer[]"]').map(function() {
                         return $(this).val();
                     }).get();
+                }else if(qtype == 'shortanswer'){
+                    answer = $('input[name="answer"]').val();
                 }
 
                 $.ajax({
@@ -275,6 +292,7 @@
                     data:{
                         key: key,
                         akey: akey,
+                        questionSequence: questionSequence,
                         q: q,
                         answer: answer,
                         nob: 'BACK',
@@ -291,11 +309,11 @@
                             $('#nextButton').removeClass('hidden');
                             $('#submitButton').addClass('hidden');
                         }
-                        if(q > 0){
+                        if(q > -1){
                             $('#progressBar').removeClass('hidden');
-                            var curPB = ((q/mq)*100)+'%';
+                            var curPB = (((q+1)/mq)*100)+'%';
                             $('#currentPBar').css('width', curPB);
-                            $('#curQ').html(q);
+                            $('#curQ').html(q+1);
                         }
                         $('#loading').addClass('hidden');
                     }
@@ -317,10 +335,17 @@
 
                 if(qtype == 'multiplechoice'){
                     answer = $('input[name="answer"]:checked').val();
-                }else if(qtype == 'shortanswer' || qtype == 'enumeration'){
+                }else if(qtype == 'multipleselect'){
+                    answer = [];
+                    $('input[name="answer[]"]:checked').each(function() {
+                        answer.push($(this).val());
+                    });
+                }else if(qtype == 'enumeration'){
                     answer = $('input[name="answer[]"]').map(function() {
                         return $(this).val();
                     }).get();
+                }else if(qtype == 'shortanswer'){
+                    answer = $('input[name="answer"]').val();
                 }
 
                 $.ajax({
@@ -330,6 +355,7 @@
                         key: key,
                         akey: akey,
                         q: q,
+                        questionSequence: questionSequence,
                         nob: 'SUBMIT',
                         answer: answer,
                         _token: _token
@@ -371,6 +397,17 @@
             jQuery(document).on("click", ".optionDiv", function() {
                 $(this).children('input').prop('checked', true);
                 optionChanged();
+            });
+
+            jQuery(document).on("click", ".selectOptionDiv", function() {
+                $(this).children('input').prop('checked', function(i, value) {
+                    return !value;
+                });
+                
+                $('input[name="answer[]"]').parent().removeClass('border-2 border-blue-400 border border-neutral-100');
+                $('input[name="answer[]"]').parent().addClass('border border-neutral-100');
+                $('input[name="answer[]"]:checked').parent().removeClass('border border-neutral-100');
+                $('input[name="answer[]"]:checked').parent().addClass('border-2 border-blue-400');
             });
 
             function optionChanged(){

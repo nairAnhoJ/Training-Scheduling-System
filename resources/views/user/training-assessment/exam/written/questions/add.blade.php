@@ -28,6 +28,7 @@
                         <select id="type" name="type" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                             <option hidden value=""></option>
                             <option {{ (old('type') == 'MultipleChoice') ? 'selected' : '' }} value="MultipleChoice">Multiple Choice</option>
+                            <option {{ (old('type') == 'MultipleSelect') ? 'selected' : '' }} value="MultipleSelect">Multiple Select</option>
                             <option {{ (old('type') == 'ShortAnswer') ? 'selected' : '' }} value="ShortAnswer">Short Answer</option>
                             <option {{ (old('type') == 'TrueOrFalse') ? 'selected' : '' }} value="TrueOrFalse">True or False</option>
                             <option {{ (old('type') == 'Enumeration') ? 'selected' : '' }} value="Enumeration">Enumeration</option>
@@ -62,7 +63,7 @@
                         </div>
                     </div>
                     <div class="w-full mb-3">
-                        <label for="answer" class="block text-sm font-semibold text-gray-600">Answer <span class="text-red-500">*</span></label>
+                        <label for="answer" class="block text-sm font-semibold text-gray-600">Answer <span class="text-xs italic">(please use semicolon <span class="not-italic">";"</span>  to separate answers) </span><span class="text-red-500">*</span></label>
                         <input type="text" id="answer" name="answer" value="{{ old('answer') }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                         @error('answer')
                             <span class="text-xs text-red-500">{{ $message }}</span>
@@ -103,7 +104,7 @@
 
             $('#type').on('change', function(){
                 var type = $(this).val();
-                if(type === 'MultipleChoice'){
+                if(type === 'MultipleChoice' || type === 'MultipleSelect'){
                     $('#optionsMainDiv').removeClass('hidden')
                 }else{
                     $('#optionsMainDiv').addClass('hidden')
