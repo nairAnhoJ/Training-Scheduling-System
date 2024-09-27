@@ -38,7 +38,7 @@ class AttendeesWrittenExamController extends Controller
         $training = ModelsRequest::where('key', $key)->first();
         if(!$key || !$training){
             return redirect()->route('dashboard.index');
-        }
+        } 
         $akey = $request->akey;
         $attendee = Attendees::where('key', $akey)->first();
         $exam  = WrittenExam::find($attendee->written_exam);
@@ -194,7 +194,7 @@ class AttendeesWrittenExamController extends Controller
                     if($nextQuestion->type == 'ShortAnswer'){
                         $theAnswers .= '
                             <div class="w-full flex items-center gap-x-2">
-                                <input type="text" id="answer" name="answer" value="'.$nextAnswer[0].'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                <input type="text" id="answer" name="answer" value="'.((count($nextAnswer) != 0) ? $nextAnswer[0] : '').'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                             </div>
                         ';
                     }else if($nextQuestion->type == 'Enumeration'){
@@ -202,7 +202,7 @@ class AttendeesWrittenExamController extends Controller
                             $theAnswers .= '
                                 <div class="w-full flex items-center gap-x-2">
                                     <p class="w-7">'.($i+1).'. </p>
-                                    <input type="text" id="answer'.$i.'" name="answer[]" value="'.$nextAnswer[$i].'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                    <input type="text" id="answer'.$i.'" name="answer[]" value="'.((count($nextAnswer) != 0) ? $nextAnswer[$i] : '').'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                                 </div>
                             ';
                         }
@@ -233,10 +233,8 @@ class AttendeesWrittenExamController extends Controller
                     }
                 }
 
-
                 if($nob == 'BACK' || (($q != -1) && ($nob == 'NEXT'))){
                     if($answer != null){
-                        // dd($answer);
                         if($previousAnswer == null){
                             $newAnswer = new AttendeesWrittenExamAnswers();
                             $newAnswer->training_key = $key;

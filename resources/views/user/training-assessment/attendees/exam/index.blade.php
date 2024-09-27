@@ -40,7 +40,7 @@
 
     <div class="w-full p-5 bg-gray-200">
         <div class="h-[calc(100vh-96px)] bg-white rounded-xl shadow-xl">
-            <div class="h-full rounded-xl">
+            <div class="h-full rounded-xl">  
                 <div class="h-full flex flex-col">
                     
                     <input type="hidden" value="-1" id="question">
