@@ -190,6 +190,8 @@ class AttendeesWrittenExamController extends Controller
                     ';
                 }else if($nextQuestion->type == 'ShortAnswer' || $nextQuestion->type == 'Enumeration'){
 
+                    dd(count($nextAnswer));
+
                     $theAnswers = '';
                     if($nextQuestion->type == 'ShortAnswer'){
                         $theAnswers .= '
