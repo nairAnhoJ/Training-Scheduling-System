@@ -190,13 +190,11 @@ class AttendeesWrittenExamController extends Controller
                     ';
                 }else if($nextQuestion->type == 'ShortAnswer' || $nextQuestion->type == 'Enumeration'){
 
-                    dd(count($nextAnswer));
-
                     $theAnswers = '';
                     if($nextQuestion->type == 'ShortAnswer'){
                         $theAnswers .= '
                             <div class="w-full flex items-center gap-x-2">
-                                <input type="text" id="answer" name="answer" value="'.((count($nextAnswer) != 0) ? $nextAnswer[0] : '').'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
+                                <input type="text" id="answer" name="answer" value="'.((count($nextAnswer) == 0) ? '' : $nextAnswer[0]).'" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" autocomplete="off">
                             </div>
                         ';
                     }else if($nextQuestion->type == 'Enumeration'){
