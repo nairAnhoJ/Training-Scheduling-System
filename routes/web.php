@@ -58,6 +58,7 @@ Route::get('/', function () {
             ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
             ->join('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
             ->where('is_approved', 1)
+            ->where('is_deleted', 0)
             ->whereIn('status', ['SCHEDULED', 'COMPLETED'])
             ->get();
 

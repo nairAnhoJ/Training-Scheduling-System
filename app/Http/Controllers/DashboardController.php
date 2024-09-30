@@ -44,6 +44,7 @@ class DashboardController extends Controller
                 return $query->where('trainer', $trainerFilter);
             })
             ->where('trainer', '!=', null)
+            ->where('is_deleted', 0)
             ->get();
 
         $eventArray = [];
