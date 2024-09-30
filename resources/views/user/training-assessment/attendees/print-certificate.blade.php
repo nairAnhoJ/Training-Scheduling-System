@@ -48,6 +48,7 @@
         @php
             // Overall Score
                 $date = new DateTime($training->end_date);
+                dd($date);
                 $formattedDate = $date->format('jS \o\f F Y');
                 $date->modify('+1 year');
                 $valid_until = $date->format('Y-m-d');
@@ -134,8 +135,8 @@
 
         <script>
             $(document).ready(function(){
-                window.onafterprint = window.close;
-                window.print();
+                // window.onafterprint = window.close;
+                // window.print();
             });
         </script>
     </body>
