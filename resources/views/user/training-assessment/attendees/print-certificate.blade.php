@@ -42,6 +42,9 @@
     </style>
 
     <body class="antialiased w-[1375px] h-[1063px] relative">
+
+        <div class="w-[1px] h-screen absolute border-l border-gray-300"></div>
+
         @php
             // Overall Score
                 $date = new DateTime($training->end_date);
@@ -98,7 +101,7 @@
             // Control Number
         @endphp
         {{-- All Text --}}
-            <h1 style="font-family: 'Monotype-Corsiva' !important;" class="whitespace-nowrap text-[57px] absolute top-[382px] left-1/4 -translate-x-1/2">{{ $attendee->name }}</h1>
+            <h1 style="font-family: 'Monotype-Corsiva' !important;" class="whitespace-nowrap text-[57px] absolute top-[382px] left-1/4 -translate-x-1/2 capitalize">{{ $attendee->name }}</h1>
             <h2 style="font-family: 'Perpetua'" class="text-lg absolute top-[445px] left-1/4 -translate-x-1/2 uppercase whitespace-nowrap">{{ $training->customer->name }}</h2>
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[548px] left-1/4 -translate-x-1/2 text-center leading-[26px] whitespace-nowrap">has attended the Comprehensive Training on <br> Basic Safety Operators Training <span class="font-bold">{{ $attendee->brand . ' ' . $attendee->type }}</span></h2>
             <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[610px] left-1/4 -translate-x-1/2 text-center">Given on this {{ $formattedDate }}</h2>
@@ -109,7 +112,7 @@
             <h2 style="font-family: 'Perpetua'" class="text-sm absolute bottom-[30px] left-[35px] uppercase">{{ 'Ctrl#: TMHP-'.$cBrand.str_pad($attendee->control_number, 7, '0', STR_PAD_LEFT) }}</h2>
 
             @if ($overallScore >= 85)
-                <h1 style="font-family: 'Monotype-Corsiva' !important;" class="whitespace-nowrap text-[57px] absolute top-[382px] left-3/4 -translate-x-1/2">{{ $attendee->name }}</h1>
+                <h1 style="font-family: 'Monotype-Corsiva' !important;" class="whitespace-nowrap text-[57px] absolute top-[382px] left-3/4 -translate-x-1/2 capitalize">{{ $attendee->name }}</h1>
                 <h2 style="font-family: 'Perpetua'" class="text-lg whitespace-nowrap absolute top-[445px] left-3/4 -translate-x-1/2 uppercase">{{ $training->customer->name }}</h2>
                 <h2 style="font-family: 'Perpetua'" class="text-xl whitespace-nowrap absolute top-[548px] left-3/4 -translate-x-1/2 text-center leading-[26px]">has attended the Comprehensive Training on <br> Basic Safety Operators Training <span class="font-bold">{{ $attendee->brand . ' ' . $attendee->type }}</span></h2>
                 <h2 style="font-family: 'Perpetua'" class="text-xl absolute top-[610px] left-3/4 -translate-x-1/2 text-center">Given on this {{ $formattedDate }}</h2>
