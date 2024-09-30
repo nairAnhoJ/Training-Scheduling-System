@@ -54,9 +54,9 @@
                     $dateYear = date('Y', strtotime($training->end_date));
 
                     if ((($dateDay % 100) >= 11) && (($dateDay % 100) <= 13)) {
-                        $formattedDate = $dateDay . '<sup>th</sup> of' . $dateMonth . ' ' . $dateYear;
+                        $formattedDate = $dateDay . '<sup>th</sup> of ' . $dateMonth . ' ' . $dateYear;
                     } else {
-                        $formattedDate = $dateDay . '<sup>' . $suffix[$dateDay % 10] . '</sup> of' . $dateMonth . ' ' . $dateYear;
+                        $formattedDate = $dateDay . '<sup>' . $suffix[$dateDay % 10] . '</sup> of ' . $dateMonth . ' ' . $dateYear;
                     }
                 // Given Date
 
