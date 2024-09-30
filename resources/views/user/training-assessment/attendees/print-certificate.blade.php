@@ -148,8 +148,8 @@
 
         <script>
             $(document).ready(function(){
-                // window.onafterprint = window.close;
-                // window.print();
+                window.onafterprint = window.close;
+                window.print();
             });
         </script>
     </body>
