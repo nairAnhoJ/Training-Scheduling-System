@@ -53,17 +53,16 @@
                     $dateDay = date('d', strtotime($training->end_date));
                     $dateYear = date('Y', strtotime($training->end_date));
 
-                    // if ((($number % 100) >= 11) && (($number % 100) <= 13)) {
-                    //     return $number . '<sup>th</sup>';
-                    // } else {
-                    //     return $number . '<sup>' . $suffix[$number % 10] . '</sup>';
-                    // }
-
-
+                    if ((($dateDay % 100) >= 11) && (($dateDay % 100) <= 13)) {
+                        $formattedDate = $dateDay . '<sup>th</sup> of' . $dateMonth . ' ' . $dateYear;
+                    } else {
+                        $formattedDate = $dateDay . '<sup>' . $suffix[$dateDay % 10] . '</sup> of' . $dateMonth . ' ' . $dateYear;
+                    }
                 // Given Date
+                
                 $date = new DateTime($training->end_date);
-                dd($dateMonth . ' - ' . $dateDay . ' - ' . $dateYear);
-                $formattedDate = $date->format('jS \o\f F Y');
+                // dd($dateMonth . ' - ' . $dateDay . ' - ' . $dateYear);
+                // $formattedDate = $date->format('jS \o\f F Y');
                 $date->modify('+1 year');
                 $valid_until = $date->format('Y-m-d');
 
