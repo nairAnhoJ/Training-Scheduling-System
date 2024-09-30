@@ -43,7 +43,7 @@
 
     <body class="antialiased w-[1375px] h-[1063px] relative">
 
-        <div class="w-[1px] h-screen absolute border-l border-gray-300"></div>
+        <div class="w-[1px] h-screen absolute border-l border-gray-300 left-1/2 top-0"></div>
 
         @php
             // Overall Score
