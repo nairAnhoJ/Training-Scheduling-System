@@ -47,8 +47,9 @@
 
         @php
             // Overall Score
+                // $dateMonth = date('')
                 $date = new DateTime($training->end_date);
-                dd($date);
+                // dd($date);
                 $formattedDate = $date->format('jS \o\f F Y');
                 $date->modify('+1 year');
                 $valid_until = $date->format('Y-m-d');
