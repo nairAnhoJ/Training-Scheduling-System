@@ -113,11 +113,6 @@ Route::post('/view', [GuestController::class, 'view'])->name('guest.view');
 Route::post('/event', [GuestController::class, 'event'])->name('guest.event');
 Route::post('/auth', [AuthController::class, 'auth'])->name('login.auth');
 
-Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
-Route::post('/trainings', [TrainingController::class, 'search'])->name('trainings.search');
-Route::post('/trainings/view', [TrainingController::class, 'view'])->name('trainings.view');
-Route::get('/trainings/view/contract-details/{key}', [TrainingController::class, 'contractDetails']);
-
 Route::get('/training-assessment/written-exam', [AttendeesWrittenExamController::class, 'writtenExam'])->name('writtenExam');
 Route::POST('/training-assessment/written-exam/npQuestion', [AttendeesWrittenExamController::class, 'npQuestion'])->name('npQuestion');
 Route::POST('/training-assessment/written-exam/sQuestion', [AttendeesWrittenExamController::class, 'sQuestion'])->name('sQuestion');
@@ -134,7 +129,7 @@ Route::post('/training-assessment/survey-submit', [AttendeesWrittenExamControlle
 
 
 Route::get('/training-request', [CustomerRequestController::class, 'TrainingRequestFromCustomer'])->name('TrainingRequestFromCustomer');
-Route::post('/training-request/submit', [CustomerRequestController::class, 'TrainingRequestFromCustomerSubmit'])->name('TrainingRequestFromCustomerSubmit');
+Route::post('/training-request/submit', [CustomerRequestController::class, 'TrainingRequestFromCustomerSubmit'])->name('TrainingRequestFromCustomer.Submit');
 
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -188,6 +183,12 @@ Route::middleware('auth')->group(function () {
     // REQUEST FROM CUSTOMERS
 
     // TRAINING
+        Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
+        Route::post('/trainings', [TrainingController::class, 'search'])->name('trainings.search');
+        Route::post('/trainings/view', [TrainingController::class, 'view'])->name('trainings.view');
+        Route::get('/trainings/view/contract-details/{key}', [TrainingController::class, 'contractDetails']);
+
+
         // Route::get('/trainings', [TrainingController::class, 'index'])->name('trainings.index');
         // Route::post('/trainings/view', [TrainingController::class, 'view'])->name('trainings.view');
         Route::post('/trainings/reschedule', [TrainingController::class, 'reschedule'])->name('trainings.reschedule');

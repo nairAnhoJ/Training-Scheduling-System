@@ -199,7 +199,7 @@ class DashboardController extends Controller
             'status' => 'COMPLETED',
         ]);
 
-        return redirect()->route('dashboard.index')->with('success', 'Training Has Been Cancelled');
+        return redirect()->route('dashboard.index')->with('success', 'Training Has Been Completed');
     }
 
     public function extend($key){
