@@ -73,7 +73,7 @@
                 <a href="{{ route('TrainingRequestFromCustomer') }}" class="border px-5 py-2 rounded bg-blue-500 text-white font-semibold tracking-wider">SUBMIT ANOTHER REQUEST</a>
             </div>
         @else
-            <form method="POST" action="{{ route('TrainingRequestFromCustomerSubmit') }}" class="w-screen h-screen overflow-y-auto overflow-x-hidden flex flex-col items-center bg-neutral-200 p-5 gap-y-5">
+            <form method="POST" action="{{ route('TrainingRequestFromCustomer.Submit') }}" class="w-screen h-screen overflow-y-auto overflow-x-hidden flex flex-col items-center bg-neutral-200 p-5 gap-y-5">
                 @csrf
                 {{-- HEADER --}}
                     <header class="w-full xl:px-44 2xl:px-96 flex">
