@@ -35,6 +35,7 @@ class UserController extends Controller
         $email = $request->email;
         $role = $request->role;
         $color = $request->color;
+        $signature_path = NULL;
         if($color == ''){
             $color = '0';
         }
@@ -50,10 +51,13 @@ class UserController extends Controller
             }
         }
 
-        $filename = $id_number . '.' . $request->file('signature')->getClientOriginalExtension();
-        $path = "users/signatures/";
-        $signature_path = $path . $filename;
-        $request->file('signature')->move(public_path('storage/' . $path), $filename);
+        if($request->file('signature')){
+            $filename = $id_number . '.' . $request->file('signature')->getClientOriginalExtension();
+            $path = "users/signatures/";
+            $signature_path = $path . $filename;
+            $request->file('signature')->move(public_path('storage/' . $path), $filename);
+        }
+
 
         if($role == 3){
             User::where('role', 3)
