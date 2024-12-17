@@ -35,7 +35,7 @@ class UserController extends Controller
         $email = $request->email;
         $role = $request->role;
         $color = $request->color;
-        $signature_path = NULL;
+        $signature_path = null;
         if($color == ''){
             $color = '0';
         }
