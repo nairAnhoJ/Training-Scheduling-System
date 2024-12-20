@@ -87,7 +87,7 @@
                                     <p class="font-bold">INQUIRE NOW</p>
                                     <p class="text-xs">TEL: (02) 8424-0730 LOCAL 212</p>
                                     <p class="text-xs">MOBILE: 0939 906 9616</p>
-                                    <p class="text-xs">EMAIL: TRAINING05@TOYOTAFORKLIFTS-PHILIPPINES.COM</p>
+                                    <p class="text-xs">EMAIL: TRAINING08@TOYOTAFORKLIFTS-PHILIPPINES.COM</p>
                                 </div>
                             </div>
                         </div>
