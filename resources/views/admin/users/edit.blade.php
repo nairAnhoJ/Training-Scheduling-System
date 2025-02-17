@@ -48,7 +48,8 @@
 
                 <div id="colorDiv" class="mb-3 w-full {{ ($user->role == 2 || $user->role == 3) ? '' : 'opacity-50' }}">
                     <label for="color" class="block text-sm font-semibold text-gray-600">Color <span class="text-red-500">{{ $user->id == 1 ? '' : '*' }}</span></label>
-                    <input {{ ($user->role == 2 || $user->role == 3) ? '' : 'disabled' }} type="color" id="color" name="color" id="favcolor" name="favcolor" value="{{ $user->role == 2 ? $user->color : '#3B82F6' }}" class=" max-w-96 w-full h-11">
+                    <input {{ ($user->role == 2 || $user->role == 3) ? '' : 'disabled' }} type="color" id="color" name="color" id="favcolor" name="favcolor" value="{{ $user->color }}" class=" max-w-96 w-full h-11">
+                    {{-- <input {{ ($user->role == 2 || $user->role == 3) ? '' : 'disabled' }} type="color" id="color" name="color" id="favcolor" name="favcolor" value="{{ $user->role == 2 ? $user->color : '#3B82F6' }}" class=" max-w-96 w-full h-11"> --}}
                 </div>
 
                 <div id="signatureDiv" class="w-full mb-3 {{ ($user->role == 2 || $user->role == 3) ? '' : 'opacity-50' }}">
