@@ -107,6 +107,31 @@ class UserController extends Controller
             $path = "users/signatures/";
             $signature_path = $path . $filename;
             $request->file('signature')->move(public_path('storage/' . $path), $filename);
+
+            User::where('key', $key)
+                ->update([
+                    'id_number' => $id_number,
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
+                    'dept_id' => $department,
+                    'email' => $email,
+                    'role' => $role,
+                    'color' => $color,
+                    'signature' => $signature_path,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
+        }else{
+            User::where('key', $key)
+                ->update([
+                    'id_number' => $id_number,
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
+                    'dept_id' => $department,
+                    'email' => $email,
+                    'role' => $role,
+                    'color' => $color,
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]);
         }
 
         if($role == 3){
@@ -116,19 +141,6 @@ class UserController extends Controller
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
         }
-
-        User::where('key', $key)
-            ->update([
-                'id_number' => $id_number,
-                'first_name' => $first_name,
-                'last_name' => $last_name,
-                'dept_id' => $department,
-                'email' => $email,
-                'role' => $role,
-                'color' => $color,
-                'signature' => $signature_path,
-                'updated_at' => date('Y-m-d H:i:s'),
-            ]);
 
         return redirect()->route('users.index')->with('success', 'User Successfully Updated');
     }
