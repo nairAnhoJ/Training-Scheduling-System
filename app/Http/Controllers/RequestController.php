@@ -103,7 +103,8 @@ class RequestController extends Controller {
         $cp3_number = $request->cp3_number;
         $cp3_email = $request->cp3_email;
 
-        $type = $request->type;
+        // $type = $request->type;
+        $type = 'PLANNED';
         $category = $request->category;
         $pm = $request->pm;
         $contract_details = $request->contract_details;
@@ -306,7 +307,8 @@ class RequestController extends Controller {
         $cp3_number = $request->cp3_number;
         $cp3_email = $request->cp3_email;
 
-        $type = $request->type;
+        // $type = $request->type;
+        $type = 'PLANNED';
         $category = $request->category;
         $contract_details = $request->contract_details;
         $brand = $request->brand;

@@ -101,7 +101,7 @@
                 <div>
                     <h1 class="mb-2 text-xl font-bold text-gray-600">OTHER DETAILS</h1>
                     <div class="pl-3">
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="adress" class="block text-sm font-semibold text-gray-600">Type <span class="text-red-500">*</span></label>
                             <div class="flex gap-x-5">
                                 <div class="flex items-center">
@@ -113,7 +113,7 @@
                                     <label for="urgent_type" class="text-sm font-medium text-gray-500 ms-2">URGENT</label>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         
                         <div class="mb-3">
                             <label for="category" class="block text-sm font-medium text-gray-600">Category <span class="text-red-500">*</span></label>
