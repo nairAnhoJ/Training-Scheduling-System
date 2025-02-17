@@ -102,7 +102,7 @@ class UserController extends Controller
             File::delete($filePath);
         }
 
-        if($role == 2 || $role == 3){
+        if(($role == 2 || $role == 3) && $request->file('signature')){
             $filename = $id_number . '.' . $request->file('signature')->getClientOriginalExtension();
             $path = "users/signatures/";
             $signature_path = $path . $filename;

@@ -52,7 +52,7 @@
                 </div>
 
                 <div id="signatureDiv" class="w-full mb-3 {{ ($user->role == 2 || $user->role == 3) ? '' : 'opacity-50' }}">
-                    <label for="signature" class="block text-sm font-semibold text-gray-600">Signature <span class="text-red-500">*</span></label>
+                    <label for="signature" class="block text-sm font-semibold text-gray-600">Signature</label>
                     <input {{ ($user->role == 2 || $user->role == 3) ? '' : 'disabled' }} type="file" id="signature" name="signature" class="max-w-96 w-full rounded-lg border">
                 </div>
 
