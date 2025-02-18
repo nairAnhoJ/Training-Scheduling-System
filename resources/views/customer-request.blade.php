@@ -248,6 +248,13 @@
                                         <span class="text-xs text-red-500">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="w-full mb-5">
+                                    <label for="sales_representative" class="block text-sm font-semibold text-gray-600">Sales Representative <span class="text-red-500">*</span></label>
+                                    <input type="text" id="sales_representative" name="sales_representative" value="{{ old('sales_representative') }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
+                                    @error('sales_representative')
+                                        <span class="text-xs text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 <div class="mb-3">
                                     <label for="brand" class="block text-sm font-semibold text-gray-600">Brand <span class="text-red-500">*</span></label>
                                     <select id="brand" name="brand" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-1/2 max-w-96 pt-2.5 pb-2 px-2">

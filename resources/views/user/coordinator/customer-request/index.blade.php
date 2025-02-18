@@ -36,6 +36,7 @@
                         <h1 class="mb-2 text-xl font-bold text-gray-600">COMPANY DETAILS</h1>
                         <input type="hidden" id="inputID" name="id">
                         <input type="hidden" id="inputCategory" name="category">
+                        <input type="hidden" id="inputSalesRepresentative" name="sales_representative">
                         <input type="hidden" id="inputBrand" name="brand">
                         <input type="hidden" id="inputModel" name="model">
                         <input type="hidden" id="inputUnitType" name="unit_type">
@@ -649,6 +650,7 @@
 
                         $('#inputID').val(id);
                         $('#inputCategory').val(category);
+                        $('#inputSalesRepresentative').val(sales_representative);
                         $('#inputBrand').val(brand);
                         $('#inputModel').val(model);
                         $('#inputUnitType').val(unit_type);

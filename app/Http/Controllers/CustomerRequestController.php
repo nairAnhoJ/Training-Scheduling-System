@@ -53,6 +53,7 @@ class CustomerRequestController extends Controller
             'cp1_email' => 'required',
 
             'category' => 'required',
+            'sales_representative' => 'required',
             'brand' => 'required',
             'model' => 'required',
             'unit_type' => 'required',
@@ -72,6 +73,7 @@ class CustomerRequestController extends Controller
             'cp1_email.required' => 'Please provide the required information.',
             
             'category.required' => 'Please select an option from the list.',
+            'sales_representative.required' => 'Please provide the required information.',
             'brand.required' => 'Please select an option from the list.',
             'model.required' => 'Please provide the required information.',
             'unit_type.required' => 'Please select an option from the list.',
@@ -102,6 +104,7 @@ class CustomerRequestController extends Controller
         $cp3_email = $request->cp3_email;
         
         $category = $request->category;
+        $sales_representative = $request->sales_representative;
         $brand = $request->brand;
         $model = $request->model;
         $unit_type = $request->unit_type;
@@ -126,6 +129,7 @@ class CustomerRequestController extends Controller
         $cusReq->cp3_email = $cp3_email;
 
         $cusReq->category = $category;
+        $cusReq->sales_representative = $sales_representative;
         $cusReq->brand = $brand;
         $cusReq->model = $model;
         $cusReq->unit_type = $unit_type;
@@ -234,6 +238,7 @@ class CustomerRequestController extends Controller
             'cp3_email' => $cr->cp3_email,
 
             'category' => strtoupper($cr->category),
+            'sales_representative' => strtoupper($cr->sales_representative),
             'brand' => strtoupper($cr->brand),
             'model' => strtoupper($cr->model),
             'unit_type' => strtoupper($cr->unit_type),
