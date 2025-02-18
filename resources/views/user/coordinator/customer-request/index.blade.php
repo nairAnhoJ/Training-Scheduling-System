@@ -587,6 +587,7 @@
                         var cp3_email = result.cp3_email;
 
                         var category = result.category;
+                        var sales_representative = result.sales_representative;
                         var brand = result.brand;
                         var model = result.model;
                         var unit_type = result.unit_type;

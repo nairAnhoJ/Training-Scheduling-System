@@ -221,7 +221,6 @@ class CustomerRequestController extends Controller
 
     public function view(Request $request){
         $cr = CustomerRequest::where('id', $request->id)->first();
-        dd($cr);
 
         $result = array(
             'name' => strtoupper($cr->name),
