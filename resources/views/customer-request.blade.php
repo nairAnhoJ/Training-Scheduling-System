@@ -248,7 +248,7 @@
                                         <span class="text-xs text-red-500">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full mb-5">
+                                <div class="w-full mb-3">
                                     <label for="sales_representative" class="block text-sm font-semibold text-gray-600">Sales Representative <span class="text-red-500">*</span></label>
                                     <input type="text" id="sales_representative" name="sales_representative" value="{{ old('sales_representative') }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                     @error('sales_representative')
@@ -266,7 +266,7 @@
                                         <span class="text-xs text-red-500">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full mb-5">
+                                <div class="w-full mb-3">
                                     <label for="model" class="block text-sm font-semibold text-gray-600">Model <span class="text-red-500">*</span></label>
                                     <input type="text" id="model" name="model" value="{{ old('model') }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                     @error('model')
@@ -291,7 +291,7 @@
                                         <span class="text-xs text-red-500">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="w-full mb-5">
+                                <div class="w-full mb-3">
                                     <label for="no_of_unit" class="block text-sm font-semibold text-gray-600">Quantity of Unit/s <span class="text-red-500">*</span></label>
                                     <input type="text" id="no_of_unit" name="no_of_unit" value="{{ old('no_of_unit') }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                     @error('no_of_unit')
