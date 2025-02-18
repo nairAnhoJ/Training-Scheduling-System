@@ -332,6 +332,7 @@ class CustomerRequestController extends Controller
         }
 
         $category = $request->category;
+        $sales_representative = $request->sales_representative;
         $brand = $request->brand;
         $model = $request->model;
         $unit_type = $request->unit_type;
@@ -354,6 +355,7 @@ class CustomerRequestController extends Controller
                 'number' => $number,
                 'customer_id' => $cusID,
                 'category' => $category,
+                'sales_representative' => $sales_representative,
                 'is_PM' => 0,
                 'unit_type' => $unit_type,
                 'brand' => $brand,

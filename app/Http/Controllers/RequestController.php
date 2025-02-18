@@ -655,6 +655,7 @@ class RequestController extends Controller {
 
             'type' => $thisRequest->type,
             'category' => $thisRequest->category,
+            'sales_representative' => $thisRequest->sales_representative,
             'is_PM' => $thisRequest->is_PM,
             'unit_type' => $thisRequest->unit_type,
             'brand' => $thisRequest->brand,
