@@ -334,6 +334,8 @@
                                     <div id="area" class="col-span-4 text-lg font-semibold"></div> --}}
                                     <div class="col-span-2">Category: </div>
                                     <div id="category" class="col-span-4 text-lg font-semibold"></div>
+                                    <div class="col-span-2">Sales Representative: </div>
+                                    <div id="sales_representative" class="col-span-4 text-lg font-semibold"></div>
                                     {{-- <div id="con_details_div" class="grid grid-cols-6 col-span-6">
                                         <div class="col-span-2">Contract Details: </div>
                                         <a href="#" id="contract_details" target="_blank" class="w-40 col-span-4 text-lg font-semibold tracking-wide text-center text-white bg-blue-500 rounded-lg hover:scale-105">VIEW</a>
@@ -642,6 +644,7 @@
                         }
 
                         $('#category').html(category);
+                        $('#sales_representative').html(sales_representative);
                         $('#brand').html(brand);
                         $('#model').html(model);
                         $('#unit_type').html(unit_type);
