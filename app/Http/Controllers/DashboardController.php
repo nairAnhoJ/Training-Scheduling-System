@@ -35,7 +35,7 @@ class DashboardController extends Controller
             }])
             ->where(function ($query) {
                 $query->where('plan_start_date', '!=', null)
-                      ->orWhereIn('status', ['PENDING', 'SCHEDULED', 'COMPLETED']);
+                      ->WhereIn('status', ['PENDING', 'SCHEDULED', 'COMPLETED']);
             })
             ->when($customerFilter !== null, function ($query) use ($customerFilter) {
                 return $query->where('customer_id', $customerFilter);
