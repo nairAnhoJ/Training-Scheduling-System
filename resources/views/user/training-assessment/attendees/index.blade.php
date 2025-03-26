@@ -178,11 +178,12 @@
                     @csrf
                     <div class="mb-3">
                         <div class="md:grid md:grid-cols-2">
-                            <div class="w-24 mb-3 md:mb-0">
-                                <a href="{{ route('attendees.add') . '?key=' . $key }}" class="flex items-center justify-center py-2 mt-px text-sm font-semibold text-white bg-blue-600 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 focus:outline-none">
+                            <div class="mb-3 md:mb-0 flex items-center gap-x-3">
+                                <a href="{{ route('attendees.add') . '?key=' . $key }}" class=" w-24 flex items-center justify-center py-2 mt-px text-sm font-semibold text-white bg-blue-600 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 focus:outline-none">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-1 transition duration-75" fill="currentColor" viewBox="0 -960 960 960"><path d="M440.391-190.391v-250h-250v-79.218h250v-250h79.218v250h250v79.218h-250v250h-79.218Z"/></svg>
                                     <span>ADD</span>
                                 </a>
+                                <h1 class="font-bold text-lg">{{ $training->customer->name }}</h1>
                             </div>
                             {{-- <div class="w-full justify-self-end xl:w-4/5">
                                 <form method="POST" action="{{ route('request.search') }}" id="searchForm" class="w-full">
@@ -223,9 +224,11 @@
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Written Exam Score
                                             </th>
-                                            <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
-                                                Driving Exam Score
-                                            </th>
+                                            @if ($training->billing_type == 'CHARGEABLE')
+                                                <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
+                                                    Driving Exam Score
+                                                </th>
+                                            @endif
                                             <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">
                                                 Overall Score(%)
                                             </th>
@@ -289,8 +292,9 @@
                                                     @if ($attendee->written_score == null)
                                                         <button type="button" data-name="{{ $attendee->name }}" data-key="{{ $attendee->training_key }}" data-akey="{{ $attendee->key }}" class="text-sm font-semibold text-blue-600 writtenButton hover:underline">Written Exam</button> |
                                                     @endif
-                                                    
-                                                    <a href="{{ route('driving.exam').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Driving Exam</a> | 
+                                                    @if ($training->billing_type == 'CHARGEABLE')
+                                                        <a href="{{ route('driving.exam').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Driving Exam</a> | 
+                                                    @endif
                                                     <a href="{{ route('attendees.edit').'?key='.$key.'&a='.$attendee->key }}" class="text-sm font-semibold text-blue-600 editButton hover:underline">Edit</a> | 
                                                     <button type="button" data-id="{{ $attendee->id }}" class="text-sm font-semibold text-red-600 cursor-pointer deleteButton hover:underline">Delete</button>
                                                 </td>
@@ -314,13 +318,15 @@
                                                         N/A
                                                     @endif
                                                 </td>
-                                                <td class="px-6 py-4 text-base font-bold text-center whitespace-nowrap {{ $color }}">
-                                                    @if ($attendee->driving_score != null && $attendee->written_score != null)
-                                                        {{ $overallScore }}
-                                                    @else
-                                                        N/A
-                                                    @endif
-                                                </td>
+                                                @if ($training->billing_type == 'CHARGEABLE')
+                                                    <td class="px-6 py-4 text-base font-bold text-center whitespace-nowrap {{ $color }}">
+                                                        @if ($attendee->driving_score != null && $attendee->written_score != null)
+                                                            {{ $overallScore }}
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
+                                                @endif
                                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                                     {{ $attendee->position }}
                                                 </td>

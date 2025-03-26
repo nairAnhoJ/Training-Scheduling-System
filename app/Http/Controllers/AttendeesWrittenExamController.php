@@ -30,7 +30,7 @@ class AttendeesWrittenExamController extends Controller
         $questionSequence = WrittenExamQuestion::where('exam_key', $exam->key)->pluck('id')->toArray();
         shuffle($questionSequence);
 
-        return view('user.training-assessment.attendees.exam.index', compact('attendee', 'key', 'akey', 'exam', 'total', 'questionSequence'));
+        return view('user.training-assessment.attendees.exam.index', compact('attendee', 'training', 'key', 'akey', 'exam', 'total', 'questionSequence'));
     }
 
     public function npQuestion(Request $request){

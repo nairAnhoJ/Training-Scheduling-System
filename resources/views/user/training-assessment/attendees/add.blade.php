@@ -192,18 +192,20 @@
                             <span class="text-xs text-red-500">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="mb-3">
-                        <label for="driving_exam" class="block text-sm font-semibold text-gray-600">Driving Exam <span class="text-red-500">*</span></label>
-                        <select id="driving_exam" name="driving_exam" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-96 p-2.5">
-                            <option hidden value=""></option>
-                            @foreach ($dexams as $dexam)
-                                <option value="{{ $dexam->id }}">{{ $dexam->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('driving_exam')
-                            <span class="text-xs text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
+                    @if ($training->billing_type == 'CHARGEABLE')
+                        <div class="mb-3">
+                            <label for="driving_exam" class="block text-sm font-semibold text-gray-600">Driving Exam <span class="text-red-500">*</span></label>
+                            <select id="driving_exam" name="driving_exam" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-96 p-2.5">
+                                <option hidden value=""></option>
+                                @foreach ($dexams as $dexam)
+                                    <option value="{{ $dexam->id }}">{{ $dexam->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('driving_exam')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    @endif
                     <div class="flex flex-col gap-2 mt-5 md:flex-row gap-x-5 w-full max-w-96">
                         <button type="submit" class="w-full py-2 font-bold tracking-wider text-white bg-blue-500 rounded-lg hover:scale-[101%]">SAVE</button>
                         <a href="{{ route('attendees') . '?key=' . $key }}" class="w-full py-2 font-bold tracking-wider text-center text-white bg-gray-500 rounded-lg hover:scale-[101%]">BACK</a>

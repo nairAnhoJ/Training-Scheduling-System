@@ -20,7 +20,7 @@ class AttendeesController extends Controller
 {
     public function index(Request $request){
         $key = $request->key;
-        $training = ModelsRequest::where('key', $key)->first();
+        $training = ModelsRequest::with('customer')->where('key', $key)->first();
         if(!$key || !$training){
             return redirect()->route('dashboard.index');
         }
@@ -28,6 +28,8 @@ class AttendeesController extends Controller
         $port = $request->getPort();
 
         $attendees = Attendees::where('training_key', $key)->get();
+
+        // dd($training->customer->name);
 
         return view('user.training-assessment.attendees.index', compact('training', 'attendees', 'key', 'ip', 'port'));
     }
@@ -42,7 +44,7 @@ class AttendeesController extends Controller
         $wexams = WrittenExam::where('is_deleted', 0)->get();
         $dexams = DrivingExam::where('is_deleted', 0)->get();
 
-        return view('user.training-assessment.attendees.add', compact('key', 'wexams', 'dexams'));
+        return view('user.training-assessment.attendees.add', compact('key', 'training', 'wexams', 'dexams'));
     }
 
     public function store(Request $request){
@@ -52,12 +54,21 @@ class AttendeesController extends Controller
             return redirect()->route('dashboard.index');
         }
 
-        $validator = Validator::make($request->all(), [
-            'brand' => 'required',
-            'type' => 'required',
-            'written_exam' => 'required',
-            'driving_exam' => 'required',
-        ]);
+        if($training->billing_type == 'CHARGEABLE'){
+            $validator = Validator::make($request->all(), [
+                'brand' => 'required',
+                'type' => 'required',
+                'written_exam' => 'required',
+                'driving_exam' => 'required',
+            ]);
+        }else{
+            $validator = Validator::make($request->all(), [
+                'brand' => 'required',
+                'type' => 'required',
+                'written_exam' => 'required',
+            ]);
+        }
+
 
         $customMessages = [
             'brand.required' => 'Please select an option from the list.',
