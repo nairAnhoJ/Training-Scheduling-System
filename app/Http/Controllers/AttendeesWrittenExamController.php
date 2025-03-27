@@ -384,7 +384,7 @@ class AttendeesWrittenExamController extends Controller
         $questions = SurveyQuestion::where('is_deleted', 0)->orderBy('position', 'asc')->get();
         $is_submitted = AttendeesSurveyAnswers::where('training_key', $key)->where('attendee_key', $akey)->count();
 
-        return view('user.training-assessment.attendees.survey.index', compact('attendee', 'key', 'akey', 'questions', 'is_submitted'));
+        return view('user.training-assessment.attendees.survey.index', compact('attendee', 'training', 'key', 'akey', 'questions', 'is_submitted'));
     }
 
     public function attendeeSurveySubmit(Request $request){

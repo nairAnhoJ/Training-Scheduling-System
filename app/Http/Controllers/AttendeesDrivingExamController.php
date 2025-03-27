@@ -22,6 +22,6 @@ class AttendeesDrivingExamController extends Controller
 
         $driving_score = DrivingExamScore::where('training_key', $key)->where('attendee_key', $akey)->where('exam_key', $dexams->key)->first();
 
-        return view('user.training-assessment.attendees.driving.index', compact('key', 'akey', 'attendee', 'dexams', 'driving_score'));
+        return view('user.training-assessment.attendees.driving.index', compact('key', 'akey', 'training', 'attendee', 'dexams', 'driving_score'));
     }
 }

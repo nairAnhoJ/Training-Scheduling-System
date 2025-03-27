@@ -354,7 +354,7 @@ class AttendeesController extends Controller
         $exam_key = WrittenExam::where('id', $attendee->written_exam)->first()->key;
         $exam_total = WrittenExamQuestion::where('exam_key', $exam_key)->where('is_deleted', 0)->sum('points');
 
-        return view('user.training-assessment.attendees.overall-result.index', compact('key', 'akey', 'attendee', 'exam_total'));
+        return view('user.training-assessment.attendees.overall-result.index', compact('key', 'training', 'akey', 'attendee', 'exam_total'));
     }
 
     public function print(Request $request){
