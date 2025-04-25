@@ -45,7 +45,7 @@ class RequestController extends Controller {
 
     public function add() {
         $customers = Customer::get();
-        $trainers = User::where('role', 2)->get();
+        $trainers = User::where('role', 2)->where('is_deleted', 0)->where('is_active', 1)->get();
 
         return view('user.coordinator.request.add', compact('customers', 'trainers'));
     }
@@ -285,7 +285,7 @@ class RequestController extends Controller {
             ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
             ->where('tss_requests.key', $key)
             ->first();
-        $trainers = User::where('role', 2)->get();
+        $trainers = User::where('role', 2)->where('is_deleted', 0)->where('is_active', 1)->get();
 
         return view('user.coordinator.request.edit', compact('request', 'trainers', 'key'));
     }
