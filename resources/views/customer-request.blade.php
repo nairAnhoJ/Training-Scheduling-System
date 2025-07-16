@@ -81,7 +81,7 @@
                             <img src="{{ asset('storage/images/system/logo.png') }}" alt="" class="w-1/2 md:w-1/6 my-3 md:mx-3 min-w-[120px]">
                             <div class="w-full h-3 md:w-3 md:h-full border border-red-500 bg-red-500"></div>
                             <div class="flex flex-col items-center md:items-end w-full text-red-500 px-5 py-10">
-                                <span class="font-bold text-xl md:text-5xl">FORKLIFT SAFETY</span>
+                                <span class="font-bold text-xl md:text-5xl">FORKLIFT SAFETY AND</span>
                                 <span class="font-bold text-xl md:text-5xl">OPERATION TRAINING</span>
                                 <div class="text-left md:text-right w-full mt-2">
                                     <p class="font-bold">INQUIRE NOW</p>
@@ -270,6 +270,13 @@
                                     <label for="model" class="block text-sm font-semibold text-gray-600">Model <span class="text-red-500">*</span></label>
                                     <input type="text" id="model" name="model" value="{{ old('model') }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
                                     @error('model')
+                                        <span class="text-xs text-red-500">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="w-full mb-3">
+                                    <label for="serial_number" class="block text-sm font-semibold text-gray-600">Serial Number <span class="text-red-500">*</span></label>
+                                    <input type="text" id="serial_number" name="serial_number" value="{{ old('serial_number') }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full md:w-1/2 p-2.5" autocomplete="off">
+                                    @error('serial_number')
                                         <span class="text-xs text-red-500">{{ $message }}</span>
                                     @enderror
                                 </div>

@@ -39,6 +39,7 @@
                         <input type="hidden" id="inputSalesRepresentative" name="sales_representative">
                         <input type="hidden" id="inputBrand" name="brand">
                         <input type="hidden" id="inputModel" name="model">
+                        <input type="hidden" id="inputSerialNumber" name="serial_number">
                         <input type="hidden" id="inputUnitType" name="unit_type">
                         <input type="hidden" id="inputNoUnit" name="no_of_unit">
                         <input type="hidden" id="inputNoAttendees" name="no_of_attendees">
@@ -344,6 +345,8 @@
                                     <div id="brand" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Model: </div>
                                     <div id="model" class="col-span-4 text-lg font-semibold"></div>
+                                    <div class="col-span-2">Serial Number: </div>
+                                    <div id="serial_number" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Type of Unit: </div>
                                     <div id="unit_type" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Number of Unit: </div>
@@ -592,6 +595,7 @@
                         var sales_representative = result.sales_representative;
                         var brand = result.brand;
                         var model = result.model;
+                        var serial_number = result.serial_number;
                         var unit_type = result.unit_type;
                         var no_of_unit = result.no_of_unit;
                         var no_of_attendees = result.no_of_attendees;
@@ -647,6 +651,7 @@
                         $('#sales_representative').html(sales_representative);
                         $('#brand').html(brand);
                         $('#model').html(model);
+                        $('#serial_number').html(serial_number);
                         $('#unit_type').html(unit_type);
                         $('#no_of_unit').html(no_of_unit);
                         $('#no_of_attendees').html(no_of_attendees);
@@ -657,6 +662,7 @@
                         $('#inputSalesRepresentative').val(sales_representative);
                         $('#inputBrand').val(brand);
                         $('#inputModel').val(model);
+                        $('#inputSerialNumber').val(serial_number);
                         $('#inputUnitType').val(unit_type);
                         $('#inputNoUnit').val(no_of_unit);
                         $('#inputNoAttendees').val(no_of_attendees);

@@ -107,6 +107,7 @@ class CustomerRequestController extends Controller
         $sales_representative = $request->sales_representative;
         $brand = $request->brand;
         $model = $request->model;
+        $serial_number = $request->serial_number;
         $unit_type = $request->unit_type;
         $no_of_unit = $request->no_of_unit;
         $no_of_attendees = $request->no_of_attendees;
@@ -132,6 +133,7 @@ class CustomerRequestController extends Controller
         $cusReq->sales_representative = $sales_representative;
         $cusReq->brand = $brand;
         $cusReq->model = $model;
+        $cusReq->serial_number = $serial_number;
         $cusReq->unit_type = $unit_type;
         $cusReq->no_of_unit = $no_of_unit;
         $cusReq->no_of_attendees = $no_of_attendees;
@@ -241,6 +243,7 @@ class CustomerRequestController extends Controller
             'sales_representative' => strtoupper($cr->sales_representative),
             'brand' => strtoupper($cr->brand),
             'model' => strtoupper($cr->model),
+            'serial_number' => strtoupper($cr->serial_number),
             'unit_type' => strtoupper($cr->unit_type),
             'no_of_unit' => $cr->no_of_unit,
             'no_of_attendees' => $cr->no_of_attendees,
@@ -335,6 +338,7 @@ class CustomerRequestController extends Controller
         $sales_representative = $request->sales_representative;
         $brand = $request->brand;
         $model = $request->model;
+        $serial_number = $request->serial_number;
         $unit_type = $request->unit_type;
         $no_of_unit = $request->no_of_unit;
         $no_of_attendees = $request->no_of_attendees;
@@ -360,6 +364,7 @@ class CustomerRequestController extends Controller
                 'unit_type' => $unit_type,
                 'brand' => $brand,
                 'model' => $model,
+                'serial_number' => $serial_number,
                 'no_of_unit' => $no_of_unit,
                 'no_of_attendees' => $no_of_attendees,
                 'knowledge_of_participants' => $knowledge_of_participants,

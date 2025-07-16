@@ -114,7 +114,7 @@ class DashboardController extends Controller
 
     public function view(Request $request){
         $id = $request->id;
-        $thisRequest = ModelsRequest::select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'tss_requests.number', 'tss_requests.category', 'tss_requests.unit_type', 'tss_requests.brand', 'tss_requests.model', 'tss_requests.no_of_unit', 'tss_requests.billing_type', 'tss_requests.is_PM', 'tss_requests.contract_details', 'tss_requests.no_of_attendees', 'tss_requests.venue', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.knowledge_of_participants', 'tss_requests.trainer', 'tss_requests.remarks', 'tss_requests.status', 'tss_requests.key', 'tss_users.first_name', 'tss_users.last_name')
+        $thisRequest = ModelsRequest::select('customers.name', 'customers.address', 'customers.area', 'customers.cp1_name', 'customers.cp1_number', 'customers.cp1_email', 'customers.cp2_name', 'customers.cp2_number', 'customers.cp2_email', 'customers.cp3_name', 'customers.cp3_number', 'customers.cp3_email', 'tss_requests.number', 'tss_requests.category', 'tss_requests.unit_type', 'tss_requests.brand', 'tss_requests.model', 'tss_requests.serial_number', 'tss_requests.no_of_unit', 'tss_requests.billing_type', 'tss_requests.is_PM', 'tss_requests.contract_details', 'tss_requests.no_of_attendees', 'tss_requests.venue', 'tss_requests.training_date', 'tss_requests.end_date', 'tss_requests.knowledge_of_participants', 'tss_requests.trainer', 'tss_requests.remarks', 'tss_requests.status', 'tss_requests.key', 'tss_users.first_name', 'tss_users.last_name')
             ->join('customers', 'tss_requests.customer_id', '=', 'customers.id')
             ->join('tss_users', 'tss_requests.trainer', '=', 'tss_users.id')
             ->where('tss_requests.key', $id)
@@ -178,6 +178,7 @@ class DashboardController extends Controller
             'unit_type' => $thisRequest->unit_type,
             'brand' => $thisRequest->brand,
             'model' => $thisRequest->model,
+            'serial_number' => $thisRequest->serial_number,
             'no_of_unit' => $thisRequest->no_of_unit,
             'billing_type' => $thisRequest->billing_type,
             'contract_details' => $thisRequest->contract_details,

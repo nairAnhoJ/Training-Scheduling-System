@@ -110,6 +110,7 @@ class RequestController extends Controller {
         $contract_details = $request->contract_details;
         $brand = $request->brand;
         $model = strtoupper($request->model);
+        $serial_number = strtoupper($request->serial_number);
         $unit_type = $request->unit_type;
         $no_of_unit = $request->no_of_unit;
         $billing_type = $request->billing_type;
@@ -211,6 +212,7 @@ class RequestController extends Controller {
                     'unit_type' => $unit_type,
                     'brand' => $brand,
                     'model' => $model,
+                    'serial_number' => $serial_number,
                     'type' => $type,
                     'no_of_unit' => $no_of_unit,
                     'billing_type' => $billing_type,
@@ -235,6 +237,7 @@ class RequestController extends Controller {
                     'unit_type' => $unit_type,
                     'brand' => $brand,
                     'model' => $model,
+                    'serial_number' => $serial_number,
                     'type' => $type,
                     'no_of_unit' => $no_of_unit,
                     'billing_type' => $billing_type,
@@ -260,6 +263,7 @@ class RequestController extends Controller {
                 'unit_type' => $unit_type,
                 'brand' => $brand,
                 'model' => $model,
+                'serial_number' => $serial_number,
                 'type' => $type,
                 'no_of_unit' => $no_of_unit,
                 'billing_type' => $billing_type,
@@ -313,6 +317,7 @@ class RequestController extends Controller {
         $contract_details = $request->contract_details;
         $brand = $request->brand;
         $reqmodel = strtoupper($request->model);
+        $serial_number = strtoupper($request->serial_number);
         $unit_type = $request->unit_type;
         $no_of_unit = $request->no_of_unit;
         $billing_type = $request->billing_type;
@@ -413,6 +418,7 @@ class RequestController extends Controller {
             $data['unit_type'] = $unit_type;
             $data['brand'] = $brand;
             $data['model'] = $reqmodel;
+            $data['serial_number'] = $serial_number;
             $data['no_of_unit'] = $no_of_unit;
             $data['billing_type'] = $billing_type;
             $data['no_of_attendees'] = $no_of_attendees;
@@ -496,6 +502,7 @@ class RequestController extends Controller {
             $data['unit_type'] = $unit_type;
             $data['brand'] = $brand;
             $data['model'] = $reqmodel;
+            $data['serial_number'] = $serial_number;
             $data['no_of_unit'] = $no_of_unit;
             $data['billing_type'] = $billing_type;
             $data['no_of_attendees'] = $no_of_attendees;
@@ -660,6 +667,7 @@ class RequestController extends Controller {
             'unit_type' => $thisRequest->unit_type,
             'brand' => $thisRequest->brand,
             'model' => $thisRequest->model,
+            'serial_number' => $thisRequest->serial_number,
             'no_of_unit' => $thisRequest->no_of_unit,
             'billing_type' => $thisRequest->billing_type,
             'contract_details' => $thisRequest->contract_details,

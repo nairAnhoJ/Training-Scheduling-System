@@ -29,8 +29,10 @@ return new class extends Migration
             $table->string('cp3_email');
 
             $table->string('category');
+            $table->string('sales_representative');
             $table->string('brand');
             $table->string('model');
+            $table->string('serial_number');
             $table->string('unit_type');
             $table->string('no_of_unit');
             $table->string('no_of_attendees');

@@ -162,6 +162,11 @@
                             <input type="text" id="model" name="model" value="{{ $request->model }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
                         </div>
 
+                        <div class="w-full mb-3">
+                            <label for="serial_number" class="block text-sm font-semibold text-gray-600">Serial Number <span class="text-red-500">*</span></label>
+                            <input type="text" id="serial_number" name="serial_number" value="{{ $request->serial_number }}" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg block w-full p-2.5" required autocomplete="off">
+                        </div>
+
                         <div class="mb-3">
                             <label for="unit_type" class="block text-sm font-semibold text-gray-600">Unit Type <span class="text-red-500">*</span></label>
                             <select id="unit_type" name="unit_type" class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">

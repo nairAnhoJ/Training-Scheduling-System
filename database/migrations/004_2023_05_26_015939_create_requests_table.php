@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('unit_type');
             $table->string('brand');
             $table->string('model');
+            $table->string('serial_number');
             $table->string('no_of_unit')->nullable();
             $table->string('billing_type')->nullable(); // Chargeable / Non-Chargeable
 
