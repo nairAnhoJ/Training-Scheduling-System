@@ -334,7 +334,7 @@ class RequestController extends Controller {
         $model = Customer::where('name', $name)->firstOrFail();
         $originalData = $model->toArray();
 
-        $data = $request->except('_token', 'type', 'category', 'contract_details', 'brand', 'model', 'unit_type', 'no_of_unit', 'billing_type', 'no_of_attendees', 'knowledge_of_participants', 'venue', 'plan_start_date', 'plan_end_date', 'event_date', 'trainer', 'remarks');
+        $data = $request->except('_token', 'type', 'category', 'contract_details', 'brand', 'model', 'serial_number', 'unit_type', 'no_of_unit', 'billing_type', 'no_of_attendees', 'knowledge_of_participants', 'venue', 'plan_start_date', 'plan_end_date', 'event_date', 'trainer', 'remarks');
         $data['address'] = $address;
         $data['area'] = $area;
         $data['cp1_name'] = $cp1_name;
