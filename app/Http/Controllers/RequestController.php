@@ -408,6 +408,7 @@ class RequestController extends Controller {
 
 
             $model = ModelsRequest::where('key', $key)->firstOrFail();
+            
             $originalData = $model->toArray();
 
             $data = $request->except('_token', 'name', 'address', 'area', 'cp1_name', 'cp1_number', 'cp1_email', 'cp2_name', 'cp2_number', 'cp2_email', 'cp3_name', 'cp3_number', 'cp3_email');
@@ -528,7 +529,9 @@ class RequestController extends Controller {
                     $changed = 'Unit Type';
                 } else if ($column == 'billing_type') {
                     $changed = 'Billing Type';
-                } else if ($column == 'no_of_attendees') {
+                } else if ($column == 'serial_number') {
+                    $changed = 'Serial Number';
+                }  else if ($column == 'no_of_attendees') {
                     $changed = 'Number of Attendees';
                 } else if ($column == 'no_of_unit') {
                     $changed = 'Number of Unit';

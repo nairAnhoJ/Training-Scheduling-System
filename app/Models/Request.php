@@ -14,6 +14,7 @@ class Request extends Model {
         'unit_type',
         'brand',
         'model',
+        'serial_number',
         'no_of_unit',
         'billing_type',
         'is_PM',
