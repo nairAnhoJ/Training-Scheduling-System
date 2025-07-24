@@ -544,6 +544,7 @@
 
                         $('#brand').html(result.brand);
                         $('#model').html(result.model);
+                        $('#serial_number').html(result.serial_number);
                         $('#unit_type').html(result.unit_type);
                         $('#billing_type').html(result.billing_type);
                         $('#no_of_attendees').html(result.no_of_attendees);

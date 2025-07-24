@@ -169,6 +169,8 @@
                                     <div id="brand" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Model: </div>
                                     <div id="model" class="col-span-4 text-lg font-semibold"></div>
+                                    <div class="col-span-2">Serial Number: </div>
+                                    <div id="serial_number" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Type of Unit: </div>
                                     <div id="unit_type" class="col-span-4 text-lg font-semibold"></div>
                                     <div class="col-span-2">Billing Type: </div>
@@ -466,6 +468,7 @@
                         $('#type').html(result.type);
                         $('#brand').html(result.brand);
                         $('#model').html(result.model);
+                        $('#serial_number').html(result.serial_number);
                         $('#unit_type').html(result.unit_type);
                         $('#billing_type').html(result.billing_type);
                         $('#no_of_attendees').html(result.no_of_attendees);
