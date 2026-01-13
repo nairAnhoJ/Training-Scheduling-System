@@ -182,6 +182,7 @@
                                 <option value="HAND PALLET TRUCK">Hand Pallet Truck</option>
                                 <option value="ARTICULATED">Articulated</option>
                                 <option value="SIDE LOADER">Side Loader</option>
+                                <option value="TOW TRUCK">Tow Truck</option>
                             </select>
                         </div>
 

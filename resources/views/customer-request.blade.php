@@ -293,6 +293,8 @@
                                         <option {{ (old('unit_type') == 'HAND PALLET TRUCK') ? 'selected' : '' }} value="HAND PALLET TRUCK">Hand Pallet Truck</option>
                                         <option {{ (old('unit_type') == 'ARTICULATED') ? 'selected' : '' }} value="ARTICULATED">Articulated</option>
                                         <option {{ (old('unit_type') == 'SIDE LOADER') ? 'selected' : '' }} value="SIDE LOADER">Side Loader</option>
+                                        <option {{ (old('unit_type') == 'SIDE LOADER') ? 'selected' : '' }} value="SIDE LOADER">Side Loader</option>
+                                        <option {{ (old('unit_type') == 'TOW TRUCK') ? 'selected' : '' }} value="TOW TRUCK">Tow Truck</option>
                                     </select>
                                     @error('unit_type')
                                         <span class="text-xs text-red-500">{{ $message }}</span>

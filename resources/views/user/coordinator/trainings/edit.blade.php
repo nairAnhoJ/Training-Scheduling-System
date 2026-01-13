@@ -161,6 +161,7 @@
                                 <option {{ $request->unit_type == 'HAND PALLET TRUCK' ? 'selected' : '' }} value="HAND PALLET TRUCK">Hand Pallet Truck</option>
                                 <option {{ $request->unit_type == 'ARTICULATED' ? 'selected' : '' }} value="ARTICULATED">Articulated</option>
                                 <option {{ $request->unit_type == 'SIDE LOADER' ? 'selected' : '' }} value="SIDE LOADER">Side Loader</option>
+                                <option {{ $request->unit_type == 'TOW TRUCK' ? 'selected' : '' }} value="TOW TRUCK">Tow Truck</option>
                             </select>
                         </div>
 
